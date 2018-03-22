@@ -1,0 +1,34 @@
+@import '../../../../styles/config.css';
+
+.gettingStarted {
+  text-align: center;
+  padding: 20px 0;
+
+  .svgScene {
+    padding: 20px 0;
+  }
+
+  .group {
+    display: inline-block;
+    max-width: 100px;
+    margin: 0 0.5em;
+  }
+
+  .man2,
+  .woman3,
+  .groupPlant {
+    display: none;
+  }
+
+  @media (--sd-tablet) {
+    .man2,
+    .woman3,
+    .groupPlant {
+      display: inline-block;
+    }
+
+    .group {
+      margin: 0 1em;
+    }
+  }
+}

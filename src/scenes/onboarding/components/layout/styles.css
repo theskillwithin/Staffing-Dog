@@ -1,0 +1,19 @@
+@import "../../../../styles/config.css";
+@import 'material-components-web/dist/material-components-web.css';
+
+html,
+body {
+  background-color: var(--sd-blueGray);
+  font-size: var(--sd-fontSize);
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+}
+
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: 400;
+}

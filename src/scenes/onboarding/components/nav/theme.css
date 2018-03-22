@@ -1,0 +1,35 @@
+@import '../../../../styles/config.css';
+
+.stepLinks {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &Item {
+    padding: 0;
+    margin: 2px;
+  }
+}
+
+.stepButton {
+  color: #1F2740;
+  border-radius: 50%;
+  padding: 0.25em 0.65em;
+  text-decoration: none;
+
+  &:hover {
+    background-color: color(var(--sd-blueGray) shade(10%));
+  }
+}
+
+.stepButtonActive {
+  color: #FFFFFF;
+  background-color: #0072FF;
+
+  &:hover {
+    background-color: color(#0072FF shade(10%));
+  }
+}

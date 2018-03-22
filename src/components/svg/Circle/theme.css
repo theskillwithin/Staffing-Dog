@@ -1,0 +1,39 @@
+@import '../../../styles/config.css';
+
+.svg {
+  :global {
+    .cls-1,
+    .cls-3 {
+      fill: none;
+    }
+
+    .cls-1 {
+      stroke-width: 2px;
+      stroke: var(--sd-gray);
+    }
+
+    .cls-2 {
+      stroke: none;
+    }
+  }
+}
+
+.colorBlue :global .cls-1 {
+  stroke: var(--sd-blue);
+}
+
+.colorGreen :global .cls-1 {
+  stroke: var(--sd-green);
+}
+
+.colorOrange :global .cls-1 {
+  stroke: var(--sd-orange);
+}
+
+.colorPurple :global .cls-1 {
+  stroke: var(--sd-purple);
+}
+
+.colorGray :global .cls-1 {
+  stroke: var(--sd-gray);
+}

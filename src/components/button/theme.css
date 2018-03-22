@@ -1,0 +1,7 @@
+@import '../../styles/config.css';
+
+.button {
+  border-radius: 1.5em;
+  padding-left: 2em;
+  padding-right: 2em;
+}

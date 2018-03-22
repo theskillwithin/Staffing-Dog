@@ -1,0 +1,25 @@
+@import '../../../styles/config.css';
+
+.svg {
+  color: var(--sd-gray);
+}
+
+.colorBlue :global .cls-1 {
+  fill: var(--sd-blue);
+}
+
+.colorGreen :global .cls-1 {
+  fill: var(--sd-green);
+}
+
+.colorOrange :global .cls-1 {
+  fill: var(--sd-orange);
+}
+
+.colorPurple :global .cls-1 {
+  fill: var(--sd-purple);
+}
+
+.colorGray :global .cls-1 {
+  fill: var(--sd-gray);
+}

@@ -1,0 +1,55 @@
+@import '../../../../styles/config.css';
+
+.stepsContent {
+  padding: 2em;
+
+  .stepTitle {
+    font-size: var(--sd-fontSizeXL);
+    text-align: center;
+  }
+}
+
+.stepForm {
+  width: 100%;
+}
+
+.formRow {
+  width: 100%;
+
+  .element {
+    width: 100%;
+  }
+
+  &.hasMany {
+    display: flex;
+    justify-content: space-between;
+
+    .formRow {
+      display: flex;
+      justify-content: space-between;
+
+      &::after {
+        content: "";
+        width: 5%;
+        display: block;
+      }
+
+      &:last-child {
+        &::after {
+          display: none;
+        }
+      }
+    }
+  }
+}
+
+.completeVideo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--sd-gray);
+  color: black;
+  width: 80%;
+  margin: 0 auto;
+  height: 200px;
+}

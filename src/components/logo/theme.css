@@ -1,0 +1,18 @@
+@import '../../styles/config.css';
+
+
+.logo {
+  display: inline-block;
+}
+
+.logoText {
+  font-size: 1.5em;
+}
+
+.path {
+  fill: #3FA9F5;
+}
+
+.path2 {
+  fill: #0072FF;
+}

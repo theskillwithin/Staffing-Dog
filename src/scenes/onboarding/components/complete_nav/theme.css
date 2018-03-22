@@ -1,0 +1,21 @@
+@import '../../../../styles/config';
+
+
+.stepNavComplete {
+  padding: 1em 4em;
+  width: 100%;
+}
+
+.stepNavCompleteInner {
+  display: flex;
+  justify-content: space-between;
+  align-items: stretch;
+  width: 100%;
+}
+
+.stepNavCompleteRight {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}

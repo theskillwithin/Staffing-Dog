@@ -1,0 +1,9 @@
+/*
+ * All MDC (RMWC) variables need important one them
+ * because of the order that it gets ran
+ * once we can create a better system we can remove them
+*/
+
+:root {
+  --mdc-theme-primary: var(--sd-primary) !important;
+}

@@ -1,0 +1,49 @@
+@import '../../../../styles/config.css';
+
+.sidebar {
+  text-align: center;
+}
+
+.sidebarNav {
+  padding-top: 2.5em;
+}
+
+.sidebarContent {
+  padding: 2.5em 2em 2em;
+}
+
+.itemElement {
+  margin: 0;
+}
+
+.title {
+  font-size: var(--sd-fontSizeL);
+  font-weight: var(--sd-fontWeightLight);
+}
+
+.subTitle {
+  font-size: var(--sd-fontSizeM);
+}
+
+.subTitleLarge {
+  font-size: var(--sd-fontSizeL);
+}
+
+.description {
+  font-size: var(--sd-fontSize);
+  font-weight: var(--sd-fontWeightLight);
+  padding: 0 2em;
+}
+
+.hr {
+  width: 30px;
+  height: 2px;
+  background-color: var(--sd-primary);
+  margin: 20px auto;
+}
+
+.svg {
+  width: 150px;
+  margin: 2em 0 0;
+  display: inline-block;
+}

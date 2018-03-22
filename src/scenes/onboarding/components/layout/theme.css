@@ -1,0 +1,317 @@
+@import '../../../../styles/config.css';
+@import '../../../../styles/reset.css';
+
+html {
+  font-size: 16px;
+}
+
+.app {
+  .onboardingApp {
+    @media (--sd-tablet) {
+      height: 100vh;
+      display: grid;
+      grid-template-rows: auto min(30%) auto;
+      grid-template-areas:
+        "."
+        "app"
+        ".";
+    }
+  }
+}
+
+.appInner {
+  grid-area: app;
+  height: 100%;
+  height: 100vh;
+  display: grid;
+  grid-template-rows: 4px minmax(20px, 65px) auto minmax(20px, 65px);
+  grid-template-areas:
+    "appTop"
+    "appHeader"
+    "appContent"
+    "appFooter";
+
+  @media (--sd-tablet) {
+    grid-template-rows: 4px auto minmax(50px, 80px) minmax(auto, min-content) minmax(20px, 65px) auto;
+    grid-template-areas:
+      "appTop"
+      "."
+      "appHeader"
+      "appContent"
+      "appFooter"
+      ".";
+  }
+}
+
+.appTop {
+  grid-area: appTop;
+  position: relative;
+
+  .appTopInner {
+    display: none;
+  }
+
+  .topError {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    background-color: red;
+    color: white;
+    transition: all ease-in-out 300ms;
+    transform: translateZ(0);
+    text-align: center;
+
+    p {
+      margin: 0;
+      padding: 0.25em;
+    }
+  }
+}
+
+.appTopLoading {
+  .appTopInner {
+    display: block;
+  }
+}
+
+.appHeader {
+  grid-area: appHeader;
+  text-align: center;
+  padding: 0.25em;
+
+  .logo {
+    padding: 0.5em 0;
+  }
+}
+
+.appContent {
+  grid-area: appContent;
+  justify-content: stretch;
+  align-items: stretch;
+  display: grid;
+  padding: 0.25em;
+
+  .box {
+    display: grid;
+    grid-template-rows: minmax(75%, auto) minmax(auto, 25%);
+    grid-template-areas:
+      "stepContent"
+      "stepNav";
+    width: 100%;
+
+    @media (--sd-tablet) {
+      border: 1px solid var(--sd-borderColor);
+      overflow: hidden;
+      max-width: 900px;
+      margin: 0 auto;
+      background-color: var(--sd-white);
+      border-radius: 8px;
+    }
+
+    &.showSidebar {
+      @media (--sd-tablet) {
+        grid-template-columns: minmax(50%, auto) 300px;
+        grid-template-areas:
+          "stepContent stepSidebar"
+          "stepNav stepSidebar";
+      }
+    }
+  }
+
+  .stepContent {
+    grid-area: stepContent;
+  }
+
+  .stepSidebar {
+    grid-area: stepSidebar;
+    display: none;
+    border-left: 1px solid var(--sd-borderColor);
+
+    &.show {
+      @media (--sd-tablet) {
+        display: block;
+      }
+    }
+  }
+
+  .stepNav {
+    grid-area: stepNav;
+    align-self: end;
+    padding: 0.25em 1em;
+    text-align: center;
+
+    @media (--sd-tablet) {
+      padding-bottom: 2em;
+    }
+
+    .stepButtons {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+
+      @media (--sd-tablet) {
+        display: block;
+      }
+
+      button {
+        margin: 2px 0 0 0.25em;
+
+        @media (--sd-tablet) {
+          margin-left: 1em;
+        }
+
+        &:first-child {
+          margin-left: 0;
+        }
+      }
+    }
+  }
+}
+
+.appFooter {
+  grid-area: appFooter;
+  text-align: center;
+  padding: 0.25em;
+  display: flex;
+  width: 100%;
+  max-width: var(--sd-contentMaxWidth);
+  margin: 0 auto;
+  align-items: flex-end;
+
+  .footerLeft {
+    flex: 1;
+  }
+
+  .footerCenter {
+    flex: 3;
+  }
+
+  .footerRight {
+    flex: 1;
+  }
+}
+
+.stepLinksHolder {
+  visibility: hidden;
+  padding: 0.5em 0;
+
+  @media (--sd-tablet) {
+    padding-top: 1em;
+    display: none;  
+  }
+}
+
+.stepLinksHolderShow {
+  visibility: visible;
+}
+
+/* Step Route */
+
+.stepSlide {
+  padding: 0 1em;
+}
+
+.stepTitle {
+  text-align: center;
+  font-size: var(--sd-fontSizeL);
+}
+
+/* Step Complete Route */
+
+.stepCompleteSlide {
+  padding: 0;
+  text-align: center;
+}
+
+.stepCompleteIcon {
+  margin: 0 auto;
+  max-width: 100px;
+  text-align: center;
+
+  i {
+    font-size: var(--sd-fontSizeIconXL);
+    text-align: center;
+    color: var(--sd-green);
+    display: inline-block;
+    max-width: 80px;
+  }
+}
+
+.completeVideo {
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(200, 200, 200, 0.3);
+  border: 1px solid rgba(200, 200, 200, 0.8);
+  width: 200px;
+  height: 200px;
+  margin: 1em auto;
+}
+
+/* Form Inputs */
+
+.formInputFullWidth {
+  width: 100%;
+}
+
+.formRow {
+  &.formRowHasExtra {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .formRowInput {
+    flex: 4 1 75%;
+  }
+
+  .formRowAfter {
+    flex: 1 1 25%;
+    white-space: nowrap;
+    margin-left: 1em;
+
+    .formRowAction {
+      text-align: right;
+    }
+  }
+}
+
+/* Slide Animations */
+
+/* Enter */
+
+:global {
+  .fade-enter {
+    transform: translateX(100%) translateZ(0);
+    z-index: 5;
+    position: absolute !important;
+    top: 0;
+    right: 0;
+    left: 0;
+  }
+
+  .fade-enter.fade-enter-active {
+    transform: translateX(0) translateZ(0);
+    transition: transform 300ms ease-in-out;
+    position: absolute !important;
+    top: 0;
+    right: 0;
+    left: 0;
+  }
+
+  /* Exit */
+
+  .fade-exit {
+    transform: translateX(0) translateZ(0);
+    z-index: 1;
+    position: relative !important;
+  }
+
+  .fade-exit.fade-exit-active {
+    transform: translateX(-100%) translateZ(0);
+    transition: transform 300ms ease-in-out;
+    position: relative !important;
+  }
+}
