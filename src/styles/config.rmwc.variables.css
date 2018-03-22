@@ -6,4 +6,5 @@
 
 :root {
   --mdc-theme-primary: var(--sd-primary) !important;
+  --mdc-theme-secondary: var(--sd-gray) !important;
 }

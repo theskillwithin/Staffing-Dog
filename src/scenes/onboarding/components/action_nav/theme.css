@@ -1,0 +1,25 @@
+@import '../../../../styles/config';
+
+
+.actionNav {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+
+  .step {
+    flex: 1 1 50%;
+  }
+}
+
+.nextStep {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.previousStep {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}

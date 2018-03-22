@@ -138,7 +138,7 @@ html {
   .stepNav {
     grid-area: stepNav;
     align-self: end;
-    padding: 0.25em 1em;
+    padding: 0.25em 2em;
     text-align: center;
 
     @media (--sd-tablet) {

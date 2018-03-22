@@ -1,9 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import find from 'lodash/find'
+import classnames from 'classnames'
 
 import Button from '../../../../components/button'
 import Icon from '../../../../components/icon'
+
+import theme from './theme.css'
 
 
 const ActionNav = ({
@@ -19,30 +22,31 @@ const ActionNav = ({
   const previousStep = find(steps, s => s.nextStep === currentStep.step)
 
   return (
-    <div>
+    <div className={theme.actionNav}>
       {previousStep && previousStep.step
         ? (
-          <p>
+          <div className={classnames(theme.step, theme.previousStep)}>
             <Button
               onClick={() => goToStep(previousStep.step, history)}
               disabled={savingStep || loadingNextStep}
+              secondary
             >
               <span><Icon inButton="left" use="arrow_back" /> Previous Step</span>
             </Button>
-          </p>
+          </div>
         )
         : null
       }
       {currentStep.nextStep
         ? (
-          <p>
+          <div className={classnames(theme.step, theme.nextStep)}>
             <Button
               onClick={() => goToStep(currentStep.nextStep, history)}
               disabled={savingStep || loadingNextStep}
             >
               <span>Next Step <Icon inButton="right" use="arrow_forward" /></span>
             </Button>
-          </p>
+          </div>
         )
         : null
       }
