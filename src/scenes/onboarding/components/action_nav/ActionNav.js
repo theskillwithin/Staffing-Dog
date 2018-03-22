@@ -27,7 +27,11 @@ const ActionNav = ({
         ? (
           <div className={classnames(theme.step, theme.previousStep)}>
             <Button
-              onClick={() => goToStep(previousStep.step, history)}
+              onClick={() => goToStep({
+                currentStep: currentStep.step,
+                nextStep: previousStep.step,
+                history,
+              })}
               disabled={savingStep || loadingNextStep}
               secondary
             >
@@ -41,7 +45,11 @@ const ActionNav = ({
         ? (
           <div className={classnames(theme.step, theme.nextStep)}>
             <Button
-              onClick={() => goToStep(currentStep.nextStep, history)}
+              onClick={() => goToStep({
+                currentStep: currentStep.step,
+                nextStep: currentStep.nextStep,
+                history,
+              })}
               disabled={savingStep || loadingNextStep}
             >
               <span>Next Step <Icon inButton="right" use="arrow_forward" /></span>

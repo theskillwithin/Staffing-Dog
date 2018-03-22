@@ -2,6 +2,7 @@ import React from 'react'
 import {
   string,
   bool,
+  object,
   oneOfType,
 } from 'prop-types'
 import { Route, Switch } from 'react-router-dom'
@@ -21,101 +22,104 @@ import './styles.css'
 import theme from './theme.css'
 
 
-const Layout = ({ loading, error, showSidebar }) => (
-  <div className={theme.app}>
-    <div className={theme.appInner}>
-      <div className={classnames(theme.appTop, loading && theme.appTopLoading)}>
-        <div className={theme.appTopInner}>
-          <LoadingBar />
+const Layout = ({ loading, error, location }) => {
+  const hasStep = RegExp('/step/([0-9]+)')
+  const showSidebar = hasStep.test(location.pathname)
+
+  return (
+    <div className={theme.app}>
+      <div className={theme.appInner}>
+        <div className={classnames(theme.appTop, loading && theme.appTopLoading)}>
+          <div className={theme.appTopInner}>
+            <LoadingBar />
+          </div>
+
+          {error
+            ? <div className={theme.topError}><p>{error}</p></div>
+            : null
+          }
         </div>
 
-        {error
-          ? <div className={theme.topError}><p>{error}</p></div>
-          : null
-        }
-      </div>
-
-      <div className={theme.appHeader}>
-        <div className={theme.logo}>
-          <Logo />
+        <div className={theme.appHeader}>
+          <div className={theme.logo}>
+            <Logo />
+          </div>
         </div>
-      </div>
 
-      <div className={theme.appContent}>
-        <div className={classnames(theme.box, showSidebar && theme.showSidebar)}>
-          <div className={theme.stepContent}>
-            <div className={theme.stepLinksHolder}>
+        <div className={theme.appContent}>
+          <div className={classnames(theme.box, showSidebar && theme.showSidebar)}>
+            <div className={theme.stepContent}>
+              <div className={theme.stepLinksHolder}>
+                <Switch>
+                  <Route path="/step/complete" render={() => null} />
+                  <Route path="/step/:step" component={Nav} />
+                </Switch>
+              </div>
+
+              <div className={theme.stepContentHolder}>
+                <Route
+                  exact
+                  path="/"
+                  component={GetStarted}
+                />
+
+                <Route
+                  path="/step/:step"
+                  component={Steps}
+                />
+              </div>
+            </div>
+
+            <div
+              className={classnames(
+                theme.stepSidebar,
+                showSidebar && theme.show,
+              )}
+            >
               <Switch>
-                <Route path="/step/complete" render={() => null} />
-                <Route path="/step/:step" component={Nav} />
+                <Route exact path="/step/complete" render={() => null} />
+                <Route
+                  path="/step/:step"
+                  component={StepsSidebar}
+                />
               </Switch>
             </div>
 
-            <div className={theme.stepContentHolder}>
-              <Route
-                exact
-                path="/"
-                component={GetStarted}
-              />
+            <div className={theme.stepNav}>
+              <Switch>
+                <Route
+                  exact
+                  path="/"
+                  component={GetStartedNav}
+                />
 
-              <Route
-                path="/step/:step"
-                component={Steps}
-              />
+                <Route
+                  path="/step/complete"
+                  component={CompleteNav}
+                />
+
+                <Route
+                  path="/step/:step"
+                  component={ActionNav}
+                />
+              </Switch>
             </div>
           </div>
-
-          <div
-            className={classnames(
-              theme.stepSidebar,
-              showSidebar && theme.show,
-            )}
-          >
-            <Switch>
-              <Route exact path="/step/complete" render={() => null} />
-              <Route
-                path="/step/:step"
-                component={StepsSidebar}
-              />
-            </Switch>
-          </div>
-
-          <div className={theme.stepNav}>
-            <Switch>
-              <Route
-                exact
-                path="/"
-                component={GetStartedNav}
-              />
-
-              <Route
-                path="/step/complete"
-                component={CompleteNav}
-              />
-
-              <Route
-                path="/step/:step"
-                component={ActionNav}
-              />
-            </Switch>
-          </div>
         </div>
-      </div>
 
-      <footer className={theme.appFooter}>
-        <span className={theme.footerLeft}>&nbsp;</span>
-        <span className={theme.footerCenter}>Copyright &copy; 2018 Staffing Dog&nbsp;</span>
-        <span className={theme.footerRight}><a href="#/legal">Legal</a></span>
-      </footer>
+        <footer className={theme.appFooter}>
+          <span className={theme.footerLeft}>&nbsp;</span>
+          <span className={theme.footerCenter}>Copyright &copy; 2018 Staffing Dog&nbsp;</span>
+          <span className={theme.footerRight}><a href="#/legal">Legal</a></span>
+        </footer>
+      </div>
     </div>
-  </div>
-)
+  )
+}
 
 Layout.defaultProps = {
   error: false,
   loading: false,
-  currentStep: false,
-  showSidebar: true,
 }
 
 Layout.propTypes = {
@@ -127,11 +131,7 @@ Layout.propTypes = {
     bool,
     string,
   ]),
-  currentStep: oneOfType([
-    string,
-    bool,
-  ]),
-  showSidebar: bool,
+  location: object.isRequired,
 }
 
 export default Layout

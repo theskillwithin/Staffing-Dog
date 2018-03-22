@@ -31,7 +31,11 @@ const Nav = ({ steps, goToStep, exclude, match, history, className }) => (
               className={stepLinkClasses(match.params.step, step.step)}
               onClick={(e) => {
                 e.preventDefault()
-                goToStep(step.step, history)
+                goToStep({
+                  currentStep: match.params.step,
+                  nextStep: step.step,
+                  history,
+                })
               }}
             >
               {step.step}

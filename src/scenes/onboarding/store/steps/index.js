@@ -334,16 +334,16 @@ export const saveStep = ({
     })
 }
 
-export const goToStep = (nextStep, history) => (dispatch, getState) => {
+export const goToStep = ({ currentStep, nextStep, history }) => (dispatch, getState) => {
   dispatch(da.goToStep(nextStep))
 
   const state = getState()
   const steps = findSteps(state)
-  const currentStep = find(steps, s => s.step === findCurrentStep(state))
+  const step = currentStep ? find(steps, s => s.step === currentStep) : false
 
-  if (currentStep && nextStep === currentStep.nextStep) {
+  if (step && nextStep === step.nextStep) {
     // check if current step is complete
-    if (currentStep.needsComplete && !currentStep.complete) {
+    if (step.needsComplete && !step.complete) {
       return Promise.resolve(
         dispatch(da.goToStepFailed({
           error: 'You must complete the current step before moving onto the next step.',
@@ -358,7 +358,7 @@ export const goToStep = (nextStep, history) => (dispatch, getState) => {
 
     // save current step
     return saveStep({
-      step: currentStep.step,
+      step: step.step,
     })(dispatch, getState)
   }
 
@@ -383,6 +383,4 @@ export const findLoadingNextStep = state => findState(state).loadingNextSteps
 export const findLoadingNextStepValue = state => findState(state).loadingNextStepValue
 export const findError = state => findState(state).error
 export const findStepValues = state => findState(state).values
-export const findCurrentStep = state => findState(state).currentStep
 export const findLoading = () => false // findLoadingNextStep(state) || findSavingStep(state)
-export const findShowSidebar = state => findCurrentStep(state) && findCurrentStep(state) !== 'complete'

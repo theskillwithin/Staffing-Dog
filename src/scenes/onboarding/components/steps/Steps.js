@@ -18,18 +18,6 @@ class Steps extends Component {
     }))
   }
 
-  componentWillMount() {
-    this.props.setStep(this.props.match.params.step)
-    console.log('step loaded:', this.props.match.params.step)
-  }
-
-  componentWillReceiveProps(nextProps) {
-    console.log(this.props.match.params.step, nextProps.match.params.step)
-    if (this.props.match.params.step !== nextProps.match.params.step) {
-      this.props.setStep(nextProps.match.params.setp)
-    }
-  }
-
   onChange = (name, value) => {
     this.props.setValue(name, value)
   }

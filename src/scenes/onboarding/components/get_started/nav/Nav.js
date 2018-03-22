@@ -6,7 +6,11 @@ import Button from '../../../../../components/button'
 
 const Nav = ({ steps, goToStep, history }) => (
   <Button
-    onClick={() => goToStep(steps[0].step, history)}
+    onClick={() => goToStep({
+      currentStep: false,
+      nextStep: steps[0].step,
+      history,
+    })}
   >
     Get Started
   </Button>
