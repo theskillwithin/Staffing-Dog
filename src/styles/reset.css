@@ -39,4 +39,20 @@ html {
       }
     }
   }
+
+  .mdc-select {
+    &--box {
+      border-radius: 4px;
+
+      .mdc-select__surface {
+        border-radius: 4px;
+        border: 1px solid var(--sd-grayLight);
+        background-color: transparent !important;
+      }
+
+      .mdc-select__bottom-line {
+        display: none;
+      }
+    }
+  }
 }
