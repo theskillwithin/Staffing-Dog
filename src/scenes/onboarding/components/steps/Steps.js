@@ -26,11 +26,25 @@ class Steps extends Component {
     return this.props.stepValues[name] || ''
   }
 
+  renderComplete = () => {
+    return (
+      <div className={theme.completeVideo}>
+        <span>Video</span>
+      </div>
+    )
+  }
+
   renderFields = (fields, key = 'row') => {
     const { renderFields, renderField } = this
 
     return map(fields, (field, i) => (
-      <div className={classnames(theme.formRow, field.fields && theme.hasMany)} key={`form:field:${key}:${i + 1}`}>
+      <div
+        key={`form:field:${key}:${i + 1}`}
+        className={classnames(
+          theme.formRow,
+          field.fields && theme.hasMany,
+        )}
+      >
         {field.fields
           ? renderFields(field.fields, `${key}:${i + 1}`)
           : renderField(field)
@@ -46,6 +60,10 @@ class Steps extends Component {
       onChange: v => onChange(field.name, v),
       label: field.label,
       className: theme.element,
+    }
+
+    if (field.fullWidth) {
+      props.fullWidth = field.fullWidth
     }
 
     switch (field.type) {
@@ -77,6 +95,7 @@ class Steps extends Component {
     } = this.props
 
     const currentStep = find(steps, s => s.step === step)
+    const isComplete = 'complete' === currentStep.step
 
     return (
       <div className={theme.steps}>
@@ -84,12 +103,8 @@ class Steps extends Component {
           <h2 className={theme.stepTitle}>{currentStep.title}</h2>
 
           <div className={theme.stepForm}>
-            {'complete' === currentStep.step
-              ? (
-                <div className={theme.completeVideo}>
-                  <span>Video</span>
-                </div>
-              )
+            {isComplete
+              ? this.renderComplete(currentStep)
               : this.renderFields(currentStep.fields)
             }
           </div>

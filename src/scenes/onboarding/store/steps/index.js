@@ -46,12 +46,14 @@ const INITIAL_STATE = {
               label: 'First Name',
               type: 'input',
               required: true,
+              fullWidth: true,
             },
             {
               name: 'last_name',
               label: 'Last Name',
               type: 'input',
               required: true,
+              fullWidth: true,
             },
           ],
         },
@@ -61,6 +63,7 @@ const INITIAL_STATE = {
           type: 'input',
           formType: 'email',
           required: true,
+          fullWidth: true,
         },
         {
           name: 'password',
@@ -68,6 +71,7 @@ const INITIAL_STATE = {
           type: 'input',
           formType: 'password',
           required: true,
+          fullWidth: true,
         },
         {
           name: 'verify_password',
@@ -75,6 +79,7 @@ const INITIAL_STATE = {
           type: 'input',
           formType: 'password',
           required: true,
+          fullWidth: true,
         },
       ],
     },

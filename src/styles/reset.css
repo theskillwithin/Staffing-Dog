@@ -1,11 +1,24 @@
 @import './config.css';
 
-*,
-*:before,
-*:after {
-  box-sizing: inherit;
+* {
+  &,
+  &:before,
+  &:after {
+    box-sizing: inherit;
+  }
 }
 
 html {
   box-sizing: border-box;
+}
+
+:global {
+  .mdc-text-field {
+    > *,
+    &,
+    &:before,
+    &:after {
+      box-sizing: content-box;
+    }
+  }
 }

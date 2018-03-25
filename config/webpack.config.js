@@ -5,6 +5,14 @@ import MiniCssExtractPlugin from 'mini-css-extract-plugin'
 import ExtractTextPlugin from 'extract-text-webpack-plugin'
 
 
+const root = path.resolve(__dirname, '../')
+const paths = {
+  src: path.join(root, 'src'),
+  config: path.join(root, 'config'),
+  nodeModules: path.join(root, 'node_modules'),
+}
+
+
 const cssBuildType = 'extract'
 // const cssBuildType = 'minicss'
 // const cssBuildType = 'basic'
@@ -29,7 +37,7 @@ const loaders = {
         loader: 'postcss-loader',
         options: {
           config: {
-            path: path.resolve(__dirname, 'config/postcss.config.js'),
+            path: path.join(paths.config, 'postcss.config.js'),
           },
         },
       },
@@ -76,7 +84,7 @@ const buildCssLoader = (type) => {
 
 
 const config = {
-  entry: path.resolve(__dirname, 'src/scenes/onboarding'),
+  entry: path.join(paths.src, 'scenes/onboarding'),
   module: {},
   plugins: [],
 }
@@ -109,12 +117,11 @@ config.module.rules = [
   },
   {
     test: /\.css$/,
-    // only turn on standard global CSS loader for the material directories
-    // These paths are the same as above and specific to your system, so change accordingly
+    // only turn on standard global Postcss loader for the material directories
     include: [
-      path.resolve('./node_modules/material-components-web'),
-      path.resolve('./node_modules/@material'),
-      path.resolve('./src'),
+      path.join(paths.nodeModules, 'material-components-web'),
+      path.join(paths.nodeModules, '@material'),
+      path.join(paths.src),
     ],
     exclude: [
       /src\/components\/(.+)\/theme/, // exclude theme.css files
@@ -125,7 +132,7 @@ config.module.rules = [
   {
     test: /\.css$/,
     include: [
-      path.resolve('./src'),
+      paths.src,
     ],
     exclude: [
       /node_modules/,
@@ -140,7 +147,7 @@ config.module.rules = [
       'raw-loader',
     ],
     include: [
-      path.resolve('./src'),
+      paths.src,
     ],
   },
 ]
