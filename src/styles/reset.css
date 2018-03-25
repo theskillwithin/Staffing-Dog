@@ -20,5 +20,23 @@ html {
     &:after {
       box-sizing: content-box;
     }
+
+    .mdc-floating-label {
+      background: transparent none;
+      border: none;
+    }
+
+    &--outlined {
+      .mdc-floating-label--float-above {
+        transform: translateY(-60%) scale(0.75);
+      }
+
+      .mdc-text-field__input {
+        padding-left: 16px;
+        padding-top: 16px;
+        position: relative;
+        top: 3px;
+      }
+    }
   }
 }

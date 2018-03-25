@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
+import { bool, func } from 'prop-types'
 import { TextField } from 'rmwc/TextField'
 
 // import './styles.css'
@@ -41,8 +41,8 @@ Input.defaultProps = {
 }
 
 Input.propTypes = {
-  outlined: PropTypes.bool,
-  onChange: PropTypes.func,
+  outlined: bool,
+  onChange: func,
 }
 
 export default Input
