@@ -43,6 +43,7 @@ class Steps extends Component {
         className={classnames(
           theme.formRow,
           field.fields && theme.hasMany,
+          !field.fields && 'dropdown' === field.type && theme.hasDropdown,
         )}
       >
         {field.fields

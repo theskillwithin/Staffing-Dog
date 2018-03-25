@@ -15,6 +15,10 @@
 
 .formRow {
   width: 100%;
+  
+  &.hasDropdown {
+    margin-bottom: 1em;
+  }
 
   .element {
     width: 100%;
