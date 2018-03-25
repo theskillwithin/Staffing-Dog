@@ -22,9 +22,7 @@ class Steps extends Component {
     this.props.setValue(name, value)
   }
 
-  getValue = (name) => {
-    return this.props.stepValues[name] || ''
-  }
+  getValue = name => this.props.stepValues[name] || ''
 
   renderComplete = () => {
     return (
@@ -76,12 +74,23 @@ class Steps extends Component {
           />
         )
       case 'dropdown':
-        return (
-          <Dropdown
-            options={Steps.formatDropdownOptions(field.options)}
-            {...props}
-          />
-        )
+        if (field.optionsByValue) {
+          const value = field.optionsByValue.name && getValue(field.optionsByValue.name)
+
+          props.options = Steps.formatDropdownOptions(
+            value
+              ? field.optionsByValue.options[getValue(field.optionsByValue.name)]
+              : [],
+          )
+
+          if (!value) {
+            props.disabled = true
+          }
+        } else {
+          props.options = Steps.formatDropdownOptions(field.options)
+        }
+
+        return <Dropdown {...props} />
     }
 
     return null

@@ -4,12 +4,14 @@ import PropTypes from 'prop-types'
 import SVGDesktopSearch from './files/desktop_search.svg'
 import SVGMobile from './files/mobile.svg'
 import SVGShirt from './files/shirt.svg'
+import SVGComputer from './files/computer.svg'
 
 
 const names = {
   desktop_search: SVGDesktopSearch,
   mobile: SVGMobile,
   shirt: SVGShirt,
+  computer: SVGComputer,
 }
 
 const Svg = ({ name, className }) => {
