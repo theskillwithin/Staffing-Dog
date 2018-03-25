@@ -1,5 +1,5 @@
 import React from 'react'
-import PropTypes from 'prop-types'
+import { oneOfType, string, bool } from 'prop-types'
 
 import SVGDesktopSearch from './files/desktop_search.svg'
 import SVGMobile from './files/mobile.svg'
@@ -30,11 +30,11 @@ Svg.defaultProps = {
 }
 
 Svg.propTypes = {
-  name: PropTypes.oneOfType([
-    PropTypes.bool,
-    PropTypes.string,
+  name: oneOfType([
+    bool,
+    string,
   ]),
-  className: PropTypes.string,
+  className: string,
 }
 
 export default Svg

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
+import { object, array, func } from 'prop-types'
 import classnames from 'classnames'
 import find from 'lodash/find'
 import map from 'lodash/map'
@@ -124,18 +124,14 @@ class Steps extends Component {
   }
 }
 
-Steps.defaultProps = {
-  match: {},
-  steps: [],
-  stepValues: {},
-}
+Steps.defaultProps = {}
 
 Steps.propTypes = {
-  match: PropTypes.object,
-  steps: PropTypes.array,
-  stepValues: PropTypes.object,
-  setValue: PropTypes.func,
-  setStep: PropTypes.func,
+  match: object.isRequired,
+  steps: array.isRequired,
+  stepValues: object.isRequired,
+  setValue: func.isRequired,
+  setStep: func.isRequired,
 }
 
 export default Steps

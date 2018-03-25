@@ -1,5 +1,5 @@
 import React from 'react'
-import PropTypes from 'prop-types'
+import { object, array, bool, func } from 'prop-types'
 import find from 'lodash/find'
 import classnames from 'classnames'
 
@@ -63,20 +63,17 @@ const ActionNav = ({
 }
 
 ActionNav.defaultProps = {
-  match: {},
-  history: {},
-  steps: [],
   savingStep: false,
   loadingNextStep: false,
 }
 
 ActionNav.propTypes = {
-  match: PropTypes.object,
-  history: PropTypes.object,
-  steps: PropTypes.array,
-  savingStep: PropTypes.bool,
-  loadingNextStep: PropTypes.bool,
-  goToStep: PropTypes.func,
+  match: object.isRequired,
+  history: object.isRequired,
+  steps: array.isRequired,
+  savingStep: bool,
+  loadingNextStep: bool,
+  goToStep: func.isRequired,
 }
 
 export default ActionNav

@@ -1,5 +1,5 @@
 import React from 'react'
-import PropTypes from 'prop-types'
+import { string, array, object, func } from 'prop-types'
 import { Link } from 'react-router-dom'
 import classnames from 'classnames'
 import map from 'lodash/map'
@@ -48,20 +48,17 @@ const Nav = ({ steps, goToStep, exclude, match, history, className }) => (
 )
 
 Nav.defaultProps = {
-  steps: [],
-  match: {},
-  history: {},
   exclude: ['complete'],
   className: '',
 }
 
 Nav.propTypes = {
-  className: PropTypes.string,
-  steps: PropTypes.array,
-  match: PropTypes.object,
-  history: PropTypes.object,
-  goToStep: PropTypes.func,
-  exclude: PropTypes.array,
+  className: string,
+  steps: array.isRequired,
+  match: object.isRequired,
+  history: object.isRequired,
+  goToStep: func.isRequired,
+  exclude: array,
 }
 
 export default Nav

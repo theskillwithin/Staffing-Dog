@@ -1,5 +1,5 @@
 import React from 'react'
-import PropTypes from 'prop-types'
+import { oneOfType, bool, string } from 'prop-types'
 import classnames from 'classnames'
 import { Icon as MIcon } from 'rmwc/Icon'
 
@@ -24,11 +24,11 @@ Icon.defaultProps = {
 }
 
 Icon.propTypes = {
-  inButton: PropTypes.oneOfType([
-    PropTypes.bool,
-    PropTypes.string,
+  inButton: oneOfType([
+    bool,
+    string,
   ]),
-  strategy: PropTypes.string,
+  strategy: string,
 }
 
 export default Icon

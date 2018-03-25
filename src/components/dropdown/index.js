@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
+import { bool, func } from 'prop-types'
 import { Select } from 'rmwc/Select'
 
 // import './styles.css'
@@ -32,8 +32,8 @@ Dropdown.defaultProps = {
 }
 
 Dropdown.propTypes = {
-  onChange: PropTypes.func,
-  box: PropTypes.bool,
+  onChange: func,
+  box: bool,
 }
 
 export default Dropdown

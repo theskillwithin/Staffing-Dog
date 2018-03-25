@@ -1,5 +1,5 @@
 import React from 'react'
-import PropTypes from 'prop-types'
+import { string, bool } from 'prop-types'
 import classnames from 'classnames'
 
 import theme from './theme.css'
@@ -41,9 +41,9 @@ Logo.defaultProps = {
 }
 
 Logo.propTypes = {
-  width: PropTypes.string,
-  className: PropTypes.string,
-  hideText: PropTypes.bool,
+  width: string,
+  className: string,
+  hideText: bool,
 }
 
 export default Logo

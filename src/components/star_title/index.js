@@ -1,5 +1,5 @@
 import React from 'react'
-import PropTypes from 'prop-types'
+import { string } from 'prop-types'
 import classnames from 'classnames'
 import map from 'lodash/map'
 
@@ -42,7 +42,7 @@ StarTitle.defaultProps = {
 }
 
 StarTitle.propTypes = {
-  title: PropTypes.string,
+  title: string,
 }
 
 export default StarTitle

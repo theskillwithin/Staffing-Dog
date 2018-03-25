@@ -1,5 +1,5 @@
 import React from 'react'
-import PropTypes from 'prop-types'
+import { oneOfType, string, bool } from 'prop-types'
 
 import SVGPersonMan from '../files/person_man.svg'
 import SVGPersonMan2 from '../files/person_man2.svg'
@@ -27,16 +27,15 @@ const Person = ({ name, className }) => {
 }
 
 Person.defaultProps = {
-  name: false,
   className: '',
 }
 
 Person.propTypes = {
-  name: PropTypes.oneOfType([
-    PropTypes.bool,
-    PropTypes.string,
-  ]),
-  className: PropTypes.string,
+  name: oneOfType([
+    bool,
+    string,
+  ]).isRequired,
+  className: string,
 }
 
 export default Person

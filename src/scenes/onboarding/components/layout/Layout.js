@@ -1,10 +1,5 @@
 import React from 'react'
-import {
-  string,
-  bool,
-  object,
-  oneOfType,
-} from 'prop-types'
+import { string, bool, object, oneOfType } from 'prop-types'
 import { Route, Switch } from 'react-router-dom'
 import classnames from 'classnames'
 

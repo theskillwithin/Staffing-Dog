@@ -1,5 +1,5 @@
 import React from 'react'
-import PropTypes from 'prop-types'
+import { string } from 'prop-types'
 import classnames from 'classnames'
 import capitalize from 'lodash/capitalize'
 
@@ -21,8 +21,8 @@ StarX.defaultProps = {
 }
 
 StarX.propTypes = {
-  color: PropTypes.string,
-  className: PropTypes.string,
+  color: string,
+  className: string,
 }
 
 export default StarX
