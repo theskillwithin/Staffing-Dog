@@ -29,10 +29,7 @@ const Layout = ({ loading, error, location }) => {
             <LoadingBar />
           </div>
 
-          {error
-            ? <div className={theme.topError}><p>{error}</p></div>
-            : null
-          }
+          {error && <div className={theme.topError}><p>{error}</p></div>}
         </div>
 
         <div className={theme.appHeader}>
@@ -45,10 +42,7 @@ const Layout = ({ loading, error, location }) => {
           <div className={classnames(theme.box, showSidebar && theme.showSidebar)}>
             <div className={theme.stepContent}>
               <div className={theme.stepLinksHolder}>
-                <Switch>
-                  <Route path="/step/complete" render={() => null} />
-                  <Route path="/step/:step" component={Nav} />
-                </Switch>
+                <Route path="/step/:step(\d)" component={Nav} />
               </div>
 
               <div className={theme.stepContentHolder}>
@@ -71,13 +65,10 @@ const Layout = ({ loading, error, location }) => {
                 showSidebar && theme.show,
               )}
             >
-              <Switch>
-                <Route exact path="/step/complete" render={() => null} />
-                <Route
-                  path="/step/:step"
-                  component={StepsSidebar}
-                />
-              </Switch>
+              <Route
+                path="/step/:step(\d)"
+                component={StepsSidebar}
+              />
             </div>
 
             <div className={theme.stepNav}>
