@@ -171,6 +171,12 @@ config.plugins = [
     filename: './onboarding.html',
     inject: true,
   }),
+
+  new HtmlWebPackPlugin({
+    template: './src/onboarding_practice.html',
+    filename: './onboarding_practice.html',
+    inject: true,
+  }),
 ]
 
 // Css/Style Plugins based on the build type

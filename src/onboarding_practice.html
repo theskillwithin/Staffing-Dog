@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="utf-8">
-  <title>Staffing Dog - Onboarding Professional</title>
+  <title>Staffing Dog - Onboarding Practice</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500|Material+Icons" />
 </head>
 
@@ -11,15 +11,16 @@
   <div id="onboarding"></div>
 </body>
 <script>
-  var loadApp = setInterval(function() {
+  var loadApp = setInterval(function () {
     if (window.StaffingDog && window.StaffingDog.init) {
       window.StaffingDog.init({
         steps: {
-          stepType: 'professional',
+          stepType: 'practice',
         },
       });
       clearInterval(loadApp);
     }
   }, 20);
 </script>
+
 </html>

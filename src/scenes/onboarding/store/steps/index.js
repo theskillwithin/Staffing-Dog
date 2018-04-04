@@ -6,7 +6,7 @@ import isEmpty from 'lodash/isEmpty'
 import build from '../../../../store/build'
 import { saveStep as onBoardingAPISaveStep } from '../../../../api/onboarding'
 
-import { professional } from './fields'
+import { professional, practice } from './fields'
 import {
   SET_VALUE,
   SET_STEP,
@@ -24,7 +24,11 @@ import {
 const INITIAL_STATE = {
   saving: false,
   savingError: false,
-  steps: professional,
+  steps: {
+    professional,
+    practice,
+  },
+  stepType: 'professional',
   values: {},
 }
 
@@ -43,14 +47,17 @@ const reducers = {
   }),
   [CHECK_STEPS_COMPLETE]: state => ({
     ...state,
-    steps: map(state.steps, step => ({
-      ...step,
-      complete: reduce(step.fields, (p, c) => {
-        return c.required && isEmpty(state.values[c.name])
-          ? false
-          : p
-      }, true),
-    })),
+    steps: {
+      ...state.steps,
+      [state.stepType]: map(state.steps[state.stepType], step => ({
+        ...step,
+        complete: reduce(step.fields, (p, c) => {
+          return c.required && isEmpty(state.values[c.name])
+            ? false
+            : p
+        }, true),
+      })),
+    },
   }),
   [GO_TO_STEP]: (state, payload) => ({
     ...state,
@@ -220,10 +227,11 @@ export const goToStep = ({ currentStep, nextStep, history }) => (dispatch, getSt
   })
 }
 
-export default build(reducers, INITIAL_STATE)
+export default build(reducers, INITIAL_STATE, true)
 
 export const findState = state => state.steps
-export const findSteps = state => findState(state).steps
+export const findStepType = state => state.steps.stepType
+export const findSteps = state => findState(state).steps[findStepType(state)]
 export const findSavingStep = state => findState(state).savingStep
 export const findSavingStepValue = state => findState(state).savingStepValue
 export const findLoadingNextStep = state => findState(state).loadingNextSteps
