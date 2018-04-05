@@ -18,8 +18,8 @@ const cssBuildType = 'extract'
 // const cssBuildType = 'basic'
 
 const extractText = {
-  rmwc: new ExtractTextPlugin('dist/rmwc.[name].css'),
-  sd: new ExtractTextPlugin('dist/sd.[name].css'),
+  rmwc: new ExtractTextPlugin('rmwc.[name].css'),
+  sd: new ExtractTextPlugin('sd.[name].css'),
 }
 
 const loaders = {
