@@ -15,13 +15,23 @@ const renderItem = (key, value) => {
     case 'title':
     case 'subTitle':
     case 'subTitleLarge':
-      return <h2 className={classnames(theme.itemElement, theme[key])}>{value}</h2>
+      return (
+        <h2
+          className={classnames(theme.itemElement, theme[key])}
+          dangerouslySetInnerHTML={{ __html: value }}
+        />
+      )
     case 'svg':
       return <Svg name={value} className={classnames(theme.svg, theme[`svg_${value}`])} />
     case 'hr':
       return <div className={classnames(theme.itemElement, theme.hr)} />
     case 'description':
-      return <p className={classnames(theme.itemElement, theme.description)}>{value}</p>
+      return (
+        <p
+          className={classnames(theme.itemElement, theme.description)}
+          dangerouslySetInnerHTML={{ __html: value }}
+        />
+      )
   }
 
   return null

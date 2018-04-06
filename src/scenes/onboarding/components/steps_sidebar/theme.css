@@ -16,6 +16,10 @@
   margin: 0;
 }
 
+.item {
+  margin: 8px 0;
+}
+
 .title {
   font-size: var(--sd-fontSizeL);
   font-weight: var(--sd-fontWeightLight);
