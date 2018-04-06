@@ -9,8 +9,20 @@ import Star from '../svg/Star'
 import theme from './theme.css'
 
 
-const stars = []
-const circles = []
+const stars = [
+  { type: 'star', color: 'blue' },
+  { type: 'star', color: 'green' },
+  { type: 'star', color: 'blue' },
+  { type: 'star', color: 'orange' },
+]
+const circles = [
+  { type: 'circle', color: 'gray' },
+  { type: 'circle', color: 'orange' },
+  { type: 'circle', color: 'blue' },
+  { type: 'circle', color: 'purple' },
+  { type: 'circle', color: 'gray' },
+  { type: 'circle', color: 'green' },
+]
 
 const StarTitle = ({ title }) => (
   <h2 className={classnames(theme.starTitle, theme.title)}>

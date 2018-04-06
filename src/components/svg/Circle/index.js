@@ -5,7 +5,7 @@ import capitalize from 'lodash/capitalize'
 
 import SVGCircle from '../files/circle.svg'
 
-import theme from './theme'
+import theme from './theme.css'
 
 
 const Circle = props => (

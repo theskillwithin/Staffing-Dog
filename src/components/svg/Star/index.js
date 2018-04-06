@@ -5,7 +5,7 @@ import capitalize from 'lodash/capitalize'
 
 import SVGStarX from '../files/star_x.svg'
 
-import theme from './theme'
+import theme from './theme.css'
 
 
 const StarX = props => (

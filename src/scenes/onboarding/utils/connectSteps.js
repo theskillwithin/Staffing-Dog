@@ -3,6 +3,7 @@ import { withRouter } from 'react-router-dom'
 
 import {
   findSteps,
+  findStepType,
   findSavingStep,
   findSavingStepValue,
   findLoadingNextStep,
@@ -19,6 +20,7 @@ import {
 export default Component => withRouter(connect(
   state => ({
     steps: findSteps(state),
+    stepType: findStepType(state),
     savingStep: findSavingStep(state),
     savingStepValue: findSavingStepValue(state),
     loadingNextStep: findLoadingNextStep(state),

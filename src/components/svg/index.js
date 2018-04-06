@@ -5,6 +5,7 @@ import SVGDesktopSearch from './files/desktop_search.svg'
 import SVGMobile from './files/mobile.svg'
 import SVGShirt from './files/shirt.svg'
 import SVGComputer from './files/computer.svg'
+import SVGDentistChair from './files/dentist_chair.svg'
 
 
 const names = {
@@ -12,6 +13,7 @@ const names = {
   mobile: SVGMobile,
   shirt: SVGShirt,
   computer: SVGComputer,
+  dentist_chair: SVGDentistChair,
 }
 
 const Svg = ({ name, className }) => {
