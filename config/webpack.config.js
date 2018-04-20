@@ -84,7 +84,10 @@ const buildCssLoader = (type) => {
 
 
 const config = {
-  entry: path.join(paths.src, 'scenes/onboarding'),
+  entry: {
+    onboarding: path.join(paths.src, 'scenes/onboarding'),
+    app: path.join(paths.src, 'scenes/app'),
+  },
   module: {},
   plugins: [],
 }
@@ -156,6 +159,7 @@ config.optimization = {
   runtimeChunk: false,
   splitChunks: {
     chunks: 'all',
+    name: 'vendor',
   },
 }
 
@@ -165,17 +169,19 @@ config.plugins = [
     template: './src/index.html',
     filename: './index.html',
     inject: true,
+    chunks: ['vendor', 'app'],
   }),
   new HtmlWebPackPlugin({
     template: './src/onboarding.html',
     filename: './onboarding.html',
     inject: true,
+    chunks: ['vendor', 'onboarding'],
   }),
-
   new HtmlWebPackPlugin({
     template: './src/onboarding_practice.html',
     filename: './onboarding_practice.html',
     inject: true,
+    chunks: ['vendor', 'onboarding'],
   }),
 ]
 

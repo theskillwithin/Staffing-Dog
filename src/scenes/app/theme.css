@@ -1,0 +1,47 @@
+@import '../../styles/config.css';
+@import '../../styles/reset.css';
+
+:root {
+  --sd-headerHeight: 50px;
+}
+
+html {
+  font-size: 16px;
+}
+
+
+.app {
+
+}
+
+.appHeader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+
+  .appHeaderInner {
+    background-color: var(--sd-white);
+    box-shadow: 2px 2px 2px rgba(24, 24, 24, 0.2);
+    height: var(--sd-headerHeight);
+    position: relative;
+    z-index: 10;
+  }
+
+  &::after {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 25px;
+    position: absolute;
+    z-index: 5;
+    left: 0;
+    right: 0;
+    top: 100%;
+    background: linear-gradient(to bottom, var(--sd-white), rgba(255, 255, 255, 0));
+  }
+}
+
+.appContent {
+  margin-top: var(--sd-headerHeight);
+}
