@@ -13,14 +13,31 @@ const paths = {
 }
 
 
+/**
+ * Configure which css builder to use
+ *
+ * Comment out all the ones you don't want to use
+ */
+
 const cssBuildType = 'extract'
 // const cssBuildType = 'minicss'
 // const cssBuildType = 'basic'
+
+
+/**
+ * Extracts specific to modules
+ */
 
 const extractText = {
   rmwc: new ExtractTextPlugin('rmwc.[name].css'),
   sd: new ExtractTextPlugin('sd.[name].css'),
 }
+
+/**
+ * Loaders used in rules
+ *
+ * Based on the setting set above
+ */
 
 const loaders = {
   sd: {
@@ -71,6 +88,10 @@ loaders.rmwc.miniCssExtract = [
   ...loaders.rmwc.basic,
 ]
 
+/**
+ * Loads loder based on type
+ */
+
 const buildCssLoader = (type) => {
   switch (cssBuildType) {
     case 'cssmini':
@@ -83,6 +104,10 @@ const buildCssLoader = (type) => {
 }
 
 
+/**
+ * Basic Config object for webpack
+ */
+
 const config = {
   entry: {
     onboarding: path.join(paths.src, 'scenes/onboarding'),
@@ -92,7 +117,10 @@ const config = {
   plugins: [],
 }
 
-// Rules
+/**
+ * Webpack Module Rules
+ */
+
 config.module.rules = [
   {
     enforce: 'pre',
