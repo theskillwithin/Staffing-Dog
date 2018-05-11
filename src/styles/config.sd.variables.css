@@ -11,7 +11,7 @@
   --sd-fontWeightBold: 500;
   --sd-white: #FFFFFF;
   --sd-black: #000000;
-  --sd-gray: #BBC1D1;
+  --sd-gray: rgb(187, 193, 209);
   --sd-grayLight: color(var(--sd-gray) tint(25%));
   --sd-blue: #0072FF;
   --sd-blueGray: #EEF1F6;
@@ -23,4 +23,6 @@
   --sd-headerHeight: 70px;
   --sd-primary: var(--sd-blue);
   --sd-borderColor: var(--sd-gray);
+  --sd-shadowColorSolid: rgb(93, 98, 107);
+  --sd-shadowColor: rgba(93, 98, 107, 0.1)
 }

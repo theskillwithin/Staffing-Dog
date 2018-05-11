@@ -13,14 +13,31 @@ const paths = {
 }
 
 
+/**
+ * Configure which css builder to use
+ *
+ * Comment out all the ones you don't want to use
+ */
+
 const cssBuildType = 'extract'
 // const cssBuildType = 'minicss'
 // const cssBuildType = 'basic'
+
+
+/**
+ * Extracts specific to modules
+ */
 
 const extractText = {
   rmwc: new ExtractTextPlugin('rmwc.[name].css'),
   sd: new ExtractTextPlugin('sd.[name].css'),
 }
+
+/**
+ * Loaders used in rules
+ *
+ * Based on the setting set above
+ */
 
 const loaders = {
   sd: {
@@ -71,6 +88,10 @@ loaders.rmwc.miniCssExtract = [
   ...loaders.rmwc.basic,
 ]
 
+/**
+ * Loads loder based on type
+ */
+
 const buildCssLoader = (type) => {
   switch (cssBuildType) {
     case 'cssmini':
@@ -83,13 +104,23 @@ const buildCssLoader = (type) => {
 }
 
 
+/**
+ * Basic Config object for webpack
+ */
+
 const config = {
-  entry: path.join(paths.src, 'scenes/onboarding'),
+  entry: {
+    onboarding: path.join(paths.src, 'scenes/onboarding'),
+    app: path.join(paths.src, 'scenes/app'),
+  },
   module: {},
   plugins: [],
 }
 
-// Rules
+/**
+ * Webpack Module Rules
+ */
+
 config.module.rules = [
   {
     enforce: 'pre',
@@ -156,6 +187,7 @@ config.optimization = {
   runtimeChunk: false,
   splitChunks: {
     chunks: 'all',
+    name: 'vendor',
   },
 }
 
@@ -165,17 +197,19 @@ config.plugins = [
     template: './src/index.html',
     filename: './index.html',
     inject: true,
+    chunks: ['vendor', 'app'],
   }),
   new HtmlWebPackPlugin({
     template: './src/onboarding.html',
     filename: './onboarding.html',
     inject: true,
+    chunks: ['vendor', 'onboarding'],
   }),
-
   new HtmlWebPackPlugin({
     template: './src/onboarding_practice.html',
     filename: './onboarding_practice.html',
     inject: true,
+    chunks: ['vendor', 'onboarding'],
   }),
 ]
 

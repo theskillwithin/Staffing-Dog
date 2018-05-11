@@ -1,0 +1,132 @@
+@import '../../styles/config.css';
+@import '../../styles/reset.css';
+
+:root {
+  --sd-headerHeight: 80px;
+  --sd-backgroundColor: var(--sd-blueGray);
+  --sd-containerWidth: 1024px;
+}
+
+html {
+  background-color: var(--sd-backgroundColor);
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 400;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 600;
+}
+
+.app {}
+
+.appHeader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+
+  .appHeaderInner {
+    background-color: var(--sd-white);
+    box-shadow: 2px 2px 2px var(--sd-shadowColor);
+    height: var(--sd-headerHeight);
+    padding: 1em;
+    position: relative;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .logo {
+      flex: 2;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      @media (--sd-tablet) {
+        flex: 1;
+        display: block;
+      }
+    }
+
+    .nav {
+      display: none;
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+      
+      @media (--sd-tablet) {
+        flex: 2;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .navItem {
+        margin: 0;
+        padding: 0;
+      }
+
+      .navLink span {
+        display: flex;
+        align-items: center;
+      }
+    }
+
+    .user {
+      flex: 1;
+      display: flex;
+      align-items: flex-end;
+    }
+
+    .menuTrigger {
+      @media (--sd-tablet) {
+        display: none;
+      }
+    }
+  }
+
+  &::after {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 25px;
+    position: absolute;
+    z-index: 5;
+    left: 0;
+    right: 0;
+    top: 100%;
+    background: linear-gradient(to bottom, var(--sd-backgroundColor), rgba(255, 255, 255, 0));
+  }
+}
+
+.appContent {
+  margin-top: var(--sd-headerHeight);
+  padding-top: 2em;
+}
+
+.pageContent {
+  width: 100%;
+  max-width: var(--sd-containerWidth);
+  margin: 0 auto;
+  padding-top: 4em;
+
+  &.columns {
+    @media (--sd-tablet) {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+    }
+
+    .column {
+      flex: 0 1 475px;
+
+      > * {
+        margin-top: 3em;
+
+        &:first-child {
+          margin-top: 0;
+        }
+      }
+    }
+  }
+}

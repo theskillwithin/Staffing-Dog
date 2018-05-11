@@ -1,0 +1,42 @@
+@import '../../styles/config.css';
+
+:root {
+  --sd-card-padding: 1em 1.5em 0.8em 1.5em;
+}
+
+.card {
+  box-shadow: 0 0 6px 3px var(--sd-shadowColor);
+  border: 1px solid rgb(220, 220, 220);
+  border-radius: 4px;
+  background-color: rgb(255, 255, 255);
+}
+
+.cardHeader {
+  padding: var(--sd-card-padding);
+  border-bottom: 1px solid var(--sd-borderColor);
+  display: flex;
+  align-items: center;
+  width: 100%;
+
+  > * {
+    margin-left: 1em;
+
+    &:first-child {
+      margin-left: 0;
+    }
+  }
+
+  .title {
+    flex: 1;
+  }
+}
+
+.cardContent {
+  padding: var(--sd-card-padding);
+}
+
+.title {
+  font-size: 14px;
+  margin-top: 0;
+  margin-bottom: 0;
+}
