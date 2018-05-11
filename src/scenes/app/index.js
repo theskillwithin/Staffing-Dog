@@ -1,10 +1,12 @@
 import React from 'react'
-import classnames from 'classnames'
+import { Route } from 'react-router-dom'
 
 import init from '../../utils/init'
 import Logo from '../../components/logo'
 import Icon from '../../components/icon'
-import Card from '../../components/card'
+import DashboardScene from '../dashboard'
+import SearchScene from '../search'
+import SettingsScene from '../settings'
 
 import theme from './theme.css'
 
@@ -37,46 +39,9 @@ const App = () => (
     </header>
 
     <div className={theme.appContent}>
-      <div className={classnames(theme.pageContent, theme.columns)}>
-        <div className={theme.column}>
-          <Card
-            title="To Do List"
-            icon="list"
-          >
-            <p>Body Goes Here</p>
-          </Card>
-
-          <Card
-            title="Testing Title Prop"
-            icon="chat"
-          >
-            <p>Body Goes Here</p>
-          </Card>
-
-          <Card
-            title="Suggested Jobs"
-            icon="lightbulb_outline"
-          >
-            <p>Body Goes Here</p>
-          </Card>
-        </div>
-
-        <div className={theme.column}>
-          <Card
-            icon="date_range"
-            title="Testing Title Prop"
-          >
-            <p>Job Schedule</p>
-          </Card>
-
-          <Card
-            icon="star_border"
-            title="Reviews"
-          >
-            <p>Body Goes Here</p>
-          </Card>
-        </div>
-      </div>
+      <Route path="/" component={DashboardScene} exact />
+      <Route path="/settings" component={SettingsScene} />
+      <Route path="/search" component={SearchScene} />
     </div>
   </div>
 )
