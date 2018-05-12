@@ -2,7 +2,7 @@
 node_modules
 dist
 
-
+*.sublime-project
 # Created by https://www.gitignore.io/api/osx,node,linux,sublimetext,visualstudiocode
 
 ### Linux ###
