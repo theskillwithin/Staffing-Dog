@@ -10,7 +10,7 @@ const Card = ({ title, icon, children, header }) => (
   <div className={theme.card}>
     {(title || header) && (
       <header className={theme.cardHeader}>
-        {icon && !header && <div className={theme.icon}><Icon use={icon} /></div>}
+        {icon && !header && <div className={theme.icon}><Icon primary use={icon} /></div>}
         {title && !header && <h2 className={theme.title}>{title}</h2>}
         {header && !title && header({ style: theme })}
       </header>
