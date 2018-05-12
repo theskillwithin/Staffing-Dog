@@ -1,9 +1,12 @@
 import React from 'react'
 import classnames from 'classnames'
 
+
 import Card from '../../components/card'
 import theme from '../app/theme.css'
 
+
+const updateSchedule = () => console.log('update schedule')
 
 const Dashboard = () => (
   <div className={classnames(theme.pageContent, theme.columns)}>
@@ -34,6 +37,8 @@ const Dashboard = () => (
       <Card
         icon="date_range"
         title="Testing Title Prop"
+        action="Update Schedule"
+        actionCb={updateSchedule}
       >
         <p>Job Schedule</p>
       </Card>
