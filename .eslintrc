@@ -4,9 +4,14 @@
     "react",
     "jsx-a11y",
     "jest",
-    "import"
+    "import",
+    "prettier"
   ],
-  "extends": "airbnb",
+  "extends": [
+    "airbnb",
+    "prettier",
+    "prettier/react"
+  ],
   "env": {
     "es6": true,
     "browser": true,
@@ -14,6 +19,15 @@
     "jest": true
   },
   "rules": {
+    "prettier/prettier": [
+      "error",
+      {
+        "trailingComma": "es5",
+        "singleQuote": true,
+        "printWidth": 90,
+        "semi": false
+      }
+    ],
     "arrow-body-style": "off",
     "default-case": "off",
     "func-names": "off",
