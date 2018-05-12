@@ -22,7 +22,7 @@
   --sd-contentMaxWidth: 900px;
   --sd-headerHeight: 70px;
   --sd-primary: var(--sd-blue);
-  --sd-borderColor: var(--sd-gray);
+  --sd-borderColor: rgb(228, 230, 237); /*  rgba(187, 193, 209, 0.4) */
   --sd-shadowColorSolid: rgb(93, 98, 107);
   --sd-shadowColor: rgba(93, 98, 107, 0.1)
 }
