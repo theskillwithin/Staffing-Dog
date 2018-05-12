@@ -6,7 +6,7 @@ import { Icon as MIcon } from 'rmwc/Icon'
 import theme from './theme.css'
 
 
-const Icon = ({ inButton, strategy, primary, ...props }) => (
+const Icon = ({ inButton, strategy, primary, size, ...props }) => (
   <MIcon
     strategy={strategy}
     className={classnames(
@@ -15,6 +15,7 @@ const Icon = ({ inButton, strategy, primary, ...props }) => (
       'left' === inButton && theme.left,
       'right' === inButton && theme.right,
       primary && theme.primary,
+      size && theme[`size-${size}`],
     )}
     {...props}
   />
@@ -32,6 +33,7 @@ Icon.propTypes = {
   ]),
   strategy: string,
   primary: bool,
+  size: string,
 }
 
 export default Icon

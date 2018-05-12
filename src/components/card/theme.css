@@ -2,6 +2,7 @@
 
 :root {
   --sd-card-padding: 1em 1.5em 0.8em 1.5em;
+  --sd-card-padding-header: 1.2em 1.5em 1.2em 1.5em;
 }
 
 .card {
@@ -12,7 +13,7 @@
 }
 
 .cardHeader {
-  padding: var(--sd-card-padding);
+  padding: var(--sd-card-padding-header);
   border-bottom: 1px solid var(--sd-borderColor);
   display: flex;
   align-items: center;

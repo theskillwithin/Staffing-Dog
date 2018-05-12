@@ -17,3 +17,7 @@
 .primary {
   color: var(--sd-primary);
 }
+
+.size-medium {
+  font-size: 24px;
+}
