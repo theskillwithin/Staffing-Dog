@@ -1,7 +1,6 @@
 import React from 'react'
 import { node, string, func } from 'prop-types'
-
-import Icon from '../icon'
+import Icon from '@sd/components/icon'
 
 import theme from './theme.css'
 
