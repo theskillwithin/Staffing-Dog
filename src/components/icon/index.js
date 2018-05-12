@@ -10,6 +10,7 @@ const Icon = ({ inButton, strategy, primary, ...props }) => (
   <MIcon
     strategy={strategy}
     className={classnames(
+      theme.root,
       inButton && 'mdc-button__icon',
       'left' === inButton && theme.left,
       'right' === inButton && theme.right,
