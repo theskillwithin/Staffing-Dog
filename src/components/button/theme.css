@@ -4,4 +4,15 @@
   border-radius: 1.5em;
   padding-left: 2em;
   padding-right: 2em;
+
+  &.round {
+    border-radius: 3em;
+  }
+
+  &.short {
+    height: 32px;
+    line-height: 1;
+  }
+
 }
+

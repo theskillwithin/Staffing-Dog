@@ -1,18 +1,19 @@
 @import '../../styles/config.css';
 
 :root {
-  --sd-card-padding: 1em 1.5em 0.8em 1.5em;
+  --sd-cardPadding: 1em 1.5em 0.8em 1.5em;
+  --sd-cardPaddingHeader: 1.2em 1.5em 1.2em 1.5em;
 }
 
 .card {
-  box-shadow: 0 0 6px 3px var(--sd-shadowColor);
+  box-shadow: 0 3px 6px 0 var(--sd-shadowColor);
   border: 1px solid rgb(220, 220, 220);
   border-radius: 4px;
   background-color: rgb(255, 255, 255);
 }
 
 .cardHeader {
-  padding: var(--sd-card-padding);
+  padding: var(--sd-cardPaddingHeader);
   border-bottom: 1px solid var(--sd-borderColor);
   display: flex;
   align-items: center;
@@ -32,11 +33,31 @@
 }
 
 .cardContent {
-  padding: var(--sd-card-padding);
+  position: relative;
+  padding: var(--sd-cardPadding);
 }
 
 .title {
   font-size: 14px;
   margin-top: 0;
   margin-bottom: 0;
+}
+
+.progress {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  margin-top: 0;
+  margin-bottom: 0;
+  span {
+    font-size: 12px;
+  }
+}
+
+.loadingBar {
+  position: absolute;
+  top: -2px;
+  left: 0;
+  right: 0;
+  height: 4px;
 }

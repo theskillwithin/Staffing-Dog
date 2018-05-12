@@ -9,6 +9,7 @@ import SearchScene from '../search'
 import SettingsScene from '../settings'
 
 import theme from './theme.css'
+import './styles.css'
 
 
 const App = () => (
@@ -24,10 +25,10 @@ const App = () => (
         </div>
 
         <ul className={theme.nav}>
-          <li className={theme.navItem}><a className={theme.navItemLink} href="/jobs/suggested"><span><Icon use="lightbulb_outline" />Suggested Jobs</span></a></li>
-          <li className={theme.navItem}><a className={theme.navItemLink} href="/alerts/jobs"><span><Icon use="notifications" /> Job Alerts</span></a></li>
-          <li className={theme.navItem}><a className={theme.navItemLink} href="/messages"><span><Icon use="chat_bubble_outline" /> Messages</span></a></li>
-          <li className={theme.navItem}><a className={theme.navItemLink} href="/schedule"><span><Icon use="date_range" /> Job Schedule</span></a></li>
+          <li className={theme.navItem}><a className={theme.navItemLink} href="/jobs/suggested"><span><Icon primary use="lightbulb_outline" />Suggested Jobs</span></a></li>
+          <li className={theme.navItem}><a className={theme.navItemLink} href="/alerts/jobs"><span><Icon primary use="notifications" /> Job Alerts</span></a></li>
+          <li className={theme.navItem}><a className={theme.navItemLink} href="/messages"><span><Icon primary use="chat_bubble_outline" /> Messages</span></a></li>
+          <li className={theme.navItem}><a className={theme.navItemLink} href="/schedule"><span><Icon primary use="date_range" /> Job Schedule</span></a></li>
         </ul>
 
         <div className={theme.user}>

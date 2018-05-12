@@ -18,6 +18,10 @@ body {
 }
 
 :global {
+  .mdc-button {
+    text-transform: inherit;
+  }
+
   .mdc-text-field {
     > *,
     &,

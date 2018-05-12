@@ -1,5 +1,9 @@
 @import "../../styles/config.css";
 
+.root {
+  vertical-align: middle;
+}
+
 .left {
   margin-left: 0;
   margin-right: 8px;
@@ -8,4 +12,12 @@
 .right {
   margin-left: 8px;
   margin-right: 0;
+}
+
+.primary {
+  color: var(--sd-primary);
+}
+
+.size-medium {
+  font-size: 24px;
 }
