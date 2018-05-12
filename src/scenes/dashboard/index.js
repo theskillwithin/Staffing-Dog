@@ -39,7 +39,7 @@ const Dashboard = () => (
         title="Testing Title Prop"
         action="Update Schedule"
         actionCb={updateSchedule}
-        actionProps={{ primary: true }}
+        actionProps={{ round: true, secondary: true, short: true }}
       >
         <p>Job Schedule</p>
       </Card>
