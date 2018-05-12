@@ -9,6 +9,7 @@ import SearchScene from '../search'
 import SettingsScene from '../settings'
 
 import theme from './theme.css'
+import './styles.css'
 
 
 const App = () => (

@@ -1,8 +1,7 @@
 import React from 'react'
 import classnames from 'classnames'
+import Card from '@sd/components/card'
 
-
-import Card from '../../components/card'
 import theme from '../app/theme.css'
 
 
@@ -14,6 +13,7 @@ const Dashboard = () => (
       <Card
         title="To Do List"
         icon="list"
+        progress={0.85}
       >
         <p>Body Goes Here</p>
       </Card>
