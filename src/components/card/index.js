@@ -1,7 +1,7 @@
 import React from 'react'
 import { node, string, func, object } from 'prop-types'
-import Button from '@sd/components/button'
 
+import Button from '../button'
 import Icon from '../icon'
 
 import theme from './theme.css'
