@@ -45,6 +45,8 @@ const Card = ({
 
 Card.defaultProps = {
   title: '',
+  icon: false,
+  header: false,
   action: false,
   actionCb: false,
   actionProps: false,
@@ -53,8 +55,14 @@ Card.defaultProps = {
 
 Card.propTypes = {
   title: string,
-  icon: string,
-  header: func,
+  icon: oneOfType([
+    string,
+    bool,
+  ]),
+  header: oneOfType([
+    func,
+    bool,
+  ]),
   children: node.isRequired,
   actionCb: oneOfType([
     func,
