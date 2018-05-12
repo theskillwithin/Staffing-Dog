@@ -1,5 +1,5 @@
 import React from 'react'
-import { oneOfType, bool, string } from 'prop-types'
+import { oneOfType, bool, string, oneOfType } from 'prop-types'
 import classnames from 'classnames'
 import { Icon as MIcon } from 'rmwc/Icon'
 
@@ -24,6 +24,8 @@ const Icon = ({ inButton, strategy, primary, size, ...props }) => (
 Icon.defaultProps = {
   inButton: false,
   strategy: 'ligature',
+  primary: false,
+  size: false,
 }
 
 Icon.propTypes = {
@@ -33,7 +35,10 @@ Icon.propTypes = {
   ]),
   strategy: string,
   primary: bool,
-  size: string,
+  size: oneOfType([
+    string,
+    bool,
+  ]),
 }
 
 export default Icon

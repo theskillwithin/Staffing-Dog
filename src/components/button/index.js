@@ -19,6 +19,8 @@ const Button = ({ primary, secondary, round, short, ...props }) => (
 Button.defaultProps = {
   primary: true,
   secondary: false,
+  round: false,
+  short: false,
 }
 
 Button.propTypes = {
