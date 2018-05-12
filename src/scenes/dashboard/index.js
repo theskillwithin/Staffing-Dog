@@ -39,6 +39,7 @@ const Dashboard = () => (
         title="Testing Title Prop"
         action="Update Schedule"
         actionCb={updateSchedule}
+        actionProps={{ primary: true }}
       >
         <p>Job Schedule</p>
       </Card>
