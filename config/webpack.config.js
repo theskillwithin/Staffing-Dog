@@ -12,6 +12,10 @@ const paths = {
   nodeModules: path.join(root, 'node_modules'),
 }
 
+const alias = {
+  '@sd': path.resolve(root, 'src'),
+}
+
 
 /**
  * Configure which css builder to use
@@ -115,6 +119,9 @@ const config = {
   },
   module: {},
   plugins: [],
+  resolve: {
+    alias,
+  },
 }
 
 /**
