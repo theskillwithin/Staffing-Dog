@@ -1,5 +1,5 @@
 import React from 'react'
-import { oneOfType, bool, string, oneOfType } from 'prop-types'
+import { oneOfType, bool, string } from 'prop-types'
 import classnames from 'classnames'
 import { Icon as MIcon } from 'rmwc/Icon'
 
