@@ -3,6 +3,7 @@ import classnames from 'classnames'
 import filter from 'lodash/filter'
 import Card from '@sd/components/card'
 import Checklist from '@sd/components/checklist'
+import Switch from '@sd/components/switch'
 
 import theme from '../app/theme.css'
 
@@ -24,7 +25,6 @@ const progressPercent = (collection, search) => {
   return result
 }
 
-
 const Dashboard = () => (
   <div className={classnames(theme.pageContent, theme.columns)}>
     <div className={theme.column}>
@@ -37,7 +37,7 @@ const Dashboard = () => (
       </Card>
 
       <Card
-        title="Testing Title Prop"
+        title="Messages"
         icon="chat"
       >
         <p>Body Goes Here</p>
@@ -54,12 +54,13 @@ const Dashboard = () => (
     <div className={theme.column}>
       <Card
         icon="date_range"
-        title="Testing Title Prop"
+        title="Job Schedule"
         action="Update Schedule"
         actionCb={updateSchedule}
         actionProps={{ round: true, secondary: true, short: true }}
       >
         <p>Job Schedule</p>
+        <Switch />
       </Card>
 
       <Card

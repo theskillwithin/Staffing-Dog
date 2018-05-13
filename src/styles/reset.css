@@ -18,6 +18,21 @@ body {
 }
 
 :global {
+  .mdc-switch { 
+    .mdc-switch__knob {
+      background: var(--sd-primary) !important;
+      top: 0;
+    }
+    .mdc-switch__background {
+      height: 20px;
+      background-color: rgb(187, 193, 209);
+      border-radius: 50px;
+      &:before {
+        display: none;
+      }
+    }
+  }
+
   .mdc-button {
     text-transform: inherit;
   }
