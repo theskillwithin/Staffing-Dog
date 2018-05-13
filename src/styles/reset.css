@@ -19,12 +19,6 @@ body {
 
 :global {
 
-  .mdc-switch-flip .mdc-form-field > label {
-    order: -1;
-    margin-right: 0.5em;
-    padding-left: 0;
-  }
-
   .mdc-switch {
 
     .mdc-switch__knob {
@@ -35,15 +29,27 @@ body {
         display: none;
       }
     }
+
     .mdc-switch__background {
-      margin-right: 0.5em;
+      margin-right: 0.75em;
       height: 20px;
       width: 40px;
-      background-color: rgb(227, 230, 236);
+      background-color: var(--sd-switchBg);
       border-radius: 50px;
       &:before {
         display: none;
       }
+    }
+  }
+
+  .mdc-switch-flip {
+    .mdc-switch__background {
+      margin-right: 0;
+    }
+    .mdc-form-field > label {
+      order: -1;
+      margin-right: 0.75em;
+      padding-left: 0;
     }
   }
   

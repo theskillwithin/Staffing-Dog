@@ -24,5 +24,6 @@
   --sd-primary: var(--sd-blue);
   --sd-borderColor: rgb(228, 230, 237); /*  rgba(187, 193, 209, 0.4) */
   --sd-shadowColorSolid: rgb(93, 98, 107);
-  --sd-shadowColor: rgba(93, 98, 107, 0.1)
+  --sd-shadowColor: rgba(93, 98, 107, 0.1);
+  --sd-switchBg: rgb(227, 230, 236);
 }

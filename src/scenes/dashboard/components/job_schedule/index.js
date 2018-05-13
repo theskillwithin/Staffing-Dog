@@ -2,6 +2,8 @@ import React from 'react'
 import Card from '@component/card'
 import Switch from '@component/switch'
 
+import theme from './theme.css'
+
 
 class JobSchedule extends React.Component {
   state = {
@@ -24,14 +26,16 @@ class JobSchedule extends React.Component {
         actionCb={this.updateSchedule}
         actionProps={{ round: true, secondary: true, short: true }}
       >
-        <p>Job Schedule</p>
-        <Switch
-          checked={state.switch}
-          onChange={() => this.handleToggle()}
-          flip
-        >
-          No
-        </Switch>
+        <div className={theme.inputRow}>
+          <span>Same day job requests</span>
+          <Switch
+            checked={state.switch}
+            onChange={() => this.handleToggle()}
+            flip
+          >
+            No
+          </Switch>
+        </div>
       </Card>
     )
   }

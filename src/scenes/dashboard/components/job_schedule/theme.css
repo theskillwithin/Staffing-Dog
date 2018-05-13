@@ -1,0 +1,9 @@
+.inputRow {
+  margin: 1em 0;
+  display: flex;
+  font-size: 14px;
+  font-weight: 600;
+  span {
+    flex: 1;
+  }
+}
