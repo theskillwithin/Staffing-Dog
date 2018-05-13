@@ -11,7 +11,7 @@ const Button = ({ checked, onChange, children, left, ...props }) => (
   <MSwitch
     checked={checked}
     className={classnames(theme.switch)}
-    onChange={props.onChange}
+    onChange={onChange}
     {...props}
   >
     {children && children}
