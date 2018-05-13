@@ -11,6 +11,43 @@ class JobSchedule extends React.Component {
     form: {
       switch: false,
       daysScheduled: false,
+      schedule: {
+        sun: {
+          active: false,
+          from: '7:00',
+          to: '8:00',
+        },
+        mon: {
+          active: false,
+          from: '7:00',
+          to: '7:00',
+        },
+        tue: {
+          active: false,
+          from: '7:00',
+          to: '7:00',
+        },
+        wed: {
+          active: false,
+          from: '7:00',
+          to: '7:00',
+        },
+        thu: {
+          active: false,
+          from: '7:00',
+          to: '7:00',
+        },
+        fri: {
+          active: false,
+          from: '7:00',
+          to: '7:00',
+        },
+        sat: {
+          active: false,
+          from: '7:00',
+          to: '7:00',
+        },
+      },
     },
   }
 
@@ -23,12 +60,31 @@ class JobSchedule extends React.Component {
     { label: '120 Days', value: '120' },
   ]
 
+  time = [
+    { label: '7:00 am', value: '7:00' },
+    { label: '7:30 am', value: '7:30' },
+    { label: '8:00 am', value: '8:00' },
+    { label: '8:30 am', value: '8:30' },
+  ]
+
+  daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
+
   handleToggle() {
-    this.setState({ form: { ...this.state.form, switch: !this.state.switch } })
+    this.setState({ form: { ...this.state.form, switch: !this.state.form.switch } })
   }
 
   handleChange(input, value) {
     this.setState({ form: { ...this.state.form, [input]: value } })
+  }
+
+  handleScheduleChange(type, value, day) {
+    const { form } = this.state
+    const { schedule } = this.state.form
+    this.setState({
+      form: {
+        ...form, schedule: { ...schedule, [day]: { ...schedule[day], [type]: value } },
+      },
+    })
   }
 
   render() {
@@ -57,7 +113,32 @@ class JobSchedule extends React.Component {
             value={state.daysScheduled}
             onChange={value => this.handleChange('daysScheduled', value)}
             options={this.days}
+            box={false}
           />
+        </div>
+        <div className={theme.scheduler}>
+          {this.daysOfWeek.map((day, index) => (
+            <div key={`${index + 1}`}>
+              <button
+                onClick={() => this.handleScheduleChange('active', !state.form.schedule[day.toLowerCase()].active, day.toLowerCase())}
+              >
+                {day}
+              </button>
+              <Dropdown
+                value={state.form.schedule[day.toLowerCase()].from}
+                onChange={value => this.handleScheduleChange('from', value, day.toLowerCase())}
+                options={this.time}
+                box={false}
+              />
+              Arrow
+              <Dropdown
+                value={state.form.schedule[day.toLowerCase()].to}
+                onChange={value => this.handleScheduleChange('to', value, day.toLowerCase())}
+                options={this.time}
+                box={false}
+              />
+            </div>
+          ))}
         </div>
       </Card>
     )
