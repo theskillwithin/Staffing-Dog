@@ -18,6 +18,13 @@ body {
 }
 
 :global {
+
+  .mdc-switch-flip .mdc-form-field > label {
+    order: -1;
+    margin-right: 0.5em;
+    padding-left: 0;
+  }
+
   .mdc-switch {
 
     .mdc-switch__knob {
