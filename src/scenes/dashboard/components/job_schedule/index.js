@@ -1,4 +1,5 @@
 import React from 'react'
+import classnames from 'classnames'
 import Card from '@component/card'
 import Switch from '@component/switch'
 import Dropdown from '@component/Dropdown'
@@ -18,32 +19,32 @@ class JobSchedule extends React.Component {
           to: '8:00',
         },
         mon: {
-          active: false,
+          active: true,
           from: '7:00',
           to: '7:00',
         },
         tue: {
-          active: false,
+          active: true,
           from: '7:00',
           to: '7:00',
         },
         wed: {
-          active: false,
+          active: true,
           from: '7:00',
           to: '7:00',
         },
         thu: {
-          active: false,
+          active: true,
           from: '7:00',
           to: '7:00',
         },
         fri: {
-          active: false,
+          active: true,
           from: '7:00',
           to: '7:00',
         },
         sat: {
-          active: false,
+          active: true,
           from: '7:00',
           to: '7:00',
         },
@@ -78,8 +79,7 @@ class JobSchedule extends React.Component {
   }
 
   handleScheduleChange(type, value, day) {
-    const { form } = this.state
-    const { schedule } = this.state.form
+    const { form, form: { schedule } } = this.state
     this.setState({
       form: {
         ...form, schedule: { ...schedule, [day]: { ...schedule[day], [type]: value } },
@@ -118,7 +118,12 @@ class JobSchedule extends React.Component {
         </div>
         <div className={theme.scheduler}>
           {this.daysOfWeek.map((day, index) => (
-            <div key={`${index + 1}`}>
+            <div
+              key={`${index + 1}`}
+              className={
+                classnames(theme.day, state.form.schedule[day.toLowerCase()].active && theme.active)
+              }
+            >
               <button
                 onClick={() => this.handleScheduleChange('active', !state.form.schedule[day.toLowerCase()].active, day.toLowerCase())}
               >
