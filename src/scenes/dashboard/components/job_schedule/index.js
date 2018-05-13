@@ -25,7 +25,7 @@ class JobSchedule extends React.Component {
         actionProps={{ round: true, secondary: true, short: true }}
       >
         <p>Job Schedule</p>
-        <Switch checked={state.switch} onChange={() => this.handleToggle()} />
+        <Switch checked={state.switch} onChange={() => this.handleToggle()}>No</Switch>
       </Card>
     )
   }

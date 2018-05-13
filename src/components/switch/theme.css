@@ -4,4 +4,7 @@
 }
 
 .switch {
+  div {
+    background: red !important;
+  }
 }
