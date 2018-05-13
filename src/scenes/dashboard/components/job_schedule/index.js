@@ -104,7 +104,7 @@ class JobSchedule extends React.Component {
             onChange={() => this.handleToggle()}
             flip
           >
-            No
+            {state.form.switch ? 'Yes' : 'No'}
           </Switch>
         </div>
         <div className={theme.inputRow}>
