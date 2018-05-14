@@ -1,7 +1,7 @@
 import React from 'react'
 import Card from '@component/card'
 import Switch from '@component/switch'
-import Dropdown from '@component/Dropdown'
+import Dropdown from '@component/dropdown'
 
 import WeekRow from './weeks'
 import theme from './theme.css'

@@ -1,7 +1,18 @@
 .day {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   opacity: 0.7;
 
   &.active {
     opacity: 1;
   }
+
+  .dropdowns {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 55%;
+  }
+
 }

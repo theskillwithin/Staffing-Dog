@@ -1,7 +1,9 @@
 import React from 'react'
 import { oneOfType, string, bool, object, func } from 'prop-types'
 import classnames from 'classnames'
-import Dropdown from '@component/Dropdown'
+import Dropdown from '@component/dropdown'
+import Button from '@component/button'
+import Icon from '@component/icon'
 
 import theme from './theme.css'
 
@@ -20,24 +22,29 @@ const WeekRow = ({ day, schedule, onChange }) => {
         classnames(theme.day, schedule.active && theme.active)
       }
     >
-      <button
-        onClick={() => onChange('active', !schedule.active, day)}
-      >
-        {day}
-      </button>
-      <Dropdown
-        value={schedule.from}
-        onChange={value => onChange('from', value, day)}
-        options={time}
-        box={false}
-      />
-      Arrow
-      <Dropdown
-        value={schedule.to}
-        onChange={value => onChange('to', value, day)}
-        options={time}
-        box={false}
-      />
+      <div>
+        <Button
+          onClick={() => onChange('active', !schedule.active, day)}
+          secondary={!schedule.active}
+        >
+          {day.toUpperCase()}
+        </Button>
+      </div>
+      <div className={theme.dropdowns}>
+        <Dropdown
+          value={schedule.from}
+          onChange={value => onChange('from', value, day)}
+          options={time}
+          box={false}
+        />
+        <Icon secondary use="arrow_forward" />
+        <Dropdown
+          value={schedule.to}
+          onChange={value => onChange('to', value, day)}
+          options={time}
+          box={false}
+        />
+      </div>
     </div>
   )
 }
