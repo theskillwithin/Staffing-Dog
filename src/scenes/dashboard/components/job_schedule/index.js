@@ -1,55 +1,59 @@
 import React from 'react'
-import classnames from 'classnames'
 import Card from '@component/card'
 import Switch from '@component/switch'
 import Dropdown from '@component/Dropdown'
 
+import WeekRow from './weeks'
 import theme from './theme.css'
 
 
 class JobSchedule extends React.Component {
-  state = {
-    form: {
-      switch: false,
-      daysScheduled: false,
-      schedule: {
-        sun: {
-          active: false,
-          from: '7:00',
-          to: '8:00',
-        },
-        mon: {
-          active: true,
-          from: '7:00',
-          to: '7:00',
-        },
-        tue: {
-          active: true,
-          from: '7:00',
-          to: '7:00',
-        },
-        wed: {
-          active: true,
-          from: '7:00',
-          to: '7:00',
-        },
-        thu: {
-          active: true,
-          from: '7:00',
-          to: '7:00',
-        },
-        fri: {
-          active: true,
-          from: '7:00',
-          to: '7:00',
-        },
-        sat: {
-          active: true,
-          from: '7:00',
-          to: '7:00',
+  constructor(props) {
+    super(props)
+    this.state = {
+      form: {
+        switch: false,
+        daysScheduled: false,
+        schedule: {
+          sun: {
+            active: false,
+            from: '7:00',
+            to: '8:00',
+          },
+          mon: {
+            active: true,
+            from: '7:00',
+            to: '7:00',
+          },
+          tue: {
+            active: true,
+            from: '7:00',
+            to: '7:00',
+          },
+          wed: {
+            active: true,
+            from: '7:00',
+            to: '7:00',
+          },
+          thu: {
+            active: true,
+            from: '7:00',
+            to: '7:00',
+          },
+          fri: {
+            active: true,
+            from: '7:00',
+            to: '7:00',
+          },
+          sat: {
+            active: true,
+            from: '7:00',
+            to: '7:00',
+          },
         },
       },
-    },
+    }
+    this.handleScheduleChange = this.handleScheduleChange.bind(this)
   }
 
   updateSchedule = () => console.log('update schedule')
@@ -59,13 +63,6 @@ class JobSchedule extends React.Component {
     { label: '60 Days', value: '60' },
     { label: '90 Days', value: '90' },
     { label: '120 Days', value: '120' },
-  ]
-
-  time = [
-    { label: '7:00 am', value: '7:00' },
-    { label: '7:30 am', value: '7:30' },
-    { label: '8:00 am', value: '8:00' },
-    { label: '8:30 am', value: '8:30' },
   ]
 
   daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
@@ -118,31 +115,12 @@ class JobSchedule extends React.Component {
         </div>
         <div className={theme.scheduler}>
           {this.daysOfWeek.map((day, index) => (
-            <div
+            <WeekRow
               key={`${index + 1}`}
-              className={
-                classnames(theme.day, state.form.schedule[day.toLowerCase()].active && theme.active)
-              }
-            >
-              <button
-                onClick={() => this.handleScheduleChange('active', !state.form.schedule[day.toLowerCase()].active, day.toLowerCase())}
-              >
-                {day}
-              </button>
-              <Dropdown
-                value={state.form.schedule[day.toLowerCase()].from}
-                onChange={value => this.handleScheduleChange('from', value, day.toLowerCase())}
-                options={this.time}
-                box={false}
-              />
-              Arrow
-              <Dropdown
-                value={state.form.schedule[day.toLowerCase()].to}
-                onChange={value => this.handleScheduleChange('to', value, day.toLowerCase())}
-                options={this.time}
-                box={false}
-              />
-            </div>
+              day={day.toLowerCase()}
+              schedule={state.form.schedule[day.toLowerCase()]}
+              onChange={this.handleScheduleChange}
+            />
           ))}
         </div>
       </Card>

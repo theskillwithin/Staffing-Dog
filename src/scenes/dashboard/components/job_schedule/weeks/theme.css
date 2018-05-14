@@ -1,0 +1,7 @@
+.day {
+  opacity: 0.7;
+
+  &.active {
+    opacity: 1;
+  }
+}
