@@ -26,6 +26,7 @@ const WeekRow = ({ day, schedule, onChange }) => {
         <Button
           onClick={() => onChange('active', !schedule.active, day)}
           secondary={!schedule.active}
+          round
         >
           {day.toUpperCase()}
         </Button>
