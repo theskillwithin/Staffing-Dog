@@ -2,8 +2,9 @@ import find from 'lodash/find'
 import map from 'lodash/map'
 import reduce from 'lodash/reduce'
 import isEmpty from 'lodash/isEmpty'
+import build from '@store/build'
+import reduxRegister from '@store/register'
 
-import build from '../../../../store/build'
 import { saveStep as onBoardingAPISaveStep } from '../../../../api/onboarding'
 
 import { professional, practice } from './fields'
@@ -227,9 +228,13 @@ export const goToStep = ({ currentStep, nextStep, history }) => (dispatch, getSt
   })
 }
 
-export default build(reducers, INITIAL_STATE, true)
+export const store = build(reducers, INITIAL_STATE, true)
 
-export const findState = state => state.steps
+reduxRegister.register('steps', store)
+
+export default store
+
+export const findState = state => state.steps || {}
 export const findStepType = state => state.steps.stepType
 export const findSteps = state => findState(state).steps[findStepType(state)]
 export const findSavingStep = state => findState(state).savingStep

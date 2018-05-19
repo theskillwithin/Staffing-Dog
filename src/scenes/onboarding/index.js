@@ -1,10 +1,14 @@
-import init from '../../utils/init'
+import { connect } from 'react-redux'
+import { withRouter } from 'react-router-dom'
 
-import store from './store'
-import Layout from './components/layout'
+import { findLoading, findError } from './store/steps'
+import Onboarding from './Onboarding'
 
 
-window.StaffingDog = window.StaffingDog || {}
-
-window.StaffingDog.init = storeData =>
-  init(Layout, store, 'onboarding', storeData)
+console.log('connect to onBoarding')
+export default withRouter(connect(
+  state => ({
+    loading: findLoading(state),
+    error: findError(state),
+  }),
+)(Onboarding))

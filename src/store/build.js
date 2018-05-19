@@ -7,7 +7,7 @@ const buildState = (actions, state, action) => {
 export const build = (
   actions,
   initialSate,
-  useHydrate = false,
+  useHydrate = true,
   runAfter = false,
 ) => (oldState = initialSate, action) => {
   let state = oldState
