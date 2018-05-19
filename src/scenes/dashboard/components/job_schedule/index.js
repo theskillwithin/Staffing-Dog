@@ -2,6 +2,7 @@ import React from 'react'
 import Card from '@component/card'
 import Switch from '@component/switch'
 import Dropdown from '@component/dropdown'
+import Icon from '@component/Icon'
 
 import WeekRow from './weeks'
 import theme from './theme.css'
@@ -67,6 +68,12 @@ class JobSchedule extends React.Component {
 
   daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
 
+  events = [
+    { date: '10', location: 'APX Dental', time: '9:30 AM - 5:00 PM', address: '641 W 900 S, STE 1 Sandy UT 84070' },
+    { date: '19', location: 'APEX Dental', time: '10:30 AM - 6 PM', address: '286 East 12200 South Draper, UT 84020' },
+    { date: '31', location: 'APEX Dental', time: '9:30 AM - 5 PM', address: '286 East 12200 South Draper, UT 84020' },
+  ]
+
   handleToggle() {
     this.setState({ form: { ...this.state.form, switch: !this.state.form.switch } })
   }
@@ -121,6 +128,19 @@ class JobSchedule extends React.Component {
               schedule={state.form.schedule[day.toLowerCase()]}
               onChange={this.handleScheduleChange}
             />
+          ))}
+        </div>
+        <hr />
+        <div>
+          {this.events.map((event, index) => (
+            <div key={`${index + 1}`}>
+              <h2>{event.date}</h2>
+              <div>
+                  <h5>{event.location} @ {event.time}</h5>
+                  <h6>{event.address}</h6>
+              </div>
+              <Icon primary use="near_me" />
+            </div>
           ))}
         </div>
       </Card>
