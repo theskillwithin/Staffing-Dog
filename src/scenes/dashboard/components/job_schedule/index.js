@@ -135,7 +135,7 @@ class JobSchedule extends React.Component {
           {this.events.map((event, index) => (
             <div key={`${index + 1}`} className={theme.event}>
               <h2 className={event.type && theme[event.type]}>{event.date}</h2>
-              <div>
+              <div className={theme.eventDetails}>
                   <h5>{event.location} @ {event.time}</h5>
                   <h6>{event.address}</h6>
               </div>

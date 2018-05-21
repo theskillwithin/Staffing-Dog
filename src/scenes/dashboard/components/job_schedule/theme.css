@@ -22,17 +22,25 @@
 .events {
   display: flex;
   flex-direction: column;
+
 }
 
 .event {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-left: -1.5em;
+  width: calc(100% + 3em);
+  padding: 0 1em;
+  border-bottom: solid 1px var(--sd-borderColor);
 }
 
 .event h2 {
   position: relative;
   padding-left: 1em;
+  font-size: 26px;
+  font-weight: normal;
+  line-height: 1.23;
 }
 
 .event h2:before {
@@ -58,4 +66,22 @@
 
 .grey:before {
   background-color: rgb(187, 193, 209);
+}
+
+.eventDetails {
+  flex: 1;
+  margin-left: 2em;
+  h5 {
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.21;
+    margin: 0 0 4px 0;
+  }
+  h6 {
+    font-size: 14px;
+    line-height: 1.14;
+    font-weight: 100;
+    color: var(--sd-grayLighter);
+    margin: 2px 0 0 0;
+  }
 }

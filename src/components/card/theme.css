@@ -1,7 +1,7 @@
 @import '../../styles/config.css';
 
 :root {
-  --sd-cardPadding: 1em 1.5em 0.8em 1.5em;
+  --sd-cardPadding: 1em 1.5em 1em 1.5em;
   --sd-cardPaddingHeader: 1.2em 1.5em 1.2em 1.5em;
 }
 

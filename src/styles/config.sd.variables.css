@@ -13,6 +13,7 @@
   --sd-black: #000000;
   --sd-gray: rgb(187, 193, 209);
   --sd-grayLight: color(var(--sd-gray) tint(25%));
+  --sd-grayLighter: rgb(152, 160, 178);
   --sd-blue: #0072FF;
   --sd-blueGray: #EEF1F6;
   --sd-green: #33CB74;
