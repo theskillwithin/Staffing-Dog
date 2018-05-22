@@ -34,8 +34,8 @@
       content: 'check';
       -webkit-font-feature-settings: 'liga';
       color: white;
-      background-color: rgb(51, 203, 116);
-      border: solid 2px rgb(51, 203, 116);
+      background-color: var(--sd-green);
+      border: solid 2px var(--sd-green);
       font-size: 1.3em;
       padding-left: 3px;
       padding-top: 1px;
