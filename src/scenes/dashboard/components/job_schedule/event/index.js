@@ -1,25 +1,34 @@
 import React from 'react'
 import { oneOfType, object, bool } from 'prop-types'
+import classnames from 'classnames'
 import Icon from '@component/Icon'
 
 import theme from './theme.css'
 
 
 class JobScheduleEvent extends React.Component {
+  state = {
+    open: false,
+  }
+
+  handleClick() {
+    this.setState({ open: !this.state.open })
+  }
+
   render() {
     const { event } = this.props
     if (!event) return null
     return (
       <div>
-        <div className={theme.event}>
+        <button className={theme.event} onClick={() => this.handleClick()}>
           <h2 className={event.type && theme[event.type]}>{event.date}</h2>
           <div className={theme.eventDetails}>
               <h5>{event.location} @ {event.time}</h5>
               <h6>{event.address}</h6>
           </div>
           <Icon primary use="near_me" />
-        </div>
-        <div className={theme.map}>
+        </button>
+        <div className={classnames(theme.map, this.state.open && theme.open)}>
           MAP
         </div>
       </div>
