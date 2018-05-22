@@ -32,19 +32,23 @@ const WeekRow = ({ day, schedule, onChange }) => {
         </Button>
       </div>
       <div className={theme.dropdowns}>
-        <Dropdown
-          value={schedule.from}
-          onChange={value => onChange('from', value, day)}
-          options={time}
-          box={false}
-        />
+        <div className={theme.dropdown}>
+          <Dropdown
+            value={schedule.from}
+            onChange={value => onChange('from', value, day)}
+            options={time}
+            box={false}
+          />
+        </div>
         <Icon secondary use="arrow_forward" />
-        <Dropdown
-          value={schedule.to}
-          onChange={value => onChange('to', value, day)}
-          options={time}
-          box={false}
-        />
+        <div className={theme.dropdown}>
+          <Dropdown
+            value={schedule.to}
+            onChange={value => onChange('to', value, day)}
+            options={time}
+            box={false}
+          />
+        </div>
       </div>
     </div>
   )

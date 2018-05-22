@@ -6,10 +6,17 @@
   span {
     flex: 1;
   }
+  .dropdown {
+    margin-top: -2em;
+  }
 }
 
 .inputRow + .inputRow {
   margin-top: 2em;
+}
+
+.scheduler {
+  margin: 2em 0 2em 0;
 }
 
 .divider {

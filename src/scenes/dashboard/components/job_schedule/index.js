@@ -113,12 +113,14 @@ class JobSchedule extends React.Component {
         </div>
         <div className={theme.inputRow}>
           <span>Days out I can be scheduled</span>
-          <Dropdown
-            value={state.daysScheduled}
-            onChange={value => this.handleChange('daysScheduled', value)}
-            options={this.days}
-            box={false}
-          />
+          <div className={theme.dropdown}>
+            <Dropdown
+              value={state.daysScheduled}
+              onChange={value => this.handleChange('daysScheduled', value)}
+              options={this.days}
+              box={false}
+            />
+          </div>
         </div>
         <div className={theme.scheduler}>
           {this.daysOfWeek.map((day, index) => (
