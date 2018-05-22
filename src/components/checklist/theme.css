@@ -6,6 +6,7 @@
 .ul {
   list-style-type: none;
   padding-left: 28px;
+
   .li {
     position: relative;
     font-size: 14px;
@@ -39,7 +40,5 @@
       padding-left: 3px;
       padding-top: 1px;
     }
-
   }
-
 }
