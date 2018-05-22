@@ -1,5 +1,5 @@
 import React from 'react'
-import { oneOfType, object, bool } from 'prop-types'
+import { object } from 'prop-types'
 import classnames from 'classnames'
 import Icon from '@component/icon'
 import Map from '@component/map'
@@ -41,15 +41,8 @@ class JobScheduleEvent extends React.Component {
   }
 }
 
-JobScheduleEvent.defaultProps = ({
-  event: false,
-})
-
 JobScheduleEvent.propTypes = ({
-  event: oneOfType([
-    object,
-    bool,
-  ]),
+  event: object.isRequired,
 })
 
 export default JobScheduleEvent
