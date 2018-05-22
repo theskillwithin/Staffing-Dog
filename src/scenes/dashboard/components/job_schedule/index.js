@@ -2,9 +2,9 @@ import React from 'react'
 import Card from '@component/card'
 import Switch from '@component/switch'
 import Dropdown from '@component/dropdown'
-import Icon from '@component/Icon'
 
 import WeekRow from './weeks'
+import Event from './event'
 import theme from './theme.css'
 
 
@@ -133,14 +133,7 @@ class JobSchedule extends React.Component {
         <hr className={theme.divider} />
         <div className={theme.events}>
           {this.events.map((event, index) => (
-            <div key={`${index + 1}`} className={theme.event}>
-              <h2 className={event.type && theme[event.type]}>{event.date}</h2>
-              <div className={theme.eventDetails}>
-                  <h5>{event.location} @ {event.time}</h5>
-                  <h6>{event.address}</h6>
-              </div>
-              <Icon primary use="near_me" />
-            </div>
+            <Event key={`${index + 1}`} event={event} />
           ))}
         </div>
       </Card>
