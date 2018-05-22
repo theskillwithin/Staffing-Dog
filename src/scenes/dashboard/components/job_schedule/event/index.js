@@ -12,7 +12,7 @@ class JobScheduleEvent extends React.Component {
     open: false,
   }
 
-  handleClick() {
+  handleClick = () => {
     this.setState({ open: !this.state.open })
   }
 
@@ -21,7 +21,7 @@ class JobScheduleEvent extends React.Component {
     if (!event) return null
     return (
       <div>
-        <button className={theme.event} onClick={() => this.handleClick()}>
+        <button className={theme.event} onClick={this.handleClick}>
           <h2 className={event.type && theme[event.type]}>{event.date}</h2>
           <div className={theme.eventDetails}>
               <h5>{event.location} @ {event.time}</h5>
