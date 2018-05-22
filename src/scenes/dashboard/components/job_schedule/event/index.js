@@ -1,7 +1,8 @@
 import React from 'react'
 import { oneOfType, object, bool } from 'prop-types'
 import classnames from 'classnames'
-import Icon from '@component/Icon'
+import Icon from '@component/icon'
+import Map from '@component/map'
 
 import theme from './theme.css'
 
@@ -29,7 +30,11 @@ class JobScheduleEvent extends React.Component {
           <Icon primary use="near_me" />
         </button>
         <div className={classnames(theme.map, this.state.open && theme.open)}>
-          MAP
+          <Map
+            isMarkerShown
+            position={{ lat: 40.764411, lng: -111.891559 }}
+            defaultCenter={{ lat: 40.764411, lng: -111.891559 }}
+          />
         </div>
       </div>
     )
@@ -41,10 +46,10 @@ JobScheduleEvent.defaultProps = ({
 })
 
 JobScheduleEvent.propTypes = ({
-  event: oneOfType({
+  event: oneOfType([
     object,
     bool,
-  }),
+  ]),
 })
 
 export default JobScheduleEvent
