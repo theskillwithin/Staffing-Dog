@@ -6,7 +6,7 @@ import { Switch as MSwitch } from 'rmwc/Switch'
 // import theme from './theme.css'
 
 
-const Button = ({ checked, onChange, children, left, flip, ...props }) => (
+const Switch = ({ checked, onChange, children, left, flip, ...props }) => (
   <div className={flip && 'mdc-switch-flip'}>
     <MSwitch
       checked={checked}
@@ -18,7 +18,7 @@ const Button = ({ checked, onChange, children, left, flip, ...props }) => (
   </div>
 )
 
-Button.defaultProps = {
+Switch.defaultProps = {
   checked: false,
   onChange: false,
   children: false,
@@ -26,7 +26,7 @@ Button.defaultProps = {
   flip: false,
 }
 
-Button.propTypes = {
+Switch.propTypes = {
   checked: bool,
   left: bool,
   onChange: oneOfType([
@@ -41,4 +41,4 @@ Button.propTypes = {
   flip: bool,
 }
 
-export default Button
+export default Switch
