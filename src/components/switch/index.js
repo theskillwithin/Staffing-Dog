@@ -3,7 +3,6 @@ import { bool, func, node, string, oneOfType } from 'prop-types'
 import { Switch as MSwitch } from 'rmwc/Switch'
 
 // import './styles.css'
-// import theme from './theme.css'
 
 
 const Switch = ({ checked, onChange, children, left, flip, ...props }) => (
