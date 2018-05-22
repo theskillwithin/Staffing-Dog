@@ -37,6 +37,7 @@ const WeekRow = ({ day, schedule, onChange }) => (
           onChange={value => onChange('from', value, day)}
           options={time}
           box={false}
+          disabled={!schedule.active}
         />
       </div>
       <Icon secondary use="arrow_forward" />
@@ -46,6 +47,7 @@ const WeekRow = ({ day, schedule, onChange }) => (
           onChange={value => onChange('to', value, day)}
           options={time}
           box={false}
+          disabled={!schedule.active}
         />
       </div>
     </div>
