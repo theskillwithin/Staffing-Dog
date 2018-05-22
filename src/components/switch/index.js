@@ -19,7 +19,6 @@ const Switch = ({ checked, onChange, children, left, flip, ...props }) => (
 
 Switch.defaultProps = {
   checked: false,
-  onChange: false,
   children: false,
   left: false,
   flip: false,
@@ -28,10 +27,7 @@ Switch.defaultProps = {
 Switch.propTypes = {
   checked: bool,
   left: bool,
-  onChange: oneOfType([
-    func,
-    bool,
-  ]),
+  onChange: func.isRequired,
   children: oneOfType([
     string,
     node,
