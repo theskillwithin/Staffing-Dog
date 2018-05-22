@@ -1,5 +1,5 @@
 import React from 'react'
-import { oneOfType, string, bool, object, func } from 'prop-types'
+import { string, object, func } from 'prop-types'
 import classnames from 'classnames'
 import Dropdown from '@component/dropdown'
 import Button from '@component/button'
@@ -52,25 +52,10 @@ const WeekRow = ({ day, schedule, onChange }) => (
   </div>
 )
 
-WeekRow.defaultProps = ({
-  day: false,
-  schedule: false,
-  onChange: false,
-})
-
 WeekRow.propTypes = ({
-  day: oneOfType([
-    string,
-    bool,
-  ]),
-  schedule: oneOfType([
-    object,
-    bool,
-  ]),
-  onChange: oneOfType([
-    func,
-    bool,
-  ]),
+  day: string.isRequired,
+  schedule: object.isRequired,
+  onChange: func.isRequired,
 })
 
 export default WeekRow
