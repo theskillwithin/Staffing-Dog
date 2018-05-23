@@ -1,0 +1,44 @@
+@import '../../styles/config.css';
+
+:root {
+}
+
+.ul {
+  list-style-type: none;
+  padding-left: 28px;
+
+  .li {
+    position: relative;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.21;
+    color: rgb(31, 39, 64);
+    padding: 1em 0 1em 1.5em;
+    margin: 1em 0;
+
+    &:before {
+      content: '';
+      position: absolute;
+      left: -28px;
+      top: 50%;
+      transform: translateY(-50%);
+      display: block;
+      border-radius: 50px;
+      height: 28px;
+      width:  28px;
+      border: solid 2px #bbc1d1;
+    }
+
+    &.checked:before {
+      font-family: 'Material Icons';
+      content: 'check';
+      -webkit-font-feature-settings: 'liga';
+      color: white;
+      background-color: var(--sd-green);
+      border: solid 2px var(--sd-green);
+      font-size: 1.3em;
+      padding-left: 3px;
+      padding-top: 1px;
+    }
+  }
+}
