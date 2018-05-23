@@ -54,10 +54,10 @@ const WeekRow = ({ day, schedule, onChange }) => (
   </div>
 )
 
-WeekRow.propTypes = ({
+WeekRow.propTypes = {
   day: string.isRequired,
   schedule: object.isRequired,
   onChange: func.isRequired,
-})
+}
 
 export default WeekRow

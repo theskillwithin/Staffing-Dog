@@ -16,7 +16,7 @@ const Map = withScriptjs(
   ),
 )
 
-Map.defaultProps = ({
+Map.defaultProps = {
   isMarkerShown: false,
   defaultZoom: 8,
   defaultCenter: { lat: -34.397, lng: 150.644 },
@@ -25,9 +25,9 @@ Map.defaultProps = ({
   loadingElement: <div style={{ height: '100%' }} />,
   containerElement: <div style={{ height: '332px' }} />,
   mapElement: <div style={{ height: '100%' }} />,
-})
+}
 
-Map.propTypes = ({
+Map.propTypes = {
   isMarkerShown: bool,
   defaultZoom: number,
   defaultCenter: object,
@@ -35,6 +35,6 @@ Map.propTypes = ({
     object,
     bool,
   ]),
-})
+}
 
 export default Map

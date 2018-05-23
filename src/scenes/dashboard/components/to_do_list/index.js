@@ -28,15 +28,15 @@ const ToDoList = () => (
   </Card>
 )
 
-ToDoList.defaultProps = ({
+ToDoList.defaultProps = {
   list: false,
-})
+}
 
-ToDoList.propTypes = ({
+ToDoList.propTypes = {
   list: oneOfType([
     array,
     bool,
   ]),
-})
+}
 
 export default ToDoList

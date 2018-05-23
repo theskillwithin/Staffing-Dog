@@ -41,8 +41,8 @@ class JobScheduleEvent extends React.Component {
   }
 }
 
-JobScheduleEvent.propTypes = ({
+JobScheduleEvent.propTypes = {
   event: object.isRequired,
-})
+}
 
 export default JobScheduleEvent
