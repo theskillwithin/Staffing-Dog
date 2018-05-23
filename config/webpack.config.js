@@ -14,6 +14,8 @@ const paths = {
 
 const alias = {
   '@sd': path.resolve(root, 'src'),
+  '@scene': path.resolve(root, 'src/scenes'),
+  '@component': path.resolve(root, 'src/components'),
 }
 
 

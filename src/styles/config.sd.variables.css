@@ -13,9 +13,10 @@
   --sd-black: #000000;
   --sd-gray: rgb(187, 193, 209);
   --sd-grayLight: color(var(--sd-gray) tint(25%));
+  --sd-grayLighter: rgb(152, 160, 178);
   --sd-blue: #0072FF;
   --sd-blueGray: #EEF1F6;
-  --sd-green: #33CB74;
+  --sd-green: #33CB74;  /* rgb(51, 203, 116) */
   --sd-red: #ED4F32;
   --sd-purple: #9D53FF;
   --sd-orange: #EF7229;
@@ -24,5 +25,6 @@
   --sd-primary: var(--sd-blue);
   --sd-borderColor: rgb(228, 230, 237); /*  rgba(187, 193, 209, 0.4) */
   --sd-shadowColorSolid: rgb(93, 98, 107);
-  --sd-shadowColor: rgba(93, 98, 107, 0.1)
+  --sd-shadowColor: rgba(93, 98, 107, 0.1);
+  --sd-switchBg: rgb(227, 230, 236);
 }
