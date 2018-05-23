@@ -9,7 +9,7 @@ import Header from './components/header'
 
 const Settings = () => (
   <div className={classnames(theme.pageContent)}>
-    <Card>
+    <Card type="large">
       <Header />
     </Card>
   </div>
