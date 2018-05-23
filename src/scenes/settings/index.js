@@ -1,13 +1,17 @@
 import React from 'react'
 import classnames from 'classnames'
+import Card from '@component/card'
 
-import Card from '../../components/card'
 import theme from '../app/theme.css'
+
+import Header from './components/header'
 
 
 const Settings = () => (
   <div className={classnames(theme.pageContent)}>
-    <Card><h2>Settings</h2></Card>
+    <Card>
+      <Header />
+    </Card>
   </div>
 )
 
