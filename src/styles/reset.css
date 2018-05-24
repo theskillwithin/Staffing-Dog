@@ -19,6 +19,10 @@ body {
 
 :global {
 
+  .mdc-tab {
+    text-transform: none;
+  }
+
   .mdc-switch {
 
     .mdc-switch__knob {

@@ -1,0 +1,12 @@
+@import '../../styles/config.css';
+
+.tabBar {
+
+  &.underline {
+    border-bottom: 2px inset var(--sd-borderColor);
+
+    span {
+      margin-bottom: -2px;
+    }
+  }
+}

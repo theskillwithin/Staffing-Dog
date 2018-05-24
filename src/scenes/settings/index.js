@@ -1,11 +1,12 @@
 import React from 'react'
 import classnames from 'classnames'
-import { TabBar, Tab } from 'rmwc/Tabs'
+import { TabBar, Tab } from '@component/tab_bar'
 import Card from '@component/card'
 
-import theme from '../app/theme.css'
+import appTheme from '../app/theme.css'
 
 import Header from './components/header'
+// import theme from './theme.css'
 
 
 class Settings extends React.Component {
@@ -15,12 +16,12 @@ class Settings extends React.Component {
 
   render() {
     return (
-      <div className={classnames(theme.pageContent)}>
+      <div className={classnames(appTheme.pageContent)}>
         <Card type="large">
           <Header />
           <TabBar
             activeTabIndex={this.state.activeTabIndex}
-            onChange={evt => this.setState({ activeTabIndex: evt.target.value })}
+            onChange={tab => this.setState({ activeTabIndex: tab })}
           >
             <Tab>About Me</Tab>
             <Tab>My Resume</Tab>

@@ -7,4 +7,6 @@
 :root {
   --mdc-theme-primary: var(--sd-primary) !important;
   --mdc-theme-secondary: var(--sd-gray) !important;
+  --mdc-theme-text-primary-on-background: var(--sd-primary) !important;
+  --mdc-theme-text-primary-on-light: var(--sd-primary) !important;
 }
