@@ -1,12 +1,22 @@
 @import '../../styles/config.css';
 
 .tabBar {
+  font-size: 15px;
 
   &.underline {
     border-bottom: 2px inset var(--sd-borderColor);
 
     span {
       margin-bottom: -2px;
+    }
+  }
+
+  &.left {
+    width: 100%;
+    display: flex;
+
+    > div {
+      line-height: 2.95rem;
     }
   }
 }
