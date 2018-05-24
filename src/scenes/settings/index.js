@@ -6,6 +6,7 @@ import Card from '@component/card'
 import appTheme from '../app/theme.css'
 
 import Header from './components/header'
+import AboutMe from './components/about_me'
 // import theme from './theme.css'
 
 
@@ -30,7 +31,7 @@ class Settings extends React.Component {
             <Tab>Security</Tab>
           </TabBar>
 
-          {this.state.activeTabIndex === 0 && <h1>About Me</h1>}
+          {this.state.activeTabIndex === 0 && <AboutMe />}
           {this.state.activeTabIndex === 1 && <h1>My Resume</h1>}
           {this.state.activeTabIndex === 2 && <h1>References</h1>}
           {this.state.activeTabIndex === 3 && <h1>Notifications</h1>}
