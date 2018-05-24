@@ -17,6 +17,26 @@
 
     > div {
       line-height: 2.95rem;
+      min-width: auto;
+    }
+  }
+
+  &.exact {
+
+    > div {
+      min-width: auto;
+      padding-left: 4px;
+      padding-right: 4px;
+      margin-right: 1.2em;
+      margin-left: 1.2em;
+
+      &:first-child {
+        margin-left: 0;
+      }
+
+      &:last-child {
+        margin-right: 0;
+      }
     }
   }
 }
