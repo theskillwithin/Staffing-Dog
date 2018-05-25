@@ -7,16 +7,43 @@ import theme from './theme.css'
 
 class SettingsAboutMe extends React.Component {
   state = {
-    form: {},
+    form: {
+      files: [],
+      filesError: false,
+    },
+  }
+
+  onDrop = (files) => {
+    // if (rejected) {
+    //   return this.setState({ filesError: 'must be a jpeg or png' })
+    // }
+
+    console.log(files)
+
+    this.setState(
+      ({ form }) => ({ form: { ...form, filesError: false } }),
+    )
+
+    return this.setState(
+      ({ form }) => ({ form: { ...form, files } }),
+    )
   }
 
   render() {
+    const { form } = this.state
     return (
       <div className={theme.about}>
         <div className={theme.photo}>
-          <Dropzone className={theme.dropzone}>
+          <Dropzone
+            className={theme.dropzone}
+            accept="image/jpeg, image/png"
+            onDrop={this.onDrop}
+          >
             <h5>Profile Photo</h5>
-            <ProfilePhotoSVG />
+            {form.files && form.files.length
+              ? (<img src={form.files[0].preview} alt={form.files[0].name} />)
+              : <ProfilePhotoSVG />
+            }
             <span>Add Photo</span>
           </Dropzone>
           <div>
@@ -30,6 +57,7 @@ class SettingsAboutMe extends React.Component {
               not shared with anyone without your explicit consent.
               </li>
             </ul>
+            <p>{this.state.filesError}</p>
           </div>
         </div>
       </div>
