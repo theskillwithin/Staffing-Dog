@@ -3,6 +3,7 @@ import Dropzone from 'react-dropzone'
 import ProfilePhotoSVG from '@component/svg/ProfilePhoto'
 import Input from '@component/input'
 import Button from '@component/button'
+import Dropdown from '@component/dropdown'
 
 import EmailVerified from './email_verified'
 import theme from './theme.css'
@@ -32,6 +33,7 @@ class SettingsAboutMe extends React.Component {
     verified: true,
   }
 
+
   onDrop = (files, rejected) => {
     if (rejected && rejected.length) {
       return this.setState({ filesError: 'must be a jpeg or png' })
@@ -43,6 +45,22 @@ class SettingsAboutMe extends React.Component {
       ({ form }) => ({ form: { ...form, files } }),
     )
   }
+
+  states = [
+    { label: 'CA', value: 'CA' },
+    { label: 'UT', value: 'UT' },
+    { label: 'OR', value: 'OR' },
+  ]
+
+  availabilitys = [
+    { label: 'Never', value: '0' },
+    { label: 'Forever', value: '1' },
+  ]
+
+  specialties = [
+    { label: 'good with kids', value: '1' },
+    { label: 'bad with kids', value: '0' },
+  ]
 
   handleChange = (field, value) => {
     this.setState(
@@ -123,10 +141,11 @@ class SettingsAboutMe extends React.Component {
               value={form.city}
               onChange={value => this.handleChange('city', value)}
             />
-            <Input
+            <Dropdown
               placeholder="State"
               value={form.state}
               onChange={value => this.handleChange('state', value)}
+              options={this.states}
             />
             <Input
               placeholder="Postal Code"
@@ -141,10 +160,11 @@ class SettingsAboutMe extends React.Component {
               value={form.profession}
               onChange={value => this.handleChange('profession', value)}
             />
-            <Input
+            <Dropdown
               placeholder="Availability"
               value={form.availability}
               onChange={value => this.handleChange('availability', value)}
+              options={this.availabilitys}
             />
             <Input
               placeholder="Hourly Wage"
@@ -167,10 +187,11 @@ class SettingsAboutMe extends React.Component {
               value={form.dentalLicenseNumber}
               onChange={value => this.handleChange('dentalLicenseNumber', value)}
             />
-            <Input
+            <Dropdown
               placeholder="Specialty"
               value={form.specialty}
               onChange={value => this.handleChange('specialty', value)}
+              options={this.specialties}
             />
           </div>
           <div className={theme.inputRow}>
