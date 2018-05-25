@@ -1,4 +1,5 @@
 import React from 'react'
+import Dropzone from 'react-dropzone'
 import ProfilePhotoSVG from '@component/svg/ProfilePhoto'
 
 import theme from './theme.css'
@@ -13,11 +14,11 @@ class SettingsAboutMe extends React.Component {
     return (
       <div className={theme.about}>
         <div className={theme.photo}>
-          <div className={theme.dropzone}>
+          <Dropzone className={theme.dropzone}>
             <h5>Profile Photo</h5>
             <ProfilePhotoSVG />
             <span>Add Photo</span>
-          </div>
+          </Dropzone>
           <div>
             <ul>
               <li>
