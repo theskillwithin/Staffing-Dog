@@ -19,14 +19,14 @@ class SettingsAboutMe extends React.Component {
       phone: '',
       street: '',
       city: '',
-      state: '',
+      state: 'CA',
       postal: '',
       profession: '',
-      availability: '',
+      availability: '0',
       wage: '',
       description: '',
       dentalLicenseNumber: '',
-      specialty: '',
+      specialty: '0',
       insuranceExpiration: '',
     },
     filesError: false,
@@ -99,7 +99,7 @@ class SettingsAboutMe extends React.Component {
             <p>{this.state.filesError}</p>
           </div>
         </div>
-        <div className={theme.formContainer}>
+        <form className={theme.formContainer}>
           <div className={theme.inputRow}>
             <Input
               label="First Name"
@@ -202,7 +202,7 @@ class SettingsAboutMe extends React.Component {
             />
             <Button primary round>Upload Insurance Declaration</Button>
           </div>
-        </div>
+        </form>
       </div>
     )
   }
