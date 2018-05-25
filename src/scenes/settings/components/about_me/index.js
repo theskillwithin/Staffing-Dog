@@ -102,19 +102,19 @@ class SettingsAboutMe extends React.Component {
         <div className={theme.formContainer}>
           <div className={theme.inputRow}>
             <Input
-              placeholder="First Name"
+              label="First Name"
               value={form.firstName}
               onChange={value => this.handleChange('firstName', value)}
             />
             <Input
-              placeholder="Last Name"
+              label="Last Name"
               value={form.lastName}
               onChange={value => this.handleChange('lastName', value)}
             />
           </div>
           <div className={theme.inputRow}>
             <Input
-              placeholder="Email"
+              label="Email"
               value={form.email}
               onChange={value => this.handleChange('email', value)}
             />
@@ -122,7 +122,7 @@ class SettingsAboutMe extends React.Component {
           </div>
           <div className={theme.inputRow}>
             <Input
-              placeholder="Phone Number"
+              label="Phone Number"
               value={form.phone}
               onChange={value => this.handleChange('phone', value)}
             />
@@ -130,25 +130,25 @@ class SettingsAboutMe extends React.Component {
           </div>
           <div className={theme.inputRow}>
             <Input
-              placeholder="Street Address"
+              label="Street Address"
               value={form.street}
               onChange={value => this.handleChange('street', value)}
             />
           </div>
           <div className={theme.inputRow}>
             <Input
-              placeholder="City"
+              label="City"
               value={form.city}
               onChange={value => this.handleChange('city', value)}
             />
             <Dropdown
-              placeholder="State"
+              label="State"
               value={form.state}
               onChange={value => this.handleChange('state', value)}
               options={this.states}
             />
             <Input
-              placeholder="Postal Code"
+              label="Postal Code"
               value={form.postal}
               onChange={value => this.handleChange('postal', value)}
             />
@@ -156,25 +156,25 @@ class SettingsAboutMe extends React.Component {
           <div className={theme.spacer} />
           <div className={theme.inputRow}>
             <Input
-              placeholder="Profession"
+              label="Profession"
               value={form.profession}
               onChange={value => this.handleChange('profession', value)}
             />
             <Dropdown
-              placeholder="Availability"
+              label="Availability"
               value={form.availability}
               onChange={value => this.handleChange('availability', value)}
               options={this.availabilitys}
             />
             <Input
-              placeholder="Hourly Wage"
+              label="Hourly Wage"
               value={form.wage}
               onChange={value => this.handleChange('wage', value)}
             />
           </div>
           <div className={theme.inputRow}>
             <Input
-              placeholder="Profile Description"
+              label="Profile Description"
               value={form.description}
               onChange={value => this.handleChange('description', value)}
               textarea
@@ -183,12 +183,12 @@ class SettingsAboutMe extends React.Component {
           <div className={theme.spacer} />
           <div className={theme.inputRow}>
             <Input
-              placeholder="Dental License Number"
+              label="Dental License Number"
               value={form.dentalLicenseNumber}
               onChange={value => this.handleChange('dentalLicenseNumber', value)}
             />
             <Dropdown
-              placeholder="Specialty"
+              label="Specialty"
               value={form.specialty}
               onChange={value => this.handleChange('specialty', value)}
               options={this.specialties}
@@ -196,7 +196,7 @@ class SettingsAboutMe extends React.Component {
           </div>
           <div className={theme.inputRow}>
             <Input
-              placeholder="Insurance Expiration"
+              label="Insurance Expiration"
               value={form.insuranceExpiration}
               onChange={value => this.handleChange('insuranceExpiration', value)}
             />
