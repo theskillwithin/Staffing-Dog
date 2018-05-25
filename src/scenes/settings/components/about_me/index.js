@@ -9,20 +9,16 @@ class SettingsAboutMe extends React.Component {
   state = {
     form: {
       files: [],
-      filesError: false,
     },
+    filesError: false,
   }
 
-  onDrop = (files) => {
-    // if (rejected) {
-    //   return this.setState({ filesError: 'must be a jpeg or png' })
-    // }
+  onDrop = (files, rejected) => {
+    if (rejected && rejected.length) {
+      return this.setState({ filesError: 'must be a jpeg or png' })
+    }
 
-    console.log(files)
-
-    this.setState(
-      ({ form }) => ({ form: { ...form, filesError: false } }),
-    )
+    this.setState({ filesError: false })
 
     return this.setState(
       ({ form }) => ({ form: { ...form, files } }),
