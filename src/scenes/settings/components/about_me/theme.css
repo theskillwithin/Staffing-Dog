@@ -68,4 +68,18 @@
 
 .formContainer {
   max-width: 520px;
+  width: 100%;
 }
+
+.inputRow {
+  display: flex;
+
+  > * {
+    flex: 1;
+  }
+
+  > * + * {
+    margin-left: 1.25em;
+  }
+}
+
