@@ -69,10 +69,15 @@
 .formContainer {
   max-width: 520px;
   width: 100%;
+
+  .spacer {
+    margin-bottom: 3.75em;
+  }
 }
 
 .inputRow {
   display: flex;
+  align-items: center;
 
   > * {
     flex: 1;

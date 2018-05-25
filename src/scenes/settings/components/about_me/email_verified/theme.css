@@ -1,0 +1,17 @@
+.verify {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 14px;
+  font-weight: 500;
+  height: 3em;
+  border-radius: 50px;
+  color: var(--sd-red);
+  border: solid 1px var(--sd-red);
+  transition: color, border 300ms;
+
+  &.verified {
+    color: var(--sd-green);
+    border: solid 1px var(--sd-green);
+  }
+}
