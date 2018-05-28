@@ -1,0 +1,110 @@
+@import '../../../../styles/config.css';
+
+.photo {
+  display: flex;
+  align-items: center;
+  margin: 2.5em 0;
+
+  .dropzone {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: space-between;
+    width: 123px;
+    margin-right: 3em;
+    cursor: pointer;
+
+    h5 {
+      margin: 0 0 0.4em 0;
+      font-size: 14px;
+      font-weight: 500;
+      line-height: 1.21;
+      text-align: center;
+      color: var(--sd-grayLighter);
+    }
+
+    span {
+      margin-top: 10px;
+      font-size: 14px;
+      line-height: 1.14;
+      text-align: center;
+      color: var(--sd-blue);
+    }
+  }
+
+  ul {
+    font-size: 14px;
+    line-height: 1.43;
+    color: var(--sd-grayLighter);
+    list-style: none;
+
+    li {
+      position: relative;
+      max-width: 487px;
+      text-indent: -.7em;
+      padding-left: 1em;
+    }
+
+    li + li {
+      margin-top: 2em;
+    }
+
+    li:before {
+      content: '';
+      display: block;
+      position: absolute;
+      left: -1em;
+      top: 6px;
+      height: 8px;
+      width: 8px;
+      border: solid 1px var(--sd-blue);
+      border-radius: 50%;
+    }
+  }
+}
+
+
+.formContainer {
+  max-width: 520px;
+  width: 100%;
+
+  .spacer {
+    margin-bottom: 3.75em;
+  }
+}
+
+.inputRow {
+  display: flex;
+  margin-bottom: 0.55em;
+
+  textarea {
+    min-height: 200px;
+  }
+
+  button {
+    margin-top: 1px;
+    min-height: 48px;
+  }
+
+  > * {
+    flex: 1;
+  }
+
+  > * + * {
+    margin-left: 1.25em;
+  }
+
+  .verifyPhone {
+    max-width: 154px;
+    margin-left: 26px;
+    border-radius: 50px;
+  }
+
+  &.withButton {
+    button {
+      max-width: 18em;
+    }
+  }
+
+}
+

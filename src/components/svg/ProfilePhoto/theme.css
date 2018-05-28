@@ -1,0 +1,15 @@
+@import '../../../styles/config.css';
+
+.svg {
+  :global {
+
+    .cls-1, .cls-2 {
+      fill: var(--sd-gray);
+    }
+
+    .cls-1 {
+      opacity: 0.381;
+    }
+  }
+}
+

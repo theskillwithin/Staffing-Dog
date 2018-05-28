@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { object, array, func } from 'prop-types'
+import { object, func, array, string, shape } from 'prop-types'
 import classnames from 'classnames'
 import find from 'lodash/find'
 import map from 'lodash/map'
@@ -26,9 +26,7 @@ class Steps extends Component {
     )
   }
 
-  onChange = (name, value) => {
-    this.props.setValue(name, value)
-  }
+  onChange = (name, value) => this.props.setValue(name, value)
 
   getValue = name => this.props.stepValues[name] || ''
 
@@ -127,7 +125,11 @@ class Steps extends Component {
 Steps.defaultProps = {}
 
 Steps.propTypes = {
-  match: object.isRequired,
+  match: shape({
+    params: shape({
+      step: string.isRequired,
+    }),
+  }),
   steps: array.isRequired,
   stepValues: object.isRequired,
   setValue: func.isRequired,

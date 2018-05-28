@@ -1,5 +1,5 @@
 import React from 'react'
-import { object, array, bool, func } from 'prop-types'
+import { object, bool, func, array, string, shape } from 'prop-types'
 import find from 'lodash/find'
 import classnames from 'classnames'
 
@@ -23,41 +23,35 @@ const ActionNav = ({
 
   return (
     <div className={theme.actionNav}>
-      {previousStep && previousStep.step
-        ? (
-          <div className={classnames(theme.step, theme.previousStep)}>
-            <Button
-              onClick={() => goToStep({
-                currentStep: currentStep.step,
-                nextStep: previousStep.step,
-                history,
-              })}
-              disabled={savingStep || loadingNextStep}
-              secondary
-            >
-              <span><Icon inButton="left" use="arrow_back" /> Previous Step</span>
-            </Button>
-          </div>
-        )
-        : null
-      }
-      {currentStep.nextStep
-        ? (
-          <div className={classnames(theme.step, theme.nextStep)}>
-            <Button
-              onClick={() => goToStep({
-                currentStep: currentStep.step,
-                nextStep: currentStep.nextStep,
-                history,
-              })}
-              disabled={savingStep || loadingNextStep}
-            >
-              <span>Next Step <Icon inButton="right" use="arrow_forward" /></span>
-            </Button>
-          </div>
-        )
-        : null
-      }
+      {previousStep && previousStep.step && (
+        <div className={classnames(theme.step, theme.previousStep)}>
+          <Button
+            onClick={() => goToStep({
+              currentStep: currentStep.step,
+              nextStep: previousStep.step,
+              history,
+            })}
+            disabled={savingStep || loadingNextStep}
+            secondary
+          >
+            <span><Icon inButton="left" use="arrow_back" /> Previous Step</span>
+          </Button>
+        </div>
+      )}
+      {currentStep.nextStep && (
+        <div className={classnames(theme.step, theme.nextStep)}>
+          <Button
+            onClick={() => goToStep({
+              currentStep: currentStep.step,
+              nextStep: currentStep.nextStep,
+              history,
+            })}
+            disabled={savingStep || loadingNextStep}
+          >
+            <span>Next Step <Icon inButton="right" use="arrow_forward" /></span>
+          </Button>
+        </div>
+      )}
     </div>
   )
 }
@@ -68,7 +62,11 @@ ActionNav.defaultProps = {
 }
 
 ActionNav.propTypes = {
-  match: object.isRequired,
+  match: shape({
+    params: shape({
+      step: string.isRequired,
+    }),
+  }),
   history: object.isRequired,
   steps: array.isRequired,
   savingStep: bool,

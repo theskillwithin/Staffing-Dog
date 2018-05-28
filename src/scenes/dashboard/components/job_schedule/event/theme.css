@@ -1,0 +1,79 @@
+@import '../../../../../styles/config.css';
+
+.event {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  margin-left: -2em;
+  width: calc(100% + 4em);
+  padding: 0 1em;
+  border-bottom: solid 1px var(--sd-borderColor);
+}
+
+.event h2 {
+  position: relative;
+  padding-left: 1em;
+  font-size: 26px;
+  font-weight: normal;
+  line-height: 1.23;
+}
+
+.event h2:before {
+  content: '';
+  display: block;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 0;
+  border-radius: 2px;
+  width: 4px;
+  height: 60px;
+}
+
+.red:before {
+
+  background-color: var(--sd-red);
+}
+
+.blue:before {
+  background-color: var(--sd-blue);
+}
+
+.grey:before {
+  background-color: var(--sd-gray);
+}
+
+.eventDetails {
+  flex: 1;
+  margin-left: 2em;
+  h5 {
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.21;
+    margin: 0 0 4px 0;
+  }
+  h6 {
+    font-size: 14px;
+    line-height: 1.14;
+    font-weight: 100;
+    color: var(--sd-grayLighter);
+    margin: 2px 0 0 0;
+  }
+}
+
+
+.map {
+  visibility: hidden;
+  max-height: 0;
+  /*transition: all 900ms;*/
+  width: calc(100% + 3em);
+  margin-left: -1.5em;
+  &.open {
+    max-height: 500px;
+    visibility: visible;
+    border-bottom: solid 1px var(--sd-borderColor);
+  }
+}

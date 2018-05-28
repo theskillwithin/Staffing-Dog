@@ -1,0 +1,36 @@
+@import '../../../../styles/config';
+
+.inputRow {
+  margin: 1em 0;
+  display: flex;
+  font-size: 14px;
+  font-weight: 600;
+  span {
+    flex: 1;
+  }
+  .dropdown {
+    margin-top: -2em;
+  }
+}
+
+.inputRow + .inputRow {
+  margin-top: 2em;
+}
+
+.scheduler {
+  margin: 2em 0 2em 0;
+}
+
+.divider {
+  border-top: 0;
+  border-bottom: solid 1px var(--sd-borderColor);
+  width: calc(100% + 3em);
+  margin-left: -1.5em;
+}
+
+.events {
+  display: flex;
+  flex-direction: column;
+
+}
+
