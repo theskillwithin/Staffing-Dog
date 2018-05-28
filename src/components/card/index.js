@@ -1,5 +1,6 @@
 import React from 'react'
 import { node, string, func, object, number, bool, oneOfType } from 'prop-types'
+import classnames from 'classnames'
 import Icon from '@sd/components/icon'
 import Button from '@sd/components/button'
 import LoadingBar from '@sd/components/loading_bar'
@@ -16,8 +17,9 @@ const Card = ({
   actionCb,
   actionProps,
   progress,
+  type,
 }) => (
-  <div className={theme.card}>
+  <div className={classnames(theme.card, type && theme[type])}>
     {(title || header) && (
       <header className={theme.cardHeader}>
         {icon && !header && <div className={theme.icon}><Icon primary use={icon} /></div>}
@@ -51,6 +53,7 @@ Card.defaultProps = {
   actionCb: false,
   actionProps: false,
   progress: false,
+  type: false,
 }
 
 Card.propTypes = {
@@ -78,6 +81,10 @@ Card.propTypes = {
   ]),
   progress: oneOfType([
     number,
+    bool,
+  ]),
+  type: oneOfType([
+    string,
     bool,
   ]),
 }

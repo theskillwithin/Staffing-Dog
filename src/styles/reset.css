@@ -19,6 +19,47 @@ body {
 
 :global {
 
+  .mdc-text-field--outlined .mdc-floating-label--float-above {
+    transform: translateY(-175%) scale(0.75) !important;
+  }
+
+  .mdc-text-field {
+    margin-top: inherit !important;
+    margin-bottom: inherit !important;
+    height: 51px !important;
+
+    &.mdc-text-field--textarea {
+      height: auto !important;
+    }
+
+    label {
+      line-height: 0.85rem !important;
+    }
+  }
+
+  .mdc-select--box:not(.mdc-select--disabled) {
+    background-color: #fff !important;
+  }
+
+  .mdc-select--box {
+    position: relative;
+    height: 48px !important;
+    .mdc-select__native-control {
+      padding-top: 15px;
+      height: 48px !important;
+      border: 1px solid var(--sd-gray) !important;
+      border-radius: 3px !important;
+
+      &:hover {
+        border: 1px solid rgba(0, 0, 0, .87) !important;
+      }
+    }
+  }
+
+  .mdc-tab {
+    text-transform: none !important;
+  }
+
   .mdc-switch {
 
     .mdc-switch__knob {
@@ -58,7 +99,7 @@ body {
   }
 
   .mdc-button {
-    text-transform: inherit;
+    text-transform: inherit !important;
   }
 
   .mdc-text-field {
@@ -91,6 +132,10 @@ body {
   .mdc-select {
     &--box {
       border-radius: 4px;
+        
+      .mdc-floating-label {
+        line-height: 1.45rem !important;
+      }
 
       .mdc-select__surface {
         border-radius: 4px;
@@ -99,7 +144,7 @@ body {
       }
 
       .mdc-select__bottom-line {
-        display: none;
+        display: none !important;
       }
     }
   }
