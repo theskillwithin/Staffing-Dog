@@ -1,10 +1,4 @@
-import init from '../../utils/init'
-
-import store from './store'
-import Layout from './components/layout'
+import Onboarding from './Onboarding'
 
 
-window.StaffingDog = window.StaffingDog || {}
-
-window.StaffingDog.init = storeData =>
-  init(Layout, store, 'onboarding', storeData)
+export default Onboarding

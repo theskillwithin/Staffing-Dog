@@ -1,10 +1,11 @@
-@import "../../../../styles/config.css";
+@import "../../styles/config.css";
 @import 'material-components-web/dist/material-components-web.css';
 
 html,
 body {
   background-color: var(--sd-blueGray);
   font-size: var(--sd-fontSize);
+  font-family: 'Open Sans', sans-serif;
   margin: 0;
   padding: 0;
   height: 100vh;

@@ -1,7 +1,6 @@
-import React from 'react'
-import { Route } from 'react-router-dom'
+import React, { Component } from 'react'
+import { Route, Link } from 'react-router-dom'
 
-import init from '../../utils/init'
 import Logo from '../../components/logo'
 import Icon from '../../components/icon'
 import DashboardScene from '../dashboard'
@@ -12,39 +11,48 @@ import theme from './theme.css'
 import './styles.css'
 
 
-const App = () => (
-  <div className={theme.app}>
-    <header className={theme.appHeader}>
-      <div className={theme.appHeaderInner}>
-        <div className={theme.menuTrigger}>
-          <Icon use="menu" />
-        </div>
+class App extends Component {
+  componentDidMount() {
+    document.title = 'Staffing Dog - Main Application'
+  }
 
-        <div className={theme.logo}>
-          <Logo />
-        </div>
+  render() {
+    return (
+      <div className={theme.app}>
+        <header className={theme.appHeader}>
+          <div className={theme.appHeaderInner}>
+            <div className={theme.menuTrigger}>
+              <Icon use="menu" />
+            </div>
 
-        <ul className={theme.nav}>
-          <li className={theme.navItem}><a className={theme.navItemLink} href="/jobs/suggested"><span><Icon primary use="lightbulb_outline" />Suggested Jobs</span></a></li>
-          <li className={theme.navItem}><a className={theme.navItemLink} href="/alerts/jobs"><span><Icon primary use="notifications" /> Job Alerts</span></a></li>
-          <li className={theme.navItem}><a className={theme.navItemLink} href="/messages"><span><Icon primary use="chat_bubble_outline" /> Messages</span></a></li>
-          <li className={theme.navItem}><a className={theme.navItemLink} href="/schedule"><span><Icon primary use="date_range" /> Job Schedule</span></a></li>
-        </ul>
+            <div className={theme.logo}>
+              <Logo />
+            </div>
 
-        <div className={theme.user}>
-          <div className={theme.userInner}>
-            <Icon use="person" /> Mellisa Gutierrez
+            <ul className={theme.nav}>
+              <li className={theme.navItem}><Link className={theme.navItemLink} to="/onboarding"><span><Icon primary use="lightbulb_outline" /> Onboarding</span></Link></li>
+              <li className={theme.navItem}><Link className={theme.navItemLink} to="/onboarding/professional"><span><Icon primary use="notifications" /> Professional Onboarding</span></Link></li>
+              <li className={theme.navItem}><Link className={theme.navItemLink} to="/onboarding/practice"><span><Icon primary use="chat_bubble_outline" /> Practice Onboarding</span></Link></li>
+            </ul>
+
+            <div className={theme.user}>
+              <div className={theme.userInner}>
+                <Link to="/onboarding">
+                  <Icon use="person" /> Mellisa Gutierrez
+                </Link>
+              </div>
+            </div>
           </div>
+        </header>
+
+        <div className={theme.appContent}>
+          <Route path="/" component={DashboardScene} exact />
+          <Route path="/settings" component={SettingsScene} />
+          <Route path="/search" component={SearchScene} />
         </div>
       </div>
-    </header>
+    )
+  }
+}
 
-    <div className={theme.appContent}>
-      <Route path="/" component={DashboardScene} exact />
-      <Route path="/settings" component={SettingsScene} />
-      <Route path="/search" component={SearchScene} />
-    </div>
-  </div>
-)
-
-init(App)
+export default App

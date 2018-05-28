@@ -4,6 +4,8 @@ export const SET_VALUE = `${BASE}_SET_VALUE`
 
 export const SET_STEP = `${BASE}_SET_STEP`
 
+export const SET_TYPE = `${BASE}_SET_TYPE`
+
 export const GO_TO_STEP = `${BASE}_GO_TO_STEP`
 export const GO_TO_STEP_SUCCESS = `${GO_TO_STEP}_SUCCESS`
 export const GO_TO_STEP_FAILED = `${GO_TO_STEP}_FAILED`

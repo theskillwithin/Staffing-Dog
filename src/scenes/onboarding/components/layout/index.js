@@ -1,10 +1,7 @@
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 
-import {
-  findLoading,
-  findError,
-} from '../../store/steps'
+import { findLoading, findError, setType } from '../../store/steps'
 
 import Layout from './Layout'
 
@@ -14,4 +11,5 @@ export default withRouter(connect(
     loading: findLoading(state),
     error: findError(state),
   }),
+  { setType },
 )(Layout))

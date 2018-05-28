@@ -1,5 +1,5 @@
-@import '../../../../styles/config.css';
-@import '../../../../styles/reset.css';
+@import '../../styles/config.css';
+@import '../../styles/reset.css';
 
 html {
   font-size: 16px;

@@ -53,7 +53,9 @@ class JobSchedule extends React.Component {
     },
   }
 
-  updateSchedule = () => console.log('update schedule')
+  updateSchedule = () => {
+    this.setState({ updateSchedule: (new Date()).time() })
+  }
 
   days = [
     { label: '30 Days', value: '30' },
