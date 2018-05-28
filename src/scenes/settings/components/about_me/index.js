@@ -72,7 +72,7 @@ class SettingsAboutMe extends React.Component {
   render() {
     const { form } = this.state
     return (
-      <div className={theme.about}>
+      <div>
         <div className={theme.photo}>
           <Dropzone
             className={theme.dropzone}
