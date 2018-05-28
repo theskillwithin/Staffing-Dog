@@ -1,5 +1,6 @@
 import React from 'react'
 import classnames from 'classnames'
+import { setTitle } from '@util/document'
 import { TabBar, Tab } from '@component/tab_bar'
 import Card from '@component/card'
 
@@ -9,10 +10,13 @@ import Header from './components/header'
 import AboutMe from './components/about_me'
 // import theme from './theme.css'
 
-
 class Settings extends React.Component {
   state = {
     activeTabIndex: 0,
+  }
+
+  componentDidMount() {
+    setTitle('Settings')
   }
 
   render() {

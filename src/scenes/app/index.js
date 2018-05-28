@@ -1,21 +1,16 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { Route, Link } from 'react-router-dom'
-
-import Logo from '../../components/logo'
-import Icon from '../../components/icon'
-import DashboardScene from '../dashboard'
-import SearchScene from '../search'
-import SettingsScene from '../settings'
+import Logo from '@component/logo'
+import Icon from '@component/icon'
+import DashboardScene from '@scene/dashboard'
+import SearchScene from '@scene/search'
+import SettingsScene from '@scene/settings'
 
 import theme from './theme.css'
 import './styles.css'
 
-
-class App extends Component {
-  componentDidMount() {
-    document.title = 'Staffing Dog - Main Application'
-  }
-
+// TODO: keep as class, we will have class methods soon
+class App extends React.Component {
   render() {
     return (
       <div className={theme.app}>
