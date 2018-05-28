@@ -19,6 +19,7 @@ const alias = {
   '@store': path.join(paths.src, 'store'),
   '@api': path.join(paths.src, 'api'),
   '@component': path.join(paths.src, 'components'),
+  '@util': path.join(paths.src, 'utils'),
 }
 
 
