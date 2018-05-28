@@ -79,7 +79,7 @@
 
 .inputRow {
   display: flex;
-  align-items: center;
+  margin-bottom: 1em;
 
   textarea {
     min-height: 200px;
