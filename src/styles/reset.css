@@ -25,28 +25,28 @@ body {
 
   .mdc-text-field {
     margin-top: inherit !important;
-    margin-bottom: inherit;
-    height: 51px;
+    margin-bottom: inherit !important;
+    height: 51px !important;
 
     &.mdc-text-field--textarea {
-      height: auto;
+      height: auto !important;
     }
 
     label {
-      line-height: 0.85rem;
+      line-height: 0.85rem !important;
     }
   }
 
   .mdc-select--box:not(.mdc-select--disabled) {
-    background-color: #fff;
+    background-color: #fff !important;
   }
 
   .mdc-select--box {
     position: relative;
-    height: 48px;
+    height: 48px !important;
     .mdc-select__native-control {
       padding-top: 15px;
-      height: 48px;
+      height: 48px !important;
       border: 1px solid var(--sd-gray) !important;
       border-radius: 3px !important;
 
@@ -134,7 +134,7 @@ body {
       border-radius: 4px;
         
       .mdc-floating-label {
-        line-height: 1.45rem;
+        line-height: 1.45rem !important;
       }
 
       .mdc-select__surface {
@@ -144,7 +144,7 @@ body {
       }
 
       .mdc-select__bottom-line {
-        display: none;
+        display: none !important;
       }
     }
   }
