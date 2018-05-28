@@ -81,6 +81,10 @@
   display: flex;
   align-items: center;
 
+  textarea {
+    min-height: 200px;
+  }
+
   > * {
     flex: 1;
   }
@@ -88,5 +92,11 @@
   > * + * {
     margin-left: 1.25em;
   }
+
+  .verifyPhone {
+    max-width: 154px;
+    margin-left: 26px;
+  }
+
 }
 

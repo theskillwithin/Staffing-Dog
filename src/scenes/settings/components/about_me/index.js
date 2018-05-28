@@ -126,7 +126,7 @@ class SettingsAboutMe extends React.Component {
               value={form.phone}
               onChange={value => this.handleChange('phone', value)}
             />
-            <Button primary round>Verify Phone #</Button>
+            <Button primary round className={theme.verifyPhone}>Verify Phone #</Button>
           </div>
           <div className={theme.inputRow}>
             <Input
@@ -178,6 +178,7 @@ class SettingsAboutMe extends React.Component {
               value={form.description}
               onChange={value => this.handleChange('description', value)}
               textarea
+              outlined={false}
             />
           </div>
           <div className={theme.spacer} />

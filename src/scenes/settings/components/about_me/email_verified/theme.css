@@ -6,7 +6,9 @@
   align-items: center;
   font-size: 14px;
   font-weight: 500;
-  height: 3em;
+  height: 3.9em;
+  max-width:  154px;
+  margin-left: 26px !important;
   border-radius: 50px;
   color: var(--sd-red);
   border: solid 1px var(--sd-red);
