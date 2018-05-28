@@ -19,9 +19,22 @@ body {
 
 :global {
 
+  .mdc-text-field--outlined .mdc-floating-label--float-above {
+    transform: translateY(-175%) scale(0.75) !important;
+  }
+
   .mdc-text-field {
     margin-top: inherit !important;
     margin-bottom: inherit;
+    height: 51px;
+
+    &.mdc-text-field--textarea {
+      height: auto;
+    }
+
+    label {
+      line-height: 0.85rem;
+    }
   }
 
   .mdc-select--box:not(.mdc-select--disabled) {
@@ -30,8 +43,10 @@ body {
 
   .mdc-select--box {
     position: relative;
+    height: 48px;
     .mdc-select__native-control {
-      height: 54px;
+      padding-top: 15px;
+      height: 48px;
       border: 1px solid var(--sd-gray) !important;
       border-radius: 3px !important;
 
@@ -117,6 +132,10 @@ body {
   .mdc-select {
     &--box {
       border-radius: 4px;
+        
+      .mdc-floating-label {
+        line-height: 1.45rem;
+      }
 
       .mdc-select__surface {
         border-radius: 4px;
