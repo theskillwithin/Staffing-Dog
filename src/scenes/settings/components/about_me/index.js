@@ -40,10 +40,8 @@ class SettingsAboutMe extends React.Component {
       return this.setState({ filesError: 'must be a jpeg or png' })
     }
 
-    this.setState({ filesError: false })
-
     return this.setState(
-      ({ form }) => ({ form: { ...form, files } }),
+      ({ form }) => ({ filesError: false, form: { ...form, files } }),
     )
   }
 
