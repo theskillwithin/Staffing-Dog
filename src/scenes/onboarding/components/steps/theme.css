@@ -15,7 +15,7 @@
 
 .formRow {
   width: 100%;
-  
+
   &.hasDropdown {
     margin-top: 1em;
     margin-bottom: 0.70em;
@@ -46,6 +46,15 @@
       }
     }
   }
+}
+
+
+.formRow + .formRow {
+  margin-top: 0.5em;
+}
+
+.formRow .formRow {
+  margin-top: 0;
 }
 
 .completeVideo {
