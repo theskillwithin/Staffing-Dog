@@ -30,10 +30,9 @@ class App extends Component {
             </div>
 
             <ul className={theme.nav}>
-              <li className={theme.navItem}><Link className={theme.navItemLink} to="/jobs/suggested"><span><Icon primary use="lightbulb_outline" />Suggested Jobs</span></Link></li>
-              <li className={theme.navItem}><Link className={theme.navItemLink} to="/alerts/jobs"><span><Icon primary use="notifications" /> Job Alerts</span></Link></li>
-              <li className={theme.navItem}><Link className={theme.navItemLink} to="/messages"><span><Icon primary use="chat_bubble_outline" /> Messages</span></Link></li>
-              <li className={theme.navItem}><Link className={theme.navItemLink} to="/schedule"><span><Icon primary use="date_range" /> Job Schedule</span></Link></li>
+              <li className={theme.navItem}><Link className={theme.navItemLink} to="/onboarding"><span><Icon primary use="lightbulb_outline" /> Onboarding</span></Link></li>
+              <li className={theme.navItem}><Link className={theme.navItemLink} to="/onboarding/professional"><span><Icon primary use="notifications" /> Professional Onboarding</span></Link></li>
+              <li className={theme.navItem}><Link className={theme.navItemLink} to="/onboarding/practice"><span><Icon primary use="chat_bubble_outline" /> Practice Onboarding</span></Link></li>
             </ul>
 
             <div className={theme.user}>

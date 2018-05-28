@@ -1,5 +1,5 @@
 import React from 'react'
-import { array, object } from 'prop-types'
+import { string, array, shape } from 'prop-types'
 import classnames from 'classnames'
 import map from 'lodash/map'
 import find from 'lodash/find'
@@ -59,7 +59,11 @@ StepsSidebar.defaultProps = {}
 
 StepsSidebar.propTypes = {
   steps: array.isRequired,
-  match: object.isRequired,
+  match: shape({
+    params: shape({
+      step: string.isRequired,
+    }),
+  }),
 }
 
 export default StepsSidebar

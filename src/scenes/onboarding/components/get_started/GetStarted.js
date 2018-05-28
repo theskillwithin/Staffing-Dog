@@ -17,7 +17,7 @@ class GetStarted extends Component {
   }
 
   renderSVG = (SVGComponent, type = 'professional') => {
-    if (this.props.stepType === type) {
+    if (this.props.type === type) {
       return SVGComponent
     }
 
@@ -101,11 +101,9 @@ class GetStarted extends Component {
   }
 }
 
-GetStarted.defaultProps = {}
-
 GetStarted.propTypes = {
   setStep: func.isRequired,
-  stepType: string.isRequired,
+  type: string.isRequired,
 }
 
 export default GetStarted

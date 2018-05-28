@@ -18,6 +18,7 @@ import {
   SAVE_STEP_SUCCESS,
   SAVE_STEP_FAILED,
   CHECK_STEPS_COMPLETE,
+  SET_TYPE,
 } from './actions'
 
 
@@ -29,7 +30,7 @@ const INITIAL_STATE = {
     professional,
     practice,
   },
-  stepType: 'professional',
+  type: 'professional',
   values: {},
 }
 
@@ -46,11 +47,15 @@ const reducers = {
     ...state,
     currentStep: payload.step,
   }),
+  [SET_TYPE]: (state, payload) => ({
+    ...state,
+    type: payload.type,
+  }),
   [CHECK_STEPS_COMPLETE]: state => ({
     ...state,
     steps: {
       ...state.steps,
-      [state.stepType]: map(state.steps[state.stepType], step => ({
+      [state.type]: map(state.steps[state.stepType], step => ({
         ...step,
         complete: reduce(step.fields, (p, c) => {
           return c.required && isEmpty(state.values[c.name])
@@ -99,7 +104,7 @@ const reducers = {
 }
 
 // Actions Creators
-export const dispatchActions = {
+const dispatchActions = {
   setValue: (name, value) => ({
     type: SET_VALUE,
     payload: { name, value },
@@ -135,6 +140,10 @@ export const dispatchActions = {
     type: SAVE_STEP_FAILED,
     payload: { step, error },
   }),
+  setType: type => ({
+    type: SET_TYPE,
+    payload: { type },
+  }),
 }
 
 dispatchActions.saveStepAPIFailed = (step, res) =>
@@ -146,6 +155,8 @@ dispatchActions.saveStepAPIFailed = (step, res) =>
   })
 
 const da = dispatchActions
+
+export { da as dispatchActions }
 
 /*
  * Prop Actions
@@ -189,11 +200,16 @@ export const saveStep = ({
     })
 }
 
-export const goToStep = ({ currentStep, nextStep, history }) => (dispatch, getState) => {
+export const goToStep = ({
+  currentStep,
+  nextStep,
+  history,
+}) => (dispatch, getState) => {
   dispatch(da.goToStep(nextStep))
 
   const state = getState()
   const steps = findSteps(state)
+  const type = findType(state)
   const step = currentStep ? find(steps, s => s.step === currentStep) : false
 
   if (step && nextStep === step.nextStep) {
@@ -207,24 +223,25 @@ export const goToStep = ({ currentStep, nextStep, history }) => (dispatch, getSt
       )
     }
 
-    dispatch(da.goToStepSuccess(nextStep))
-
-    history.push(`/step/${nextStep}`)
+    dispatch(da.goToStepSuccess(nextStep, type))
+    history.push(`/onboarding/${type}/step/${nextStep}`)
 
     // save current step
-    return saveStep({
-      step: step.step,
-    })(dispatch, getState)
+    return saveStep({ step: step.step })(dispatch, getState)
   }
 
   // we are trying to jump to another step
   // lets save and go to the correct step
 
   return new Promise((resolve) => {
-    setTimeout(() => {
-      dispatch(da.goToStepSuccess(nextStep))
-      resolve(history.push(`/step/${nextStep}`))
-    }, 500)
+    dispatch(da.goToStepSuccess(nextStep, type))
+    resolve(history.push(`/onboarding/${type}/step/${nextStep}`))
+  })
+}
+
+export const setType = type => (dispatch) => {
+  return new Promise((resolve) => {
+    resolve(dispatch(da.setType(type)))
   })
 }
 
@@ -234,9 +251,9 @@ reduxRegister.register('steps', store)
 
 export default store
 
-export const findState = state => state.steps || {}
-export const findStepType = state => state.steps.stepType
-export const findSteps = state => findState(state).steps[findStepType(state)]
+export const findState = state => state.steps
+export const findType = state => findState(state).type
+export const findSteps = state => findState(state).steps[findType(state)] || []
 export const findSavingStep = state => findState(state).savingStep
 export const findSavingStepValue = state => findState(state).savingStepValue
 export const findLoadingNextStep = state => findState(state).loadingNextSteps

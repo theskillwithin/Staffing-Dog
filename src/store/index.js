@@ -1,8 +1,8 @@
 import {
   combineReducers,
   createStore,
-  applyMiddleware,
   compose,
+  applyMiddleware,
 } from 'redux'
 import thunkMiddleware from 'redux-thunk'
 
@@ -15,10 +15,14 @@ const isDev = 'development' === env
 
 const isBrowser = (typeof window !== 'undefined')
 
+const composeEnhancers = isBrowser && isDev && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ // eslint-disable-line
+  ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ // eslint-disable-line
+  : compose
+
 // generated combine reducers based off reducers passed in
 // allow default store generated for initialSate (would be provided by server)
 // allows data to be added into store before store is created :)
-const reduxCombine = (reducers, initialState) => {
+const reduxCombine = (reducers, initialState = {}) => {
   const reduxReducers = { ...reducers }
   const reducerNames = Object.keys(reducers)
 
@@ -34,11 +38,9 @@ const reduxCombine = (reducers, initialState) => {
   return combineReducers(reduxReducers)
 }
 
-const composeEnhancers = isBrowser && isDev && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ // eslint-disable-line no-underscore-dangle
-  ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ // eslint-disable-line no-underscore-dangle
-  : compose
-
 export default (storeData = {}, reducers = {}) => {
+  reduxRegister.setInitialReducers(reducers)
+
   const store = createStore(
     reduxCombine(reducers, storeData),
     storeData,
@@ -47,10 +49,10 @@ export default (storeData = {}, reducers = {}) => {
 
   // replace redux store based on newely updated list of reducers
   reduxRegister.setChangeListener((updatedListOfReducers) => {
-    store.replaceReducer(reduxCombine({
-      ...reducers,
-      ...updatedListOfReducers,
-    }, storeData))
+    store.dispatch({ type: '@@INIT' })
+    store.replaceReducer(reduxCombine(updatedListOfReducers, storeData))
+    store.dispatch({ type: '@@INIT' })
+    store.dispatch({ type: '@@REPLACE' })
   })
 
   return store

@@ -1,5 +1,5 @@
 import React from 'react'
-import { array, object, func } from 'prop-types'
+import { object, func, array } from 'prop-types'
 
 import Button from '../../../../../components/button'
 
@@ -15,8 +15,6 @@ const Nav = ({ steps, goToStep, history }) => (
     Get Started
   </Button>
 )
-
-Nav.defaultProps = {}
 
 Nav.propTypes = {
   steps: array.isRequired,
