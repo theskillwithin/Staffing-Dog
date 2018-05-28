@@ -7,7 +7,6 @@ import SVGShirt from './files/shirt.svg'
 import SVGComputer from './files/computer.svg'
 import SVGDentistChair from './files/dentist_chair.svg'
 
-
 const names = {
   desktop_search: SVGDesktopSearch,
   mobile: SVGMobile,
@@ -17,13 +16,9 @@ const names = {
 }
 
 const Svg = ({ name, className }) => {
-  return name && names[name]
-    ? (
-      <span
-        className={className}
-        dangerouslySetInnerHTML={{ __html: names[name] }}
-      />
-    ) : null
+  return name && names[name] ? (
+    <span className={className} dangerouslySetInnerHTML={{ __html: names[name] }} />
+  ) : null
 }
 
 Svg.defaultProps = {
@@ -32,10 +27,7 @@ Svg.defaultProps = {
 }
 
 Svg.propTypes = {
-  name: oneOfType([
-    bool,
-    string,
-  ]),
+  name: oneOfType([bool, string]),
   className: string,
 }
 

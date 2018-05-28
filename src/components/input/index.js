@@ -4,29 +4,21 @@ import { TextField } from 'rmwc/TextField'
 
 // import './styles.css'
 
-
 class Input extends Component {
-  onChange = (e) => {
+  onChange = e => {
     if (this.props.onChange) {
       const ref = this.inputRef
 
-      this.props.onChange(
-        ref ? ref.value : null,
-        ref,
-        e,
-      )
+      this.props.onChange(ref ? ref.value : null, ref, e)
     }
   }
 
   render() {
-    const {
-      onChange,
-      ...props
-    } = this.props
+    const { onChange, ...props } = this.props
 
     return (
       <TextField
-        inputRef={(input) => {
+        inputRef={input => {
           this.inputRef = input
         }}
         onChange={this.onChange}

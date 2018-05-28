@@ -7,7 +7,6 @@ import indexOf from 'lodash/indexOf'
 
 import theme from './theme.css'
 
-
 const pInt = n => parseInt(n, 10)
 
 const stepLinkClasses = (currentStep, step) => {
@@ -19,17 +18,15 @@ const stepLinkClasses = (currentStep, step) => {
 
 const Nav = ({ steps, goToStep, exclude, match, history, className }) => (
   <ul className={classnames(theme.stepLinks, className)}>
-    {map(steps, step => (
-      indexOf(exclude, step.step) === -1
-        ? (
-          <li
-            key={`stepNav:item:${step.step}`}
-            className={theme.stepLinksItem}
-          >
+    {map(
+      steps,
+      step =>
+        indexOf(exclude, step.step) === -1 ? (
+          <li key={`stepNav:item:${step.step}`} className={theme.stepLinksItem}>
             <Link
               to={`/step/${step.step}`}
               className={stepLinkClasses(match.params.step, step.step)}
-              onClick={(e) => {
+              onClick={e => {
                 e.preventDefault()
                 goToStep({
                   currentStep: match.params.step,
@@ -41,9 +38,8 @@ const Nav = ({ steps, goToStep, exclude, match, history, className }) => (
               {step.step}
             </Link>
           </li>
-        )
-        : null
-    ))}
+        ) : null,
+    )}
   </ul>
 )
 

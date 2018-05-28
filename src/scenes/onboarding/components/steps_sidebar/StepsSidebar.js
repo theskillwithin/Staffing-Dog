@@ -9,7 +9,6 @@ import Nav from '../nav'
 
 import theme from './theme.css'
 
-
 const renderItem = (key, value) => {
   switch (key) {
     case 'title':

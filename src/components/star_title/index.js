@@ -8,7 +8,6 @@ import Star from '../svg/Star'
 
 import theme from './theme.css'
 
-
 const stars = [
   { type: 'star', color: 'blue' },
   { type: 'star', color: 'green' },
@@ -29,21 +28,13 @@ const StarTitle = ({ title }) => (
     <span className={theme.text}>{title}</span>
     <span className={theme.stars}>
       {map(stars, (star, i) => (
-        <Star
-          className={theme.star}
-          key={`circle:${i + 1}`}
-          color={star.color}
-        />
+        <Star className={theme.star} key={`circle:${i + 1}`} color={star.color} />
       ))}
     </span>
 
     <span className={theme.circles}>
       {map(circles, (circle, i) => (
-        <Circle
-          className={theme.circle}
-          key={`circle:${i + 1}`}
-          color={circle.color}
-        />
+        <Circle className={theme.circle} key={`circle:${i + 1}`} color={circle.color} />
       ))}
     </span>
   </h2>

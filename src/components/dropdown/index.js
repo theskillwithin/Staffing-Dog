@@ -4,26 +4,17 @@ import { Select } from 'rmwc/Select'
 
 // import './styles.css'
 
-
 class Dropdown extends Component {
-  onChange = (e) => {
+  onChange = e => {
     if (this.props.onChange) {
-      this.props.onChange(
-        e.target.value,
-        e,
-      )
+      this.props.onChange(e.target.value, e)
     }
   }
 
   render() {
     const { onChange, ...props } = this.props
 
-    return (
-      <Select
-        onChange={this.onChange}
-        {...props}
-      />
-    )
+    return <Select onChange={this.onChange} {...props} />
   }
 }
 

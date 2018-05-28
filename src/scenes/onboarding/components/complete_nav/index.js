@@ -8,7 +8,6 @@ import Icon from '../../../../components/icon'
 
 import theme from './theme.css'
 
-
 const CompleteNav = () => (
   <div className={theme.stepNavComplete}>
     <div className={theme.stepNavCompleteInner}>

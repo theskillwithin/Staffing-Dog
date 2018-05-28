@@ -10,13 +10,10 @@ import reducers from '@store/reducers'
 
 import { interceptAuth, auth } from '@api'
 
-
-const Onboarding = loadable(() => (
-  import(/* webpackChunkName: "onboarding" */ '@scene/onboarding')
-))
-const App = loadable(() => (
-  import(/* webpackChunkName: "app" */ '@scene/app')
-))
+const Onboarding = loadable(() =>
+  import(/* webpackChunkName: "onboarding" */ '@scene/onboarding'),
+)
+const App = loadable(() => import(/* webpackChunkName: "app" */ '@scene/app'))
 
 interceptAuth()
 
@@ -25,7 +22,7 @@ const storeData = token ? { auth: { token } } : { auth: { token: 'test' } }
 
 const store = createStore(storeData, reducers)
 
-render((
+render(
   <Provider store={store}>
     <Router>
       <Switch>
@@ -33,5 +30,6 @@ render((
         <Route path="/" component={App} />
       </Switch>
     </Router>
-  </Provider>
-), document.getElementById('app'))
+  </Provider>,
+  document.getElementById('app'),
+)

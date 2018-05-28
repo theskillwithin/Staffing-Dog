@@ -5,7 +5,6 @@ import { findSteps, goToStep } from '../../../store/steps'
 
 import Nav from './Nav'
 
-
 export default withRouter(
   connect(
     state => ({

@@ -7,7 +7,6 @@ import Icon from '@component/icon'
 
 import theme from './theme.css'
 
-
 const time = [
   { label: '7:00 am', value: '7:00' },
   { label: '7:30 am', value: '7:30' },
@@ -16,11 +15,7 @@ const time = [
 ]
 
 const WeekRow = ({ day, schedule, onChange }) => (
-  <div
-    className={
-      classnames(theme.day, schedule.active && theme.active)
-    }
-  >
+  <div className={classnames(theme.day, schedule.active && theme.active)}>
     <div>
       <Button
         onClick={() => onChange('active', !schedule.active, day)}

@@ -7,10 +7,13 @@ import SVGCircle from '../files/circle.svg'
 
 import theme from './theme.css'
 
-
 const Circle = props => (
   <span
-    className={classnames(props.className, theme.svg, theme[`color${capitalize(props.color)}`])}
+    className={classnames(
+      props.className,
+      theme.svg,
+      theme[`color${capitalize(props.color)}`],
+    )}
     dangerouslySetInnerHTML={{ __html: SVGCircle }}
   />
 )

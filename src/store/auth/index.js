@@ -1,12 +1,7 @@
 import { refreshToken as refreshMyToken } from '../../api/auth'
 import buildStore from '../build'
 
-import {
-  SET_TOKEN,
-  SET_ERROR,
-  REFRESH_TOKEN,
-} from './actions'
-
+import { SET_TOKEN, SET_ERROR, REFRESH_TOKEN } from './actions'
 
 const initialState = {
   token: false,
@@ -43,27 +38,28 @@ export const actions = {
   }),
 }
 
+export const setToken = token => dispatch => dispatch(actions.setToken(token))
 
-export const setToken = token => dispatch =>
-  dispatch(actions.setToken(token))
-
-export const refreshToken = () => (dispatch) => {
+export const refreshToken = () => dispatch => {
   dispatch(actions.refreshToken())
 
   return refreshMyToken()
-    .then((res) => {
+    .then(res => {
       dispatch(actions.setToken(res.roken))
     })
-    .catch((res) => {
+    .catch(res => {
       dispatch(actions.setError(res.error || res))
     })
 }
 
-export default buildStore({
-  [SET_TOKEN]: reducers.setToken,
-  [SET_ERROR]: reducers.setError,
-  [REFRESH_TOKEN]: reducers.refreshToken,
-}, initialState)
+export default buildStore(
+  {
+    [SET_TOKEN]: reducers.setToken,
+    [SET_ERROR]: reducers.setError,
+    [REFRESH_TOKEN]: reducers.refreshToken,
+  },
+  initialState,
+)
 
 export const findState = state => state.auth
 export const findToken = state => findState(state).token

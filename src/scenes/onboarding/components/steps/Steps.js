@@ -9,7 +9,6 @@ import Dropdown from '../../../../components/dropdown'
 
 import theme from './theme.css'
 
-
 class Steps extends Component {
   static formatDropdownOptions(options) {
     return map(options, option => ({
@@ -44,13 +43,12 @@ class Steps extends Component {
       >
         {field.fields
           ? renderFields(field.fields, `${key}:${i + 1}`)
-          : renderField(field)
-        }
+          : renderField(field)}
       </div>
     ))
   }
 
-  renderField = (field) => {
+  renderField = field => {
     const { getValue, onChange } = this
     const props = {
       value: getValue(field.name),
@@ -65,12 +63,7 @@ class Steps extends Component {
 
     switch (field.type) {
       case 'input':
-        return (
-          <Input
-            type={field.formType || 'text'}
-            {...props}
-          />
-        )
+        return <Input type={field.formType || 'text'} {...props} />
       case 'dropdown':
         if (field.optionsByValue) {
           const value = field.optionsByValue.name && getValue(field.optionsByValue.name)
@@ -113,8 +106,7 @@ class Steps extends Component {
           <div className={theme.stepForm}>
             {isComplete
               ? Steps.renderComplete(currentStep)
-              : this.renderFields(currentStep.fields)
-            }
+              : this.renderFields(currentStep.fields)}
           </div>
         </div>
       </div>

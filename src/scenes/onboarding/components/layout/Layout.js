@@ -16,7 +16,6 @@ import ActionNav from '../action_nav'
 import '../../styles.css'
 import theme from '../../theme.css'
 
-
 class Onboarding extends Component {
   componentDidMount() {
     setTitle(`Onboarding - ${this.props.match.params.type}`)
@@ -45,7 +44,11 @@ class Onboarding extends Component {
               <LoadingBar />
             </div>
 
-            {error && <div className={theme.topError}><p>{error}</p></div>}
+            {error && (
+              <div className={theme.topError}>
+                <p>{error}</p>
+              </div>
+            )}
           </div>
 
           <div className={theme.appHeader}>
@@ -67,12 +70,7 @@ class Onboarding extends Component {
                 </div>
               </div>
 
-              <div
-                className={classnames(
-                  theme.stepSidebar,
-                  showSidebar && theme.show,
-                )}
-              >
+              <div className={classnames(theme.stepSidebar, showSidebar && theme.show)}>
                 <Route path={`${match.path}/step/:step(\\d)`} component={StepsSidebar} />
               </div>
 
@@ -88,8 +86,12 @@ class Onboarding extends Component {
 
           <footer className={theme.appFooter}>
             <span className={theme.footerLeft}>&nbsp;</span>
-            <span className={theme.footerCenter}>Copyright &copy; 2018 Staffing Dog&nbsp;</span>
-            <span className={theme.footerRight}><a href="#/legal">Legal</a></span>
+            <span className={theme.footerCenter}>
+              Copyright &copy; 2018 Staffing Dog&nbsp;
+            </span>
+            <span className={theme.footerRight}>
+              <a href="#/legal">Legal</a>
+            </span>
           </footer>
         </div>
       </div>
@@ -103,14 +105,8 @@ Onboarding.defaultProps = {
 }
 
 Onboarding.propTypes = {
-  error: oneOfType([
-    bool,
-    string,
-  ]),
-  loading: oneOfType([
-    bool,
-    string,
-  ]),
+  error: oneOfType([bool, string]),
+  loading: oneOfType([bool, string]),
   location: object.isRequired,
   match: shape({
     path: string.isRequired,
