@@ -8,7 +8,8 @@
     "start": "webpack-dev-server --mode development",
     "start:open": "npm start --open",
     "build": "npm run clear:dist ; webpack --mode production",
-    "clear:dist": "rm -r ./dist"
+    "clear:dist": "rm -r ./dist",
+    "eslint-check": "eslint --print-config .eslintrc.js | eslint-config-prettier-check"
   },
   "keywords": [],
   "author": "",
