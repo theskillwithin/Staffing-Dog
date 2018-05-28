@@ -8,14 +8,17 @@ import ExtractTextPlugin from 'extract-text-webpack-plugin'
 const root = path.resolve(__dirname, '../')
 const paths = {
   src: path.join(root, 'src'),
+  dist: path.join(root, 'dist'),
   config: path.join(root, 'config'),
   nodeModules: path.join(root, 'node_modules'),
 }
 
 const alias = {
-  '@sd': path.resolve(root, 'src'),
-  '@scene': path.resolve(root, 'src/scenes'),
-  '@component': path.resolve(root, 'src/components'),
+  '@sd': paths.src,
+  '@scene': path.join(paths.src, 'scenes'),
+  '@store': path.join(paths.src, 'store'),
+  '@api': path.join(paths.src, 'api'),
+  '@component': path.join(paths.src, 'components'),
 }
 
 
@@ -115,9 +118,9 @@ const buildCssLoader = (type) => {
  */
 
 const config = {
-  entry: {
-    onboarding: path.join(paths.src, 'scenes/onboarding'),
-    app: path.join(paths.src, 'scenes/app'),
+  entry: path.resolve(__dirname, '../src/index.js'),
+  output: {
+    filename: '[name].js',
   },
   module: {},
   plugins: [],
@@ -206,20 +209,23 @@ config.plugins = [
     template: './src/index.html',
     filename: './index.html',
     inject: true,
-    chunks: ['vendor', 'app'],
+    // chunks: ['vendor', 'app'],
   }),
-  new HtmlWebPackPlugin({
-    template: './src/onboarding.html',
-    filename: './onboarding.html',
-    inject: true,
-    chunks: ['vendor', 'onboarding'],
-  }),
-  new HtmlWebPackPlugin({
-    template: './src/onboarding_practice.html',
-    filename: './onboarding_practice.html',
-    inject: true,
-    chunks: ['vendor', 'onboarding'],
-  }),
+  // new webpack.optimize.CommonsChunkPlugin({
+  //   name: 'common', // Specify the common bundle's name.
+  // }),
+  // new HtmlWebPackPlugin({
+  //   template: './src/onboarding.html',
+  //   filename: './onboarding.html',
+  //   inject: true,
+  //   chunks: ['vendor', 'onboarding'],
+  // }),
+  // new HtmlWebPackPlugin({
+  //   template: './src/onboarding_practice.html',
+  //   filename: './onboarding_practice.html',
+  //   inject: true,
+  //   chunks: ['vendor', 'onboarding'],
+  // }),
 ]
 
 // Css/Style Plugins based on the build type
@@ -230,8 +236,8 @@ switch (cssBuildType) {
       new MiniCssExtractPlugin({
         // Options similar to the same options in webpackOptions.output
         // both options are optional
-        filename: '[name].css',
-        chunkFilename: '[id].css',
+        filename: '[name].[hash].css',
+        chunkFilename: '[id].[hash].css',
       }),
     ]
     break
