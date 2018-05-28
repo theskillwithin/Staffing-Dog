@@ -4,6 +4,7 @@ import { Route, Switch } from 'react-router-dom'
 import classnames from 'classnames'
 import Logo from '@sd/components/logo'
 import LoadingBar from '@sd/components/loading_bar'
+import { setTitle } from '@util/document'
 
 import Steps from '../steps'
 import StepsSidebar from '../steps_sidebar'
@@ -18,7 +19,7 @@ import theme from '../../theme.css'
 
 class Onboarding extends Component {
   componentDidMount() {
-    document.title = 'Staffing Dog - Onboarding'
+    setTitle(`Onboarding - ${this.props.match.params.type}`)
 
     this.props.setType(this.props.match.params.type)
   }
@@ -26,6 +27,7 @@ class Onboarding extends Component {
   componentDidUpdate(prevProps) {
     if (prevProps.match.params.type !== this.props.match.params.type) {
       this.props.setType(this.props.match.params.type)
+      setTitle(`Onboarding - ${this.props.match.params.type}`)
     }
   }
 
