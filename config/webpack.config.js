@@ -141,6 +141,11 @@ config.module.rules = [
     exclude: /node_modules/,
     use: {
       loader: 'eslint-loader',
+      options: {
+        fix: true,
+        failOnWarning: false,
+        failOnError: true,
+      },
     },
   },
   {

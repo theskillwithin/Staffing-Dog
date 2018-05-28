@@ -4,9 +4,14 @@
     "react",
     "jsx-a11y",
     "jest",
-    "import"
+    "import",
+    "prettier"
   ],
-  "extends": "airbnb",
+  "extends": [
+    "airbnb",
+    "prettier",
+    "prettier/react"
+  ],
   "env": {
     "es6": true,
     "browser": true,
@@ -14,13 +19,18 @@
     "jest": true
   },
   "rules": {
+    "prettier/prettier": [
+      "error",
+      {
+        "trailingComma": "all",
+        "singleQuote": true,
+        "printWidth": 90,
+        "semi": false
+      }
+    ],
     "arrow-body-style": "off",
     "default-case": "off",
     "func-names": "off",
-    "function-paren-newline": [
-      "error",
-      "consistent"
-    ],
     "max-len": [
       "error",
       100,
@@ -32,10 +42,6 @@
       }
     ],
     "prefer-arrow-callback": "off",
-    "semi": [
-      "error",
-      "never"
-    ],
     "yoda": "off",
     "no-use-before-define": "off",
     "no-nested-ternary": "off",
@@ -46,12 +52,6 @@
       }
     ],
     "no-multi-assign": "off",
-    "object-curly-newline": [
-      "error",
-      {
-        "consistent": true
-      }
-    ],
     "react/forbid-prop-types": "off",
     "react/require-default-props": "off",
     "react/prefer-stateless-function": "off",
@@ -63,12 +63,6 @@
           ".js",
           ".jsx"
         ]
-      }
-    ],
-    "react/jsx-max-props-per-line": [
-      "error",
-      {
-        "when": "multiline"
       }
     ],
     "react/no-unused-prop-types": "off",
@@ -87,7 +81,7 @@
     "import/newline-after-import": [
       "error",
       {
-        "count": 2
+        "count": 1
       }
     ],
     "import/order": [
