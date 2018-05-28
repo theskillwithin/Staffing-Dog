@@ -57,7 +57,7 @@ body {
   }
 
   .mdc-tab {
-    text-transform: none;
+    text-transform: none !important;
   }
 
   .mdc-switch {
@@ -99,7 +99,7 @@ body {
   }
 
   .mdc-button {
-    text-transform: inherit;
+    text-transform: inherit !important;
   }
 
   .mdc-text-field {
