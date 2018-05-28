@@ -6,7 +6,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "webpack-dev-server --mode development",
+    "start:mock": "MOCK_DATA=1 npm start",
     "start:open": "npm start --open",
+    "start:mock:open": "npm run start:mock --open",
     "build": "npm run clear:dist ; webpack --mode production",
     "clear:dist": "rm -r ./dist",
     "eslint-check": "eslint --print-config .eslintrc.js | eslint-config-prettier-check"
