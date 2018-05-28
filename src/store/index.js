@@ -1,16 +1,14 @@
 import { combineReducers, createStore, compose, applyMiddleware } from 'redux'
 import thunkMiddleware from 'redux-thunk'
+import { IS_DEV } from '@util/env'
 
 import reduxRegister from './register'
 
-// environment
-const env = 'development'
-const isDev = 'development' === env
-
 const isBrowser = typeof window !== 'undefined'
 
-const composeEnhancers = isBrowser && isDev && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ // eslint-disable-line
-  ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ // eslint-disable-line
+const composeEnhancers =
+  isBrowser && IS_DEV && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ // eslint-disable-line no-underscore-dangle
+    ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ // eslint-disable-line no-underscore-dangle
     : compose
 
 // generated combine reducers based off reducers passed in

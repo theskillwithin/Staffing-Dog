@@ -4,6 +4,9 @@ import HtmlWebPackPlugin from 'html-webpack-plugin'
 import MiniCssExtractPlugin from 'mini-css-extract-plugin'
 import ExtractTextPlugin from 'extract-text-webpack-plugin'
 
+// const ENV = process.env.NODE_ENV
+// const IS_DEV = ENV === 'development'
+// const IS_PROD = !ENV
 
 const root = path.resolve(__dirname, '../')
 const paths = {
@@ -22,7 +25,6 @@ const alias = {
   '@util': path.join(paths.src, 'utils'),
 }
 
-
 /**
  * Configure which css builder to use
  *
@@ -32,7 +34,6 @@ const alias = {
 const cssBuildType = 'extract'
 // const cssBuildType = 'minicss'
 // const cssBuildType = 'basic'
-
 
 /**
  * Extracts specific to modules
@@ -71,10 +72,7 @@ const loaders = {
     ],
   },
   rmwc: {
-    basic: [
-      'css-loader',
-      'postcss-loader',
-    ],
+    basic: ['css-loader', 'postcss-loader' ],
   },
 }
 
@@ -83,26 +81,20 @@ loaders.sd.extract = extractText.sd.extract({
   use: loaders.sd.basic,
 })
 
-loaders.sd.miniCssExtract = [
-  MiniCssExtractPlugin.loader,
-  ...loaders.sd.basic,
-]
+loaders.sd.miniCssExtract = [MiniCssExtractPlugin.loader, ...loaders.sd.basic]
 
 loaders.rmwc.extract = extractText.rmwc.extract({
   fallback: 'style-loader',
   use: loaders.rmwc.basic,
 })
 
-loaders.rmwc.miniCssExtract = [
-  MiniCssExtractPlugin.loader,
-  ...loaders.rmwc.basic,
-]
+loaders.rmwc.miniCssExtract = [MiniCssExtractPlugin.loader, ...loaders.rmwc.basic]
 
 /**
  * Loads loder based on type
  */
 
-const buildCssLoader = (type) => {
+const buildCssLoader = type => {
   switch (cssBuildType) {
     case 'cssmini':
       return loaders[type].miniCssExtract
@@ -113,21 +105,16 @@ const buildCssLoader = (type) => {
   return ['style-loader', ...loaders[type].basic]
 }
 
-
 /**
  * Basic Config object for webpack
  */
 
 const config = {
   entry: path.resolve(__dirname, '../src/index.js'),
-  output: {
-    filename: '[name].js',
-  },
+  output: { filename: '[name].js' },
   module: {},
   plugins: [],
-  resolve: {
-    alias,
-  },
+  resolve: { alias },
 }
 
 /**
@@ -180,9 +167,7 @@ config.module.rules = [
   },
   {
     test: /\.css$/,
-    include: [
-      paths.src,
-    ],
+    include: [paths.src],
     exclude: [
       /node_modules/,
       /src\/components\/(.+)\/styles/, // exclude style.css files
@@ -192,12 +177,8 @@ config.module.rules = [
   },
   {
     test: /\.svg$/,
-    use: [
-      'raw-loader',
-    ],
-    include: [
-      paths.src,
-    ],
+    use: ['raw-loader'],
+    include: [paths.src],
   },
 ]
 
@@ -215,23 +196,7 @@ config.plugins = [
     template: './src/index.html',
     filename: './index.html',
     inject: true,
-    // chunks: ['vendor', 'app'],
   }),
-  // new webpack.optimize.CommonsChunkPlugin({
-  //   name: 'common', // Specify the common bundle's name.
-  // }),
-  // new HtmlWebPackPlugin({
-  //   template: './src/onboarding.html',
-  //   filename: './onboarding.html',
-  //   inject: true,
-  //   chunks: ['vendor', 'onboarding'],
-  // }),
-  // new HtmlWebPackPlugin({
-  //   template: './src/onboarding_practice.html',
-  //   filename: './onboarding_practice.html',
-  //   inject: true,
-  //   chunks: ['vendor', 'onboarding'],
-  // }),
 ]
 
 // Css/Style Plugins based on the build type
@@ -248,11 +213,7 @@ switch (cssBuildType) {
     ]
     break
   case 'extract':
-    config.plugins = [
-      ...config.plugins,
-      extractText.rmwc,
-      extractText.sd,
-    ]
+    config.plugins = [...config.plugins, extractText.rmwc, extractText.sd]
     break
 }
 
