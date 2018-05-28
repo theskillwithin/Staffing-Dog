@@ -88,7 +88,8 @@ export const professional = [
     title: 'Address Information',
     sidebar: {
       title: 'DayHire &tm;',
-      description: 'Never depend on an early morning phone call again. DayHire  is a location based, on-demand hiring alternative to calling a temp agency.',
+      description:
+        'Never depend on an early morning phone call again. DayHire  is a location based, on-demand hiring alternative to calling a temp agency.',
       svg: 'mobile',
       order: ['svg', 'title', 'description'],
     },
@@ -129,7 +130,8 @@ export const professional = [
     sidebar: {
       title: 'Work When you Want',
       titleSubLarge: 'Make What you Need',
-      description: 'Temping with StaffingDog is flexible and rewarding, helping dental professionals meet their career and financial goals.',
+      description:
+        'Temping with StaffingDog is flexible and rewarding, helping dental professionals meet their career and financial goals.',
       svg: 'desktop_search',
       order: ['svg', 'title', 'subTitleLarge', 'description'],
     },
@@ -194,7 +196,8 @@ export const practice = [
     sidebar: {
       title: 'Sign Up Today',
       subTitle: 'Dental Practice',
-      description: 'See how your office can cut hiring and recruiting costs by as much as 70% through our automated hiring network.',
+      description:
+        'See how your office can cut hiring and recruiting costs by as much as 70% through our automated hiring network.',
       svg: 'computer',
       order: ['subTitle', 'title', 'svg', 'hr', 'description'],
     },
@@ -246,7 +249,8 @@ export const practice = [
     title: 'Practice Address',
     sidebar: {
       title: 'DayHire &tm;',
-      description: 'Never depend on an early morning phone call again. DayHire  is a location based, on-demand hiring alternative to calling a temp agency.',
+      description:
+        'Never depend on an early morning phone call again. DayHire  is a location based, on-demand hiring alternative to calling a temp agency.',
       svg: 'mobile',
       order: ['svg', 'title', 'description'],
     },
@@ -287,7 +291,8 @@ export const practice = [
     sidebar: {
       title: 'Work When you Want',
       titleSubLarge: 'Make What you Need',
-      description: 'Temping with StaffingDog is flexible and rewarding, helping dental professionals meet their career and financial goals.',
+      description:
+        'Temping with StaffingDog is flexible and rewarding, helping dental professionals meet their career and financial goals.',
       svg: 'desktop_search',
       order: ['svg', 'title', 'subTitleLarge', 'description'],
     },

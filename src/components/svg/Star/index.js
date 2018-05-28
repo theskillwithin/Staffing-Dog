@@ -7,10 +7,13 @@ import SVGStarX from '../files/star_x.svg'
 
 import theme from './theme.css'
 
-
 const StarX = props => (
   <span
-    className={classnames(props.className, theme.svg, theme[`color${capitalize(props.color)}`])}
+    className={classnames(
+      props.className,
+      theme.svg,
+      theme[`color${capitalize(props.color)}`],
+    )}
     dangerouslySetInnerHTML={{ __html: SVGStarX }}
   />
 )

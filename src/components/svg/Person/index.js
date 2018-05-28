@@ -7,7 +7,6 @@ import SVGPersonWoman from '../files/person_woman.svg'
 import SVGPersonWoman2 from '../files/person_woman2.svg'
 import SVGPersonWoman3 from '../files/person_woman3.svg'
 
-
 const names = {
   man: SVGPersonMan,
   man2: SVGPersonMan2,
@@ -17,13 +16,9 @@ const names = {
 }
 
 const Person = ({ name, className }) => {
-  return name && names[name]
-    ? (
-      <span
-        className={className}
-        dangerouslySetInnerHTML={{ __html: names[name] }}
-      />
-    ) : null
+  return name && names[name] ? (
+    <span className={className} dangerouslySetInnerHTML={{ __html: names[name] }} />
+  ) : null
 }
 
 Person.defaultProps = {
@@ -31,10 +26,7 @@ Person.defaultProps = {
 }
 
 Person.propTypes = {
-  name: oneOfType([
-    bool,
-    string,
-  ]).isRequired,
+  name: oneOfType([bool, string]).isRequired,
   className: string,
 }
 

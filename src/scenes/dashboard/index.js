@@ -8,7 +8,6 @@ import theme from '../app/theme.css'
 import ToDoList from './components/to_do_list'
 import JobSchedule from './components/job_schedule'
 
-
 class Dashboard extends React.Component {
   componentDidMount() {
     setTitle('Dashboard')
@@ -20,17 +19,11 @@ class Dashboard extends React.Component {
         <div className={theme.column}>
           <ToDoList />
 
-          <Card
-            title="Messages"
-            icon="chat"
-          >
+          <Card title="Messages" icon="chat">
             <p>Body Goes Here</p>
           </Card>
 
-          <Card
-            title="Suggested Jobs"
-            icon="lightbulb_outline"
-          >
+          <Card title="Suggested Jobs" icon="lightbulb_outline">
             <p>Body Goes Here</p>
           </Card>
         </div>
@@ -38,10 +31,7 @@ class Dashboard extends React.Component {
         <div className={theme.column}>
           <JobSchedule />
 
-          <Card
-            icon="star_border"
-            title="Reviews"
-          >
+          <Card icon="star_border" title="Reviews">
             <p>Body Goes Here</p>
           </Card>
         </div>

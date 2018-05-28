@@ -6,7 +6,6 @@ import Map from '@component/map'
 
 import theme from './theme.css'
 
-
 class JobScheduleEvent extends React.Component {
   state = {
     open: false,
@@ -24,8 +23,10 @@ class JobScheduleEvent extends React.Component {
         <button className={theme.event} onClick={this.handleClick}>
           <h2 className={event.type && theme[event.type]}>{event.date}</h2>
           <div className={theme.eventDetails}>
-              <h5>{event.location} @ {event.time}</h5>
-              <h6>{event.address}</h6>
+            <h5>
+              {event.location} @ {event.time}
+            </h5>
+            <h6>{event.address}</h6>
           </div>
           <Icon primary use="near_me" />
         </button>

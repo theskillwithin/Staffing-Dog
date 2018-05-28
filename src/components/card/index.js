@@ -7,7 +7,6 @@ import LoadingBar from '@sd/components/loading_bar'
 
 import theme from './theme.css'
 
-
 const Card = ({
   title,
   icon,
@@ -22,16 +21,23 @@ const Card = ({
   <div className={classnames(theme.card, type && theme[type])}>
     {(title || header) && (
       <header className={theme.cardHeader}>
-        {icon && !header && <div className={theme.icon}><Icon primary use={icon} /></div>}
+        {icon &&
+          !header && (
+            <div className={theme.icon}>
+              <Icon primary use={icon} />
+            </div>
+          )}
         {title && !header && <h2 className={theme.title}>{title}</h2>}
         {header && !title && header({ style: theme })}
-        {action && actionCb && (
-          <Button {...actionProps} onClick={() => actionCb()}>{action}</Button>
-        )}
+        {action &&
+          actionCb && (
+            <Button {...actionProps} onClick={() => actionCb()}>
+              {action}
+            </Button>
+          )}
         {progress && (
           <h2 className={theme.progress}>
-            {progress * 100}%
-           &nbsp;
+            {progress * 100}% &nbsp;
             <span>Complete</span>
           </h2>
         )}
@@ -39,7 +45,9 @@ const Card = ({
     )}
 
     <section className={theme.cardContent}>
-      {progress && <LoadingBar className={theme.loadingBar} progress={progress} determinate />}
+      {progress && (
+        <LoadingBar className={theme.loadingBar} progress={progress} determinate />
+      )}
       {children}
     </section>
   </div>
@@ -58,35 +66,14 @@ Card.defaultProps = {
 
 Card.propTypes = {
   title: string,
-  icon: oneOfType([
-    string,
-    bool,
-  ]),
-  header: oneOfType([
-    func,
-    bool,
-  ]),
+  icon: oneOfType([string, bool]),
+  header: oneOfType([func, bool]),
   children: node.isRequired,
-  actionCb: oneOfType([
-    func,
-    bool,
-  ]),
-  action: oneOfType([
-    string,
-    bool,
-  ]),
-  actionProps: oneOfType([
-    object,
-    bool,
-  ]),
-  progress: oneOfType([
-    number,
-    bool,
-  ]),
-  type: oneOfType([
-    string,
-    bool,
-  ]),
+  actionCb: oneOfType([func, bool]),
+  action: oneOfType([string, bool]),
+  actionProps: oneOfType([object, bool]),
+  progress: oneOfType([number, bool]),
+  type: oneOfType([string, bool]),
 }
 
 export default Card

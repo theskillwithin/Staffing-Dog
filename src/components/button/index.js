@@ -6,7 +6,6 @@ import classnames from 'classnames'
 // import './styles.css'
 import theme from './theme.css'
 
-
 const Button = ({ primary, secondary, round, short, ...props }) => (
   <MButton
     className={classnames(theme.button, round && theme.round, short && theme.short)}

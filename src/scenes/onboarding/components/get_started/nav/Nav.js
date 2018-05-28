@@ -3,14 +3,15 @@ import { object, func, array } from 'prop-types'
 
 import Button from '../../../../../components/button'
 
-
 const Nav = ({ steps, goToStep, history }) => (
   <Button
-    onClick={() => goToStep({
-      currentStep: false,
-      nextStep: steps[0].step,
-      history,
-    })}
+    onClick={() =>
+      goToStep({
+        currentStep: false,
+        nextStep: steps[0].step,
+        history,
+      })
+    }
   >
     Get Started
   </Button>

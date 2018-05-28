@@ -2,7 +2,6 @@ import axios from 'axios'
 
 import auth from './auth'
 
-
 export const interceptAuth = () => {
   axios.interceptors.request.use(config => ({
     ...config,

@@ -4,7 +4,6 @@ import classnames from 'classnames'
 
 import theme from './theme.css'
 
-
 const Checklist = ({ list }) => (
   <ul className={theme.ul}>
     {list.map((li, i) => (

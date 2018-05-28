@@ -5,7 +5,6 @@ import Card from '@component/card'
 
 import theme from '../app/theme.css'
 
-
 class Search extends React.Component {
   componentDidMount() {
     setTitle('Search')
@@ -14,7 +13,9 @@ class Search extends React.Component {
   render() {
     return (
       <div className={classnames(theme.pageContent)}>
-        <Card><h2>Search</h2></Card>
+        <Card>
+          <h2>Search</h2>
+        </Card>
       </div>
     )
   }

@@ -7,7 +7,6 @@ import WeekRow from './weeks'
 import Event from './event'
 import theme from './theme.css'
 
-
 class JobSchedule extends React.Component {
   state = {
     form: {
@@ -54,7 +53,7 @@ class JobSchedule extends React.Component {
   }
 
   updateSchedule = () => {
-    this.setState({ updateSchedule: (new Date()).time() })
+    this.setState({ updateSchedule: new Date().time() })
   }
 
   days = [
@@ -67,9 +66,30 @@ class JobSchedule extends React.Component {
   daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
 
   events = [
-    { id: 0, date: '10', location: 'APX Dental', time: '9:30 AM - 5:00 PM', address: '641 W 900 S, STE 1 Sandy UT 84070', type: 'red' },
-    { id: 1, date: '19', location: 'APEX Dental', time: '10:30 AM - 6 PM', address: '286 East 12200 South Draper, UT 84020', type: 'blue' },
-    { id: 2, date: '31', location: 'APEX Dental', time: '9:30 AM - 5 PM', address: '286 East 12200 South Draper, UT 84020', type: 'grey' },
+    {
+      id: 0,
+      date: '10',
+      location: 'APX Dental',
+      time: '9:30 AM - 5:00 PM',
+      address: '641 W 900 S, STE 1 Sandy UT 84070',
+      type: 'red',
+    },
+    {
+      id: 1,
+      date: '19',
+      location: 'APEX Dental',
+      time: '10:30 AM - 6 PM',
+      address: '286 East 12200 South Draper, UT 84020',
+      type: 'blue',
+    },
+    {
+      id: 2,
+      date: '31',
+      location: 'APEX Dental',
+      time: '9:30 AM - 5 PM',
+      address: '286 East 12200 South Draper, UT 84020',
+      type: 'grey',
+    },
   ]
 
   handleToggle = () => {
@@ -83,7 +103,8 @@ class JobSchedule extends React.Component {
   handleScheduleChange = (type, value, day) => {
     this.setState(({ form, form: { schedule } }) => ({
       form: {
-        ...form, schedule: { ...schedule, [day]: { ...schedule[day], [type]: value } },
+        ...form,
+        schedule: { ...schedule, [day]: { ...schedule[day], [type]: value } },
       },
     }))
   }
@@ -100,11 +121,7 @@ class JobSchedule extends React.Component {
       >
         <div className={theme.inputRow}>
           <span>Same day job requests</span>
-          <Switch
-            checked={state.form.switch}
-            onChange={this.handleToggle}
-            flip
-          >
+          <Switch checked={state.form.switch} onChange={this.handleToggle} flip>
             {state.form.switch ? 'Yes' : 'No'}
           </Switch>
         </div>
@@ -131,9 +148,7 @@ class JobSchedule extends React.Component {
         </div>
         <hr className={theme.divider} />
         <div className={theme.events}>
-          {this.events.map(event => (
-            <Event key={event.id} event={event} />
-          ))}
+          {this.events.map(event => <Event key={event.id} event={event} />)}
         </div>
       </Card>
     )

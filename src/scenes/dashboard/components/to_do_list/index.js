@@ -4,7 +4,6 @@ import Card from '@component/card'
 import Checklist from '@component/checklist'
 import filter from 'lodash/filter'
 
-
 const list = [
   { name: 'Verify Phone Number', checked: true },
   { name: 'Verify Email Address', checked: true },
@@ -33,10 +32,7 @@ ToDoList.defaultProps = {
 }
 
 ToDoList.propTypes = {
-  list: oneOfType([
-    array,
-    bool,
-  ]),
+  list: oneOfType([array, bool]),
 }
 
 export default ToDoList

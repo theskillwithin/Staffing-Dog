@@ -9,7 +9,6 @@ import Dropdown from '@component/dropdown'
 import EmailVerified from './email_verified'
 import theme from './theme.css'
 
-
 class SettingsAboutMe extends React.Component {
   state = {
     form: {
@@ -34,15 +33,12 @@ class SettingsAboutMe extends React.Component {
     verified: true,
   }
 
-
   onDrop = (files, rejected) => {
     if (rejected && rejected.length) {
       return this.setState({ filesError: 'must be a jpeg or png' })
     }
 
-    return this.setState(
-      ({ form }) => ({ filesError: false, form: { ...form, files } }),
-    )
+    return this.setState(({ form }) => ({ filesError: false, form: { ...form, files } }))
   }
 
   states = [
@@ -51,10 +47,7 @@ class SettingsAboutMe extends React.Component {
     { label: 'OR', value: 'OR' },
   ]
 
-  availabilitys = [
-    { label: 'Never', value: '0' },
-    { label: 'Forever', value: '1' },
-  ]
+  availabilitys = [{ label: 'Never', value: '0' }, { label: 'Forever', value: '1' }]
 
   specialties = [
     { label: 'good with kids', value: '1' },
@@ -62,9 +55,7 @@ class SettingsAboutMe extends React.Component {
   ]
 
   handleChange = (field, value) => {
-    this.setState(
-      ({ form }) => ({ form: { ...form, [field]: value } }),
-    )
+    this.setState(({ form }) => ({ form: { ...form, [field]: value } }))
   }
 
   render() {
@@ -78,21 +69,22 @@ class SettingsAboutMe extends React.Component {
             onDrop={this.onDrop}
           >
             <h5>Profile Photo</h5>
-            {form.files && form.files.length
-              ? (<img src={form.files[0].preview} alt={form.files[0].name} />)
-              : <ProfilePhotoSVG />
-            }
+            {form.files && form.files.length ? (
+              <img src={form.files[0].preview} alt={form.files[0].name} />
+            ) : (
+              <ProfilePhotoSVG />
+            )}
             <span>Add Photo</span>
           </Dropzone>
           <div>
             <ul>
               <li>
-              Having a complete rich profile will help you stand out from{' '}
-              the crowd and attract more employers.
+                Having a complete rich profile will help you stand out from the crowd and
+                attract more employers.
               </li>
               <li>
-              This information is visible to employers. Your information is{' '}
-              not shared with anyone without your explicit consent.
+                This information is visible to employers. Your information is not shared
+                with anyone without your explicit consent.
               </li>
             </ul>
             <p>{this.state.filesError}</p>
@@ -125,7 +117,9 @@ class SettingsAboutMe extends React.Component {
               value={form.phone}
               onChange={value => this.handleChange('phone', value)}
             />
-            <Button primary round className={theme.verifyPhone}>Verify Phone #</Button>
+            <Button primary round className={theme.verifyPhone}>
+              Verify Phone #
+            </Button>
           </div>
           <div className={theme.inputRow}>
             <Input
@@ -200,7 +194,9 @@ class SettingsAboutMe extends React.Component {
               value={form.insuranceExpiration}
               onChange={value => this.handleChange('insuranceExpiration', value)}
             />
-            <Button primary round>Upload Insurance Declaration</Button>
+            <Button primary round>
+              Upload Insurance Declaration
+            </Button>
           </div>
         </form>
       </div>
