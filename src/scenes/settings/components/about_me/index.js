@@ -1,4 +1,5 @@
 import React from 'react'
+import classnames from 'classnames'
 import Dropzone from 'react-dropzone'
 import ProfilePhotoSVG from '@component/svg/ProfilePhoto'
 import Input from '@component/input'
@@ -195,7 +196,7 @@ class SettingsAboutMe extends React.Component {
               options={this.specialties}
             />
           </div>
-          <div className={theme.inputRow}>
+          <div className={classnames(theme.inputRow, theme.withButton)}>
             <Input
               label="Insurance Expiration"
               value={form.insuranceExpiration}

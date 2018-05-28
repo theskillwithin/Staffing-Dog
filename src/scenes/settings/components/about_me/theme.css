@@ -85,6 +85,11 @@
     min-height: 200px;
   }
 
+  button {
+    margin-top: 3px;
+    min-height: 48px;
+  }
+
   > * {
     flex: 1;
   }
@@ -96,6 +101,13 @@
   .verifyPhone {
     max-width: 154px;
     margin-left: 26px;
+    border-radius: 50px;
+  }
+
+  &.withButton {
+    button {
+      max-width: 18em;
+    }
   }
 
 }
