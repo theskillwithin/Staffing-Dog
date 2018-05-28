@@ -25,10 +25,6 @@ const TabBar = ({ activeTabIndex, onChange, underline, left, exact, ...props }) 
   </MTabBar>
 )
 
-Tab.propTypes = {
-  children: node.isRequired,
-}
-
 TabBar.defaultProps = {
   underline: true,
   left: true,
