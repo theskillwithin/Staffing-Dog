@@ -28,6 +28,7 @@
 .loadingBar {
   height: 8px;
   border-radius: 50px;
+
   :global(.mdc-linear-progress__bar-inner) {
     border-radius: 50px;
   }
