@@ -20,7 +20,6 @@ class Onboarding extends Component {
   componentDidMount() {
     document.title = 'Staffing Dog - Onboarding'
 
-    console.log('Onboarding', 'componentDidMount', this.props.match.params.type)
     this.props.setType(this.props.match.params.type)
   }
 
