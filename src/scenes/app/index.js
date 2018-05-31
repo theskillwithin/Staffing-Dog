@@ -26,31 +26,20 @@ class App extends React.Component {
 
             <ul className={theme.nav}>
               <li className={theme.navItem}>
-                <Link className={theme.navItemLink} to="/onboarding">
-                  <span>
-                    <Icon primary use="lightbulb_outline" /> Onboarding
-                  </span>
-                </Link>
-              </li>
-              <li className={theme.navItem}>
                 <Link className={theme.navItemLink} to="/onboarding/professional">
-                  <span>
-                    <Icon primary use="notifications" /> Professional Onboarding
-                  </span>
+                  Professional Onboarding
                 </Link>
               </li>
               <li className={theme.navItem}>
                 <Link className={theme.navItemLink} to="/onboarding/practice">
-                  <span>
-                    <Icon primary use="chat_bubble_outline" /> Practice Onboarding
-                  </span>
+                  Practice Onboarding
                 </Link>
               </li>
             </ul>
 
             <div className={theme.user}>
               <div className={theme.userInner}>
-                <Link to="/onboarding">
+                <Link to="/profile">
                   <Icon use="person" /> Mellisa Gutierrez
                 </Link>
               </div>
