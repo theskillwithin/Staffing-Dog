@@ -31,11 +31,7 @@ class JobScheduleEvent extends React.Component {
           <Icon primary use="near_me" />
         </button>
         <div className={classnames(theme.map, this.state.open && theme.open)}>
-          <Map
-            isMarkerShown
-            position={{ lat: 40.764411, lng: -111.891559 }}
-            defaultCenter={{ lat: 40.764411, lng: -111.891559 }}
-          />
+          <Map coordinates={[-111.891559, 40.764411]} />
         </div>
       </div>
     )
