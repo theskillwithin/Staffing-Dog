@@ -1,6 +1,6 @@
 import React from 'react'
 import { array } from 'prop-types'
-import ReactMapboxGl, { Layer, Feature } from 'react-mapbox-gl'
+import ReactMapboxGl, { Layer, Feature, ZoomControl } from 'react-mapbox-gl'
 
 const Map = ReactMapboxGl({
   accessToken:
@@ -12,10 +12,12 @@ const MapBox = ({ coordinates }) => (
     style="mapbox://styles/mapbox/streets-v9"  // eslint-disable-line
     containerStyle={{ height: '332px', width: '100%' }}
     center={coordinates}
+    zoom={[13]}
   >
     <Layer type="symbol" id="marker" layout={{ 'icon-image': 'marker-15' }}>
       <Feature coordinates={coordinates} />
     </Layer>
+    <ZoomControl />
   </Map>
 )
 

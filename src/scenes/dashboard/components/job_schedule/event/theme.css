@@ -49,12 +49,14 @@
 .eventDetails {
   flex: 1;
   margin-left: 2em;
+
   h5 {
     font-size: 14px;
     font-weight: 600;
     line-height: 1.21;
     margin: 0 0 4px 0;
   }
+
   h6 {
     font-size: 14px;
     line-height: 1.14;
@@ -67,13 +69,16 @@
 
 .map {
   visibility: hidden;
+  opacity: 0;
   max-height: 0;
   /*transition: all 900ms;*/
   width: calc(100% + 3em);
   margin-left: -1.5em;
+
   &.open {
     max-height: 500px;
     visibility: visible;
+    opacity: 1;
     border-bottom: solid 1px var(--sd-borderColor);
   }
 }
