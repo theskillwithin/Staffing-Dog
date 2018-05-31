@@ -20,20 +20,12 @@ class Dashboard extends React.Component {
           <ToDoList />
 
           <Card title="Messages" icon="chat">
-            <p>Body Goes Here</p>
-          </Card>
-
-          <Card title="Suggested Jobs" icon="lightbulb_outline">
-            <p>Body Goes Here</p>
+            <p>Messages Coming Soon!</p>
           </Card>
         </div>
 
         <div className={theme.column}>
           <JobSchedule />
-
-          <Card icon="star_border" title="Reviews">
-            <p>Body Goes Here</p>
-          </Card>
         </div>
       </div>
     )
