@@ -66,6 +66,7 @@ body {
       background: var(--sd-primary) !important;
       box-shadow: none;
       top: 0;
+
       &:before {
         display: none;
       }
@@ -77,6 +78,7 @@ body {
       width: 40px;
       background-color: var(--sd-switchBg);
       border-radius: 50px;
+
       &:before {
         display: none;
       }
@@ -84,18 +86,21 @@ body {
   }
 
   .mdc-switch-flip {
+
     .mdc-switch__background {
-      margin-right: 0;
+      margin-right: 0 !important;
     }
+
     .mdc-form-field > label {
       order: -1;
       margin-right: 0.75em;
       padding-left: 0;
+      color: black;
     }
   }
   
   .mdc-switch__native-control:checked ~ .mdc-switch__background .mdc-switch__knob {
-    transform: translateX(20px);
+    transform: translateX(20px) !important;
   }
 
   .mdc-button {

@@ -57,7 +57,7 @@
   }
 }
 
-.loadingBar {
+nav.loadingBar {
   position: absolute;
   top: -2px;
   left: 0;
