@@ -2,6 +2,7 @@ import React from 'react'
 import map from 'lodash/map'
 import classnames from 'classnames'
 import ProfilePhotoSVG from '@component/svg/ProfilePhoto'
+import ReplySVG from '@component/svg/Reply'
 
 import theme from './theme.css'
 
@@ -93,7 +94,9 @@ class Messages extends React.Component {
                 message.threadCount > 1 && (
                   <div className={theme.threadCount}>{message.threadCount}</div>
                 )}
-              <div className={theme.reply}>R</div>
+              <div className={theme.reply}>
+                <ReplySVG />
+              </div>
             </div>
           </div>
         ))}

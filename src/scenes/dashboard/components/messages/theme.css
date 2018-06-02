@@ -1,3 +1,5 @@
+@import "../../../../styles/config.css";
+
 .messages {
   width: calc(100% + 3em);
   margin: -1em -1.5em -1em -1.5em;
@@ -5,8 +7,10 @@
 
 .message {
   display: flex;
+  height: 106px;
   border-bottom: solid 1px var(--sd-borderColor);
   padding: 12.5px 7px;
+  cursor: pointer;
 
   .avatar {
     align-self: center;
@@ -27,7 +31,7 @@
       align-items: center;
       font-size: 14px;
       font-weight: 500;
-      color: rgb(31, 39, 64);
+      color: var(--sd-blackTxt);
       margin-bottom: 0.5em;
 
       h6 {
@@ -84,12 +88,17 @@
       width: 23px;
       height: 20px;
     }
+
+    .reply {
+      svg {
+        color: var(--sd-borderColor);
+      }
+    }
   }
 
   &.unread {
-  
     &:before {
-      content: '';
+      content: "";
       background: var(--sd-primary);
       height: 5em;
       width: 4px;
@@ -99,6 +108,14 @@
     .date {
       color: var(--sd-primary);
       font-weight: 600;
+    }
+  }
+
+  &:hover {
+
+    background: var(--sd-blueGray);
+    .reply svg {
+      color: var(--sd-primary);
     }
   }
 }
