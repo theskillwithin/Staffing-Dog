@@ -3,6 +3,8 @@
 .messages {
   width: calc(100% + 3em);
   margin: -1em -1.5em -1em -1.5em;
+  max-height: 700px;
+  overflow-y: scroll;
 }
 
 .message {

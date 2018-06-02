@@ -16,7 +16,7 @@ class Messages extends React.Component {
       id: 0,
       from: 'Wes Bos',
       location: 'React Dental',
-      date: '5/16/18',
+      date: '4:00 PM',
       short:
         'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis, dolor provident.',
       read: false,
@@ -26,7 +26,7 @@ class Messages extends React.Component {
       id: 1,
       from: 'Wes Bos',
       location: 'React Dental',
-      date: '5/16/18',
+      date: 'Monday',
       short:
         'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis, dolor provident.',
       read: false,
@@ -61,6 +61,26 @@ class Messages extends React.Component {
       read: true,
       threadCount: null,
       avatar: 'https://fillmurray.com/48/48',
+    },
+    {
+      id: 0,
+      from: 'Wes Bos',
+      location: 'React Dental',
+      date: '5/16/18',
+      short:
+        'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis, dolor provident.',
+      read: true,
+      threadCount: 4,
+    },
+    {
+      id: 1,
+      from: 'Wes Bos',
+      location: 'React Dental',
+      date: '5/16/18',
+      short:
+        'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis, dolor provident.',
+      read: true,
+      threadCount: null,
     },
   ]
 
