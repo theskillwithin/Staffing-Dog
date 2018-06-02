@@ -1,28 +1,32 @@
 import React from 'react'
-import { array } from 'prop-types'
-import ReactMapboxGl, { Layer, Feature, ZoomControl } from 'react-mapbox-gl'
+import { bool, number, object, oneOfType } from 'prop-types'
+import { withScriptjs, withGoogleMap, GoogleMap, Marker } from 'react-google-maps'
 
-const Map = ReactMapboxGl({
-  accessToken:
-    'pk.eyJ1IjoidGhlc2tpbGx3aXRoaW4iLCJhIjoiY2podWl3OXVsMG95ejNwcGRpM2xxaHhuNSJ9.srQbrb72e33iv_nzgLfojQ',
-})
-
-const MapBox = ({ coordinates }) => (
-  <Map
-    style="mapbox://styles/mapbox/streets-v9"  // eslint-disable-line
-    containerStyle={{ height: '332px', width: '100%' }}
-    center={coordinates}
-    zoom={[13]}
-  >
-    <Layer type="symbol" id="marker" layout={{ 'icon-image': 'marker-15' }}>
-      <Feature coordinates={coordinates} />
-    </Layer>
-    <ZoomControl />
-  </Map>
+const Map = withScriptjs(
+  withGoogleMap(({ isMarkerShown, position, defaultZoom, defaultCenter }) => (
+    <GoogleMap defaultZoom={defaultZoom} defaultCenter={defaultCenter}>
+      {isMarkerShown && <Marker position={position} />}
+    </GoogleMap>
+  )),
 )
 
-MapBox.propTypes = {
-  coordinates: array.isRequired,
+Map.defaultProps = {
+  isMarkerShown: false,
+  defaultZoom: 8,
+  defaultCenter: { lat: -34.397, lng: 150.644 },
+  position: false,
+  googleMapURL:
+    'https://maps.googleapis.com/maps/api/js?key=AIzaSyAz3RiIjZRmSuInzwz2VYWSZKlf1y5CGLY&v=3.exp&libraries=geometry,drawing,places',
+  loadingElement: <div style={{ height: '100%' }} />,
+  containerElement: <div style={{ height: '332px' }} />,
+  mapElement: <div style={{ height: '100%' }} />,
 }
 
-export default MapBox
+Map.propTypes = {
+  isMarkerShown: bool,
+  defaultZoom: number,
+  defaultCenter: object,
+  position: oneOfType([object, bool]),
+}
+
+export default Map

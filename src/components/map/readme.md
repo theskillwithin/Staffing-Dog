@@ -1,2 +1,2 @@
-[MapBox](https://www.mapbox.com/)
-[react-mapbox-gl](https://github.com/alex3165/react-mapbox-gl)
+# Google Maps
+[React Google Map docs](https://tomchentw.github.io/react-google-maps/)
