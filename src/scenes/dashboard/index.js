@@ -30,6 +30,7 @@ class Dashboard extends React.Component {
             action="New Message"
             actionCb={this.newMessage}
             actionProps={{ round: true, secondary: true, short: true }}
+            type="overflowHidden"
           >
             <Messages />
           </Card>

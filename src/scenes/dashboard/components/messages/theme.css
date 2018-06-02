@@ -1,8 +1,27 @@
 @import "../../../../styles/config.css";
 
-.messages {
+.messagesContainer {
   width: calc(100% + 3em);
   margin: -1em -1.5em -1em -1.5em;
+  transition: transform 300ms ease-out;
+
+  &.active {
+    transform: translateX(-100%);
+  }
+}
+
+.singleMessage {
+  position: absolute;
+  top: 0;
+  right: 0;
+  transform: translateX(100%);
+  width: calc(100% + 3em);
+  padding: 1em;
+}
+
+.messages {
+  position: relative;
+  width: 100%;
   max-height: 700px;
   overflow-y: scroll;
 }
@@ -10,9 +29,11 @@
 .message {
   display: flex;
   height: 106px;
+  border: none;
   border-bottom: solid 1px var(--sd-borderColor);
   padding: 12.5px 7px;
   cursor: pointer;
+  outline: none;
 
   .avatar {
     align-self: center;
