@@ -1,3 +1,104 @@
 .messages {
+  width: calc(100% + 3em);
+  margin: -1em -1.5em -1em -1.5em;
+}
+
+.message {
   display: flex;
+  border-bottom: solid 1px var(--sd-borderColor);
+  padding: 12.5px 7px;
+
+  .avatar {
+    align-self: center;
+    width: 48px;
+    margin: 1em;
+
+    img {
+      border-radius: 50%;
+    }
+  }
+
+  .middle {
+    flex: 1;
+    padding-top: 4px;
+
+    .title {
+      display: flex;
+      align-items: center;
+      font-size: 14px;
+      font-weight: 500;
+      color: rgb(31, 39, 64);
+      margin-bottom: 0.5em;
+
+      h6 {
+        margin: 0;
+        font-size: 14px;
+      }
+
+      span {
+        display: flex;
+        align-items: center;
+        padding-left: 0.5em;
+        color: var(--sd-gray);
+
+        &:before {
+          content: "";
+          display: block;
+          margin-right: 0.5em;
+          background: var(--sd-primary);
+          width: 4px;
+          height: 4px;
+          border-radius: 50%;
+        }
+      }
+    }
+
+    .short p {
+      margin: 0;
+      font-size: 14px;
+      color: var(--sd-grayLighter);
+    }
+  }
+
+  .right {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-end;
+    width: 50px;
+    margin-right: 0.5em;
+
+    .date {
+      color: var(--sd-gray);
+      font-size: 12px;
+    }
+
+    .threadCount {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 12px;
+      font-weight: 500;
+      background: var(--sd-borderColor);
+      border-radius: 4px;
+      width: 23px;
+      height: 20px;
+    }
+  }
+
+  &.unread {
+  
+    &:before {
+      content: '';
+      background: var(--sd-primary);
+      height: 5em;
+      width: 4px;
+      border-radius: 2px;
+    }
+
+    .date {
+      color: var(--sd-primary);
+      font-weight: 600;
+    }
+  }
 }
