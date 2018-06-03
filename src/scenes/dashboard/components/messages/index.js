@@ -27,16 +27,19 @@ class Messages extends React.Component {
   handleClick = threadId => {
     // retrieve selected msg data
     this.props.getMessages(threadId)
-    this.setState({ active: threadId })
+    this.setState({ active: threadId, quickReply: null })
   }
 
   back = () => {
-    this.setState({ active: false })
+    this.setState({ active: false, message: '' })
   }
 
   quickReply = (e, quickReply) => {
     e.stopPropagation()
-    this.setState({ quickReply })
+    if (quickReply === this.state.quickReply) {
+      return this.setState({ quickReply: null, message: '' })
+    }
+    return this.setState({ quickReply, message: '' })
   }
 
   handleChange = message => {
@@ -53,7 +56,13 @@ class Messages extends React.Component {
       <div className={classnames(theme.threadsContainer, active && theme.active)}>
         <div className={theme.threads}>
           {map(threads, thread => (
-            <div key={thread.id} className={theme.threadContainer}>
+            <div
+              key={thread.id}
+              className={classnames(
+                theme.threadContainer,
+                this.state.quickReply === thread.id && theme.quickReplyActive,
+              )}
+            >
               <div
                 role="button"
                 tabIndex={0}
