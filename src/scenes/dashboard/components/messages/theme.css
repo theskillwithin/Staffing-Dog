@@ -75,6 +75,10 @@
   width: 100%;
   max-height: 700px;
   overflow-y: scroll;
+
+  .quickReply {
+    align-self: flex-end;
+  }
 }
 
 .avatar {
@@ -113,8 +117,18 @@
   }
 
   .reply {
+    cursor: pointer;
+    background: transparent;
+    border: none;
+    outline: none;
+    z-index: 10;
+
     svg {
       color: var(--sd-borderColor);
+
+      &:hover {
+        color: var(--sd-primary);
+      }
     }
   }
 }
@@ -187,11 +201,7 @@
   }
 
   &:hover {
-
     background: var(--sd-blueGray);
-    .reply svg {
-      color: var(--sd-primary);
-    }
   }
 }
 

@@ -17,6 +17,7 @@ class Messages extends React.Component {
   state = {
     active: false,
     message: '',
+    quickReply: null,
   }
 
   componentDidMount() {
@@ -31,6 +32,11 @@ class Messages extends React.Component {
 
   back = () => {
     this.setState({ active: false })
+  }
+
+  quickReply = (e, quickReply) => {
+    e.stopPropagation()
+    this.setState({ quickReply })
   }
 
   handleChange = message => {
@@ -76,9 +82,12 @@ class Messages extends React.Component {
                   thread.threadCount > 1 && (
                     <div className={theme.threadCount}>{thread.threadCount}</div>
                   )}
-                <div className={theme.reply}>
+                <button
+                  className={theme.reply}
+                  onClick={e => this.quickReply(e, thread.id)}
+                >
                   <ReplySVG />
-                </div>
+                </button>
               </div>
             </div>
           ))}
