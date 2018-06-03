@@ -1,4 +1,3 @@
-
 module.exports = {
   rootDir: './',
   coverageDirectory: '<rootDir>/public/_coverage',
