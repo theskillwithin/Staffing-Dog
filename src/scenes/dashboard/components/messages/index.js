@@ -1,4 +1,5 @@
 import React from 'react'
+import Textarea from 'react-textarea-autosize'
 import map from 'lodash/map'
 import classnames from 'classnames'
 import ProfilePhotoSVG from '@component/svg/ProfilePhoto'
@@ -212,7 +213,7 @@ class Messages extends React.Component {
             </div>
           ))}
           <div className={theme.respond}>
-            <textarea
+            <Textarea
               placeholder="Type message here"
               value={this.state.message}
               onChange={e => this.handleChange(e.target.value)}
