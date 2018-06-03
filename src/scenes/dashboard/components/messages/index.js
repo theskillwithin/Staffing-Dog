@@ -1,11 +1,15 @@
 import React from 'react'
+import { func, array, number, string, shape, arrayOf, oneOfType } from 'prop-types'
+import { connect } from 'react-redux'
 import Textarea from 'react-textarea-autosize'
 import map from 'lodash/map'
+import find from 'lodash/find'
 import classnames from 'classnames'
 import ProfilePhotoSVG from '@component/svg/ProfilePhoto'
 import ReplySVG from '@component/svg/Reply'
 import Icon from '@component/icon'
 import Button from '@component/button'
+import { getThreads, getMessages, findThreads } from '@store/messages'
 
 import theme from './theme.css'
 
@@ -15,117 +19,14 @@ class Messages extends React.Component {
     message: '',
   }
 
-  messages = [
-    {
-      id: 111,
-      from: 'Wes Bos',
-      location: 'React Dental',
-      date: '4:00 PM',
-      short:
-        'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis, dolor provident.',
-      read: false,
-      threadCount: 4,
-    },
-    {
-      id: 1,
-      from: 'Wes Bos',
-      location: 'React Dental',
-      date: 'Monday',
-      short:
-        'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis, dolor provident.',
-      read: false,
-      threadCount: null,
-    },
-    {
-      id: 2,
-      from: 'Wes Bos',
-      location: 'React Dental',
-      date: '5/16/18',
-      short:
-        'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis, dolor provident.',
-      read: true,
-      threadCount: null,
-    },
-    {
-      id: 3,
-      from: 'Wes Bos',
-      date: '5/16/18',
-      short:
-        'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis, dolor provident.',
-      read: true,
-      threadCount: null,
-    },
-    {
-      id: 4,
-      from: 'Wes Bos',
-      location: 'React Dental',
-      date: '5/16/18',
-      short:
-        'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis, dolor provident.',
-      read: true,
-      threadCount: null,
-      avatar: 'https://fillmurray.com/48/48',
-    },
-    {
-      id: 5,
-      from: 'Wes Bos',
-      location: 'React Dental',
-      date: '5/16/18',
-      short:
-        'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis, dolor provident.',
-      read: true,
-      threadCount: 4,
-    },
-    {
-      id: 6,
-      from: 'Wes Bos',
-      location: 'React Dental',
-      date: '5/16/18',
-      short:
-        'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis, dolor provident.',
-      read: true,
-      threadCount: null,
-    },
-  ]
+  componentDidMount() {
+    this.props.getThreads()
+  }
 
-  threads = [
-    {
-      id: 1111,
-      threadId: 111,
-      from: 'Wes Bos',
-      location: 'React Dental',
-      date: '5/16/18',
-      order: 0,
-      message:
-        'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Excepturi asperiores error cupiditate doloribus obcaecati sint blanditiis, maxime quae delectus quibusdam aperiam nam ab? Minus repellendus aut, asperiores facere delectus blanditiis!',
-      read: false,
-    },
-    {
-      id: 2222,
-      threadId: 222,
-      from: 'Me',
-      date: '5/16/18',
-      order: 0,
-      message:
-        'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Excepturi asperiores error cupiditate doloribus obcaecati sint blanditiis, maxime quae delectus quibusdam aperiam nam ab? Minus repellendus aut, asperiores facere delectus blanditiis!',
-      read: false,
-    },
-    {
-      id: 3333,
-      threadId: 333,
-      from: 'Wes Bos',
-      location: 'React Dental',
-      date: '5/16/18',
-      order: 0,
-      message:
-        'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Excepturi asperiores error cupiditate doloribus obcaecati sint blanditiis, maxime quae delectus quibusdam aperiam nam ab? Minus repellendus aut, asperiores facere delectus blanditiis!',
-      read: false,
-    },
-  ]
-
-  handleClick = active => {
+  handleClick = threadId => {
     // retrieve selected msg data
-    this.setState({ active })
+    this.props.getMessages(threadId)
+    this.setState({ active: threadId })
   }
 
   back = () => {
@@ -138,10 +39,14 @@ class Messages extends React.Component {
 
   render() {
     const { active } = this.state
+    const { threads } = this.props
+    const activeThread = active ? find(threads, thread => thread.id === active) : {}
+    const messages = activeThread.messages || []
+
     return (
       <div className={classnames(theme.messagesContainer, active && theme.active)}>
         <div className={theme.messages}>
-          {map(this.messages, message => (
+          {map(threads, message => (
             <div
               key={message.id}
               className={classnames(theme.message, !message.read && theme.unread)}
@@ -182,7 +87,7 @@ class Messages extends React.Component {
           <button className={theme.back} onClick={this.back}>
             <Icon use="arrow_back" />
           </button>
-          {map(this.threads, thread => (
+          {map(messages, thread => (
             <div
               key={thread.id}
               className={classnames(theme.thread, !thread.read && theme.unread)}
@@ -228,4 +133,20 @@ class Messages extends React.Component {
   }
 }
 
-export default Messages
+Messages.propTypes = {
+  getThreads: func.isRequired,
+  getMessages: func.isRequired,
+  threads: arrayOf(
+    shape({
+      id: oneOfType([string, number]),
+      messages: array,
+    }),
+  ).isRequired,
+}
+
+export default connect(
+  state => ({
+    threads: findThreads(state),
+  }),
+  { getThreads, getMessages },
+)(Messages)
