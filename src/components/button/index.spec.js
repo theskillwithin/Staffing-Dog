@@ -1,5 +1,6 @@
 import React from 'react'
-import { mount } from 'enzyme'
+import { shallow } from 'enzyme'
+// import render from 'react-test-renderer'
 
 import Button from './index'
 
@@ -8,7 +9,7 @@ describe('Button', () => {
   let onClick
 
   beforeEach(() => {
-    button = mount(<Button>My Button</Button>)
+    button = shallow(<Button />)
     onClick = jest.fn()
   })
 
@@ -18,10 +19,20 @@ describe('Button', () => {
 
   it('should fire onclick', () => {
     button.setProps({ onClick })
-    button.find('button').simulate('click')
+    button.simulate('click')
 
     expect(onClick).toHaveBeenCalledTimes(1)
 
     onClick.mockClear()
+  })
+
+  it('should add round class', () => {
+    button.setProps({ round: true })
+    expect(button.find('.round')).toBeTruthy()
+  })
+
+  it('should add short class', () => {
+    button.setProps({ short: true })
+    expect(button.find('.short')).toBeTruthy()
   })
 })
