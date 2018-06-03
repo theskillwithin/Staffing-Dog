@@ -4,12 +4,14 @@ import classnames from 'classnames'
 import ProfilePhotoSVG from '@component/svg/ProfilePhoto'
 import ReplySVG from '@component/svg/Reply'
 import Icon from '@component/icon'
+import Button from '@component/button'
 
 import theme from './theme.css'
 
 class Messages extends React.Component {
   state = {
     active: false,
+    message: '',
   }
 
   messages = [
@@ -129,6 +131,10 @@ class Messages extends React.Component {
     this.setState({ active: false })
   }
 
+  handleChange = message => {
+    this.setState({ message })
+  }
+
   render() {
     const { active } = this.state
     return (
@@ -205,6 +211,16 @@ class Messages extends React.Component {
               </div>
             </div>
           ))}
+          <div className={theme.respond}>
+            <textarea
+              placeholder="Type message here"
+              value={this.state.message}
+              onChange={e => this.handleChange(e.target.value)}
+            />
+            <Button primary round>
+              <Icon use="send" />
+            </Button>
+          </div>
         </div>
       </div>
     )
