@@ -1,6 +1,6 @@
 @import "../../../../styles/config.css";
 
-.messagesContainer {
+.threadsContainer {
   width: calc(100% + 3em);
   margin: -1em -1.5em -1em -1.5em;
   transition: transform 300ms ease-out;
@@ -10,7 +10,7 @@
   }
 }
 
-.threads {
+.messages {
   position: absolute;
   top: 0;
   right: 0;
@@ -70,7 +70,7 @@
   }
 }
 
-.messages {
+.threads {
   position: relative;
   width: 100%;
   max-height: 700px;
@@ -162,7 +162,7 @@
 }
 
 
-.message {
+.thread {
   display: flex;
   height: 106px;
   border: none;
@@ -196,7 +196,7 @@
 }
 
 
-.thread {
+.message {
   display: flex;
   border-bottom: solid 1px var(--sd-borderColor);
   padding: 12.5px 7px;

@@ -44,53 +44,15 @@ class Messages extends React.Component {
     const messages = activeThread.messages || []
 
     return (
-      <div className={classnames(theme.messagesContainer, active && theme.active)}>
-        <div className={theme.messages}>
-          {map(threads, message => (
-            <div
-              key={message.id}
-              className={classnames(theme.message, !message.read && theme.unread)}
-              role="button"
-              tabIndex={0}
-              onClick={() => this.handleClick(message.id)}
-            >
-              <div className={theme.avatar}>
-                {message.avatar ? (
-                  <img src={message.avatar} alt="avatar" />
-                ) : (
-                  <ProfilePhotoSVG />
-                )}
-              </div>
-              <div className={theme.middle}>
-                <div className={theme.title}>
-                  <h6>{message.from}</h6>
-                  {message.location && <span>{message.location}</span>}
-                </div>
-                <div className={theme.short}>
-                  <p>{message.short && message.short}</p>
-                </div>
-              </div>
-              <div className={theme.right}>
-                <div className={theme.date}>{message.date}</div>
-                {message.threadCount &&
-                  message.threadCount > 1 && (
-                    <div className={theme.threadCount}>{message.threadCount}</div>
-                  )}
-                <div className={theme.reply}>
-                  <ReplySVG />
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
+      <div className={classnames(theme.threadsContainer, active && theme.active)}>
         <div className={theme.threads}>
-          <button className={theme.back} onClick={this.back}>
-            <Icon use="arrow_back" />
-          </button>
-          {map(messages, thread => (
+          {map(threads, thread => (
             <div
               key={thread.id}
               className={classnames(theme.thread, !thread.read && theme.unread)}
+              role="button"
+              tabIndex={0}
+              onClick={() => this.handleClick(thread.id)}
             >
               <div className={theme.avatar}>
                 {thread.avatar ? (
@@ -105,7 +67,7 @@ class Messages extends React.Component {
                   {thread.location && <span>{thread.location}</span>}
                 </div>
                 <div className={theme.short}>
-                  <p>{thread.message && thread.message}</p>
+                  <p>{thread.short && thread.short}</p>
                 </div>
               </div>
               <div className={theme.right}>
@@ -113,6 +75,44 @@ class Messages extends React.Component {
                 {thread.threadCount &&
                   thread.threadCount > 1 && (
                     <div className={theme.threadCount}>{thread.threadCount}</div>
+                  )}
+                <div className={theme.reply}>
+                  <ReplySVG />
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+        <div className={theme.messages}>
+          <button className={theme.back} onClick={this.back}>
+            <Icon use="arrow_back" />
+          </button>
+          {map(messages, message => (
+            <div
+              key={message.id}
+              className={classnames(theme.message, !message.read && theme.unread)}
+            >
+              <div className={theme.avatar}>
+                {message.avatar ? (
+                  <img src={message.avatar} alt="avatar" />
+                ) : (
+                  <ProfilePhotoSVG />
+                )}
+              </div>
+              <div className={theme.middle}>
+                <div className={theme.title}>
+                  <h6>{message.from}</h6>
+                  {message.location && <span>{message.location}</span>}
+                </div>
+                <div className={theme.short}>
+                  <p>{message.message && message.message}</p>
+                </div>
+              </div>
+              <div className={theme.right}>
+                <div className={theme.date}>{message.date}</div>
+                {message.threadCount &&
+                  message.threadCount > 1 && (
+                    <div className={theme.threadCount}>{message.threadCount}</div>
                   )}
               </div>
             </div>
