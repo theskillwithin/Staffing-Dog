@@ -53,42 +53,57 @@ class Messages extends React.Component {
       <div className={classnames(theme.threadsContainer, active && theme.active)}>
         <div className={theme.threads}>
           {map(threads, thread => (
-            <div
-              key={thread.id}
-              className={classnames(theme.thread, !thread.read && theme.unread)}
-              role="button"
-              tabIndex={0}
-              onClick={() => this.handleClick(thread.id)}
-            >
-              <div className={theme.avatar}>
-                {thread.avatar ? (
-                  <img src={thread.avatar} alt="avatar" />
-                ) : (
-                  <ProfilePhotoSVG />
-                )}
-              </div>
-              <div className={theme.middle}>
-                <div className={theme.title}>
-                  <h6>{thread.from}</h6>
-                  {thread.location && <span>{thread.location}</span>}
-                </div>
-                <div className={theme.short}>
-                  <p>{thread.short && thread.short}</p>
-                </div>
-              </div>
-              <div className={theme.right}>
-                <div className={theme.date}>{thread.date}</div>
-                {thread.threadCount &&
-                  thread.threadCount > 1 && (
-                    <div className={theme.threadCount}>{thread.threadCount}</div>
+            <div key={thread.id} className={theme.threadContainer}>
+              <div
+                role="button"
+                tabIndex={0}
+                onClick={() => this.handleClick(thread.id)}
+                className={classnames(theme.thread, !thread.read && theme.unread)}
+              >
+                <div className={theme.avatar}>
+                  {thread.avatar ? (
+                    <img src={thread.avatar} alt="avatar" />
+                  ) : (
+                    <ProfilePhotoSVG />
                   )}
-                <button
-                  className={theme.reply}
-                  onClick={e => this.quickReply(e, thread.id)}
-                >
-                  <ReplySVG />
-                </button>
+                </div>
+                <div className={theme.middle}>
+                  <div className={theme.title}>
+                    <h6>{thread.from}</h6>
+                    {thread.location && <span>{thread.location}</span>}
+                  </div>
+                  <div className={theme.short}>
+                    <p>{thread.short && thread.short}</p>
+                  </div>
+                </div>
+                <div className={theme.right}>
+                  <div className={theme.date}>{thread.date}</div>
+                  {thread.threadCount &&
+                    thread.threadCount > 1 && (
+                      <div className={theme.threadCount}>{thread.threadCount}</div>
+                    )}
+                  <button
+                    className={theme.reply}
+                    onClick={e => this.quickReply(e, thread.id)}
+                  >
+                    <ReplySVG />
+                  </button>
+                </div>
               </div>
+              {this.state.quickReply === thread.id && (
+                <div className={theme.quickReply}>
+                  <div className={theme.respond}>
+                    <Textarea
+                      placeholder="Type message here"
+                      value={this.state.message}
+                      onChange={e => this.handleChange(e.target.value)}
+                    />
+                    <Button primary round>
+                      <Icon use="send" />
+                    </Button>
+                  </div>
+                </div>
+              )}
             </div>
           ))}
         </div>

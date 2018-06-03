@@ -33,39 +33,39 @@
       color: var(--sd-primary);
     }
   }
+}
 
-  .respond {
-    position: relative;
-    display: flex;
-    align-items: center;
+.respond {
+  position: relative;
+  display: flex;
+  align-items: center;
 
-    span {
-      position: absolute;
-      left: 1em;
-      top: 1em;
-      color: var(--sd-gray);
-    }
+  span {
+    position: absolute;
+    left: 1em;
+    top: 1em;
+    color: var(--sd-gray);
+  }
 
-    textarea {
-      flex: 1;
-      padding: 2em;
-      font-size: 14px;
-      height: auto;
-      border: none;
-      outline: none;
-      padding-right: 6em;
-      background: white;
-      resize: none;
-    }
+  textarea {
+    flex: 1;
+    padding: 2em;
+    font-size: 14px;
+    height: auto;
+    border: none;
+    outline: none;
+    padding-right: 6em;
+    background: white;
+    resize: none;
+  }
 
-    button {
-      position: absolute;
-      top: 1em;
-      right: 1em;
+  button {
+    position: absolute;
+    top: 1em;
+    right: 1em;
 
-      i {
-        font-size: 22px;
-      }
+    i {
+      font-size: 22px;
     }
   }
 }
