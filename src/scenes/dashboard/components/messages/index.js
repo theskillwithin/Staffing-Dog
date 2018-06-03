@@ -3,6 +3,7 @@ import map from 'lodash/map'
 import classnames from 'classnames'
 import ProfilePhotoSVG from '@component/svg/ProfilePhoto'
 import ReplySVG from '@component/svg/Reply'
+import Icon from '@component/icon'
 
 import theme from './theme.css'
 
@@ -84,8 +85,48 @@ class Messages extends React.Component {
     },
   ]
 
+  threads = [
+    {
+      id: 1111,
+      threadId: 111,
+      from: 'Wes Bos',
+      location: 'React Dental',
+      date: '5/16/18',
+      order: 0,
+      message:
+        'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Excepturi asperiores error cupiditate doloribus obcaecati sint blanditiis, maxime quae delectus quibusdam aperiam nam ab? Minus repellendus aut, asperiores facere delectus blanditiis!',
+      read: false,
+    },
+    {
+      id: 2222,
+      threadId: 222,
+      from: 'Me',
+      date: '5/16/18',
+      order: 0,
+      message:
+        'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Excepturi asperiores error cupiditate doloribus obcaecati sint blanditiis, maxime quae delectus quibusdam aperiam nam ab? Minus repellendus aut, asperiores facere delectus blanditiis!',
+      read: false,
+    },
+    {
+      id: 3333,
+      threadId: 333,
+      from: 'Wes Bos',
+      location: 'React Dental',
+      date: '5/16/18',
+      order: 0,
+      message:
+        'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Excepturi asperiores error cupiditate doloribus obcaecati sint blanditiis, maxime quae delectus quibusdam aperiam nam ab? Minus repellendus aut, asperiores facere delectus blanditiis!',
+      read: false,
+    },
+  ]
+
   handleClick = active => {
+    // retrieve selected msg data
     this.setState({ active })
+  }
+
+  back = () => {
+    this.setState({ active: false })
   }
 
   render() {
@@ -130,8 +171,40 @@ class Messages extends React.Component {
             </div>
           ))}
         </div>
-        <div className={theme.singleMessage}>
-          <h1>Test</h1>
+        <div className={theme.threads}>
+          <button className={theme.back} onClick={this.back}>
+            <Icon use="arrow_back" />
+          </button>
+          {map(this.threads, thread => (
+            <div
+              key={thread.id}
+              className={classnames(theme.thread, !thread.read && theme.unread)}
+            >
+              <div className={theme.avatar}>
+                {thread.avatar ? (
+                  <img src={thread.avatar} alt="avatar" />
+                ) : (
+                  <ProfilePhotoSVG />
+                )}
+              </div>
+              <div className={theme.middle}>
+                <div className={theme.title}>
+                  <h6>{thread.from}</h6>
+                  {thread.location && <span>{thread.location}</span>}
+                </div>
+                <div className={theme.short}>
+                  <p>{thread.message && thread.message}</p>
+                </div>
+              </div>
+              <div className={theme.right}>
+                <div className={theme.date}>{thread.date}</div>
+                {thread.threadCount &&
+                  thread.threadCount > 1 && (
+                    <div className={theme.threadCount}>{thread.threadCount}</div>
+                  )}
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     )
