@@ -1,6 +1,5 @@
 import React from 'react'
 import classnames from 'classnames'
-import Card from '@component/card'
 import { setTitle } from '@util/document'
 
 import theme from '../app/theme.css'
@@ -14,26 +13,12 @@ class Dashboard extends React.Component {
     setTitle('Dashboard')
   }
 
-  newMessage = () => {
-    console.log('New Message')
-  }
-
   render() {
     return (
       <div className={classnames(theme.pageContent, theme.columns)}>
         <div className={theme.column}>
           <ToDoList />
-
-          <Card
-            title="Messages"
-            icon="chat"
-            action="New Message"
-            actionCb={this.newMessage}
-            actionProps={{ round: true, secondary: true, short: true }}
-            type="overflowHidden"
-          >
-            <Messages />
-          </Card>
+          <Messages />
         </div>
 
         <div className={theme.column}>
