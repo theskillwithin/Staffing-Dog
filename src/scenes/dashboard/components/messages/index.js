@@ -10,7 +10,7 @@ import ProfilePhotoSVG from '@component/svg/ProfilePhoto'
 import ReplySVG from '@component/svg/Reply'
 import Icon from '@component/icon'
 import Button from '@component/button'
-import Dropdown from '@component/dropdown'
+import Select from '@component/select'
 import { getThreads, getMessages, findThreads } from '@store/messages'
 
 import theme from './theme.css'
@@ -20,7 +20,7 @@ class Messages extends React.Component {
     active: false,
     message: '',
     quickReply: null,
-    users: undefined,
+    users: '',
   }
 
   componentDidMount() {
@@ -60,6 +60,7 @@ class Messages extends React.Component {
   }
 
   handleUsersChange = users => {
+    console.log(users)
     this.setState({ users })
   }
 
@@ -147,12 +148,12 @@ class Messages extends React.Component {
             </button>
             {this.state.active === 'new' && (
               <div className={theme.users}>
-                <h3>Send To: </h3>
-                <Dropdown
+                <Select
                   value={this.state.users}
-                  onChange={value => this.handleUsersChange(value)}
+                  placeholder="Select User..."
+                  onChange={this.handleUsersChange}
                   options={this.usersList}
-                  box={false}
+                  searchable
                 />
               </div>
             )}

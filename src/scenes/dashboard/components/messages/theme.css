@@ -18,6 +18,7 @@
   width: 100%;
   overflow-y: scroll;
   max-height: 700px;
+  min-height: 100%;
 
   .back {
     width: 100%;
@@ -227,4 +228,9 @@
   display: flex;
   justify-content: space-around;
   align-items: center;
+  padding: 1em;
+
+  > * {
+    width: 100%;
+  }
 }
