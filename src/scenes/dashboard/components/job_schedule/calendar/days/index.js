@@ -56,7 +56,9 @@ const Days = ({ date, startDate, endDate, onClick }) => {
   }
 
   const daysCount = days.length
-  for (let i = 1; i <= 42 - daysCount; i++) {
+  const DAYS_IN_WEEK = 7
+
+  for (let i = 1; i <= DAYS_IN_WEEK * 6 - daysCount; i++) {
     nextsMonth.date(i)
     days.push(
       <Day
