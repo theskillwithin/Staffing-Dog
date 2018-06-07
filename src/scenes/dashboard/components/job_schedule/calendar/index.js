@@ -6,23 +6,19 @@ import Days from './days'
 import theme from './theme.css'
 
 class Calendar extends React.Component {
-  constructor(props) {
-    super(props)
-
-    this.state = {
-      date: moment(),
-      startDate: moment().subtract(5, 'day'),
-      endDate: moment().add(3, 'day'),
-    }
+  state = {
+    date: moment(),
+    startDate: moment().subtract(5, 'day'),
+    endDate: moment().add(3, 'day'),
   }
 
-  resetDate() {
+  resetDate = () => {
     this.setState({
       date: moment(),
     })
   }
 
-  changeMonth(month) {
+  changeMonth = month => {
     const { date } = this.state
 
     date.month(month)
@@ -30,7 +26,7 @@ class Calendar extends React.Component {
     this.setState(date)
   }
 
-  changeDate(date) {
+  changeDate = date => {
     let { startDate, endDate } = this.state
 
     if (
@@ -58,14 +54,10 @@ class Calendar extends React.Component {
 
     return (
       <div className={theme.calendar}>
-        <Heading
-          date={date}
-          changeMonth={month => this.changeMonth(month)}
-          resetDate={() => this.resetDate()}
-        />
+        <Heading date={date} changeMonth={this.changeMonth} resetDate={this.resetDate} />
 
         <Days
-          onClick={dateM => this.changeDate(dateM)}
+          onClick={this.changeDate}
           date={date}
           startDate={startDate}
           endDate={endDate}
