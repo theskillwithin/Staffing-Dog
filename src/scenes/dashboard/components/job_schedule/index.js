@@ -5,6 +5,7 @@ import Dropdown from '@component/dropdown'
 
 import WeekRow from './weeks'
 import Event from './event'
+import Calendar from './calendar/'
 import theme from './theme.css'
 
 class JobSchedule extends React.Component {
@@ -146,6 +147,8 @@ class JobSchedule extends React.Component {
             />
           ))}
         </div>
+        <hr className={theme.divider} />
+        <Calendar />
         <hr className={theme.divider} />
         <div className={theme.events}>
           {this.events.map(event => <Event key={event.id} event={event} />)}
