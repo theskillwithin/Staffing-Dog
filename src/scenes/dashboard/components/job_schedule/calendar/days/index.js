@@ -17,7 +17,7 @@ const Days = ({ date, startDate, endDate, onClick }) => {
 
   for (let i = 1; i <= 7; i++) {
     labels.push(
-      <span key={i} className="label">
+      <span key={i} className={theme.label}>
         {moment()
           .day(i)
           .format('ddd')}

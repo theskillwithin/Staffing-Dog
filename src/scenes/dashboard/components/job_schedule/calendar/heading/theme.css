@@ -1,19 +1,25 @@
 @import '../../../../../../styles/config';
 
 .nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   margin: -15px -15px 0;
   padding: 0 15px;
   color: var(--sd-blackTxt);
   height: 50px;
   position: relative;
 
-  a {
-    position: absolute;
+  button {
+    border: none;
+    background: transparent;
+    outline: none;
+  }
+
+  .right, .left {
     cursor: pointer;
-    left: 10px;
     font-size: 32px;
     line-height: 1;
-    top: 16px;
     width: 30px;
     text-align: center;
     display: inline-block;
@@ -21,7 +27,7 @@
     user-select: none;
 
     &:hover {
-      color: #fff;
+      color: var(--sd-gray);
     }
 
     &:last-child {
@@ -31,10 +37,8 @@
   }
 
   h1 {
+    text-align: center;
     margin: 0;
-    position: absolute;
-    left: 40px;
-    right: 40px;
     text-align: center;
     cursor: pointer;
     font-weight: 300;

@@ -1,0 +1,57 @@
+@import '../../../../../../../styles/config';
+
+.active {
+  font-weight: 700;
+  /*background-color: transparentize($primary, 0.95);*/
+  background-color: var(--sd-primary);
+  border-radius: 50px;
+}
+
+.muted {
+  color: rgba(0, 0, 0, 0.3);
+}
+
+.between {
+  border-radius: 0;
+}
+
+.start, .between, .end {
+  background-color: var(--sd-gray);
+  color: #fff;
+}
+
+.start {
+  border-radius: 50px 0 0 50px;
+}
+
+.end {
+  border-radius: 0 50px 50px 0;
+}
+
+.start.end {
+  border-radius: 50px;
+}
+
+.between:nth-child(7n):after, .start:nth-child(7n):after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 100%;
+  background-color: var(--sd-gray);
+  width: 20px;
+}
+
+.between:nth-child(7n + 1):after, .end:nth-child(7n + 1):after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 100%;
+  background-color: var(--sd-gray);
+  width: 20px;
+}
+
+&.start.end:after {
+  display: none;
+}
