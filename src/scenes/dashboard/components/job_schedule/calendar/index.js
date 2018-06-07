@@ -3,8 +3,7 @@ import moment from 'moment'
 
 import Heading from './heading'
 import Days from './days'
-
-// import theme from './styles.css'
+import theme from './theme.css'
 
 class Calendar extends React.Component {
   constructor(props) {
@@ -58,7 +57,7 @@ class Calendar extends React.Component {
     const { date, startDate, endDate } = this.state
 
     return (
-      <div className="calendar">
+      <div className={theme.calendar}>
         <Heading
           date={date}
           changeMonth={month => this.changeMonth(month)}

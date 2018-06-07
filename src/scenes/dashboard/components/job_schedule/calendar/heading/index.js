@@ -1,8 +1,10 @@
 import React from 'react'
 import { object, func } from 'prop-types'
 
+import theme from './theme.css'
+
 const Heading = ({ date, changeMonth, resetDate }) => (
-  <nav className="calendar--nav">
+  <nav className={theme.nav}>
     <button onClick={() => changeMonth(date.month() - 1)}>&#8249;</button>
     <button onClick={() => resetDate()}>
       <h1>

@@ -3,6 +3,7 @@ import { object, func } from 'prop-types'
 import moment from 'moment'
 
 import Day from './day'
+import theme from './theme.css'
 
 const Days = ({ date, startDate, endDate, onClick }) => {
   const thisDate = moment(date)
@@ -70,7 +71,7 @@ const Days = ({ date, startDate, endDate, onClick }) => {
   }
 
   return (
-    <nav className="calendar--days">
+    <nav className={theme.days}>
       {labels.concat()}
       {days.concat()}
     </nav>
