@@ -1,0 +1,15 @@
+@import "../../../styles/config.css";
+
+.svg {
+
+  :global {
+
+    svg {
+      width: 23px;
+    }
+
+    .cls-1 {
+      fill: currentColor;
+    }
+  }
+}

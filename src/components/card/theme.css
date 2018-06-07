@@ -71,3 +71,7 @@ nav.loadingBar {
     padding: var(--sd-cardPaddingLarge);
   }
 }
+
+.overflowHidden {
+  overflow: hidden;
+}
