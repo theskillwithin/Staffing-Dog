@@ -51,6 +51,6 @@
   width: 20px;
 }
 
-&.start.end:after {
+.start.end:after {
   display: none;
 }
