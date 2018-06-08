@@ -6,6 +6,7 @@ import Day from './day'
 import theme from './theme.css'
 
 const Days = ({ date, startDate, endDate, onClick }) => {
+  const DAYS_IN_WEEK = 7
   const thisDate = moment(date)
   const daysInMonth = moment(date).daysInMonth()
   const firstDayDate = moment(date).startOf('month')
@@ -15,7 +16,7 @@ const Days = ({ date, startDate, endDate, onClick }) => {
   const days = []
   const labels = []
 
-  for (let i = 1; i <= 7; i++) {
+  for (let i = 1; i <= DAYS_IN_WEEK; i++) {
     labels.push(
       <span key={i} className={theme.label}>
         {moment()
@@ -56,9 +57,10 @@ const Days = ({ date, startDate, endDate, onClick }) => {
   }
 
   const daysCount = days.length
-  const DAYS_IN_WEEK = 7
+  const MAX_COLUMNS = 6
+  const MAX_DAYS = DAYS_IN_WEEK * MAX_COLUMNS
 
-  for (let i = 1; i <= DAYS_IN_WEEK * 6 - daysCount; i++) {
+  for (let i = 1; i <= MAX_DAYS - daysCount; i++) {
     nextsMonth.date(i)
     days.push(
       <Day
