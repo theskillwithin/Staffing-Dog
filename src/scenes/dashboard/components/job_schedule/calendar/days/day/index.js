@@ -8,16 +8,28 @@ import theme from './theme.css'
 
 const Day = ({ currentDate, date, startDate, endDate, activeDates, onClick }) => {
   const active = moment().isSame(date, 'day')
-  const start =
-    date.isSame(startDate, 'day') ||
-    filter(activeDates, x => date.isSame(x.startDate, 'day')).length > 0
-  const between =
-    date.isBetween(startDate, endDate, 'day') ||
-    filter(activeDates, x => date.isBetween(x.startDate, x.endDate, 'day')).length > 0
-  const end =
-    date.isSame(endDate, 'day') ||
-    filter(activeDates, x => date.isSame(x.endDate, 'day')).length > 0
+
+  const editStart = date.isSame(startDate, 'day')
+  const activeStart = filter(activeDates, x => date.isSame(x.startDate, 'day'))
+  const start = editStart || activeStart.length > 0
+
+  const editBetween = date.isBetween(startDate, endDate, 'day')
+  const activeBetween = filter(activeDates, x =>
+    date.isBetween(x.startDate, x.endDate, 'day'),
+  )
+  const between = editBetween || activeBetween.length > 0
+
+  const editEnd = date.isSame(endDate, 'day')
+  const activeEnd = filter(activeDates, x => date.isSame(x.endDate, 'day'))
+  const end = editEnd || activeEnd.length > 0
+
   const muted = !date.isSame(currentDate, 'month')
+
+  const primary =
+    filter(activeBetween, x => x.primary === true).length > 0 ||
+    filter(activeStart, x => x.primary === true).length > 0 ||
+    filter(activeEnd, x => x.primary === true).length > 0
+  console.log(primary)
   return (
     <span
       onClick={() => onClick(date)}
@@ -28,6 +40,7 @@ const Day = ({ currentDate, date, startDate, endDate, activeDates, onClick }) =>
         between && theme.between,
         end && theme.end,
         muted && theme.muted,
+        primary && theme.primary,
       )}
       role="button"
       tabIndex={0}

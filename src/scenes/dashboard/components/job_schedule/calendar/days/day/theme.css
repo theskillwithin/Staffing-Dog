@@ -39,6 +39,10 @@
   left: 100%;
   background-color: var(--sd-gray);
   width: 20px;
+
+  &.primary {
+    background-color: var(--sd-primary);
+  }
 }
 
 .between:nth-child(7n + 1):after, .end:nth-child(7n + 1):after {
@@ -51,6 +55,18 @@
   width: 20px;
 }
 
+.between.primary:nth-child(7n):after, .start.primary:nth-child(7n):after {
+  background-color: var(--sd-primary);
+}
+
+.between.primary:nth-child(7n + 1):after, .end.primary:nth-child(7n + 1):after {
+  background-color: var(--sd-primary);
+}
+
 .start.end:after {
   display: none;
+}
+
+.primary {
+  background-color: var(--sd-primary);
 }
