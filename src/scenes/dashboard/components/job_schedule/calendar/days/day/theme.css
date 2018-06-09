@@ -2,8 +2,16 @@
 
 .active {
   font-weight: 700;
-  background-color: var(--sd-primary);
   border-radius: 50px;
+  
+  &:after {
+    content: '';
+    display: block;
+    width: 20px;
+    height: 2px;
+    background: var(--sd-red);
+    margin: -2px auto auto auto;
+  }
 }
 
 .muted {
@@ -15,7 +23,7 @@
 }
 
 .start, .between, .end {
-  background-color: var(--sd-gray);
+  background-color: var(--sd-grayLight);
   color: #fff;
 }
 
@@ -37,12 +45,8 @@
   top: 0;
   bottom: 0;
   left: 100%;
-  background-color: var(--sd-gray);
+  background-color: var(--sd-grayLight);
   width: 20px;
-
-  &.primary {
-    background-color: var(--sd-primary);
-  }
 }
 
 .between:nth-child(7n + 1):after, .end:nth-child(7n + 1):after {
@@ -51,7 +55,7 @@
   top: 0;
   bottom: 0;
   right: 100%;
-  background-color: var(--sd-gray);
+  background-color: var(--sd-grayLight);
   width: 20px;
 }
 
