@@ -2,11 +2,11 @@ import path from 'path'
 
 import HtmlWebPackPlugin from 'html-webpack-plugin'
 import MiniCssExtractPlugin from 'mini-css-extract-plugin'
-import ExtractTextPlugin from 'extract-text-webpack-plugin'
+import UglifyJsPlugin from 'uglifyjs-webpack-plugin'
+import OptimizeCSSAssetsPlugin from 'optimize-css-assets-webpack-plugin'
 
-// const ENV = process.env.NODE_ENV
-// const IS_DEV = ENV === 'development'
-// const IS_PROD = !ENV
+const ENV = process.env.NODE_ENV
+const IS_DEV = ENV === 'development'
 
 const root = path.resolve(__dirname, '../')
 const paths = {
@@ -23,86 +23,6 @@ const alias = {
   '@api': path.join(paths.src, 'api'),
   '@component': path.join(paths.src, 'components'),
   '@util': path.join(paths.src, 'utils'),
-}
-
-/**
- * Configure which css builder to use
- *
- * Comment out all the ones you don't want to use
- */
-
-const cssBuildType = 'extract'
-// const cssBuildType = 'minicss'
-// const cssBuildType = 'basic'
-
-/**
- * Extracts specific to modules
- */
-
-const extractText = {
-  rmwc: new ExtractTextPlugin('rmwc.[name].css'),
-  sd: new ExtractTextPlugin('sd.[name].css'),
-}
-
-/**
- * Loaders used in rules
- *
- * Based on the setting set above
- */
-
-const loaders = {
-  sd: {
-    basic: [
-      {
-        loader: 'css-loader',
-        options: {
-          modules: true,
-          localIdentName: '[local]__[name]--[hash:base64:5]',
-          importLoaders: 1,
-        },
-      },
-      {
-        loader: 'postcss-loader',
-        options: {
-          config: {
-            path: path.join(paths.config, 'postcss.config.js'),
-          },
-        },
-      },
-    ],
-  },
-  rmwc: {
-    basic: ['css-loader', 'postcss-loader' ],
-  },
-}
-
-loaders.sd.extract = extractText.sd.extract({
-  fallback: 'style-loader',
-  use: loaders.sd.basic,
-})
-
-loaders.sd.miniCssExtract = [MiniCssExtractPlugin.loader, ...loaders.sd.basic]
-
-loaders.rmwc.extract = extractText.rmwc.extract({
-  fallback: 'style-loader',
-  use: loaders.rmwc.basic,
-})
-
-loaders.rmwc.miniCssExtract = [MiniCssExtractPlugin.loader, ...loaders.rmwc.basic]
-
-/**
- * Loads loder based on type
- */
-
-const buildCssLoader = type => {
-  switch (cssBuildType) {
-    case 'cssmini':
-      return loaders[type].miniCssExtract
-    case 'extract':
-      return loaders[type].extract
-  }
-
-  return ['style-loader', ...loaders[type].basic]
 }
 
 /**
@@ -163,7 +83,12 @@ config.module.rules = [
       /src\/components\/(.+)\/theme/, // exclude theme.css files
       /src\/scenes\/(.+)\/theme/, // exclude theme.css files
     ],
-    use: buildCssLoader('rmwc'),
+    use: [
+      ...(IS_DEV ? 'style-loader' : []),
+      MiniCssExtractPlugin.loader,
+      'css-loader',
+      'postcss-loader',
+    ],
   },
   {
     test: /\.css$/,
@@ -173,7 +98,26 @@ config.module.rules = [
       /src\/components\/(.+)\/styles/, // exclude style.css files
       /src\/scenes\/(.+)\/styles/, // exclude style.css files
     ],
-    use: buildCssLoader('sd'),
+    use: [
+      ...(IS_DEV ? 'style-loader' : []),
+      MiniCssExtractPlugin.loader,
+      {
+        loader: 'css-loader',
+        options: {
+          modules: true,
+          localIdentName: '[local]__[name]--[hash:base64:5]',
+          importLoaders: 1,
+        },
+      },
+      {
+        loader: 'postcss-loader',
+        options: {
+          config: {
+            path: path.join(paths.config, 'postcss.config.js'),
+          },
+        },
+      },
+    ],
   },
   {
     test: /\.svg$/,
@@ -188,6 +132,16 @@ config.optimization = {
     chunks: 'all',
     name: 'vendor',
   },
+  minimizer: IS_DEV
+    ? []
+    : [
+        new UglifyJsPlugin({
+          cache: true,
+          parallel: true,
+          sourceMap: true, // set to true if you want JS source maps
+        }),
+        new OptimizeCSSAssetsPlugin({}),
+      ],
 }
 
 // Plugins
@@ -197,24 +151,12 @@ config.plugins = [
     filename: './index.html',
     inject: true,
   }),
+  new MiniCssExtractPlugin({
+    // Options similar to the same options in webpackOptions.output
+    // both options are optional
+    filename: '[name].[hash].css',
+    chunkFilename: '[name].[id].[hash].css',
+  }),
 ]
-
-// Css/Style Plugins based on the build type
-switch (cssBuildType) {
-  case 'minicss':
-    config.plugins = [
-      ...config.plugins,
-      new MiniCssExtractPlugin({
-        // Options similar to the same options in webpackOptions.output
-        // both options are optional
-        filename: '[name].[hash].css',
-        chunkFilename: '[id].[hash].css',
-      }),
-    ]
-    break
-  case 'extract':
-    config.plugins = [...config.plugins, extractText.rmwc, extractText.sd]
-    break
-}
 
 export default config

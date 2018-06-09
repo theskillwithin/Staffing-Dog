@@ -17,17 +17,15 @@ class Steps extends Component {
     }))
   }
 
-  static renderComplete() {
-    return (
-      <div className={theme.completeVideo}>
-        <span>Video</span>
-      </div>
-    )
-  }
-
   onChange = (name, value) => this.props.setValue(name, value)
 
   getValue = name => this.props.stepValues[name] || ''
+
+  renderComplete = () => (
+    <div className={theme.completeVideo}>
+      <span>Video</span>
+    </div>
+  )
 
   renderFields = (fields, key = 'row') => {
     const { renderFields, renderField } = this

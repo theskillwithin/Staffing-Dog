@@ -6,5 +6,8 @@ import { setStep, findType } from '../../store/steps'
 import GetStarted from './GetStarted'
 
 export default withRouter(
-  connect(state => ({ type: findType(state) }), { setStep })(GetStarted),
+  connect(
+    state => ({ type: findType(state) }),
+    { setStep },
+  )(GetStarted),
 )
