@@ -1,11 +1,11 @@
 import React from 'react'
-import { object, func } from 'prop-types'
+import { object, func, array } from 'prop-types'
 import moment from 'moment'
 
 import Day from './day'
 import theme from './theme.css'
 
-const Days = ({ date, startDate, endDate, onClick }) => {
+const Days = ({ date, startDate, endDate, activeDates, onClick }) => {
   const DAYS_IN_WEEK = 7
   const thisDate = moment(date)
   const daysInMonth = moment(date).daysInMonth()
@@ -37,6 +37,7 @@ const Days = ({ date, startDate, endDate, onClick }) => {
         date={moment(previousMonth)}
         startDate={startDate}
         endDate={endDate}
+        activeDates={activeDates}
       />,
     )
   }
@@ -52,6 +53,7 @@ const Days = ({ date, startDate, endDate, onClick }) => {
         date={moment(thisDate)}
         startDate={startDate}
         endDate={endDate}
+        activeDates={activeDates}
       />,
     )
   }
@@ -70,6 +72,7 @@ const Days = ({ date, startDate, endDate, onClick }) => {
         date={moment(nextsMonth)}
         startDate={startDate}
         endDate={endDate}
+        activeDates={activeDates}
       />,
     )
   }
@@ -87,6 +90,7 @@ Days.propTypes = {
   startDate: object,
   endDate: object,
   onClick: func,
+  activeDates: array,
 }
 
 export default Days
