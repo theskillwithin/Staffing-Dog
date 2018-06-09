@@ -5,7 +5,7 @@ import Dropdown from '@component/dropdown'
 
 import WeekRow from './weeks'
 import Event from './event'
-import Calendar from './calendar/'
+import Calendar from './calendar'
 import theme from './theme.css'
 
 class JobSchedule extends React.Component {
