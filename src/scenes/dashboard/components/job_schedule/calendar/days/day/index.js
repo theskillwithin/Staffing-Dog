@@ -29,7 +29,6 @@ const Day = ({ currentDate, date, startDate, endDate, activeDates, onClick }) =>
     filter(activeBetween, x => x.primary === true).length > 0 ||
     filter(activeStart, x => x.primary === true).length > 0 ||
     filter(activeEnd, x => x.primary === true).length > 0
-  console.log(primary)
   return (
     <span
       onClick={() => onClick(date)}
@@ -50,13 +49,18 @@ const Day = ({ currentDate, date, startDate, endDate, activeDates, onClick }) =>
   )
 }
 
+Day.defaultProps = {
+  startDate: null,
+  endDate: null,
+}
+
 Day.propTypes = {
-  currentDate: object,
-  date: object,
+  currentDate: object.isRequired,
+  date: object.isRequired,
   startDate: object,
   endDate: object,
-  activeDates: array,
-  onClick: func,
+  activeDates: array.isRequired,
+  onClick: func.isRequired,
 }
 
 export default Day

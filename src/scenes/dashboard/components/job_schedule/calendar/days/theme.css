@@ -8,7 +8,6 @@
     display: inline-block;
     text-align: center;
     user-select: none;
-    cursor: pointer;
     margin: 8px 0;
     line-height: 34px;
     position: relative;
@@ -25,4 +24,8 @@
       outline: none;
     }
   }
+}
+
+.editable span {
+  cursor: pointer;
 }

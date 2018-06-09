@@ -72,6 +72,7 @@ class Calendar extends React.Component {
           startDate={startDate}
           endDate={endDate}
           activeDates={this.activeDates}
+          editable={this.props.editable}
         />
       </div>
     )

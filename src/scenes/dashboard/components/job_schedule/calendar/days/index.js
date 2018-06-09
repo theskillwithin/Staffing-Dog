@@ -1,11 +1,12 @@
 import React from 'react'
-import { object, func, array } from 'prop-types'
+import { object, func, array, bool } from 'prop-types'
+import classnames from 'classnames'
 import moment from 'moment'
 
 import Day from './day'
 import theme from './theme.css'
 
-const Days = ({ date, startDate, endDate, activeDates, onClick }) => {
+const Days = ({ date, startDate, endDate, activeDates, editable, onClick }) => {
   const DAYS_IN_WEEK = 7
   const thisDate = moment(date)
   const daysInMonth = moment(date).daysInMonth()
@@ -78,19 +79,25 @@ const Days = ({ date, startDate, endDate, activeDates, onClick }) => {
   }
 
   return (
-    <nav className={theme.days}>
+    <nav className={classnames(theme.days, editable && theme.editable)}>
       {labels.concat()}
       {days.concat()}
     </nav>
   )
 }
 
+Days.defaultProps = {
+  startDate: null,
+  endDate: null,
+}
+
 Days.propTypes = {
-  date: object,
+  date: object.isRequired,
   startDate: object,
   endDate: object,
-  onClick: func,
-  activeDates: array,
+  onClick: func.isRequired,
+  activeDates: array.isRequired,
+  editable: bool.isRequired,
 }
 
 export default Days
