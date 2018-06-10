@@ -1,5 +1,5 @@
 import React from 'react'
-import { bool } from 'prop-types'
+import { bool, array } from 'prop-types'
 import moment from 'moment'
 
 import Heading from './heading'
@@ -12,13 +12,6 @@ class Calendar extends React.Component {
     startDate: null,
     endDate: null,
   }
-
-  activeDates = [
-    { startDate: '2018-06-02', endDate: '2018-06-05', primary: true },
-    { startDate: '2018-06-12', endDate: '2018-06-15', primary: false },
-    { startDate: '2018-06-20', endDate: '2018-06-20', primary: true },
-    { startDate: '2018-07-02', endDate: '2018-07-04', primary: true },
-  ]
 
   resetDate = () => {
     this.setState({
@@ -71,7 +64,7 @@ class Calendar extends React.Component {
           date={date}
           startDate={startDate}
           endDate={endDate}
-          activeDates={this.activeDates}
+          activeDates={this.props.activeDates}
           editable={this.props.editable}
         />
       </div>
@@ -85,6 +78,7 @@ Calendar.defaultProps = {
 
 Calendar.propTypes = {
   editable: bool,
+  activeDates: array.isRequired,
 }
 
 export default Calendar
