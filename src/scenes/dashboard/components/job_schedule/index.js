@@ -2,10 +2,10 @@ import React from 'react'
 import Card from '@component/card'
 import Switch from '@component/switch'
 import Dropdown from '@component/dropdown'
+import Calendar from '@component/calendar'
 
 import WeekRow from './weeks'
 import Event from './event'
-import Calendar from './calendar'
 import theme from './theme.css'
 
 class JobSchedule extends React.Component {
