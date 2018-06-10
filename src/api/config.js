@@ -1,7 +1,7 @@
 import { SIM } from '@util/env'
 
 export { SIM }
-export const SIM_TTL = 2000
+export const SIM_TTL = 1000
 
 export const fakePromise = data => {
   return new Promise(resolve => {

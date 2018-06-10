@@ -1,7 +1,10 @@
 import React from 'react'
+import { func, array } from 'prop-types'
+import { connect } from 'react-redux'
 import Card from '@component/card'
 import Switch from '@component/switch'
 import Dropdown from '@component/dropdown'
+import { findScheduledEvents, getScheduledEvents } from '@store/jobs'
 
 import WeekRow from './weeks'
 import Event from './event'
@@ -52,6 +55,10 @@ class JobSchedule extends React.Component {
     },
   }
 
+  componentDidMount() {
+    this.props.getScheduledEvents()
+  }
+
   updateSchedule = () => {
     this.setState({ updateSchedule: new Date().time() })
   }
@@ -64,33 +71,6 @@ class JobSchedule extends React.Component {
   ]
 
   daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
-
-  events = [
-    {
-      id: 0,
-      date: '10',
-      location: 'APX Dental',
-      time: '9:30 AM - 5:00 PM',
-      address: '641 W 900 S, STE 1 Sandy UT 84070',
-      type: 'red',
-    },
-    {
-      id: 1,
-      date: '19',
-      location: 'APEX Dental',
-      time: '10:30 AM - 6 PM',
-      address: '286 East 12200 South Draper, UT 84020',
-      type: 'blue',
-    },
-    {
-      id: 2,
-      date: '31',
-      location: 'APEX Dental',
-      time: '9:30 AM - 5 PM',
-      address: '286 East 12200 South Draper, UT 84020',
-      type: 'grey',
-    },
-  ]
 
   handleToggle = () => {
     this.setState(state => ({ form: { ...state.form, switch: !state.form.switch } }))
@@ -110,6 +90,7 @@ class JobSchedule extends React.Component {
   }
 
   render() {
+    console.log('events', this.props.scheduledEvents)
     const { state } = this
     return (
       <Card
@@ -148,11 +129,23 @@ class JobSchedule extends React.Component {
         </div>
         <hr className={theme.divider} />
         <div className={theme.events}>
-          {this.events.map(event => <Event key={event.id} event={event} />)}
+          {this.props.scheduledEvents.map(event => (
+            <Event key={event.id} event={event} />
+          ))}
         </div>
       </Card>
     )
   }
 }
 
-export default JobSchedule
+JobSchedule.propTypes = {
+  getScheduledEvents: func.isRequired,
+  scheduledEvents: array.isRequired,
+}
+
+export default connect(
+  state => ({
+    scheduledEvents: findScheduledEvents(state),
+  }),
+  { getScheduledEvents },
+)(JobSchedule)
