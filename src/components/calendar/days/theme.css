@@ -1,0 +1,31 @@
+@import '../../../styles/config';
+
+.days {
+  font-size: 0;
+  
+  span {
+    width: 14.28571%;
+    display: inline-block;
+    text-align: center;
+    user-select: none;
+    margin: 8px 0;
+    line-height: 34px;
+    position: relative;
+    font-size: 16px;
+    font-weight: 500;
+    outline: none;
+
+    &.label {
+      text-transform: uppercase;
+      font-weight: 400;
+      color: rgba(0, 0, 0, 0.3);
+      font-size: 14px;
+      cursor: initial;
+      outline: none;
+    }
+  }
+}
+
+.editable span {
+  cursor: pointer;
+}

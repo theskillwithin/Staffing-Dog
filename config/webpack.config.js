@@ -1,5 +1,6 @@
 import path from 'path'
 
+import webpack from 'webpack'
 import HtmlWebPackPlugin from 'html-webpack-plugin'
 import MiniCssExtractPlugin from 'mini-css-extract-plugin'
 import UglifyJsPlugin from 'uglifyjs-webpack-plugin'
@@ -146,6 +147,7 @@ config.optimization = {
 
 // Plugins
 config.plugins = [
+  new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
   new HtmlWebPackPlugin({
     template: './src/index.html',
     filename: './index.html',
