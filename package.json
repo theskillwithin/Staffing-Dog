@@ -12,6 +12,7 @@
     "start:open": "npm start --open",
     "start:mock:open": "npm run start:mock --open",
     "build": "npm run clear:dist ; webpack --mode production",
+    "build:mock": "MOCK_DATA=1 npm run build",
     "clear:dist": "rm -r ./dist",
     "eslint-check": "eslint --print-config .eslintrc.js | eslint-config-prettier-check"
   },
