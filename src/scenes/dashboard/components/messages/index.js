@@ -60,7 +60,6 @@ class Messages extends React.Component {
   }
 
   handleUsersChange = users => {
-    console.log(users)
     this.setState({ users })
   }
 

@@ -2,6 +2,7 @@ import React from 'react'
 import Card from '@component/card'
 import Switch from '@component/switch'
 import Dropdown from '@component/dropdown'
+import Calendar from '@component/calendar'
 
 import WeekRow from './weeks'
 import Event from './event'
@@ -51,6 +52,13 @@ class JobSchedule extends React.Component {
       },
     },
   }
+
+  activeDates = [
+    { startDate: '2018-06-02', endDate: '2018-06-05', primary: true },
+    { startDate: '2018-06-12', endDate: '2018-06-15', primary: false },
+    { startDate: '2018-06-20', endDate: '2018-06-20', primary: true },
+    { startDate: '2018-07-02', endDate: '2018-07-04', primary: true },
+  ]
 
   updateSchedule = () => {
     this.setState({ updateSchedule: new Date().time() })
@@ -146,6 +154,8 @@ class JobSchedule extends React.Component {
             />
           ))}
         </div>
+        <hr className={theme.divider} />
+        <Calendar activeDates={this.activeDates} />
         <hr className={theme.divider} />
         <div className={theme.events}>
           {this.events.map(event => <Event key={event.id} event={event} />)}

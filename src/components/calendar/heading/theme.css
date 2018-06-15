@@ -1,0 +1,49 @@
+@import '../../../styles/config';
+
+.nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: -15px -15px 0;
+  padding: 0 15px;
+  color: var(--sd-blackTxt);
+  height: 50px;
+  position: relative;
+
+  button {
+    border: none;
+    background: transparent;
+    outline: none;
+  }
+
+  .right, .left {
+    cursor: pointer;
+    font-size: 32px;
+    line-height: 1;
+    width: 30px;
+    text-align: center;
+    display: inline-block;
+    color: var(--sd-blackTxt);
+    user-select: none;
+
+    &:hover {
+      color: var(--sd-gray);
+    }
+
+    &:last-child {
+      left: auto;
+      right: 10px;
+    }
+  }
+
+  h1 {
+    text-align: center;
+    margin: 0;
+    text-align: center;
+    cursor: pointer;
+    font-weight: 300;
+    font-size: 18px;
+    line-height: 66px;
+    user-select: none;
+  }
+}
