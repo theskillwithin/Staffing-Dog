@@ -1,33 +1,16 @@
-import axios from 'axios'
+import api from '@sdog/api'
 
-import { SIM, API_ROOT, fakePromise } from '../config'
+import { API_ROOT, createPath } from '../config'
 
-import { getToken, setToken } from './storage'
+export { getToken, setToken } from './storage'
 
 export const API_AUTH_ROOT = `${API_ROOT}/auth`
+export const API_AUTH_REFRESH_TOKEN = `${API_AUTH_ROOT}/refresh`
+export const API_AUTH_LOGIN = `${API_AUTH_ROOT}/login`
+export const API_AUTH_LOGOUT = `${API_AUTH_ROOT}/logout`
+export const API_AUTH_FORGOT_PASSWORD = `${API_AUTH_ROOT}/forgot_password`
 
-export const refreshToken = () => {
-  return SIM ? fakePromise({}) : axios.get(`${API_AUTH_ROOT}/refresh`)
-}
-
-export const login = data => {
-  return SIM ? fakePromise({}) : axios.post(`${API_AUTH_ROOT}/login`, data)
-}
-
-export const logout = () => {
-  return SIM ? fakePromise({}) : axios.get(`${API_AUTH_ROOT}/logout`)
-}
-
-export const forgotPassword = data => {
-  return SIM ? fakePromise({}) : axios.post(`${API_AUTH_ROOT}/forgot_password`, data)
-}
-
-export default {
-  login,
-  logout,
-  forgotPassword,
-  refreshToken,
-  API_AUTH_ROOT,
-  getToken,
-  setToken,
-}
+export const login = data => api.post(API_AUTH_LOGIN, data)
+export const refreshToken = () => api.get(createPath(refreshToken.url))
+export const logout = () => api.get(API_AUTH_LOGOUT)
+export const forgotPassword = data => api.post(API_AUTH_FORGOT_PASSWORD, data)

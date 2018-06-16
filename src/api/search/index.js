@@ -1,9 +1,7 @@
-import axios from 'axios'
+import api from '@sdog/api'
 
-import { SIM, API_ROOT, fakePromise } from '../config'
+import { API_ROOT } from '../config'
 
-export const search = data => {
-  return SIM ? fakePromise({}) : axios.post(`${API_ROOT}/search`, data)
-}
+export const API_SEARCH = `${API_ROOT}/search`
 
-export default { search }
+export const search = data => api.post(API_SEARCH, data)

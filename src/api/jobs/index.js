@@ -1,17 +1,16 @@
-import axios from 'axios'
+import api, { createApi } from '@sdog/api'
+import { API_ROOT } from '@sdog/api/config'
 
-import { SIM, fakePromise } from '../config'
+export const API_JOBS = `${API_ROOT}/jobs`
 
-import { events, scheduledEvents } from './mock'
+export const getEvents = createApi(
+  {
+    type: 'GET',
+    url: API_JOBS,
+  },
+  url => api.get(url),
+)
 
-export const getScheduledEvents = () => {
-  return SIM
-    ? fakePromise({ events: scheduledEvents })
-    : axios.get('/jobs/scheduled-events')
+export default {
+  getEvents,
 }
-
-export const getEvents = () => {
-  return SIM ? fakePromise({ events }) : axios.get('/jobs')
-}
-
-export default { getScheduledEvents, getEvents }

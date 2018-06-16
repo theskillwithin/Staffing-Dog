@@ -1,32 +1,34 @@
 import buildStore from '@store/build'
 import reduxRegister from '@store/register'
-import jobsApi from '@api/jobs'
+import * as jobsApi from '@api/jobs'
 
 export const BASE = '@SD/JOBS'
 export const FETCH = `${BASE}_FETCH`
-export const FETCH_SCHEDULED_EVENTS = `${FETCH}_SCHEDULED_EVENTS`
-export const FETCH_SCHEDULED_EVENTS_SUCCESS = `${FETCH_SCHEDULED_EVENTS}_SUCCESS`
-export const FETCH_SCHEDULED_EVENTS_ERROR = `${FETCH_SCHEDULED_EVENTS}_ERROR`
+export const FETCH_EVENTS = `${FETCH}_EVENTS`
+export const FETCH_EVENTS_SUCCESS = `${FETCH_EVENTS}_SUCCESS`
+export const FETCH_EVENTS_ERROR = `${FETCH_EVENTS}_ERROR`
 
 export const actions = {
-  fetchScheduledEvents: () => ({ type: FETCH_SCHEDULED_EVENTS }),
+  fetchScheduledEvents: () => ({ type: FETCH_EVENTS }),
   fetchScheduledEventsSuccess: events => ({
-    type: FETCH_SCHEDULED_EVENTS_SUCCESS,
+    type: FETCH_EVENTS_SUCCESS,
     payload: { events },
   }),
   fetchScheduledEventsError: error => ({
-    type: FETCH_SCHEDULED_EVENTS_ERROR,
-    paylaod: { error },
+    type: FETCH_EVENTS_ERROR,
+    payload: { error },
   }),
 }
 
 export const getScheduledEvents = () => dispatch => {
   dispatch(actions.fetchScheduledEvents())
 
-  return jobsApi
-    .getScheduledEvents()
-    .then(({ events }) => dispatch(actions.fetchScheduledEventsSuccess(events)))
-    .catch(error => dispatch(actions.fetchScheduledEventsError(error)))
+  return jobsApi.getEvents
+    .send()
+    .then(({ data }) => dispatch(actions.fetchScheduledEventsSuccess(data.events)))
+    .catch(error =>
+      dispatch(actions.fetchScheduledEventsError(error.message || error || 'error')),
+    )
 }
 
 export const INITIAL_STATE = {
@@ -37,14 +39,14 @@ export const INITIAL_STATE = {
 }
 
 export const reducers = {
-  [FETCH_SCHEDULED_EVENTS]: state => ({ ...state, loading: true, error: false }),
-  [FETCH_SCHEDULED_EVENTS_SUCCESS]: (state, payload) => ({
+  [FETCH_EVENTS]: state => ({ ...state, loading: true, error: false }),
+  [FETCH_EVENTS_SUCCESS]: (state, payload) => ({
     ...state,
     scheduledEvents: payload.events,
     loading: false,
     error: false,
   }),
-  [FETCH_SCHEDULED_EVENTS_ERROR]: (state, payload) => ({
+  [FETCH_EVENTS_ERROR]: (state, payload) => ({
     ...state,
     loading: false,
     errror: payload.error,

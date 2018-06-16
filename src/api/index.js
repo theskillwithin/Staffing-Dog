@@ -1,23 +1,13 @@
 import axios from 'axios'
+import pathToRegex from 'path-to-regexp'
 
-import auth from './auth'
+const sdNoop = () => {}
 
-export const interceptAuth = () => {
-  axios.interceptors.request.use(config => ({
-    ...config,
-    headers: {
-      ...config.headers,
-      common: {
-        ...config.headers.common,
-        Authorization: auth.getToken(),
-      },
-    },
-  }))
-}
+export const createApi = (options = {}, apiCall = sdNoop) => ({
+  ...options,
+  send: (...args) => apiCall(options.url, ...args),
+})
 
-export { auth }
+export const createPath = (url, args) => pathToRegex.parse(url)(url, args)
 
-export default {
-  interceptAuth,
-  auth,
-}
+export default axios

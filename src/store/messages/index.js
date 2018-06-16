@@ -1,8 +1,6 @@
-import map from 'lodash/map'
-import find from 'lodash/find'
-import buildStore from '@store/build'
-import reduxRegister from '@store/register'
-import messagesApi from '@api/messages'
+import buildStore from '@sdog/store/build'
+import reduxRegister from '@sdog/store/register'
+import * as messagesApi from '@sdog/api/messages'
 
 export const BASE = '@SD/MESSAGES'
 export const FETCH = `${BASE}_FETCH`
@@ -23,35 +21,15 @@ export const actions = {
     type: FETCH_THREADS_ERROR,
     payload: { error },
   }),
-  fetchMessages: threadId => ({ type: FETCH_MESSAGES, payload: { threadId } }),
-  fetchMessagesSuccess: ({ messages, threadId }) => ({
-    type: FETCH_MESSAGES_SUCCESS,
-    payload: { messages, threadId },
-  }),
-  fetchMessagesError: error => ({
-    type: FETCH_MESSAGES_ERROR,
-    payload: { error },
-  }),
 }
 
 export const getThreads = () => dispatch => {
   dispatch(actions.fetchThreads())
 
-  return messagesApi
-    .getThreads()
-    .then(data => dispatch(actions.fetchThreadsSuccess(data.threads)))
+  return messagesApi.getMessages
+    .send()
+    .then(({ data }) => dispatch(actions.fetchThreadsSuccess(data.threads)))
     .catch(error => dispatch(actions.fetchThreadsError(error)))
-}
-
-export const getMessages = threadId => dispatch => {
-  dispatch(actions.fetchMessages(threadId))
-
-  return messagesApi
-    .getMessages(threadId)
-    .then(({ messages }) =>
-      dispatch(actions.fetchMessagesSuccess({ messages, threadId })),
-    )
-    .catch(error => dispatch(actions.fetchMessagesError(error)))
 }
 
 export const INITIAL_STATE = {
@@ -69,22 +47,6 @@ export const reducers = {
     error: false,
   }),
   [FETCH_THREADS_ERROR]: (state, payload) => ({
-    ...state,
-    loading: false,
-    error: payload.error,
-  }),
-  [FETCH_MESSAGES]: state => ({ ...state, loading: true, error: false }),
-  [FETCH_MESSAGES_SUCCESS]: (state, payload) => ({
-    ...state,
-    threads: find(state.threads, thread => thread.id === payload.threadId)
-      ? map(state.threads, thread => ({
-          ...thread,
-          messages:
-            thread.id === payload.threadId ? payload.messages : thread.messages || [],
-        }))
-      : [...state.threads, { id: payload.threadId, messages: payload.messages }],
-  }),
-  [FETCH_MESSAGES_ERROR]: (state, payload) => ({
     ...state,
     loading: false,
     error: payload.error,
