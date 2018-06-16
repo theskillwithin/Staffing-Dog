@@ -1,5 +1,6 @@
 import React from 'react'
 import { Route, Link } from 'react-router-dom'
+import classnames from 'classnames'
 import Logo from '@component/logo'
 import Icon from '@component/icon'
 import DashboardScene from '@scene/dashboard'
@@ -26,7 +27,7 @@ class App extends React.Component {
 
             <ul className={theme.nav}>
               <li className={theme.navItem}>
-                <Link className={theme.navItemLink} to="/">
+                <Link className={classnames(theme.navItemLink, theme.active)} to="/">
                   Dashboard
                 </Link>
               </li>

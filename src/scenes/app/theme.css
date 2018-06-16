@@ -70,6 +70,7 @@ h6 {
         padding: 0;
 
         .navItemLink {
+          position: relative;
           font-size: 14px;
           font-weight: 500;
           line-height: 1.21;
@@ -79,6 +80,19 @@ h6 {
           &.active {
             font-weight: 600;
             color: var(--sd-blackTxt);
+
+            &:after {
+              content: '';
+              display: block;
+              position: absolute;
+              bottom: -12px;
+              left: 50%;
+              transform: translateX(-50%);
+              width: 20px;
+              height: 4px;
+              border-radius: 2px;
+              background-color: var(--sd-primary);
+            }
           }
         }
 
