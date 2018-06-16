@@ -5,7 +5,7 @@
   "semi": false,
   "overrides": [
     {
-      "files": ".prettierrc",
+      "files": [".prettierrc", "package.json", ".eslintrc", ".babelrc", ".stylelintrc"],
       "options": { "parser": "json" }
     }
   ]

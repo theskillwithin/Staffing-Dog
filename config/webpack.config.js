@@ -1,5 +1,6 @@
 import path from 'path'
 
+import webpack from 'webpack'
 import HtmlWebPackPlugin from 'html-webpack-plugin'
 import MiniCssExtractPlugin from 'mini-css-extract-plugin'
 import UglifyJsPlugin from 'uglifyjs-webpack-plugin'
@@ -7,6 +8,7 @@ import OptimizeCSSAssetsPlugin from 'optimize-css-assets-webpack-plugin'
 
 const ENV = process.env.NODE_ENV
 const IS_DEV = ENV === 'development'
+const IS_PROD = !IS_DEV
 
 const root = path.resolve(__dirname, '../')
 const paths = {
@@ -18,6 +20,7 @@ const paths = {
 
 const alias = {
   '@sd': paths.src,
+  '@sdog': paths.src,
   '@scene': path.join(paths.src, 'scenes'),
   '@store': path.join(paths.src, 'store'),
   '@api': path.join(paths.src, 'api'),
@@ -31,7 +34,7 @@ const alias = {
 
 const config = {
   entry: path.resolve(__dirname, '../src/index.js'),
-  output: { filename: '[name].js' },
+  output: { filename: '[name].[hash].js' },
   module: {},
   plugins: [],
   resolve: { alias },
@@ -84,8 +87,7 @@ config.module.rules = [
       /src\/scenes\/(.+)\/theme/, // exclude theme.css files
     ],
     use: [
-      ...(IS_DEV ? 'style-loader' : []),
-      MiniCssExtractPlugin.loader,
+      ...(IS_DEV ? ['style-loader'] : [MiniCssExtractPlugin.loader]),
       'css-loader',
       'postcss-loader',
     ],
@@ -99,8 +101,7 @@ config.module.rules = [
       /src\/scenes\/(.+)\/styles/, // exclude style.css files
     ],
     use: [
-      ...(IS_DEV ? 'style-loader' : []),
-      MiniCssExtractPlugin.loader,
+      ...(IS_DEV ? ['style-loader'] : [MiniCssExtractPlugin.loader]),
       {
         loader: 'css-loader',
         options: {
@@ -132,20 +133,21 @@ config.optimization = {
     chunks: 'all',
     name: 'vendor',
   },
-  minimizer: IS_DEV
-    ? []
-    : [
+  minimizer: IS_PROD
+    ? [
         new UglifyJsPlugin({
           cache: true,
           parallel: true,
           sourceMap: true, // set to true if you want JS source maps
         }),
         new OptimizeCSSAssetsPlugin({}),
-      ],
+      ]
+    : [],
 }
 
 // Plugins
 config.plugins = [
+  new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
   new HtmlWebPackPlugin({
     template: './src/index.html',
     filename: './index.html',
@@ -155,7 +157,7 @@ config.plugins = [
     // Options similar to the same options in webpackOptions.output
     // both options are optional
     filename: '[name].[hash].css',
-    chunkFilename: '[name].[id].[hash].css',
+    chunkFilename: '[id].[hash].css',
   }),
 ]
 

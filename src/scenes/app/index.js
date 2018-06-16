@@ -39,7 +39,7 @@ class App extends React.Component {
 
             <div className={theme.user}>
               <div className={theme.userInner}>
-                <Link to="/profile">
+                <Link to="/settings">
                   <Icon use="person" /> Mellisa Gutierrez
                 </Link>
               </div>
