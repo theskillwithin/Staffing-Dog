@@ -73,8 +73,13 @@ h6 {
           font-size: 14px;
           font-weight: 500;
           line-height: 1.21;
-          color: var(--sd-blackTxt);
-          text-decoration: none !important;
+          color: var(--sd-grayLighter);
+          text-decoration: none;
+
+          &.active {
+            font-weight: 600;
+            color: var(--sd-blackTxt);
+          }
         }
 
         @media (--sd-tablet) {

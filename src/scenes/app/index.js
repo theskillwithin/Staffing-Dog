@@ -26,13 +26,18 @@ class App extends React.Component {
 
             <ul className={theme.nav}>
               <li className={theme.navItem}>
-                <Link className={theme.navItemLink} to="/onboarding/professional">
-                  Professional Onboarding
+                <Link className={theme.navItemLink} to="/">
+                  Dashboard
                 </Link>
               </li>
               <li className={theme.navItem}>
-                <Link className={theme.navItemLink} to="/onboarding/practice">
-                  Practice Onboarding
+                <Link className={theme.navItemLink} to="/search">
+                  Job Search
+                </Link>
+              </li>
+              <li className={theme.navItem}>
+                <Link className={theme.navItemLink} to="/settings">
+                  My Profile
                 </Link>
               </li>
             </ul>
