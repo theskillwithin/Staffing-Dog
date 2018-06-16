@@ -64,6 +64,14 @@ h1, h2, h3, h4, h5, h6 {
         margin: 0;
         padding: 0;
 
+        .navItemLink {
+          font-size: 14px;
+          font-weight: 500;
+          line-height: 1.21;
+          color: var(--sd-blackTxt);
+          text-decoration: none !important;
+        }
+
         @media (--sd-tablet) {
           margin-left: 2em;
 
