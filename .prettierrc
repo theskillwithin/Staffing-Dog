@@ -2,5 +2,11 @@
   "trailingComma": "all",
   "singleQuote": true,
   "printWidth": 90,
-  "semi": false
+  "semi": false,
+  "overrides": [
+    {
+      "files": [".prettierrc", "package.json", ".eslintrc", ".babelrc", ".stylelintrc"],
+      "options": { "parser": "json" }
+    }
+  ]
 }

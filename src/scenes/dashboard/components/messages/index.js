@@ -11,7 +11,7 @@ import ReplySVG from '@component/svg/Reply'
 import Icon from '@component/icon'
 import Button from '@component/button'
 import Select from '@component/select'
-import { getThreads, getMessages, findThreads } from '@store/messages'
+import { getThreads, findThreads } from '@store/messages'
 
 import theme from './theme.css'
 
@@ -33,15 +33,9 @@ class Messages extends React.Component {
     { label: 'theskillwithin', value: 'theskillwithin' },
   ]
 
-  handleClick = threadId => {
-    // retrieve selected msg data
-    this.props.getMessages(threadId)
-    this.setState({ active: threadId, quickReply: null })
-  }
+  handleClick = threadId => this.setState({ active: threadId, quickReply: null })
 
-  back = () => {
-    this.setState({ active: false, message: '' })
-  }
+  back = () => this.setState({ active: false, message: '' })
 
   quickReply = (e, quickReply) => {
     e.stopPropagation()
@@ -51,13 +45,9 @@ class Messages extends React.Component {
     return this.setState({ quickReply, message: '' })
   }
 
-  newMessage = () => {
-    this.setState({ active: 'new', quickReply: null })
-  }
+  newMessage = () => this.setState({ active: 'new', quickReply: null })
 
-  handleChange = message => {
-    this.setState({ message })
-  }
+  handleChange = message => this.setState({ message })
 
   handleUsersChange = users => {
     this.setState({ users })
@@ -205,7 +195,6 @@ class Messages extends React.Component {
 
 Messages.propTypes = {
   getThreads: func.isRequired,
-  getMessages: func.isRequired,
   threads: arrayOf(
     shape({
       id: oneOfType([string, number]),
@@ -218,5 +207,5 @@ export default connect(
   state => ({
     threads: findThreads(state),
   }),
-  { getThreads, getMessages },
+  { getThreads },
 )(Messages)

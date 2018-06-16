@@ -4,8 +4,7 @@ import reduce from 'lodash/reduce'
 import isEmpty from 'lodash/isEmpty'
 import build from '@store/build'
 import reduxRegister from '@store/register'
-
-import { saveStep as onBoardingAPISaveStep } from '../../../../api/onboarding'
+import { updateProfile } from '@api/user'
 
 import { professional, practice } from './fields'
 import {
@@ -180,7 +179,7 @@ export const saveStep = ({ step, onSuccess = false, onFail = false }) => (
 ) => {
   dispatch(da.saveStep(step))
 
-  return onBoardingAPISaveStep({
+  return updateProfile({
     step,
     values: getState.values,
   }).then(res => {

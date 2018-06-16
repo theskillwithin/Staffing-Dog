@@ -19,8 +19,8 @@ const paths = {
 }
 
 const alias = {
-  '@sd': paths.src,
   '@sdog': paths.src,
+  '@sd': paths.src,
   '@scene': path.join(paths.src, 'scenes'),
   '@store': path.join(paths.src, 'store'),
   '@api': path.join(paths.src, 'api'),
@@ -158,6 +158,9 @@ config.plugins = [
     // both options are optional
     filename: '[name].[hash].css',
     chunkFilename: '[id].[hash].css',
+  }),
+  new webpack.DefinePlugin({
+    'process.env.MOCK_DATA': JSON.stringify(process.env.MOCK_DATA || false),
   }),
 ]
 

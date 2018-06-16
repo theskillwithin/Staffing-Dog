@@ -3,21 +3,23 @@ import { render } from 'react-dom'
 import { Provider } from 'react-redux'
 import { HashRouter as Router, Route, Switch } from 'react-router-dom'
 import loadable from 'loadable-components'
-
-import createStore from '@store'
-
-import reducers from '@store/reducers'
-
-import { interceptAuth, auth } from '@api'
+import createStore from '@sdog/store'
+import reducers from '@sdog/store/reducers'
+import { interceptAuth } from '@sdog/api/intercepts'
+import { getToken } from '@sdog/api/auth'
 
 const Onboarding = loadable(() =>
-  import(/* webpackChunkName: "onboarding" */ '@scene/onboarding'),
+  import(/* webpackChunkName: "onboarding" */ '@sdog/scenes/onboarding'),
 )
-const App = loadable(() => import(/* webpackChunkName: "app" */ '@scene/app'))
+const App = loadable(() => import(/* webpackChunkName: "app" */ '@sdog/scenes/app'))
 
 interceptAuth()
 
-const token = auth.getToken()
+if (process.env.MOCK_DATA) {
+  require('@sdog/api/mock') // eslint-disable-line
+}
+
+const token = getToken()
 const storeData = token ? { auth: { token } } : { auth: { token: 'test' } }
 
 const store = createStore(storeData, reducers)

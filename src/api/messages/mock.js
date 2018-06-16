@@ -1,3 +1,7 @@
+import mockBuilder from '@api/mockBuilder'
+
+import messagesApi from './'
+
 export const messages = [
   {
     id: 1111,
@@ -105,3 +109,16 @@ export const threads = [
     threadCount: null,
   },
 ]
+
+export const mock = {
+  getMessages: {
+    threads: threads.map(thread => ({
+      ...thread,
+      messages,
+    })),
+  },
+}
+
+export const apiMocks = mockBuilder(messagesApi, mock)
+
+export default apiMocks

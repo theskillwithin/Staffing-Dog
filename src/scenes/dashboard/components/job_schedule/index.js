@@ -1,7 +1,10 @@
 import React from 'react'
+import { func, array } from 'prop-types'
+import { connect } from 'react-redux'
 import Card from '@component/card'
 import Switch from '@component/switch'
 import Dropdown from '@component/dropdown'
+import { findScheduledEvents, getScheduledEvents } from '@store/jobs'
 import Calendar from '@component/calendar'
 
 import WeekRow from './weeks'
@@ -53,12 +56,9 @@ class JobSchedule extends React.Component {
     },
   }
 
-  activeDates = [
-    { startDate: '2018-06-02', endDate: '2018-06-05', primary: true },
-    { startDate: '2018-06-12', endDate: '2018-06-15', primary: false },
-    { startDate: '2018-06-20', endDate: '2018-06-20', primary: true },
-    { startDate: '2018-07-02', endDate: '2018-07-04', primary: true },
-  ]
+  componentDidMount() {
+    this.props.getScheduledEvents()
+  }
 
   updateSchedule = () => {
     this.setState({ updateSchedule: new Date().time() })
@@ -72,33 +72,6 @@ class JobSchedule extends React.Component {
   ]
 
   daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
-
-  events = [
-    {
-      id: 0,
-      date: '10',
-      location: 'APX Dental',
-      time: '9:30 AM - 5:00 PM',
-      address: '641 W 900 S, STE 1 Sandy UT 84070',
-      type: 'red',
-    },
-    {
-      id: 1,
-      date: '19',
-      location: 'APEX Dental',
-      time: '10:30 AM - 6 PM',
-      address: '286 East 12200 South Draper, UT 84020',
-      type: 'blue',
-    },
-    {
-      id: 2,
-      date: '31',
-      location: 'APEX Dental',
-      time: '9:30 AM - 5 PM',
-      address: '286 East 12200 South Draper, UT 84020',
-      type: 'grey',
-    },
-  ]
 
   handleToggle = () => {
     this.setState(state => ({ form: { ...state.form, switch: !state.form.switch } }))
@@ -155,14 +128,24 @@ class JobSchedule extends React.Component {
           ))}
         </div>
         <hr className={theme.divider} />
-        <Calendar activeDates={this.activeDates} />
+        <Calendar activeDates={this.props.events} />
         <hr className={theme.divider} />
         <div className={theme.events}>
-          {this.events.map(event => <Event key={event.id} event={event} />)}
+          {this.props.events.map(event => <Event key={event.id} event={event} />)}
         </div>
       </Card>
     )
   }
 }
 
-export default JobSchedule
+JobSchedule.propTypes = {
+  getScheduledEvents: func.isRequired,
+  events: array.isRequired,
+}
+
+export default connect(
+  state => ({
+    events: findScheduledEvents(state),
+  }),
+  { getScheduledEvents },
+)(JobSchedule)
