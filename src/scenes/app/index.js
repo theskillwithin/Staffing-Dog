@@ -88,7 +88,7 @@ class App extends React.Component {
 }
 
 App.propTypes = {
-  location: object,
+  location: object.isRequired,
 }
 
 export default App
