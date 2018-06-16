@@ -1,5 +1,6 @@
 import React from 'react'
 import { Route, Link } from 'react-router-dom'
+import { object } from 'prop-types'
 import classnames from 'classnames'
 import Logo from '@component/logo'
 import Icon from '@component/icon'
@@ -12,6 +13,11 @@ import './styles.css'
 
 // TODO: keep as class, we will have class methods soon
 class App extends React.Component {
+  isActive(page) {
+    const { pathname } = this.props.location
+    return page.test(pathname)
+  }
+
   render() {
     return (
       <div className={theme.app}>
@@ -27,17 +33,35 @@ class App extends React.Component {
 
             <ul className={theme.nav}>
               <li className={theme.navItem}>
-                <Link className={classnames(theme.navItemLink, theme.active)} to="/">
+                <Link
+                  className={classnames(
+                    theme.navItemLink,
+                    this.isActive(/^\/$/) && theme.active,
+                  )}
+                  to="/"
+                >
                   Dashboard
                 </Link>
               </li>
               <li className={theme.navItem}>
-                <Link className={theme.navItemLink} to="/search">
+                <Link
+                  className={classnames(
+                    theme.navItemLink,
+                    this.isActive(/search/) && theme.active,
+                  )}
+                  to="/search"
+                >
                   Job Search
                 </Link>
               </li>
               <li className={theme.navItem}>
-                <Link className={theme.navItemLink} to="/settings">
+                <Link
+                  className={classnames(
+                    theme.navItemLink,
+                    this.isActive(/settings/) && theme.active,
+                  )}
+                  to="/settings"
+                >
                   My Profile
                 </Link>
               </li>
@@ -61,6 +85,10 @@ class App extends React.Component {
       </div>
     )
   }
+}
+
+App.propTypes = {
+  location: object,
 }
 
 export default App
