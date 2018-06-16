@@ -160,7 +160,7 @@ config.plugins = [
     chunkFilename: '[id].[hash].css',
   }),
   new webpack.DefinePlugin({
-    'process.env.MOCK_DATA': JSON.stringify(process.env.MOCK_DATA || 'development'),
+    'process.env.MOCK_DATA': JSON.stringify(process.env.MOCK_DATA || false),
   }),
 ]
 
