@@ -141,8 +141,10 @@ h6 {
       }
 
       .contactActiveInner {
+        position: relative;
         display: flex;
         flex-direction: column;
+        margin-top: 35px;
         width: 170px;
         height: 136px;
         border-radius: 8px;
@@ -158,12 +160,27 @@ h6 {
           font-size: 14px;
 
           i {
-            margin: 0 0.5em;
+            margin: 0 0.2em 0 0.8em;
           }
 
           &:hover {
             background: rgb(246, 248, 250);
           }
+        }
+
+        &:before {
+          content: '';
+          display: block;
+          position: absolute;
+          top: 28px;
+          right: 10px;
+          transform-origin: top;
+          transform: rotate(45deg) translate(-50%, -50%);
+          width: 35.4px;
+          height: 35.4px;
+          background-color: rgb(255, 255, 255);
+          box-shadow: 0 3px 6px 0 rgba(93, 98, 107, 0.1);
+          z-index: -1;
         }
       }
 
