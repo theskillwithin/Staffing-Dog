@@ -2,7 +2,7 @@
 @import '../../styles/reset.css';
 
 :root {
-  --sd-headerHeight: 80px;
+  --sd-headerHeight: 61px;
   --sd-backgroundColor: var(--sd-blueGray);
   --sd-containerWidth: 1024px;
 }
@@ -113,10 +113,63 @@ h6 {
       }
     }
 
-    .user {
+    .contact {
+      position: relative;
       flex: 1;
       display: flex;
       align-items: flex-end;
+
+      a {
+        text-decoration: none;
+        color: var(--sd-blackTxt);
+
+        i {
+          width: 30px;
+          color: var(--sd-primary);
+        }
+      }
+
+      .contactActive {
+        display: none;
+        position: absolute;
+        top: 25px;
+        left: -40px;
+
+        &:hover {
+          display: block;
+        }
+      }
+
+      .contactActiveInner {
+        display: flex;
+        flex-direction: column;
+        width: 170px;
+        height: 136px;
+        border-radius: 8px;
+        background-color: rgb(255, 255, 255);
+        box-shadow: 0 3px 6px 0 rgba(93, 98, 107, 0.1);
+
+        a {
+          height: 35px;
+          width: 100%;
+          margin-top: 0.5em;
+          display: flex;
+          align-items: center;
+          font-size: 14px;
+
+          i {
+            margin: 0 0.5em;
+          }
+
+          &:hover {
+            background: rgb(246, 248, 250);
+          }
+        }
+      }
+
+      &:hover .contactActive {
+        display: block;
+      }
     }
 
     .menuTrigger {

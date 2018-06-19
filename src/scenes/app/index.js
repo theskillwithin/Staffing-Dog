@@ -67,11 +67,24 @@ class App extends React.Component {
               </li>
             </ul>
 
-            <div className={theme.user}>
-              <div className={theme.userInner}>
-                <Link to="/settings">
-                  <Icon use="person" /> Mellisa Gutierrez
+            <div className={theme.contact}>
+              <div className={theme.contactInner}>
+                <Link to="/contact">
+                  <Icon use="chat_bubble_open" /> Contact Us
                 </Link>
+              </div>
+              <div className={theme.contactActive}>
+                <div className={theme.contactActiveInner}>
+                  <a href="/test">
+                    <Icon use="headset_mic" />(385) 707-0156
+                  </a>
+                  <a href="/test">
+                    <Icon use="send" />Email Us
+                  </a>
+                  <a href="/test">
+                    <Icon use="chat" />Live Chat
+                  </a>
+                </div>
               </div>
             </div>
           </div>
