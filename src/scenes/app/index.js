@@ -5,6 +5,9 @@ import classnames from 'classnames'
 import Logo from '@component/logo'
 import Icon from '@component/icon'
 import ContactSVG from '@component/svg/Contact'
+import HeadsetSVG from '@component/svg/Headset'
+import EmailUsSVG from '@component/svg/EmailUs'
+import LiveChatSVG from '@component/svg/LiveChat'
 import DashboardScene from '@scene/dashboard'
 import SearchScene from '@scene/search'
 import SettingsScene from '@scene/settings'
@@ -77,13 +80,13 @@ class App extends React.Component {
               <div className={theme.contactActive}>
                 <div className={theme.contactActiveInner}>
                   <a href="/test">
-                    <Icon use="headset_mic" />(385) 707-0156
+                    <HeadsetSVG />(385) 707-0156
                   </a>
                   <a href="/test">
-                    <Icon use="send" />Email Us
+                    <EmailUsSVG />Email Us
                   </a>
                   <a href="/test">
-                    <Icon use="chat" />Live Chat
+                    <LiveChatSVG />Live Chat
                   </a>
                 </div>
               </div>

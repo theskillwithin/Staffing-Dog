@@ -1,0 +1,18 @@
+@import "../../../styles/config.css";
+
+.svg {
+
+  svg {
+    color: var(--sd-primary);
+    width: 23px;
+    height: 18px;
+    vertical-align: middle;
+  }
+
+  :global {
+
+    .cls-1 {
+      fill: currentColor;
+    }
+  }
+}

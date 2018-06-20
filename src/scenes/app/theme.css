@@ -123,7 +123,7 @@ h6 {
         text-decoration: none;
         color: var(--sd-blackTxt);
 
-        i {
+        i, svg {
           width: 30px;
           color: var(--sd-primary);
         }
@@ -139,7 +139,7 @@ h6 {
       .contactActive {
         display: none;
         position: absolute;
-        top: 25px;
+        top: 23px;
         left: -40px;
 
         &:hover {
@@ -166,7 +166,7 @@ h6 {
           align-items: center;
           font-size: 14px;
 
-          i {
+          i, svg {
             margin: 0 0.2em 0 0.8em;
           }
 
