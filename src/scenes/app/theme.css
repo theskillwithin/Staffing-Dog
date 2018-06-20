@@ -129,6 +129,13 @@ h6 {
         }
       }
 
+      .contactSVG {
+        svg {
+          margin-top: -2px;
+          margin-right: 5px;
+        }
+      }
+
       .contactActive {
         display: none;
         position: absolute;

@@ -4,6 +4,7 @@ import { object } from 'prop-types'
 import classnames from 'classnames'
 import Logo from '@component/logo'
 import Icon from '@component/icon'
+import ContactSVG from '@component/svg/Contact'
 import DashboardScene from '@scene/dashboard'
 import SearchScene from '@scene/search'
 import SettingsScene from '@scene/settings'
@@ -70,7 +71,7 @@ class App extends React.Component {
             <div className={theme.contact}>
               <div className={theme.contactInner}>
                 <Link to="/contact">
-                  <Icon use="chat_bubble_open" /> Contact Us
+                  <ContactSVG className={theme.contactSVG} /> Contact Us
                 </Link>
               </div>
               <div className={theme.contactActive}>
