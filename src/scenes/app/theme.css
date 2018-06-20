@@ -123,7 +123,8 @@ h6 {
         text-decoration: none;
         color: var(--sd-blackTxt);
 
-        i, svg {
+        i,
+        svg {
           width: 30px;
           color: var(--sd-primary);
         }
@@ -166,7 +167,8 @@ h6 {
           align-items: center;
           font-size: 14px;
 
-          i, svg {
+          i,
+          svg {
             margin: 0 0.8em 0 0.8em;
           }
 
