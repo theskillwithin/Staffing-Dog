@@ -2,11 +2,13 @@
 
 
 .logo {
-  display: inline-block;
+  display: flex;
+  align-items: center;
 }
 
 .logoText {
-  font-size: 1.5em;
+  font-size: 1.2em;
+  margin-left: 0.5em;
 }
 
 .path {

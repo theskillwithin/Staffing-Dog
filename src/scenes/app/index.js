@@ -1,7 +1,13 @@
 import React from 'react'
 import { Route, Link } from 'react-router-dom'
+import { object } from 'prop-types'
+import classnames from 'classnames'
 import Logo from '@component/logo'
 import Icon from '@component/icon'
+import ContactSVG from '@component/svg/Contact'
+import HeadsetSVG from '@component/svg/Headset'
+import EmailUsSVG from '@component/svg/EmailUs'
+import LiveChatSVG from '@component/svg/LiveChat'
 import DashboardScene from '@scene/dashboard'
 import SearchScene from '@scene/search'
 import SettingsScene from '@scene/settings'
@@ -11,6 +17,11 @@ import './styles.css'
 
 // TODO: keep as class, we will have class methods soon
 class App extends React.Component {
+  isActive(page) {
+    const { pathname } = this.props.location
+    return page.test(pathname)
+  }
+
   render() {
     return (
       <div className={theme.app}>
@@ -26,22 +37,58 @@ class App extends React.Component {
 
             <ul className={theme.nav}>
               <li className={theme.navItem}>
-                <Link className={theme.navItemLink} to="/onboarding/professional">
-                  Professional Onboarding
+                <Link
+                  className={classnames(
+                    theme.navItemLink,
+                    this.isActive(/^\/$/) && theme.active,
+                  )}
+                  to="/"
+                >
+                  Dashboard
                 </Link>
               </li>
               <li className={theme.navItem}>
-                <Link className={theme.navItemLink} to="/onboarding/practice">
-                  Practice Onboarding
+                <Link
+                  className={classnames(
+                    theme.navItemLink,
+                    this.isActive(/search/) && theme.active,
+                  )}
+                  to="/search"
+                >
+                  Job Search
+                </Link>
+              </li>
+              <li className={theme.navItem}>
+                <Link
+                  className={classnames(
+                    theme.navItemLink,
+                    this.isActive(/settings/) && theme.active,
+                  )}
+                  to="/settings"
+                >
+                  My Profile
                 </Link>
               </li>
             </ul>
 
-            <div className={theme.user}>
-              <div className={theme.userInner}>
-                <Link to="/settings">
-                  <Icon use="person" /> Mellisa Gutierrez
+            <div className={theme.contact}>
+              <div className={theme.contactInner}>
+                <Link to="/contact">
+                  <ContactSVG className={theme.contactSVG} /> Contact Us
                 </Link>
+              </div>
+              <div className={theme.contactActive}>
+                <div className={theme.contactActiveInner}>
+                  <a href="/test">
+                    <HeadsetSVG />(385) 707-0156
+                  </a>
+                  <a href="/test">
+                    <EmailUsSVG />Email Us
+                  </a>
+                  <a href="/test">
+                    <LiveChatSVG />Live Chat
+                  </a>
+                </div>
               </div>
             </div>
           </div>
@@ -55,6 +102,10 @@ class App extends React.Component {
       </div>
     )
   }
+}
+
+App.propTypes = {
+  location: object.isRequired,
 }
 
 export default App

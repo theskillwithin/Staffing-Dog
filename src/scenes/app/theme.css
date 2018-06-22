@@ -2,7 +2,7 @@
 @import '../../styles/reset.css';
 
 :root {
-  --sd-headerHeight: 80px;
+  --sd-headerHeight: 61px;
   --sd-backgroundColor: var(--sd-blueGray);
   --sd-containerWidth: 1024px;
 }
@@ -13,7 +13,12 @@ html {
   font-weight: 400;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-weight: 600;
 }
 
@@ -50,9 +55,9 @@ h1, h2, h3, h4, h5, h6 {
     .nav {
       display: none;
       list-style-type: none;
-      margin: 0;
+      margin: -0.2em 0 0 0;
       padding: 0;
-      
+
       @media (--sd-tablet) {
         flex: 2;
         display: flex;
@@ -61,8 +66,35 @@ h1, h2, h3, h4, h5, h6 {
       }
 
       .navItem {
-        margin: 0;
+        margin: 0 3em 0 3em;
         padding: 0;
+
+        .navItemLink {
+          position: relative;
+          font-size: 14px;
+          font-weight: 500;
+          line-height: 1.21;
+          color: var(--sd-grayLighter);
+          text-decoration: none;
+
+          &.active {
+            font-weight: 600;
+            color: var(--sd-blackTxt);
+
+            &:after {
+              content: '';
+              display: block;
+              position: absolute;
+              bottom: -12px;
+              left: 50%;
+              transform: translateX(-50%);
+              width: 20px;
+              height: 4px;
+              border-radius: 2px;
+              background-color: var(--sd-primary);
+            }
+          }
+        }
 
         @media (--sd-tablet) {
           margin-left: 2em;
@@ -81,10 +113,89 @@ h1, h2, h3, h4, h5, h6 {
       }
     }
 
-    .user {
+    .contact {
+      position: relative;
       flex: 1;
       display: flex;
       align-items: flex-end;
+
+      a {
+        text-decoration: none;
+        color: var(--sd-blackTxt);
+
+        i,
+        svg {
+          width: 30px;
+          color: var(--sd-primary);
+        }
+      }
+
+      .contactSVG {
+        svg {
+          margin-top: -2px;
+          margin-right: 5px;
+        }
+      }
+
+      .contactActive {
+        display: none;
+        position: absolute;
+        top: 23px;
+        left: -40px;
+
+        &:hover {
+          display: block;
+        }
+      }
+
+      .contactActiveInner {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        margin-top: 35px;
+        width: 170px;
+        height: 136px;
+        border-radius: 8px;
+        background-color: rgb(255, 255, 255);
+        box-shadow: 0 3px 6px 0 rgba(93, 98, 107, 0.1);
+
+        a {
+          height: 35px;
+          width: 100%;
+          margin-top: 0.5em;
+          display: flex;
+          align-items: center;
+          font-size: 14px;
+
+          i,
+          svg {
+            margin: 0 0.8em 0 0.8em;
+          }
+
+          &:hover {
+            background: rgb(246, 248, 250);
+          }
+        }
+
+        &:before {
+          content: '';
+          display: block;
+          position: absolute;
+          top: 28px;
+          right: 10px;
+          transform-origin: top;
+          transform: rotate(45deg) translate(-50%, -50%);
+          width: 35.4px;
+          height: 35.4px;
+          background-color: rgb(255, 255, 255);
+          box-shadow: 0 3px 6px 0 rgba(93, 98, 107, 0.1);
+          z-index: -1;
+        }
+      }
+
+      &:hover .contactActive {
+        display: block;
+      }
     }
 
     .menuTrigger {
@@ -95,7 +206,7 @@ h1, h2, h3, h4, h5, h6 {
   }
 
   &::after {
-    content: "";
+    content: '';
     display: block;
     width: 100%;
     height: 25px;
@@ -104,7 +215,11 @@ h1, h2, h3, h4, h5, h6 {
     left: 0;
     right: 0;
     top: 100%;
-    background: linear-gradient(to bottom, var(--sd-backgroundColor), rgba(255, 255, 255, 0));
+    background: linear-gradient(
+      to bottom,
+      var(--sd-backgroundColor),
+      rgba(255, 255, 255, 0)
+    );
   }
 }
 
