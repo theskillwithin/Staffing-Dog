@@ -1,6 +1,6 @@
 import mockBuilder from '@api/mockBuilder'
 
-import jobsApi from './'
+import jobsApi from '.'
 
 export const events = [
   {

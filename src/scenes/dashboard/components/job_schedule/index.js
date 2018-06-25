@@ -12,6 +12,15 @@ import Event from './event'
 import theme from './theme.css'
 
 class JobSchedule extends React.Component {
+  days = [
+    { label: '30 Days', value: '30' },
+    { label: '60 Days', value: '60' },
+    { label: '90 Days', value: '90' },
+    { label: '120 Days', value: '120' },
+  ]
+
+  daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
+
   state = {
     form: {
       switch: false,
@@ -64,21 +73,8 @@ class JobSchedule extends React.Component {
     this.setState({ updateSchedule: new Date().time() })
   }
 
-  days = [
-    { label: '30 Days', value: '30' },
-    { label: '60 Days', value: '60' },
-    { label: '90 Days', value: '90' },
-    { label: '120 Days', value: '120' },
-  ]
-
-  daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
-
   handleToggle = () => {
     this.setState(state => ({ form: { ...state.form, switch: !state.form.switch } }))
-  }
-
-  handleChange(input, value) {
-    this.setState(state => ({ form: { ...state.form, [input]: value } }))
   }
 
   handleScheduleChange = (type, value, day) => {
@@ -88,6 +84,10 @@ class JobSchedule extends React.Component {
         schedule: { ...schedule, [day]: { ...schedule[day], [type]: value } },
       },
     }))
+  }
+
+  handleChange(input, value) {
+    this.setState(state => ({ form: { ...state.form, [input]: value } }))
   }
 
   render() {

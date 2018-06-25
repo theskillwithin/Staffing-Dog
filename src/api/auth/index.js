@@ -1,6 +1,6 @@
-import api from '@sdog/api'
+import api, { createPath } from '@sdog/api'
 
-import { API_ROOT, createPath } from '../config'
+import { API_ROOT } from '../config'
 
 export { getToken, setToken } from './storage'
 

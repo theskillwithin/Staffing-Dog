@@ -1,6 +1,6 @@
 import mockBuilder from '@api/mockBuilder'
 
-import messagesApi from './'
+import messagesApi from '.'
 
 export const messages = [
   {
