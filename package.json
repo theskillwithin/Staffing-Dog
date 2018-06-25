@@ -7,12 +7,7 @@
     "test": "jest",
     "test:all": "npm test -- --watchAll",
     "test:all:coverage": "npm test -- --watchAll --coverage",
-<<<<<<< Updated upstream
-    "start": "cross-env MOCK_DATA=1 webpack-dev-server --mode development",
-=======
-    "start": "MOCK_DATA=1 webpack-dev-server --mode development",
-    "start:mock": "MOCK_DATA=1 npm start",
->>>>>>> Stashed changes
+    "start": "webpack-dev-server --mode development",
     "start:open": "npm start --open",
     "start:mock": "cross-env MOCK_DATA=1 npm start",
     "start:mock:open": "npm run start:mock --open",
@@ -28,7 +23,7 @@
   "license": "ISC",
   "devDependencies": {
     "babel-core": "^6.26.3",
-    "babel-eslint": "^8.2.3",
+    "babel-eslint": "^8.2.5",
     "babel-jest": "^23.0.1",
     "babel-loader": "^7.1.4",
     "babel-preset-env": "^1.7.0",
@@ -39,14 +34,14 @@
     "css-loader": "^0.28.11",
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.1.1",
-    "eslint": "^4.19.1",
-    "eslint-config-airbnb": "^16.1.0",
+    "eslint": "^5.0.0",
+    "eslint-config-airbnb": "^17.0.0",
     "eslint-config-with-prettier": "^3.5.1",
     "eslint-loader": "^2.0.0",
-    "eslint-plugin-import": "^2.12.0",
+    "eslint-plugin-import": "^2.13.0",
     "eslint-plugin-jest": "^21.17.0",
     "eslint-plugin-jsx-a11y": "^6.0.3",
-    "eslint-plugin-prettier": "^2.6.0",
+    "eslint-plugin-prettier": "^2.6.1",
     "eslint-plugin-react": "^7.9.1",
     "extract-text-webpack-plugin": "^4.0.0-beta.0",
     "html-loader": "^0.5.5",
@@ -55,22 +50,18 @@
     "jest": "^23.1.0",
     "mini-css-extract-plugin": "^0.4.0",
     "optimize-css-assets-webpack-plugin": "^4.0.2",
-    "postcss": "^6.0.22",
+    "postcss": "^6.0.23",
     "postcss-apply": "^0.10.0",
-    "postcss-cssnext": "^3.1.0",
     "postcss-import": "^11.1.0",
     "postcss-loader": "^2.1.5",
     "postcss-nested": "^3.0.0",
+    "postcss-preset-env": "^5.1.0",
     "raw-loader": "^0.5.1",
     "react-test-renderer": "^16.4.1",
     "style-loader": "^0.21.0",
-    "uglifyjs-webpack-plugin": "^1.2.5",
-    "webpack": "^4.12.0",
-<<<<<<< Updated upstream
+    "uglifyjs-webpack-plugin": "^1.2.6",
+    "webpack": "^4.12.1",
     "webpack-cli": "^3.0.8",
-=======
-    "webpack-cli": "^3.0.4",
->>>>>>> Stashed changes
     "webpack-dev-server": "^3.1.4"
   },
   "dependencies": {
@@ -82,7 +73,7 @@
     "moment": "^2.22.2",
     "npm": "^6.1.0",
     "path-to-regexp": "^2.2.1",
-    "prop-types": "^15.6.1",
+    "prop-types": "^15.6.2",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
     "react-dropzone": "^4.2.11",
@@ -93,6 +84,6 @@
     "react-textarea-autosize": "^6.1.0",
     "redux": "^4.0.0",
     "redux-thunk": "^2.3.0",
-    "rmwc": "^1.7.1"
+    "rmwc": "^1.7.4"
   }
 }

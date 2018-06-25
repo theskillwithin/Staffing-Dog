@@ -74,6 +74,8 @@
         "ignoreStateless": true
       }
     ],
+    
+    "react/destructuring-assignment": 0,
     "import/extensions": [
       "error",
       "never"

@@ -18,7 +18,6 @@ body {
 }
 
 :global {
-
   .mdc-text-field--outlined .mdc-floating-label--float-above {
     transform: translateY(-175%) scale(0.75) !important;
   }

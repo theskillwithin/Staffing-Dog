@@ -10,6 +10,16 @@ import EmailVerified from './email_verified'
 import theme from './theme.css'
 
 class SettingsAboutMe extends React.Component {
+  states = [
+    { label: 'CA', value: 'CA' },
+    { label: 'UT', value: 'UT' },
+    { label: 'OR', value: 'OR' },
+  ]
+
+  availabilitys = [{ label: 'Never', value: '0' }, { label: 'Forever', value: '1' }]
+
+  specialties = [{ label: 'I can fly!', value: '1' }, { label: 'I run fast', value: '0' }]
+
   state = {
     form: {
       files: [],
@@ -40,19 +50,6 @@ class SettingsAboutMe extends React.Component {
 
     return this.setState(({ form }) => ({ filesError: false, form: { ...form, files } }))
   }
-
-  states = [
-    { label: 'CA', value: 'CA' },
-    { label: 'UT', value: 'UT' },
-    { label: 'OR', value: 'OR' },
-  ]
-
-  availabilitys = [{ label: 'Never', value: '0' }, { label: 'Forever', value: '1' }]
-
-  specialties = [
-    { label: 'good with kids', value: '1' },
-    { label: 'bad with kids', value: '0' },
-  ]
 
   handleChange = (field, value) => {
     this.setState(({ form }) => ({ form: { ...form, [field]: value } }))

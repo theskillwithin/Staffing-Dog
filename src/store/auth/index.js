@@ -1,7 +1,6 @@
-import { refreshToken as refreshMyToken } from '../../api/auth'
 import buildStore from '../build'
 
-import { SET_TOKEN, SET_ERROR, REFRESH_TOKEN } from './actions'
+import { SET_TOKEN, SET_ERROR } from './actions'
 
 const initialState = {
   token: false,
@@ -29,9 +28,6 @@ export const actions = {
     type: SET_TOKEN,
     payload: { token },
   }),
-  refreshToken: () => ({
-    type: REFRESH_TOKEN,
-  }),
   setError: error => ({
     type: SET_ERROR,
     payload: { error },
@@ -40,23 +36,10 @@ export const actions = {
 
 export const setToken = token => dispatch => dispatch(actions.setToken(token))
 
-export const refreshToken = () => dispatch => {
-  dispatch(actions.refreshToken())
-
-  return refreshMyToken()
-    .then(res => {
-      dispatch(actions.setToken(res.roken))
-    })
-    .catch(res => {
-      dispatch(actions.setError(res.error || res))
-    })
-}
-
 export default buildStore(
   {
     [SET_TOKEN]: reducers.setToken,
     [SET_ERROR]: reducers.setError,
-    [REFRESH_TOKEN]: reducers.refreshToken,
   },
   initialState,
 )

@@ -1,6 +1,8 @@
 export class ReduxRegister {
   emitChange = null
+
   reducers = {}
+
   hasSetInitialReducers = false
 
   getReducers = () => ({ ...this.reducers })

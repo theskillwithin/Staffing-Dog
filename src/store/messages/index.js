@@ -28,11 +28,7 @@ export const getThreads = () => dispatch => {
 
   return messagesApi.getMessages
     .send()
-<<<<<<< Updated upstream
     .then(({ data }) => dispatch(actions.fetchThreadsSuccess(data.threads)))
-=======
-    .then(data => dispatch(actions.fetchThreadsSuccess(data.threads)))
->>>>>>> Stashed changes
     .catch(error => dispatch(actions.fetchThreadsError(error)))
 }
 
