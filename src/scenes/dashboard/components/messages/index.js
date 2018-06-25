@@ -16,6 +16,12 @@ import { getThreads, findThreads } from '@store/messages'
 import theme from './theme.css'
 
 class Messages extends React.Component {
+  usersList = [
+    { label: 'cointilt', value: 'cointilt' },
+    { label: 'goot', value: 'goot' },
+    { label: 'theskillwithin', value: 'theskillwithin' },
+  ]
+
   state = {
     active: false,
     message: '',
@@ -26,12 +32,6 @@ class Messages extends React.Component {
   componentDidMount() {
     this.props.getThreads()
   }
-
-  usersList = [
-    { label: 'cointilt', value: 'cointilt' },
-    { label: 'goot', value: 'goot' },
-    { label: 'theskillwithin', value: 'theskillwithin' },
-  ]
 
   handleClick = threadId => this.setState({ active: threadId, quickReply: null })
 
@@ -49,9 +49,7 @@ class Messages extends React.Component {
 
   handleChange = message => this.setState({ message })
 
-  handleUsersChange = users => {
-    this.setState({ users })
-  }
+  handleUsersChange = users => this.setState({ users })
 
   render() {
     const { active } = this.state
@@ -107,6 +105,7 @@ class Messages extends React.Component {
                         <div className={theme.threadCount}>{thread.threadCount}</div>
                       )}
                     <button
+                      type="button"
                       className={theme.reply}
                       onClick={e => this.quickReply(e, thread.id)}
                     >
@@ -132,7 +131,7 @@ class Messages extends React.Component {
             ))}
           </div>
           <div className={theme.messages}>
-            <button className={theme.back} onClick={this.back}>
+            <button type="button" className={theme.back} onClick={this.back}>
               <Icon use="arrow_back" />
             </button>
             {this.state.active === 'new' && (

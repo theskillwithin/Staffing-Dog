@@ -5,6 +5,9 @@ import HtmlWebPackPlugin from 'html-webpack-plugin'
 import MiniCssExtractPlugin from 'mini-css-extract-plugin'
 import UglifyJsPlugin from 'uglifyjs-webpack-plugin'
 import OptimizeCSSAssetsPlugin from 'optimize-css-assets-webpack-plugin'
+import postcssPresetEnv from 'postcss-preset-env'
+import postcssImport from 'postcss-import'
+import postcssNested from 'postcss-nested'
 
 const ENV = process.env.NODE_ENV
 const IS_DEV = ENV === 'development'
@@ -26,6 +29,10 @@ const alias = {
   '@api': path.join(paths.src, 'api'),
   '@component': path.join(paths.src, 'components'),
   '@util': path.join(paths.src, 'utils'),
+}
+
+const postCssPresetEnvOptions = {
+  stage: 1,
 }
 
 /**
@@ -89,7 +96,17 @@ config.module.rules = [
     use: [
       ...(IS_DEV ? ['style-loader'] : [MiniCssExtractPlugin.loader]),
       'css-loader',
-      'postcss-loader',
+      {
+        loader: 'postcss-loader',
+        options: {
+          ident: 'postcss-rmwc',
+          plugins: () => [
+            postcssImport(),
+            postcssPresetEnv(postCssPresetEnvOptions),
+            postcssNested(),
+          ],
+        },
+      },
     ],
   },
   {
@@ -113,9 +130,20 @@ config.module.rules = [
       {
         loader: 'postcss-loader',
         options: {
-          config: {
-            path: path.join(paths.config, 'postcss.config.js'),
-          },
+          ident: 'postcss-app',
+          plugins: () => [
+            postcssImport(),
+            postcssPresetEnv({
+              ...postCssPresetEnvOptions,
+              features: {
+                customProperties: {
+                  preserve: true,
+                  warnings: false,
+                },
+              },
+            }),
+            postcssNested(),
+          ],
         },
       },
     ],

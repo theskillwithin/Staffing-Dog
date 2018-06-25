@@ -18,15 +18,29 @@ import theme from '../../theme.css'
 
 class Onboarding extends Component {
   componentDidMount() {
-    setTitle(`Onboarding - ${this.props.match.params.type}`)
+    const {
+      match: {
+        params: { type },
+      },
+      setType,
+    } = this.props
 
-    this.props.setType(this.props.match.params.type)
+    setTitle(`Onboarding - ${type}`)
+
+    setType(type)
   }
 
   componentDidUpdate(prevProps) {
-    if (prevProps.match.params.type !== this.props.match.params.type) {
-      this.props.setType(this.props.match.params.type)
-      setTitle(`Onboarding - ${this.props.match.params.type}`)
+    const {
+      match: {
+        params: { type },
+      },
+      setType,
+    } = this.props
+
+    if (prevProps.match.params.type !== type) {
+      setType(type)
+      setTitle(`Onboarding - ${type}`)
     }
   }
 
