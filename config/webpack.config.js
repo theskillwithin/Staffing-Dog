@@ -87,7 +87,7 @@ config.module.rules = [
       /src\/scenes\/(.+)\/theme/, // exclude theme.css files
     ],
     use: [
-      ...(IS_DEV ? ['style-loader'] : [MiniCssExtractPlugin.loader]),
+      IS_DEV ? 'style-loader' : MiniCssExtractPlugin.loader,
       'css-loader',
       'postcss-loader',
     ],
@@ -101,7 +101,7 @@ config.module.rules = [
       /src\/scenes\/(.+)\/styles/, // exclude style.css files
     ],
     use: [
-      ...(IS_DEV ? ['style-loader'] : [MiniCssExtractPlugin.loader]),
+      IS_DEV ? 'style-loader' : MiniCssExtractPlugin.loader,
       {
         loader: 'css-loader',
         options: {

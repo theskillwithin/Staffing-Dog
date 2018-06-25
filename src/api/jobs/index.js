@@ -11,6 +11,4 @@ export const getEvents = createApi(
   url => api.get(url),
 )
 
-export default {
-  getEvents,
-}
+export default { getEvents }
