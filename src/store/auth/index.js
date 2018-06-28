@@ -1,23 +1,26 @@
 import buildStore from '../build'
 
-import { SET_TOKEN, SET_ERROR } from './actions'
+export const BASE = '@SD/AUTH'
+export const SET_TOKEN = `${BASE}_SET_TOKEN`
+export const SET_ERROR = `${BASE}_SET_ERROR`
+export const REFRESH_TOKEN = `${BASE}_REFRESH_TOKEN`
 
-const initialState = {
+const INITIAL_STATE = {
   token: false,
   error: false,
 }
 
 const reducers = {
-  setToken: (state, payload) => ({
+  [SET_TOKEN]: (state, payload) => ({
     ...state,
     token: payload.token,
     error: false,
   }),
-  setError: (state, payload) => ({
+  [SET_ERROR]: (state, payload) => ({
     ...state,
     error: payload.error,
   }),
-  refreshToken: state => ({
+  [REFRESH_TOKEN]: state => ({
     ...state,
     error: false,
   }),
@@ -36,13 +39,7 @@ export const actions = {
 
 export const setToken = token => dispatch => dispatch(actions.setToken(token))
 
-export default buildStore(
-  {
-    [SET_TOKEN]: reducers.setToken,
-    [SET_ERROR]: reducers.setError,
-  },
-  initialState,
-)
+export default buildStore(reducers, INITIAL_STATE)
 
 export const findState = state => state.auth
 export const findToken = state => findState(state).token

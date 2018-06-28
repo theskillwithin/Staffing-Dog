@@ -1,27 +1,25 @@
 import find from 'lodash/find'
-import map from 'lodash/map'
-import reduce from 'lodash/reduce'
 import isEmpty from 'lodash/isEmpty'
 import build from '@store/build'
 import reduxRegister from '@store/register'
 import { updateProfile } from '@api/user'
 
 import { professional, practice } from './fields'
-import {
-  SET_VALUE,
-  SET_STEP,
-  GO_TO_STEP,
-  GO_TO_STEP_SUCCESS,
-  GO_TO_STEP_FAILED,
-  SAVE_STEP,
-  SAVE_STEP_SUCCESS,
-  SAVE_STEP_FAILED,
-  CHECK_STEPS_COMPLETE,
-  SET_TYPE,
-} from './actions'
+
+export const BASE = '@SD/OB/STEPS'
+export const SET_VALUE = `${BASE}_SET_VALUE`
+export const SET_STEP = `${BASE}_SET_STEP`
+export const SET_TYPE = `${BASE}_SET_TYPE`
+export const GO_TO_STEP = `${BASE}_GO_TO_STEP`
+export const GO_TO_STEP_SUCCESS = `${GO_TO_STEP}_SUCCESS`
+export const GO_TO_STEP_FAILED = `${GO_TO_STEP}_FAILED`
+export const SAVE_STEP = `${BASE}_SAVE_STEP`
+export const SAVE_STEP_SUCCESS = `${SAVE_STEP}_SUCCESS`
+export const SAVE_STEP_FAILED = `${SAVE_STEP}_FAILED`
+export const CHECK_STEPS_COMPLETE = `${BASE}_CHECK_STEPS_COMPLETE`
 
 // Initial State
-const INITIAL_STATE = {
+export const INITIAL_STATE = {
   saving: false,
   savingError: false,
   steps: {
@@ -33,7 +31,7 @@ const INITIAL_STATE = {
 }
 
 // Reducer Methods
-const reducers = {
+export const reducers = {
   [SET_VALUE]: (state, payload) => ({
     ...state,
     values: {
@@ -53,15 +51,11 @@ const reducers = {
     ...state,
     steps: {
       ...state.steps,
-      [state.type]: map(state.steps[state.stepType], step => ({
+      [state.type]: state.steps[state.stepType].map(step => ({
         ...step,
-        complete: reduce(
-          step.fields,
-          (p, c) => {
-            return c.required && isEmpty(state.values[c.name]) ? false : p
-          },
-          true,
-        ),
+        complete: step.fields.reduce((p, c) => {
+          return c.required && isEmpty(state.values[c.name]) ? false : p
+        }, true),
       })),
     },
   }),
@@ -104,7 +98,7 @@ const reducers = {
 }
 
 // Actions Creators
-const dispatchActions = {
+export const actions = {
   setValue: (name, value) => ({
     type: SET_VALUE,
     payload: { name, value },
@@ -144,20 +138,17 @@ const dispatchActions = {
     type: SET_TYPE,
     payload: { type },
   }),
+  saveStepAPIFailed: (nextStep, res) => ({
+    type: GO_TO_STEP_FAILED,
+    payload: {
+      error:
+        res && res.data && res.data.message
+          ? res.data.message
+          : 'There was an error attempting to save the step.',
+      nextStep,
+    },
+  }),
 }
-
-dispatchActions.saveStepAPIFailed = (step, res) =>
-  da.saveStepFailed({
-    error:
-      res && res.data && res.data.message
-        ? res.data.message
-        : 'There was an error attempting to save the step.',
-    step,
-  })
-
-const da = dispatchActions
-
-export { da as dispatchActions }
 
 /*
  * Prop Actions
@@ -166,18 +157,19 @@ export { da as dispatchActions }
 */
 
 export const setValue = (name, value) => dispatch => {
-  dispatch(da.setValue(name, value))
+  dispatch(actions.setValue(name, value))
 
-  return Promise.resolve(dispatch(da.checkStepsComplete()))
+  return Promise.resolve(dispatch(actions.checkStepsComplete()))
 }
 
-export const setStep = step => dispatch => Promise.resolve(dispatch(da.setStep(step)))
+export const setStep = step => dispatch =>
+  Promise.resolve(dispatch(actions.setStep(step)))
 
 export const saveStep = ({ step, onSuccess = false, onFail = false }) => (
   dispatch,
   getState,
 ) => {
-  dispatch(da.saveStep(step))
+  dispatch(actions.saveStep(step))
 
   return updateProfile({
     step,
@@ -185,7 +177,7 @@ export const saveStep = ({ step, onSuccess = false, onFail = false }) => (
   }).then(res => {
     if (res && res.data && res.data.success) {
       dispatch(
-        da.saveStepSuccess({
+        actions.saveStepSuccess({
           step,
           data: res.data,
         }),
@@ -193,7 +185,7 @@ export const saveStep = ({ step, onSuccess = false, onFail = false }) => (
 
       if (onSuccess) onSuccess()
     } else {
-      dispatch(da.saveStepApiFail(res, step))
+      dispatch(actions.saveStepApiFail(res, step))
 
       if (onFail) onFail()
     }
@@ -201,7 +193,7 @@ export const saveStep = ({ step, onSuccess = false, onFail = false }) => (
 }
 
 export const goToStep = ({ currentStep, nextStep, history }) => (dispatch, getState) => {
-  dispatch(da.goToStep(nextStep))
+  dispatch(actions.goToStep(nextStep))
 
   const state = getState()
   const steps = findSteps(state)
@@ -213,7 +205,7 @@ export const goToStep = ({ currentStep, nextStep, history }) => (dispatch, getSt
     if (step.needsComplete && !step.complete) {
       return Promise.resolve(
         dispatch(
-          da.goToStepFailed({
+          actions.goToStepFailed({
             error: 'You must complete the current step before moving onto the next step.',
             nextStep,
           }),
@@ -221,7 +213,7 @@ export const goToStep = ({ currentStep, nextStep, history }) => (dispatch, getSt
       )
     }
 
-    dispatch(da.goToStepSuccess(nextStep, type))
+    dispatch(actions.goToStepSuccess(nextStep, type))
     history.push(`/onboarding/${type}/step/${nextStep}`)
 
     // save current step
@@ -232,14 +224,14 @@ export const goToStep = ({ currentStep, nextStep, history }) => (dispatch, getSt
   // lets save and go to the correct step
 
   return new Promise(resolve => {
-    dispatch(da.goToStepSuccess(nextStep, type))
+    dispatch(actions.goToStepSuccess(nextStep, type))
     resolve(history.push(`/onboarding/${type}/step/${nextStep}`))
   })
 }
 
 export const setType = type => dispatch => {
   return new Promise(resolve => {
-    resolve(dispatch(da.setType(type)))
+    resolve(dispatch(actions.setType(type)))
   })
 }
 
