@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { object, func, array, string, shape } from 'prop-types'
 import classnames from 'classnames'
 import find from 'lodash/find'
@@ -9,7 +9,7 @@ import Dropdown from '../../../../components/dropdown'
 
 import theme from './theme.css'
 
-class Steps extends Component {
+class Steps extends React.Component {
   static formatDropdownOptions(options) {
     return map(options, option => ({
       label: option.label || option.value || option,
