@@ -8,10 +8,15 @@ import reducers from '@sdog/store/reducers'
 import { interceptAuth } from '@sdog/api/intercepts'
 import { getToken } from '@sdog/api/auth'
 
-const Onboarding = loadable(() =>
+const OnboardingScene = loadable(() =>
   import(/* webpackChunkName: "onboarding" */ '@sdog/scenes/onboarding'),
 )
+
 const App = loadable(() => import(/* webpackChunkName: "app" */ '@sdog/scenes/app'))
+
+const LoginScene = loadable(() =>
+  import(/* webpackChunkName: "login" */ '@sdog/scenes/login'),
+)
 
 interceptAuth()
 
@@ -28,7 +33,8 @@ render(
   <Provider store={store}>
     <Router>
       <Switch>
-        <Route path="/onboarding" component={Onboarding} />
+        <Route path="/onboarding" component={OnboardingScene} />
+        <Route path="/login" component={LoginScene} />
         <Route path="/" component={App} />
       </Switch>
     </Router>
