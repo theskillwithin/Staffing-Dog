@@ -1,6 +1,7 @@
 import React from 'react'
 import { Route, Link } from 'react-router-dom'
 import { object } from 'prop-types'
+import loadable from 'loadable-components'
 import classnames from 'classnames'
 import Logo from '@component/logo'
 import Icon from '@component/icon'
@@ -8,12 +9,19 @@ import ContactSVG from '@component/svg/Contact'
 import HeadsetSVG from '@component/svg/Headset'
 import EmailUsSVG from '@component/svg/EmailUs'
 import LiveChatSVG from '@component/svg/LiveChat'
-import DashboardScene from '@scene/dashboard'
-import SearchScene from '@scene/search'
-import SettingsScene from '@scene/settings'
 
 import theme from './theme.css'
 import './styles.css'
+
+const DashboardScene = loadable(() =>
+  import(/* webpackChunkName: "dashboard" */ '@sdog/scenes/dashboard'),
+)
+const SearchScene = loadable(() =>
+  import(/* webpackChunkName: "search" */ '@sdog/scenes/search'),
+)
+const SettingsScene = loadable(() =>
+  import(/* webpackChunkName: "settings" */ '@sdog/scenes/settings'),
+)
 
 // TODO: keep as class, we will have class methods soon
 class App extends React.Component {
