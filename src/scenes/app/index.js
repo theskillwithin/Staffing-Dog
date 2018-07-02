@@ -23,7 +23,6 @@ const SettingsScene = loadable(() =>
   import(/* webpackChunkName: "settings" */ '@sdog/scenes/settings'),
 )
 
-// TODO: keep as class, we will have class methods soon
 class App extends React.Component {
   isActive(page) {
     const { pathname } = this.props.location
