@@ -7,10 +7,12 @@
   --sd-containerWidth: 1024px;
 }
 
-html {
-  background-color: var(--sd-backgroundColor);
-  font-family: 'Open Sans', sans-serif;
-  font-weight: 400;
+:global {
+  .html-app {
+    background-color: var(--sd-backgroundColor);
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 400;
+  }
 }
 
 h1,

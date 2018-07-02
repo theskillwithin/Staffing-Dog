@@ -3,6 +3,7 @@ import { Route, Link } from 'react-router-dom'
 import { object } from 'prop-types'
 import loadable from 'loadable-components'
 import classnames from 'classnames'
+import { setHtmlClass, removeHtmlClass } from '@sdog/utils/document'
 import Logo from '@component/logo'
 import Icon from '@component/icon'
 import ContactSVG from '@component/svg/Contact'
@@ -24,6 +25,14 @@ const SettingsScene = loadable(() =>
 )
 
 class App extends React.Component {
+  componentDidMount() {
+    setHtmlClass('html-app')
+  }
+
+  componentWillUnmount() {
+    removeHtmlClass('html-app')
+  }
+
   isActive(page) {
     const { pathname } = this.props.location
     return page.test(pathname)
