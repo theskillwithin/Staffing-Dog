@@ -12,12 +12,12 @@
     line-height: 34px;
     position: relative;
     font-size: 16px;
-    font-weight: 500;
+    font-weight: var(--sd-fontWeightBold);
     outline: none;
 
     &.label {
       text-transform: uppercase;
-      font-weight: 400;
+      font-weight: var(--sd-fontWeightNormal);
       color: rgba(0, 0, 0, 0.3);
       font-size: 14px;
       cursor: initial;
