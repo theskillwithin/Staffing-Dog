@@ -70,6 +70,7 @@ body {
       background: var(--sd-primary) !important;
       box-shadow: none;
       top: 0;
+      border: none;
 
       &:before {
         display: none;
