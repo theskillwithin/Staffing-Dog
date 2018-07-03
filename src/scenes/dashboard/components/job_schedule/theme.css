@@ -4,7 +4,7 @@
   margin: 1em 0;
   display: flex;
   font-size: 14px;
-  font-weight: 500;
+  font-weight: var(--sd-fontWeightBold);
   span {
     flex: 1;
   }

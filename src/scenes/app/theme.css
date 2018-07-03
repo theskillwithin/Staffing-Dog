@@ -10,7 +10,7 @@
 html {
   background-color: var(--sd-backgroundColor);
   font-family: 'Helvetica Neue', sans-serif;
-  font-weight: 400;
+  font-weight: var(--sd-fontWeightNormal);
 }
 
 h1,
@@ -72,13 +72,13 @@ h6 {
         .navItemLink {
           position: relative;
           font-size: 14px;
-          font-weight: 400;
+          font-weight: var(--sd-fontWeightNormal);
           line-height: 1.21;
           color: var(--sd-grayLighter);
           text-decoration: none;
 
           &.active {
-            font-weight: 500;
+            font-weight: var(--sd-fontWeightBold);
             color: var(--sd-blackTxt);
 
             &:after {

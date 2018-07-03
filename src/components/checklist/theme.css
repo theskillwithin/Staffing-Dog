@@ -10,7 +10,7 @@
   .li {
     position: relative;
     font-size: 14px;
-    font-weight: 500;
+    font-weight: var(--sd-fontWeightBold);
     line-height: 1.21;
     color: rgb(31, 39, 64);
     padding: 1em 0 1em 1.5em;

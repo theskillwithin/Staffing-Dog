@@ -114,7 +114,7 @@
     justify-content: center;
     align-items: center;
     font-size: 12px;
-    font-weight: 500;
+    font-weight: var(--sd-fontWeightBold);
     background: var(--sd-borderColor);
     border-radius: 4px;
     width: 23px;
@@ -146,7 +146,7 @@
     display: flex;
     align-items: center;
     font-size: 14px;
-    font-weight: 500;
+    font-weight: var(--sd-fontWeightBold);
     color: var(--sd-blackTxt);
     margin-bottom: 0.5em;
 
@@ -208,7 +208,7 @@
 
     .date {
       color: var(--sd-primary);
-      font-weight: 500;
+      font-weight: var(--sd-fontWeightBold);
     }
   }
 

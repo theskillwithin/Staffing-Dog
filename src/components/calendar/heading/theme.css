@@ -41,7 +41,7 @@
     margin: 0;
     text-align: center;
     cursor: pointer;
-    font-weight: 300;
+    font-weight: var(--sd-fontWeightLight);
     font-size: 18px;
     line-height: 66px;
     user-select: none;
