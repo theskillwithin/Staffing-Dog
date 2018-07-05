@@ -18,6 +18,11 @@ body {
 }
 
 :global {
+
+  .mdc-button {
+    font-family: 'Helvetica Neue', sans-serif !important;
+  }
+
   .mdc-text-field--outlined .mdc-floating-label--float-above {
     transform: translateY(-175%) scale(0.75) !important;
   }
@@ -65,6 +70,7 @@ body {
       background: var(--sd-primary) !important;
       box-shadow: none;
       top: 0;
+      border: none;
 
       &:before {
         display: none;
