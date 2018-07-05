@@ -1,0 +1,10 @@
+.header {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.signin {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
