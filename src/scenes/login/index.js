@@ -1,5 +1,4 @@
 import React from 'react'
-import classnames from 'classnames'
 import { setTitle, setHtmlClass, removeHtmlClass } from '@sdog/utils/document'
 import Contact from '@scene/app/contact'
 
@@ -18,7 +17,7 @@ class Login extends React.Component {
   }
 
   render = () => (
-    <div className={classnames(appTheme.pageContent, appTheme.columns)}>
+    <div className={appTheme.pageContent}>
       <header className={theme.header}>
         <Contact />
       </header>

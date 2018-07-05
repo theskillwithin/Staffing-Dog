@@ -1,6 +1,7 @@
 .header {
   display: flex;
   justify-content: flex-end;
+  margin: auto 0 auto auto;
 }
 
 .signin {
