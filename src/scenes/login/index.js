@@ -2,12 +2,17 @@ import React from 'react'
 import { setTitle, setHtmlClass, removeHtmlClass } from '@sdog/utils/document'
 import Contact from '@scene/app/contact'
 import Logo from '@component/logo'
+import { TabBar, Tab } from '@component/tab_bar'
 
 import appTheme from '../app/theme.css'
 
 import theme from './theme.css'
 
 class Login extends React.Component {
+  state = {
+    activeTabIndex: 0,
+  }
+
   componentDidMount() {
     setTitle('Login')
     setHtmlClass('html-login')
@@ -15,6 +20,10 @@ class Login extends React.Component {
 
   componentWillUnmount() {
     removeHtmlClass('html-login')
+  }
+
+  handleChange = tab => {
+    this.setState({ activeTabIndex: tab })
   }
 
   render = () => (
@@ -28,6 +37,16 @@ class Login extends React.Component {
         </div>
         <div className={theme.signin}>
           <h2>Sign In</h2>
+          <TabBar
+            activeTabIndex={this.state.activeTabIndex}
+            onChange={tab => this.handleChange(tab)}
+          >
+            <Tab>Dental Professional</Tab>
+            <Tab>Dental Provider</Tab>
+          </TabBar>
+
+          {this.state.activeTabIndex === 0 && <h1>Hello</h1>}
+          {this.state.activeTabIndex === 1 && <h1>World</h1>}
         </div>
       </div>
     </div>

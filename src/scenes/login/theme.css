@@ -20,4 +20,8 @@
   background-color: rgb(255, 255, 255);
   box-shadow: 0 3px 6px 0 rgba(93, 98, 107, 0.1);
   text-align: center;
+
+  h2 {
+    font-weight: var(--sd-fontWeightLight);
+  }
 }
