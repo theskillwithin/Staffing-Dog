@@ -37,16 +37,21 @@ class Login extends React.Component {
         </div>
         <div className={theme.signin}>
           <h2>Sign In</h2>
-          <TabBar
-            activeTabIndex={this.state.activeTabIndex}
-            onChange={tab => this.handleChange(tab)}
-          >
-            <Tab>Dental Professional</Tab>
-            <Tab>Dental Provider</Tab>
-          </TabBar>
+          <div>
+            <TabBar
+              activeTabIndex={this.state.activeTabIndex}
+              onChange={tab => this.handleChange(tab)}
+              // underline={false}
+              // left={false}
+              // exact={false}
+            >
+              <Tab>Dental Professional</Tab>
+              <Tab>Dental Provider</Tab>
+            </TabBar>
 
-          {this.state.activeTabIndex === 0 && <h1>Hello</h1>}
-          {this.state.activeTabIndex === 1 && <h1>World</h1>}
+            {this.state.activeTabIndex === 0 && <h1>Hello</h1>}
+            {this.state.activeTabIndex === 1 && <h1>World</h1>}
+          </div>
         </div>
       </div>
     </div>

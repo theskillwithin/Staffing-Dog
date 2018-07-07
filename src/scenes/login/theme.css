@@ -1,3 +1,5 @@
+@import '../../styles/config.css';
+
 .header {
   position: absolute;
   top: 2em;
