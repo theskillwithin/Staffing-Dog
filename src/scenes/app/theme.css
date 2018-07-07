@@ -7,10 +7,19 @@
   --sd-containerWidth: 1024px;
 }
 
+body {
+  min-height: 100vh;
+}
+
+:global(#app) {
+  min-height: 100vh;
+}
+
 html, .html-app {
   background-color: var(--sd-backgroundColor);
   font-family: 'Helvetica Neue', sans-serif;
   font-weight: var(--sd-fontWeightNormal);
+  min-height: 100%;
 }
 
 h1,

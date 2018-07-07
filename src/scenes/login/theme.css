@@ -1,11 +1,23 @@
 .header {
+  position: absolute;
+  top: 2em;
+  right: 2em;
+}
+
+.signinContainer {
   display: flex;
-  justify-content: flex-end;
-  margin: auto 0 auto auto;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 80vh;
 }
 
 .signin {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  margin: 2em;
+  max-width: 480px;
+  width: 100%;
+  border-radius: 8px;
+  background-color: rgb(255, 255, 255);
+  box-shadow: 0 3px 6px 0 rgba(93, 98, 107, 0.1);
+  text-align: center;
 }

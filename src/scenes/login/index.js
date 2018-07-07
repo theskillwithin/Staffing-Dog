@@ -1,6 +1,7 @@
 import React from 'react'
 import { setTitle, setHtmlClass, removeHtmlClass } from '@sdog/utils/document'
 import Contact from '@scene/app/contact'
+import Logo from '@component/logo'
 
 import appTheme from '../app/theme.css'
 
@@ -21,8 +22,13 @@ class Login extends React.Component {
       <header className={theme.header}>
         <Contact />
       </header>
-      <div className={theme.signin}>
-        <h2>Sign In</h2>
+      <div className={theme.signinContainer}>
+        <div className={theme.logo}>
+          <Logo />
+        </div>
+        <div className={theme.signin}>
+          <h2>Sign In</h2>
+        </div>
       </div>
     </div>
   )
