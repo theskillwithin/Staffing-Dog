@@ -41,9 +41,9 @@ class Login extends React.Component {
             <TabBar
               activeTabIndex={this.state.activeTabIndex}
               onChange={tab => this.handleChange(tab)}
-              // underline={false}
-              // left={false}
-              // exact={false}
+              underline={false}
+              left={false}
+              exact={false}
             >
               <Tab>Dental Professional</Tab>
               <Tab>Dental Provider</Tab>
