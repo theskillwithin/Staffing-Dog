@@ -3,6 +3,10 @@
 .tabBar {
   font-size: 15px;
 
+  > div {
+    letter-spacing: normal;
+  }
+
   &.underline {
     border-bottom: 2px inset var(--sd-borderColor);
 
@@ -22,7 +26,6 @@
   }
 
   &.exact {
-
     > div {
       min-width: auto;
       padding-left: 4px;

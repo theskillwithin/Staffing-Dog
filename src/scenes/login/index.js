@@ -3,6 +3,7 @@ import { setTitle, setHtmlClass, removeHtmlClass } from '@sdog/utils/document'
 import Contact from '@scene/app/contact'
 import Logo from '@component/logo'
 import { TabBar, Tab } from '@component/tab_bar'
+import Input from '@component/input'
 
 import appTheme from '../app/theme.css'
 
@@ -11,6 +12,10 @@ import theme from './theme.css'
 class Login extends React.Component {
   state = {
     activeTabIndex: 0,
+    form: {
+      email: '',
+      password: '',
+    },
   }
 
   componentDidMount() {
@@ -22,8 +27,12 @@ class Login extends React.Component {
     removeHtmlClass('html-login')
   }
 
-  handleChange = tab => {
+  handleChangeTab = tab => {
     this.setState({ activeTabIndex: tab })
+  }
+
+  handleChange = (label, value) => {
+    this.setState(state => ({ form: { ...state, [label]: value } }))
   }
 
   render = () => (
@@ -40,7 +49,7 @@ class Login extends React.Component {
           <div>
             <TabBar
               activeTabIndex={this.state.activeTabIndex}
-              onChange={tab => this.handleChange(tab)}
+              onChange={tab => this.handleChangeTab(tab)}
               underline={false}
               left={false}
               exact={false}
@@ -49,8 +58,34 @@ class Login extends React.Component {
               <Tab>Dental Provider</Tab>
             </TabBar>
 
-            {this.state.activeTabIndex === 0 && <h1>Hello</h1>}
-            {this.state.activeTabIndex === 1 && <h1>World</h1>}
+            {this.state.activeTabIndex === 0 && (
+              <div>
+                <Input
+                  label="Email"
+                  value={this.state.form.email}
+                  onChange={value => this.handleChange('email', value)}
+                />
+                <Input
+                  label="Password"
+                  value={this.state.form.password}
+                  onChange={value => this.handleChange('password', value)}
+                />
+              </div>
+            )}
+            {this.state.activeTabIndex === 1 && (
+              <div>
+                <Input
+                  label="Email"
+                  value={this.state.form.email}
+                  onChange={value => this.handleChange('email', value)}
+                />
+                <Input
+                  label="Password"
+                  value={this.state.form.password}
+                  onChange={value => this.handleChange('password', value)}
+                />
+              </div>
+            )}
           </div>
         </div>
       </div>
