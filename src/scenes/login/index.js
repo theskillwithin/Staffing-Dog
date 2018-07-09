@@ -61,12 +61,12 @@ class Login extends React.Component {
             {this.state.activeTabIndex === 0 && (
               <div>
                 <Input
-                  label="Email"
+                  placeholder="Email"
                   value={this.state.form.email}
                   onChange={value => this.handleChange('email', value)}
                 />
                 <Input
-                  label="Password"
+                  placeholder="Password"
                   value={this.state.form.password}
                   onChange={value => this.handleChange('password', value)}
                 />
@@ -75,12 +75,12 @@ class Login extends React.Component {
             {this.state.activeTabIndex === 1 && (
               <div>
                 <Input
-                  label="Email"
+                  placeholder="Email"
                   value={this.state.form.email}
                   onChange={value => this.handleChange('email', value)}
                 />
                 <Input
-                  label="Password"
+                  placeholder="Password"
                   value={this.state.form.password}
                   onChange={value => this.handleChange('password', value)}
                 />
