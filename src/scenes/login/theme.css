@@ -28,3 +28,14 @@
     font-weight: var(--sd-fontWeightLight);
   }
 }
+
+.inputRow {
+  display: flex;
+  justify-content: space-between;
+  margin: 0.55em 0;
+  width: 100%;
+
+  > * {
+    width: 50%;
+  }
+}

@@ -59,28 +59,28 @@ class Login extends React.Component {
             </TabBar>
 
             {this.state.activeTabIndex === 0 && (
-              <div>
+              <div className={theme.inputRow}>
                 <Input
-                  placeholder="Email"
+                  label="Email"
                   value={this.state.form.email}
                   onChange={value => this.handleChange('email', value)}
                 />
                 <Input
-                  placeholder="Password"
+                  label="Password"
                   value={this.state.form.password}
                   onChange={value => this.handleChange('password', value)}
                 />
               </div>
             )}
             {this.state.activeTabIndex === 1 && (
-              <div>
+              <div className={theme.inputRow}>
                 <Input
-                  placeholder="Email"
+                  label="Email"
                   value={this.state.form.email}
                   onChange={value => this.handleChange('email', value)}
                 />
                 <Input
-                  placeholder="Password"
+                  label="Password"
                   value={this.state.form.password}
                   onChange={value => this.handleChange('password', value)}
                 />
