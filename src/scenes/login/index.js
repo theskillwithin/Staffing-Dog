@@ -32,7 +32,7 @@ class Login extends React.Component {
   }
 
   handleChange = (label, value) => {
-    this.setState(state => ({ form: { ...state, [label]: value } }))
+    this.setState(state => ({ form: { ...state.form, [label]: value } }))
   }
 
   render = () => (
