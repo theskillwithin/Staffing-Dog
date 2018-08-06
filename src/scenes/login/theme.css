@@ -32,10 +32,7 @@
 .inputRow {
   display: flex;
   justify-content: space-between;
+  flex-direction: column;
   margin: 0.55em 0;
   width: 100%;
-
-  > * {
-    width: 50%;
-  }
 }
