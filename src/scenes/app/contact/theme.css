@@ -41,6 +41,7 @@
     position: relative;
     display: flex;
     flex-direction: column;
+    z-index: 1;
     margin-top: 35px;
     width: 170px;
     height: 136px;
