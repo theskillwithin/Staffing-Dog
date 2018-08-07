@@ -98,6 +98,9 @@ class Login extends React.Component {
             )}
           </div>
         </div>
+        <div className={theme.bottom}>
+          <a href="/">Find a Job</a> <a href="/">Post a Job</a> <a href="/">Legal</a>
+        </div>
       </div>
     </div>
   )

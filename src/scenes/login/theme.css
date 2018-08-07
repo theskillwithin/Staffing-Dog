@@ -23,7 +23,7 @@
   border-radius: 8px;
   background-color: rgb(255, 255, 255);
   box-shadow: 0 3px 6px 0 rgba(93, 98, 107, 0.1);
-  
+
   h2 {
     text-align: center;
     font-weight: var(--sd-fontWeightLight);
@@ -63,5 +63,31 @@
     color: var(--sd-blue);
     font-size: 14px;
     text-decoration: none;
+  }
+}
+
+.bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 261px;
+
+  a {
+    position: relative;
+    font-size: 14px;
+    line-height: 1.14;
+    color: var(--sd-grayLighter);
+    text-decoration: none;
+  }
+
+  a + a:before {
+    content: '';
+    position: absolute;
+    top: -5px;
+    left: -25px;
+    display: block;
+    background-color: var(--sd-grayLighter);
+    width: 1px;
+    height: 24px;
   }
 }
