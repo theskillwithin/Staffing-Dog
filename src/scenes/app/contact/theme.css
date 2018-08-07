@@ -29,6 +29,7 @@
   .contactActive {
     display: none;
     position: absolute;
+    z-index: 1;
     top: 23px;
     left: -40px;
 
@@ -41,7 +42,6 @@
     position: relative;
     display: flex;
     flex-direction: column;
-    z-index: 1;
     margin-top: 35px;
     width: 170px;
     height: 136px;
