@@ -15,7 +15,8 @@
 }
 
 .signin {
-  padding: 32px;
+  position: relative;
+  padding: 32px 32px 45px 32px;
   margin: 2em;
   max-width: 480px;
   width: 100%;
@@ -35,4 +36,32 @@
   flex-direction: column;
   margin: 0.55em 0;
   width: 100%;
+
+  button {
+    margin-top: 1em;
+  }
+}
+
+.forgot {
+  font-size: 14px;
+  line-height: 1.14;
+  color: var(--sd-grayLighter);
+  text-decoration: none;
+  margin: 2em auto 1em auto;
+}
+
+.signup {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  border-top: solid 1px rgba(187, 193, 209, 0.5);
+  text-align: center;
+  padding: 1em;
+
+  a {
+    color: var(--sd-blue);
+    font-size: 14px;
+    text-decoration: none;
+  }
 }

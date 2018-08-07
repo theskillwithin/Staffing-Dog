@@ -4,6 +4,7 @@ import Contact from '@scene/app/contact'
 import Logo from '@component/logo'
 import { TabBar, Tab } from '@component/tab_bar'
 import Input from '@component/input'
+import Button from '@component/button'
 
 import appTheme from '../app/theme.css'
 
@@ -70,6 +71,15 @@ class Login extends React.Component {
                   value={this.state.form.password}
                   onChange={value => this.handleChange('password', value)}
                 />
+                <Button primary round type="submit">
+                  Sign In
+                </Button>
+                <a href="/forgot-password" className={theme.forgot}>
+                  Forgot Password?
+                </a>
+                <div className={theme.signup}>
+                  <a href="/signup">Don’t have an account? Sign Up</a>
+                </div>
               </div>
             )}
             {this.state.activeTabIndex === 1 && (
