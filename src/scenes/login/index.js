@@ -36,6 +36,11 @@ class Login extends React.Component {
     this.setState(state => ({ form: { ...state.form, [label]: value } }))
   }
 
+  submit = () => {
+    // const type = this.state.activeTabIndex === 0 ? 'Professional' : 'Provider'
+    // this.props.submit(this.state.form, type)
+  }
+
   render = () => (
     <div className={appTheme.pageContent}>
       <header className={theme.header}>
@@ -59,43 +64,27 @@ class Login extends React.Component {
               <Tab>Dental Provider</Tab>
             </TabBar>
 
-            {this.state.activeTabIndex === 0 && (
-              <div className={theme.inputRow}>
-                <Input
-                  label="Email"
-                  value={this.state.form.email}
-                  onChange={value => this.handleChange('email', value)}
-                />
-                <Input
-                  label="Password"
-                  value={this.state.form.password}
-                  onChange={value => this.handleChange('password', value)}
-                />
-                <Button primary round type="submit">
-                  Sign In
-                </Button>
-                <a href="/forgot-password" className={theme.forgot}>
-                  Forgot Password?
-                </a>
-                <div className={theme.signup}>
-                  <a href="/signup">Don’t have an account? Sign Up</a>
-                </div>
+            <form className={theme.form} onSubmit={this.submit}>
+              <Input
+                label="Email"
+                value={this.state.form.email}
+                onChange={value => this.handleChange('email', value)}
+              />
+              <Input
+                label="Password"
+                value={this.state.form.password}
+                onChange={value => this.handleChange('password', value)}
+              />
+              <Button primary round type="submit">
+                Sign In
+              </Button>
+              <a href="/forgot-password" className={theme.forgot}>
+                Forgot Password?
+              </a>
+              <div className={theme.signup}>
+                <a href="/signup">Don’t have an account? Sign Up</a>
               </div>
-            )}
-            {this.state.activeTabIndex === 1 && (
-              <div className={theme.inputRow}>
-                <Input
-                  label="Email"
-                  value={this.state.form.email}
-                  onChange={value => this.handleChange('email', value)}
-                />
-                <Input
-                  label="Password"
-                  value={this.state.form.password}
-                  onChange={value => this.handleChange('password', value)}
-                />
-              </div>
-            )}
+            </form>
           </div>
         </div>
         <div className={theme.bottom}>
