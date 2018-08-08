@@ -87,13 +87,16 @@ class App extends React.Component {
               <div className={theme.contactActive}>
                 <div className={theme.contactActiveInner}>
                   <a href="/test">
-                    <HeadsetSVG />(385) 707-0156
+                    <HeadsetSVG />
+                    (385) 707-0156
                   </a>
                   <a href="/test">
-                    <EmailUsSVG />Email Us
+                    <EmailUsSVG />
+                    Email Us
                   </a>
                   <a href="/test">
-                    <LiveChatSVG />Live Chat
+                    <LiveChatSVG />
+                    Live Chat
                   </a>
                 </div>
               </div>
