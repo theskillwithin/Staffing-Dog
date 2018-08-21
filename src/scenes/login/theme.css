@@ -1,5 +1,11 @@
 @import '../../styles/config.css';
 
+html {
+  @media (max-width: 500px) {
+    background-color: white;
+  }
+}
+
 .header {
   position: absolute;
   top: 2em;
@@ -89,5 +95,9 @@
     background-color: var(--sd-grayLighter);
     width: 1px;
     height: 24px;
+  }
+
+  @media (max-width: 500px) {
+    display: none;
   }
 }
