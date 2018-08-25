@@ -78,13 +78,15 @@ class Login extends React.Component {
               <Button primary round type="submit">
                 Sign In
               </Button>
+            </form>
+            <div className={theme.underForm}>
               <a href="/forgot-password" className={theme.forgot}>
                 Forgot Password?
               </a>
               <div className={theme.signup}>
                 <a href="/signup">Don’t have an account? Sign Up</a>
               </div>
-            </form>
+            </div>
           </div>
         </div>
         <div className={theme.bottom}>

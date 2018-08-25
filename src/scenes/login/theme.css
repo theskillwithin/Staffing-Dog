@@ -1,7 +1,7 @@
 @import '../../styles/config.css';
 
 html {
-  @media (max-width: 500px) {
+  @media (--sd-mobile) {
     background-color: white;
   }
 }
@@ -48,12 +48,29 @@ html {
   }
 }
 
+.underForm {
+  display: flex;
+  flex-direction: column;
+
+  @media (--sd-mobile) {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 110px;
+  }
+}
+
 .forgot {
   font-size: 14px;
   line-height: 1.14;
   color: var(--sd-grayLighter);
   text-decoration: none;
-  margin: 2em auto 1em auto;
+  margin: 2em auto;
+
+  @media (--sd-mobile) {
+    color: var(--sd-blue);
+  }
 }
 
 .signup {
@@ -69,6 +86,11 @@ html {
     color: var(--sd-blue);
     font-size: 14px;
     text-decoration: none;
+  }
+
+  @media (--sd-mobile) {
+    background: var(--sd-grayLight);
+    color: white;
   }
 }
 
@@ -97,7 +119,7 @@ html {
     height: 24px;
   }
 
-  @media (max-width: 500px) {
+  @media (--sd-mobile) {
     display: none;
   }
 }
