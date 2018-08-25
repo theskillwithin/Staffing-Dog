@@ -90,6 +90,10 @@ html {
     color: var(--sd-blue);
     font-size: 14px;
     text-decoration: none;
+
+    @media (--sd-mobile) {
+      color: white;
+    }
   }
 
   i {
