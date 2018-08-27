@@ -35,9 +35,15 @@
     top: 23px;
     left: -40px;
 
-    &:hover {
-      display: block;
+    @media (--sd-notMobile) {
+      &:hover {
+        display: block;
+      }
     }
+  }
+
+  .mobileActive {
+    display: block;
   }
 
   .contactActiveInner {
@@ -86,7 +92,9 @@
   }
 
   &:hover .contactActive {
-    display: block;
+    @media (--sd-notMobile) {
+      display: block;
+    }
   }
 
   .contactDesktop {
