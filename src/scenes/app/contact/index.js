@@ -3,6 +3,7 @@ import ContactSVG from '@component/svg/Contact'
 import HeadsetSVG from '@component/svg/Headset'
 import EmailUsSVG from '@component/svg/EmailUs'
 import LiveChatSVG from '@component/svg/LiveChat'
+import Icon from '@component/icon'
 import { Link } from 'react-router-dom'
 
 import theme from './theme.css'
@@ -10,9 +11,14 @@ import theme from './theme.css'
 const Contact = () => (
   <div className={theme.contact}>
     <div className={theme.contactInner}>
-      <Link to="/contact">
-        <ContactSVG className={theme.contactSVG} /> Contact Us
-      </Link>
+      <div className={theme.contactDesktop}>
+        <Link to="/contact">
+          <ContactSVG className={theme.contactSVG} /> Contact Us
+        </Link>
+      </div>
+      <div className={theme.contactMobile}>
+        <Icon use="menu" />
+      </div>
     </div>
     <div className={theme.contactActive}>
       <div className={theme.contactActiveInner}>

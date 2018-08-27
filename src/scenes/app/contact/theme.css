@@ -1,3 +1,5 @@
+@import '../../../styles/config.css';
+
 .contact {
   position: relative;
   flex: 1;
@@ -85,5 +87,19 @@
 
   &:hover .contactActive {
     display: block;
+  }
+
+  .contactDesktop {
+    @media (--sd-mobile) {
+      display: none;
+    }
+  }
+
+  .contactMobile {
+    display: none;
+
+    @media (--sd-mobile) {
+      display: block;
+    }
   }
 }
