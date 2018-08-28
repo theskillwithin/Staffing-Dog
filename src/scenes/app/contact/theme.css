@@ -19,6 +19,10 @@
       width: 30px;
       color: var(--sd-primary);
     }
+
+    @media (--sd-mobile) {
+      color: white;
+    }
   }
 
   .contactSVG {
@@ -40,10 +44,25 @@
         display: block;
       }
     }
+
+    @media (--sd-mobile) {
+      left: calc(-80vw + 2em);
+      right: 0;
+    }
   }
 
   .mobileActive {
     display: block;
+  }
+
+  .mobileOption {
+    display: none;
+    background-color: var(--sd-primary);
+    border-radius: 8px 8px 0 0;
+
+    @media (--sd-mobile) {
+      display: block;
+    }
   }
 
   .contactActiveInner {
@@ -68,10 +87,20 @@
       i,
       svg {
         margin: 0 0.8em 0 0.8em;
+
+        @media (--sd-mobile) {
+          color: white;
+        }
       }
 
       &:hover {
         background: rgb(246, 248, 250);
+      }
+    }
+
+    .mobileOption {
+      a {
+        height: 40px;
       }
     }
 
@@ -89,6 +118,14 @@
       box-shadow: 0 3px 6px 0 rgba(93, 98, 107, 0.1);
       z-index: -1;
     }
+
+    @media (--sd-mobile) {
+      height: 185px;
+      width: 100%;
+      background-color: rgb(31, 39, 64);
+      box-shadow: 0 3px 6px 0 rgba(93, 98, 107, 0.1);
+      color: white;
+    }
   }
 
   &:hover .contactActive {
@@ -105,6 +142,15 @@
 
   .contactMobile {
     display: none;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+
+    i {
+      color: var(--sd-primary);
+      font-weight: bold;
+      font-size: 34px;
+    }
 
     @media (--sd-mobile) {
       display: block;

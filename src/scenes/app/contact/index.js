@@ -42,6 +42,11 @@ class Contact extends React.Component {
           )}
         >
           <div className={theme.contactActiveInner}>
+            <div className={theme.mobileOption}>
+              <Link to="/contact">
+                <ContactSVG className={theme.contactSVG} /> Contact Us
+              </Link>
+            </div>
             <a href="/test">
               <HeadsetSVG />
               (385) 707-0156
