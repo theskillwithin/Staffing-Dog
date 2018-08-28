@@ -21,7 +21,7 @@
     }
 
     @media (--sd-mobile) {
-      color: white;
+      color: var(--sd-white);
     }
   }
 
@@ -73,8 +73,8 @@
     width: 170px;
     height: 136px;
     border-radius: 8px;
-    background-color: rgb(255, 255, 255);
-    box-shadow: 0 3px 6px 0 rgba(93, 98, 107, 0.1);
+    background-color: var(--sd-white);
+    box-shadow: 0 3px 6px 0 var(--sd-shadowColor);
 
     a {
       height: 35px;
@@ -89,12 +89,12 @@
         margin: 0 0.8em 0 0.8em;
 
         @media (--sd-mobile) {
-          color: white;
+          color: var(--sd-white);
         }
       }
 
       &:hover {
-        background: rgb(246, 248, 250);
+        background: var(--sd-offWhite);
       }
     }
 
@@ -114,16 +114,16 @@
       transform: rotate(45deg) translate(-50%, -50%);
       width: 35.4px;
       height: 35.4px;
-      background-color: rgb(255, 255, 255);
-      box-shadow: 0 3px 6px 0 rgba(93, 98, 107, 0.1);
+      background-color: var(--sd-white);
+      box-shadow: 0 3px 6px 0 var(--sd-shadowColor);
       z-index: -1;
     }
 
     @media (--sd-mobile) {
       height: 185px;
       width: 100%;
-      background-color: rgb(31, 39, 64);
-      box-shadow: 0 3px 6px 0 rgba(93, 98, 107, 0.1);
+      background-color: var(--sd-blackTxt);
+      box-shadow: 0 3px 6px 0 var(--sd-shadowColor);
       color: white;
     }
   }
