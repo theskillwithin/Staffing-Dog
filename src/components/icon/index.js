@@ -1,5 +1,5 @@
 import React from 'react'
-import { oneOfType, bool, string } from 'prop-types'
+import { oneOfType, bool, string, object } from 'prop-types'
 import classnames from 'classnames'
 import { Icon as MIcon } from 'rmwc/Icon'
 
@@ -7,7 +7,9 @@ import theme from './theme.css'
 
 const Icon = ({ inButton, strategy, primary, secondary, size, ...props }) => (
   <MIcon
-    strategy={strategy}
+    iconOptions={{
+      strategy,
+    }}
     className={classnames(
       theme.root,
       inButton && 'mdc-button__icon',
@@ -24,6 +26,7 @@ const Icon = ({ inButton, strategy, primary, secondary, size, ...props }) => (
 Icon.defaultProps = {
   inButton: false,
   strategy: 'ligature',
+  iconOptions: {},
   primary: false,
   size: false,
   secondary: false,
@@ -31,6 +34,7 @@ Icon.defaultProps = {
 
 Icon.propTypes = {
   inButton: oneOfType([bool, string]),
+  iconOptions: object,
   strategy: string,
   primary: bool,
   secondary: bool,
