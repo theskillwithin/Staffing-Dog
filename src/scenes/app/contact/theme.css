@@ -145,6 +145,7 @@
     border: none;
     background: transparent;
     cursor: pointer;
+    outline: none;
 
     i {
       color: var(--sd-primary);
