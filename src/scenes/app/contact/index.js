@@ -1,4 +1,5 @@
 import React from 'react'
+import enhanceWithClickOutside from 'react-click-outside'
 import classnames from 'classnames'
 import ContactSVG from '@component/svg/Contact'
 import HeadsetSVG from '@component/svg/Headset'
@@ -16,6 +17,13 @@ class Contact extends React.Component {
 
   handleMobileToggle = () => {
     this.setState(state => ({ mobileActive: !state.mobileActive }))
+  }
+
+  handleClickOutside = () => {
+    if (this.state.mobileActive) {
+      return this.handleMobileToggle()
+    }
+    return false
   }
 
   render() {
@@ -66,4 +74,4 @@ class Contact extends React.Component {
   }
 }
 
-export default Contact
+export default enhanceWithClickOutside(Contact)
