@@ -1,0 +1,142 @@
+@import '../../styles/config.css';
+
+html {
+  @media (--sd-mobile) {
+    background-color: var(--sd-white);
+  }
+}
+
+.header {
+  position: absolute;
+  top: 2em;
+  right: 2em;
+}
+
+.signinContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 80vh;
+}
+
+.signin {
+  position: relative;
+  padding: 32px 32px 45px 32px;
+  margin: 2em;
+  max-width: 480px;
+  width: 100%;
+  border-radius: 8px;
+  background-color: var(--sd-white);
+  box-shadow: 0 3px 6px 0 var(--sd-shadowColor);
+
+  h2 {
+    text-align: center;
+    font-weight: var(--sd-fontWeightLight);
+  }
+
+  @media (--sd-mobile) {
+    box-shadow: unset;
+  }
+}
+
+.form {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  margin: 0.55em 0;
+  width: 100%;
+
+  button {
+    margin-top: 1em;
+  }
+}
+
+.underForm {
+  display: flex;
+  flex-direction: column;
+
+  @media (--sd-mobile) {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 130px;
+  }
+}
+
+.forgot {
+  font-size: 14px;
+  line-height: 1.14;
+  color: var(--sd-grayLighter);
+  text-decoration: none;
+  margin: 2em auto;
+
+  @media (--sd-mobile) {
+    color: var(--sd-blue);
+  }
+}
+
+.signup {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  border-top: solid 1px var(--sd-borderColor);
+  text-align: center;
+  padding: 1em;
+
+  a {
+    color: var(--sd-blue);
+    font-size: 14px;
+    text-decoration: none;
+
+    @media (--sd-mobile) {
+      color: var(--sd-white);
+    }
+  }
+
+  i {
+    display: none;
+    color: white;
+
+    @media (--sd-mobile) {
+      display: inline-block;
+    }
+  }
+
+  @media (--sd-mobile) {
+    background-color: var(--sd-grayLighter);
+    color: white;
+  }
+}
+
+.bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 261px;
+
+  a {
+    position: relative;
+    font-size: 14px;
+    line-height: 1.14;
+    color: var(--sd-grayLighter);
+    text-decoration: none;
+  }
+
+  a + a:before {
+    content: '';
+    position: absolute;
+    top: -5px;
+    left: -25px;
+    display: block;
+    background-color: var(--sd-grayLighter);
+    width: 1px;
+    height: 24px;
+  }
+
+  @media (--sd-mobile) {
+    display: none;
+  }
+}

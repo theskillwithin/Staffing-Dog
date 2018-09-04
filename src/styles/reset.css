@@ -62,6 +62,7 @@ body {
 
   .mdc-tab {
     text-transform: none !important;
+    font-family: 'Helvetica Neue', sans-serif !important;
   }
 
   .mdc-switch {

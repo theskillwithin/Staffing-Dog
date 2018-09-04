@@ -4,4 +4,22 @@ export const setTitle = (page = '', params = {}) => {
   document.title = `${main} ${sep} ${page}`
 }
 
+export const setHtmlClass = className => {
+  const htmlTag = document.documentElement
+
+  if (htmlTag.classList && htmlTag.classList.add) {
+    htmlTag.classList.add(className)
+  } else if (` ${htmlTag.className} `.indexOf(` ${className} `) < 0) {
+    htmlTag.className += ` ${className} `
+  }
+}
+
+export const removeHtmlClass = className => {
+  const htmlTag = document.documentElement
+
+  if (htmlTag.classList && htmlTag.classList.remove) {
+    htmlTag.classList.remove(className)
+  }
+}
+
 export const isBrowser = () => !!window

@@ -3,12 +3,10 @@ import { Route, Link } from 'react-router-dom'
 import { object } from 'prop-types'
 import loadable from 'loadable-components'
 import classnames from 'classnames'
+import { setHtmlClass, removeHtmlClass } from '@sdog/utils/document'
 import Logo from '@component/logo'
 import Icon from '@component/icon'
-import ContactSVG from '@component/svg/Contact'
-import HeadsetSVG from '@component/svg/Headset'
-import EmailUsSVG from '@component/svg/EmailUs'
-import LiveChatSVG from '@component/svg/LiveChat'
+import Contact from '@scene/app/contact'
 
 import theme from './theme.css'
 import './styles.css'
@@ -24,6 +22,14 @@ const SettingsScene = loadable(() =>
 )
 
 class App extends React.Component {
+  componentDidMount() {
+    setHtmlClass('html-app')
+  }
+
+  componentWillUnmount() {
+    removeHtmlClass('html-app')
+  }
+
   isActive(page) {
     const { pathname } = this.props.location
     return page.test(pathname)
@@ -78,29 +84,7 @@ class App extends React.Component {
               </li>
             </ul>
 
-            <div className={theme.contact}>
-              <div className={theme.contactInner}>
-                <Link to="/contact">
-                  <ContactSVG className={theme.contactSVG} /> Contact Us
-                </Link>
-              </div>
-              <div className={theme.contactActive}>
-                <div className={theme.contactActiveInner}>
-                  <a href="/test">
-                    <HeadsetSVG />
-                    (385) 707-0156
-                  </a>
-                  <a href="/test">
-                    <EmailUsSVG />
-                    Email Us
-                  </a>
-                  <a href="/test">
-                    <LiveChatSVG />
-                    Live Chat
-                  </a>
-                </div>
-              </div>
-            </div>
+            <Contact />
           </div>
         </header>
 
