@@ -1,5 +1,7 @@
 import React from 'react'
-import { shape, string } from 'prop-types'
+import { shape, string, array } from 'prop-types'
+import { connect } from 'react-redux'
+import { withRouter } from 'react-router-dom'
 import classnames from 'classnames'
 import { setTitle } from '@util/document'
 import Card from '@component/card'
@@ -11,6 +13,7 @@ class Search extends React.Component {
     location: shape({
       search: string.isRequired,
     }).isRequired,
+    results: array.isRequired,
   }
 
   componentDidMount() {
@@ -34,28 +37,38 @@ class Search extends React.Component {
   }
 
   render() {
-    const {
-      props: {
-        location: { search: searchQuery },
-      },
-      getQueryParams,
-    } = this
+    const { results } = this.props
 
     return (
       <div className={classnames(theme.pageContent)}>
-        <Card>
-          <h2>Search</h2>
+        <header className={theme.searchFilters}>
+          <p>filters go here</p>
+        </header>
 
-          {searchQuery &&
-            Array.entries(getQueryParams(searchQuery)).map(([key, val]) => (
-              <li key={key}>
-                {key}:{val}
-              </li>
+        <div className={theme.searchResults}>
+          <div className={theme.searchResultsMeta}>
+            <p>Salt Lake City, UT</p>
+            <p>5 job posts in your area.</p>
+          </div>
+
+          <div className={theme.searchResultsList}>
+            {results.map(job => (
+              <Card key={job.title}>{job.title}</Card>
             ))}
-        </Card>
+          </div>
+        </div>
       </div>
     )
   }
 }
 
-export default Search
+export const mapStateToProps = () => ({
+  results: [
+    { title: 'first job' },
+    { title: 'second job' },
+    { title: 'third job' },
+    { title: 'fourth job' },
+  ],
+})
+
+export default withRouter(connect(mapStateToProps)(Search))
