@@ -2,10 +2,11 @@ import MockAdapter from 'axios-mock-adapter'
 import axios from '@sdog/api'
 import messagesMock from '@sdog/api/messages/mock'
 import jobsMock from '@sdog/api/jobs/mock'
+import searchMock from '@sdog/api/search/mock'
 import log from '@sdog/utils/log'
 
 const mock = new MockAdapter(axios)
-const endpoints = [...messagesMock, ...jobsMock]
+const endpoints = [...messagesMock, ...jobsMock, ...searchMock]
 
 endpoints.forEach(({ url, type = 'ANY', response = {}, responseCode = 200 }) => {
   log('[SD]:[MOCK]:[REQUEST] ', url, type)
@@ -18,7 +19,7 @@ endpoints.forEach(({ url, type = 'ANY', response = {}, responseCode = 200 }) => 
       })
       break
     case 'post':
-      mock.onGet(url).reply(config => {
+      mock.onPost(url).reply(config => {
         log('[SD]:[MOCK]:[RESPONSE]', config.url, response)
         return [responseCode, response]
       })
