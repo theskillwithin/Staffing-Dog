@@ -33,28 +33,31 @@ class Filter extends Component {
         ...base,
         ...dot(state.isSelected),
         color: 'white',
-        background: state.isFocused ? 'teal' : 'blue',
+        background: state.isFocused ? 'teal' : '#0072FF',
         padding: 5,
         cursor: state.isDisabled ? 'not-allowed' : 'pointer',
       }),
       menu: styles => ({
         ...styles,
-        background: 'blue',
+        background: '#0072FF',
         borderRadius: '0 0 20px 20px',
         paddingBottom: 20,
       }),
-      control: styles => ({
+      control: (styles, state) => ({
         ...styles,
-        background: 'blue',
+        background: state.isFocused ? '#0072FF' : 'rgb(187, 193, 209);',
         color: 'white',
         borderRadius: '20px',
       }),
-      value: styles => ({ ...styles, background: 'blue', color: 'white' }),
-      dropdownIndicator: styles => ({ ...styles, color: 'white' }),
+      value: styles => ({ ...styles, background: '#0072FF', color: 'white' }),
+      dropdownIndicator: (styles, { isFocused }) => ({
+        ...styles,
+        color: isFocused ? 'white' : 'black',
+      }),
       indicatorSeparator: () => ({ display: 'none' }),
-      // placeholder: styles => ({ ...styles, color: 'white', }),
-      // singleValue: (styles, { data }) => ({ ...styles, ...dot(data.color) })
     }
+    // placeholder: styles => ({ ...styles, color: 'white', }),
+    // singleValue: (styles, { data }) => ({ ...styles, ...dot(data.color) })
 
     return (
       <Select
