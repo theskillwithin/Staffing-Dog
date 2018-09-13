@@ -42,12 +42,18 @@ class Filter extends Component {
         background: '#0072FF',
         borderRadius: '0 0 20px 20px',
         paddingBottom: 20,
+        paddingTop: 20,
+        marginTop: -20,
       }),
       control: (styles, state) => ({
         ...styles,
         background: state.isFocused ? '#0072FF' : 'rgb(187, 193, 209);',
         color: 'white',
         borderRadius: '20px',
+        cursor: 'pointer',
+        zIndex: 5,
+        boxShadow: 'none',
+        borderWidth: 0,
       }),
       value: styles => ({ ...styles, background: '#0072FF', color: 'white' }),
       dropdownIndicator: (styles, { isFocused }) => ({
@@ -55,9 +61,13 @@ class Filter extends Component {
         color: isFocused ? 'white' : 'black',
       }),
       indicatorSeparator: () => ({ display: 'none' }),
+      placeholder: styles => ({ ...styles, color: 'rgb(31, 39, 64)' }),
+      singleValue: (styles, { menuIsOpen }) => ({
+        ...styles,
+        color: menuIsOpen ? 'white' : 'rgb(31, 39, 64)',
+      }),
+      // selectContainer: styles => ({ ...styles, boxShadow: 'none' }),
     }
-    // placeholder: styles => ({ ...styles, color: 'white', }),
-    // singleValue: (styles, { data }) => ({ ...styles, ...dot(data.color) })
 
     return (
       <Select
