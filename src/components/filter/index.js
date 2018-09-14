@@ -22,9 +22,9 @@ class Filter extends Component {
         border: '1px solid white',
         content: '""',
         display: 'block',
-        marginRight: 8,
-        height: 10,
-        width: 10,
+        marginRight: '1em',
+        height: 18,
+        width: 18,
       },
     })
 
@@ -33,7 +33,7 @@ class Filter extends Component {
         ...base,
         ...dot(state.isSelected),
         color: 'white',
-        background: state.isFocused ? 'teal' : '#0072FF',
+        background: state.isFocused ? 'rgb(0, 175, 253)' : '#0072FF',
         padding: 5,
         cursor: state.isDisabled ? 'not-allowed' : 'pointer',
         paddingLeft: '1em',
@@ -70,8 +70,8 @@ class Filter extends Component {
         ...styles,
         color: menuIsOpen ? 'white' : 'rgb(31, 39, 64)',
       }),
-      // selectContainer: styles => ({ ...styles, boxShadow: 'none' }),
     }
+    // selectContainer: styles => ({ ...styles, boxShadow: 'none' }),
 
     return (
       <Select
