@@ -60,9 +60,9 @@ class Filter extends Component {
         paddingTop: 20,
         marginTop: -20,
       }),
-      control: (styles, state) => ({
+      control: styles => ({
         ...styles,
-        background: state.isFocused ? '#0072FF' : 'rgb(187, 193, 209);',
+        background: this.state.open ? '#0072FF' : 'rgb(187, 193, 209);',
         color: 'white',
         borderRadius: '20px',
         cursor: 'pointer',
@@ -73,9 +73,9 @@ class Filter extends Component {
       }),
       value: styles => ({ ...styles, background: '#0072FF', color: 'white' }),
       valueContainer: styles => ({ ...styles, paddingLeft: '1em' }),
-      dropdownIndicator: (styles, { isFocused }) => ({
+      dropdownIndicator: styles => ({
         ...styles,
-        color: isFocused ? 'white' : 'black',
+        color: this.state.open ? 'white' : 'black',
         paddingRight: '1em',
       }),
       indicatorSeparator: () => ({ display: 'none' }),
