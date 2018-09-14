@@ -36,6 +36,7 @@ class Filter extends Component {
         background: state.isFocused ? 'teal' : '#0072FF',
         padding: 5,
         cursor: state.isDisabled ? 'not-allowed' : 'pointer',
+        paddingLeft: '1em',
       }),
       menu: styles => ({
         ...styles,
@@ -54,11 +55,14 @@ class Filter extends Component {
         zIndex: 5,
         boxShadow: 'none',
         borderWidth: 0,
+        minHeight: 40,
       }),
       value: styles => ({ ...styles, background: '#0072FF', color: 'white' }),
+      valueContainer: styles => ({ ...styles, paddingLeft: '1em' }),
       dropdownIndicator: (styles, { isFocused }) => ({
         ...styles,
         color: isFocused ? 'white' : 'black',
+        paddingRight: '1em',
       }),
       indicatorSeparator: () => ({ display: 'none' }),
       placeholder: styles => ({ ...styles, color: 'rgb(31, 39, 64)' }),
