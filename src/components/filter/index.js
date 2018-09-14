@@ -3,10 +3,22 @@ import { func, array } from 'prop-types'
 import Select from 'react-select'
 
 class Filter extends Component {
+  state = {
+    open: false,
+  }
+
   onChange = value => {
     if (this.props.onChange) {
       this.props.onChange(value)
     }
+  }
+
+  open = () => {
+    this.setState({ open: true })
+  }
+
+  close = () => {
+    this.setState({ open: false })
   }
 
   render() {
@@ -67,10 +79,13 @@ class Filter extends Component {
         paddingRight: '1em',
       }),
       indicatorSeparator: () => ({ display: 'none' }),
-      placeholder: styles => ({ ...styles, color: 'rgb(31, 39, 64)' }),
-      singleValue: (styles, { isFocused }) => ({
+      placeholder: styles => ({
         ...styles,
-        color: isFocused ? 'white' : 'rgb(31, 39, 64)',
+        color: this.state.open ? 'white' : 'rgb(31, 39, 64)',
+      }),
+      singleValue: styles => ({
+        ...styles,
+        color: this.state.open ? 'white' : 'rgb(31, 39, 64)',
       }),
     }
 
@@ -80,6 +95,8 @@ class Filter extends Component {
         styles={customStyles}
         placeholder="Distance"
         onChange={value => this.onChange(value)}
+        onMenuOpen={this.open}
+        onMenuClose={this.close}
         {...props}
       />
     )
