@@ -15,16 +15,18 @@ class Filter extends Component {
     const dot = selected => ({
       alignItems: 'center',
       display: 'flex',
-
       ':before': {
+        fontFamily: selected ? 'Material Icons' : 'Inherit',
         backgroundColor: selected ? 'white' : 'transparent',
         borderRadius: 10,
         border: '1px solid white',
-        content: '""',
+        content: selected ? '"check"' : '""',
+        WebkitFontFeatureSettings: 'liga',
         display: 'block',
         marginRight: '1em',
         height: 18,
         width: 18,
+        color: '#0072FF',
       },
     })
 
