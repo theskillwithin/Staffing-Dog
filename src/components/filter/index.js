@@ -68,12 +68,11 @@ class Filter extends Component {
       }),
       indicatorSeparator: () => ({ display: 'none' }),
       placeholder: styles => ({ ...styles, color: 'rgb(31, 39, 64)' }),
-      singleValue: (styles, { menuIsOpen }) => ({
+      singleValue: (styles, { isFocused }) => ({
         ...styles,
-        color: menuIsOpen ? 'white' : 'rgb(31, 39, 64)',
+        color: isFocused ? 'white' : 'rgb(31, 39, 64)',
       }),
     }
-    // selectContainer: styles => ({ ...styles, boxShadow: 'none' }),
 
     return (
       <Select
