@@ -19,7 +19,7 @@ class Filter extends Component {
         fontFamily: selected ? 'Material Icons' : 'Inherit',
         backgroundColor: selected ? 'white' : 'transparent',
         borderRadius: 10,
-        border: '1px solid white',
+        border: '2px solid white',
         content: selected ? '"check"' : '""',
         WebkitFontFeatureSettings: 'liga',
         display: 'block',
