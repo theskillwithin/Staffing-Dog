@@ -22,8 +22,6 @@ class Filter extends Component {
   }
 
   render() {
-    const { onChange, ...props } = this.props
-
     const dot = selected => ({
       alignItems: 'center',
       display: 'flex',
@@ -94,10 +92,10 @@ class Filter extends Component {
         options={this.props.options}
         styles={customStyles}
         placeholder="Distance"
-        onChange={value => this.onChange(value)}
+        onChange={this.onChange}
         onMenuOpen={this.open}
         onMenuClose={this.close}
-        {...props}
+        {...this.props}
       />
     )
   }
