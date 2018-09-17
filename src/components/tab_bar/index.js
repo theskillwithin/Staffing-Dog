@@ -15,7 +15,7 @@ const TabBar = ({ activeTabIndex, onChange, underline, left, exact, ...props }) 
       exact && theme.exact,
     )}
     activeTabIndex={activeTabIndex}
-    onChange={evt => onChange(evt.detail.activeTabIndex)}
+    onActivate={evt => onChange(evt.detail.index)}
     {...props}
   >
     {props.children}
