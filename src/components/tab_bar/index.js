@@ -3,7 +3,7 @@ import { bool, node, number, func } from 'prop-types'
 import { TabBar as MTabBar, Tab } from 'rmwc/Tabs'
 import classnames from 'classnames'
 
-// import './styles.css'
+import './styles.css'
 import theme from './theme.css'
 
 const TabBar = ({ activeTabIndex, onChange, underline, left, exact, ...props }) => (
@@ -15,7 +15,7 @@ const TabBar = ({ activeTabIndex, onChange, underline, left, exact, ...props }) 
       exact && theme.exact,
     )}
     activeTabIndex={activeTabIndex}
-    onChange={evt => onChange(evt.target.value)}
+    onActivate={evt => onChange(evt.detail.index)}
     {...props}
   >
     {props.children}

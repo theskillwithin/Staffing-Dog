@@ -3,7 +3,7 @@ import { bool } from 'prop-types'
 import { Button as MButton } from 'rmwc/Button'
 import classnames from 'classnames'
 
-// import './styles.css'
+import './styles.css'
 import theme from './theme.css'
 
 const Button = ({ primary, secondary, round, short, ...props }) => (

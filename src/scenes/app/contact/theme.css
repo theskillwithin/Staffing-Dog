@@ -1,0 +1,160 @@
+@import '../../../styles/config.css';
+
+.contact {
+  position: relative;
+  flex: 1;
+  display: flex;
+  align-items: flex-end;
+
+  .contactInner a {
+    padding-bottom: 1em;
+  }
+
+  a {
+    text-decoration: none;
+    color: var(--sd-blackTxt);
+
+    i,
+    svg {
+      width: 30px;
+      color: var(--sd-primary);
+    }
+
+    @media (--sd-mobile) {
+      color: var(--sd-white);
+    }
+  }
+
+  .contactSVG {
+    svg {
+      margin-top: -2px;
+      margin-right: 5px;
+    }
+  }
+
+  .contactActive {
+    display: none;
+    position: absolute;
+    z-index: 1;
+    top: 23px;
+    left: -40px;
+
+    @media (--sd-notMobile) {
+      &:hover {
+        display: block;
+      }
+    }
+
+    @media (--sd-mobile) {
+      left: calc(-80vw + 2em);
+      right: 0;
+    }
+  }
+
+  .mobileActive {
+    display: block;
+  }
+
+  .mobileOption {
+    display: none;
+    background-color: var(--sd-primary);
+    border-radius: 8px 8px 0 0;
+
+    @media (--sd-mobile) {
+      display: block;
+    }
+  }
+
+  .contactActiveInner {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    margin-top: 35px;
+    width: 170px;
+    height: 136px;
+    border-radius: 8px;
+    background-color: var(--sd-white);
+    box-shadow: 0 3px 6px 0 var(--sd-shadowColor);
+
+    a {
+      height: 35px;
+      width: 100%;
+      margin-top: 0.5em;
+      display: flex;
+      align-items: center;
+      font-size: 14px;
+
+      i,
+      svg {
+        margin: 0 0.8em 0 0.8em;
+
+        @media (--sd-mobile) {
+          color: var(--sd-white);
+        }
+      }
+
+      &:hover {
+        background: var(--sd-offWhite);
+      }
+    }
+
+    .mobileOption {
+      a {
+        height: 40px;
+      }
+    }
+
+    &:before {
+      content: '';
+      display: block;
+      position: absolute;
+      top: 28px;
+      right: 10px;
+      transform-origin: top;
+      transform: rotate(45deg) translate(-50%, -50%);
+      width: 35.4px;
+      height: 35.4px;
+      background-color: var(--sd-white);
+      box-shadow: 0 3px 6px 0 var(--sd-shadowColor);
+      z-index: -1;
+    }
+
+    @media (--sd-mobile) {
+      height: 185px;
+      width: 100%;
+      background-color: var(--sd-blackTxt);
+      box-shadow: 0 3px 6px 0 var(--sd-shadowColor);
+      color: white;
+    }
+  }
+
+  &:hover .contactActive {
+    @media (--sd-notMobile) {
+      display: block;
+    }
+  }
+
+  .contactDesktop {
+    @media (--sd-mobile) {
+      display: none;
+    }
+  }
+
+  .contactMobile {
+    display: none;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    outline: none;
+
+    i {
+      color: var(--sd-primary);
+      font-weight: bold;
+      font-size: 34px;
+    }
+
+    @media (--sd-mobile) {
+      display: block;
+    }
+  }
+}

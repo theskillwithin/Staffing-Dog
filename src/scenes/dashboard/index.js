@@ -1,6 +1,6 @@
 import React from 'react'
 import classnames from 'classnames'
-import { setTitle } from '@util/document'
+import { setTitle, setHtmlClass, removeHtmlClass } from '@util/document'
 
 import theme from '../app/theme.css'
 
@@ -11,6 +11,11 @@ import JobSchedule from './components/job_schedule'
 class Dashboard extends React.Component {
   componentDidMount() {
     setTitle('Dashboard')
+    setHtmlClass('html-app')
+  }
+
+  componentWillUnmount() {
+    removeHtmlClass('html-app')
   }
 
   render() {
