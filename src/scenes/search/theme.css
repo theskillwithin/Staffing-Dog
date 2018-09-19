@@ -8,3 +8,8 @@
     width: 30%;
   }
 }
+
+.searchResultsMeta {
+  display: flex;
+  justify-content: space-between;
+}
