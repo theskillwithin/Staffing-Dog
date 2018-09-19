@@ -95,7 +95,10 @@ class Search extends React.Component {
 
               <div className={theme.searchResultsList}>
                 {this.props.results.map(job => (
-                  <Card key={job.location}>{job.location}</Card>
+                  <Card key={job.location}>
+                    <a href={job.slug}>{job.title}</a>
+                    {job.location}
+                  </Card>
                 ))}
               </div>
             </React.Fragment>

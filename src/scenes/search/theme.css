@@ -13,3 +13,9 @@
   display: flex;
   justify-content: space-between;
 }
+
+.searchResultsList {
+  > * {
+    margin-bottom: 1em;
+  }
+}
