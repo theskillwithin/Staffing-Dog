@@ -1,0 +1,10 @@
+@import '../../styles/config.css';
+
+.searchFilters {
+  display: flex;
+  justify-content: space-around;
+
+  > * {
+    width: 30%;
+  }
+}

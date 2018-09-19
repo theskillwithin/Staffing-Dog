@@ -7,8 +7,9 @@ import { setTitle } from '@util/document'
 import Card from '@component/card'
 import Filter from '@component/filter'
 
-import theme from '../app/theme.css'
+import appTheme from '../app/theme.css'
 
+import theme from './theme.css'
 import { getResults, findResults, findLoading, findError } from './store'
 
 class Search extends React.Component {
@@ -63,8 +64,18 @@ class Search extends React.Component {
     ]
 
     return (
-      <div className={classnames(theme.pageContent)}>
+      <div className={classnames(appTheme.pageContent)}>
         <header className={theme.searchFilters}>
+          <Filter
+            onChange={value => this.handleChange(value)}
+            value={this.state.value}
+            options={options}
+          />
+          <Filter
+            onChange={value => this.handleChange(value)}
+            value={this.state.value}
+            options={options}
+          />
           <Filter
             onChange={value => this.handleChange(value)}
             value={this.state.value}
