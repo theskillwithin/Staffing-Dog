@@ -14,6 +14,15 @@ export const results = [
     distance: 7,
     type: 'red',
     slug: '/test',
+    position: 'Dental Hygientist',
+    experience: '4-7 Years',
+    jobType: 'Temporary',
+    short:
+      'We are in need of a RDH for the months of December, January and February for maternity leave. Possibly turning into a part-time permanet position. Dentrix knowlege is preferred …',
+    pay: '$15 hr',
+    new: true,
+    star: true,
+    applied: false,
   },
   {
     id: 1,
@@ -26,6 +35,15 @@ export const results = [
     distance: 7,
     type: 'blue',
     slug: '/test',
+    position: 'Dental Hygientist',
+    experience: '4-7 Years',
+    jobType: 'Temporary',
+    short:
+      'We are in need of a RDH for the months of December, January and February for maternity leave. Possibly turning into a part-time permanet position. Dentrix knowlege is preferred …',
+    pay: '$15 hr',
+    new: false,
+    star: false,
+    applied: true,
   },
   {
     id: 2,
@@ -38,6 +56,15 @@ export const results = [
     distance: 7,
     type: 'grey',
     slug: '/test',
+    position: 'Dental Hygientist',
+    experience: '4-7 Years',
+    jobType: 'Temporary',
+    short:
+      'We are in need of a RDH for the months of December, January and February for maternity leave. Possibly turning into a part-time permanet position. Dentrix knowlege is preferred …',
+    pay: '$15 hr',
+    new: false,
+    star: false,
+    applied: false,
   },
 ]
 
