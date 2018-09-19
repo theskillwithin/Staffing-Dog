@@ -97,7 +97,11 @@ class Search extends React.Component {
                 {this.props.results.map(job => (
                   <Card key={job.location}>
                     <a href={job.slug}>{job.title}</a>
-                    {job.location}
+                    <div className={theme.location}>
+                      <strong>{job.location}</strong>
+                      <span>{job.city}</span>
+                      <span>{job.distance} miles away</span>
+                    </div>
                   </Card>
                 ))}
               </div>
