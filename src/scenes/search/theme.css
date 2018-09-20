@@ -27,3 +27,29 @@
 .empty {
   text-align: center;
 }
+
+.title {
+  font-size: 20px;
+  line-height: 1.2;
+  color: var(--sd-primary);
+  text-decoration: none;
+}
+
+.location {
+  > * {
+    position: relative;
+    margin-right: 1em;
+  }
+  > * + *:before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: -0.5em;
+    transform: translateY(-50%);
+    display: block;
+    background-color: var(--sd-primary);
+    width: 4px;
+    height: 4px;
+    border-radius: 50px;
+  }
+}
