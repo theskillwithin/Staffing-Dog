@@ -53,3 +53,24 @@
     border-radius: 50px;
   }
 }
+
+.details {
+  dl {
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 500px;
+  }
+  dt {
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.21;
+    color: var(--sd-grayLighter);
+    float: left;
+    margin: 0 1em 1em 0;
+  }
+  dd {
+    margin-right: 1em;
+    color: var(--sd-blackTxt);
+    font-weight: 500;
+  }
+}
