@@ -20,7 +20,9 @@
 
 .searchResultsList {
   > * {
+    position: relative;
     margin-bottom: 1em;
+    /* padding-bottom: calc(1em + 50px); */
   }
 }
 
@@ -73,4 +75,25 @@
     color: var(--sd-blackTxt);
     font-weight: 500;
   }
+}
+
+.short {
+  color: var(--sd-blackTxt);
+  font-size: 15px;
+  margin-bottom: 4em;
+}
+
+.actions {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: solid 1px var(--sd-borderColor);
+  /* width: calc(100% + 3em); */
+  /* margin-left: -1.5em; */
+  padding: 0 1.5em;
+  height: 51px;
 }
