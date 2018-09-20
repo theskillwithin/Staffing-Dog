@@ -95,33 +95,41 @@ class Search extends React.Component {
               </div>
 
               <div className={theme.searchResultsList}>
-                {this.props.results.map(job => (
-                  <Card key={job.location}>
-                    <a href={job.slug}>{job.title}</a>
-                    {job.star && <div className={theme.star}>*</div>}
-                    <div className={theme.location}>
-                      <strong>{job.location}</strong>
-                      <span>{job.city}</span>
-                      <span>{job.distance} miles away</span>
-                    </div>
-                    <div className={theme.details}>
-                      <dl>
-                        <dt>Position</dt>
-                        <dd>{job.position}</dd>
-                        <dt>Experience</dt>
-                        <dd>{job.experience}</dd>
-                        <dt>Job Type</dt>
-                        <dd>{job.jobType}</dd>
-                      </dl>
-                    </div>
-                    <div className={theme.short}>{job.short}</div>
-                    <div className={theme.actions}>
-                      <div>{job.pay}</div>
-                      <a href={job.slug}>Read More</a>
-                      <Button round>Quick Apply</Button>
-                    </div>
-                  </Card>
-                ))}
+                {this.props.results && this.props.results.length ? (
+                  <React.Fragment>
+                    {this.props.results.map(job => (
+                      <Card key={job.location}>
+                        <a href={job.slug}>{job.title}</a>
+                        {job.star && <div className={theme.star}>*</div>}
+                        <div className={theme.location}>
+                          <strong>{job.location}</strong>
+                          <span>{job.city}</span>
+                          <span>{job.distance} miles away</span>
+                        </div>
+                        <div className={theme.details}>
+                          <dl>
+                            <dt>Position</dt>
+                            <dd>{job.position}</dd>
+                            <dt>Experience</dt>
+                            <dd>{job.experience}</dd>
+                            <dt>Job Type</dt>
+                            <dd>{job.jobType}</dd>
+                          </dl>
+                        </div>
+                        <div className={theme.short}>{job.short}</div>
+                        <div className={theme.actions}>
+                          <div>{job.pay}</div>
+                          <a href={job.slug}>Read More</a>
+                          <Button round>Quick Apply</Button>
+                        </div>
+                      </Card>
+                    ))}
+                  </React.Fragment>
+                ) : (
+                  <div className={theme.empty}>
+                    <h2>No Search Results</h2>
+                  </div>
+                )}
               </div>
             </React.Fragment>
           )}
