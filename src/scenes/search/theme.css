@@ -3,9 +3,13 @@
 .searchFilters {
   display: flex;
   justify-content: space-around;
+  flex-wrap: wrap;
+  padding: 0 4em;
 
   > * {
-    width: 30%;
+    width: 25%;
+    min-width: 200px;
+    margin: 1em 0;
   }
 }
 
