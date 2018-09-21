@@ -6,10 +6,10 @@
 .container {
   z-index: 3;
 
-  & + .container {
+  &  ~ .container {
     z-index: 2;
 
-    & + .container {
+    & ~ .container {
       z-index: 1;
     }
   }
