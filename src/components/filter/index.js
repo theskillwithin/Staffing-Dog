@@ -1,6 +1,9 @@
 import React, { Component } from 'react'
 import { func, array, string } from 'prop-types'
 import Select from 'react-select'
+// import { Theme } from 'rmwc'
+
+import theme from './theme.css'
 
 class Filter extends Component {
   state = {
@@ -88,15 +91,17 @@ class Filter extends Component {
     }
 
     return (
-      <Select
-        options={this.props.options}
-        styles={customStyles}
-        placeholder={this.props.placeholder}
-        onChange={this.onChange}
-        onMenuOpen={this.open}
-        onMenuClose={this.close}
-        {...this.props}
-      />
+      <div className={theme.container}>
+        <Select
+          options={this.props.options}
+          styles={customStyles}
+          placeholder={this.props.placeholder}
+          onChange={this.onChange}
+          onMenuOpen={this.open}
+          onMenuClose={this.close}
+          {...this.props}
+        />
+      </div>
     )
   }
 }
