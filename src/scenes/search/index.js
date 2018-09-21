@@ -99,7 +99,10 @@ class Search extends React.Component {
                   <React.Fragment>
                     {this.props.results.map(job => (
                       <Card key={job.location}>
-                        <a href={job.slug} className={theme.title}>
+                        <a
+                          href={job.slug}
+                          className={classnames(theme.title, job.new && theme.new)}
+                        >
                           {job.title}
                         </a>
                         {job.star && <div className={theme.star}>*</div>}

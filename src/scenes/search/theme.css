@@ -34,13 +34,17 @@
   line-height: 1.2;
   color: var(--sd-primary);
   text-decoration: none;
+  margin-bottom: 1em;
 }
 
 .location {
+  margin-top: 0.75em;
+
   > * {
     position: relative;
     margin-right: 1em;
   }
+
   > * + *:before {
     content: '';
     position: absolute;
@@ -70,7 +74,7 @@
     margin: 0 1em 1em 0;
   }
   dd {
-    margin-right: 1em;
+    margin-right: 2em;
     color: var(--sd-blackTxt);
     font-weight: 500;
   }
@@ -105,4 +109,26 @@
   text-align: left;
   color: var(--sd-gray);
   text-decoration: none;
+}
+
+.star {
+  position: absolute;
+  top: 2em;
+  right: 2em;
+}
+
+.new {
+  &:after {
+    content: 'New';
+    text-transform: uppercase;
+    width: 58px;
+    height: 22px;
+    padding: 5px 1.5em;
+    border-radius: 13px;
+    background-color: var(--sd-green);
+    margin: 0 0 0 2em;
+    font-size: 12px;
+    line-height: 1.5;
+    color: white;
+  }
 }
