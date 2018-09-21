@@ -134,7 +134,12 @@ class Search extends React.Component {
                           <a href={job.slug} className={theme.readMore}>
                             Read More
                           </a>
-                          <Button round secondary={job.applied} active={!job.applied}>
+                          <Button
+                            round
+                            secondary={job.applied}
+                            disabled={job.applied}
+                            className={theme.apply}
+                          >
                             {job.applied ? 'Applied' : 'Quick Apply'}
                           </Button>
                         </div>
