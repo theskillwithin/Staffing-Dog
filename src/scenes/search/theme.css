@@ -22,7 +22,6 @@
   > * {
     position: relative;
     margin-bottom: 1em;
-    /* padding-bottom: calc(1em + 50px); */
   }
 }
 
@@ -92,8 +91,18 @@
   justify-content: space-between;
   align-items: center;
   border-top: solid 1px var(--sd-borderColor);
-  /* width: calc(100% + 3em); */
-  /* margin-left: -1.5em; */
   padding: 0 1.5em;
   height: 51px;
+}
+
+.readMore {
+  font-size: 14px;
+  font-weight: 500;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.21;
+  letter-spacing: normal;
+  text-align: left;
+  color: var(--sd-gray);
+  text-decoration: none;
 }

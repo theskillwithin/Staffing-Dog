@@ -121,7 +121,9 @@ class Search extends React.Component {
                         <div className={theme.short}>{job.short}</div>
                         <div className={theme.actions}>
                           <div>{job.pay}</div>
-                          <a href={job.slug}>Read More</a>
+                          <a href={job.slug} className={theme.readMore}>
+                            Read More
+                          </a>
                           <Button round>Quick Apply</Button>
                         </div>
                       </Card>
