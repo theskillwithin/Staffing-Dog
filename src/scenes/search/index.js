@@ -124,7 +124,7 @@ class Search extends React.Component {
                 {this.props.results && this.props.results.length ? (
                   <React.Fragment>
                     {this.props.results.map(job => (
-                      <Card key={job.location} type="large">
+                      <Card key={job.location + job.id} type="large">
                         <a
                           href={job.slug}
                           className={classnames(theme.title, job.new && theme.new)}
