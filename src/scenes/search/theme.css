@@ -16,6 +16,11 @@
 .searchResultsMeta {
   display: flex;
   justify-content: space-between;
+
+  i {
+    color: var(--sd-blue);
+    margin-right: 6px;
+  }
 }
 
 .searchResultsList {

@@ -8,6 +8,7 @@ import Card from '@component/card'
 import Filter from '@component/filter'
 import Button from '@component/button'
 import Star from '@component/svg/FavStar'
+import Icon from '@component/icon'
 
 import appTheme from '../app/theme.css'
 
@@ -91,7 +92,10 @@ class Search extends React.Component {
           ) : (
             <React.Fragment>
               <div className={theme.searchResultsMeta}>
-                <p>Salt Lake City, UT</p>
+                <p>
+                  <Icon use="location_on" />
+                  Salt Lake City, UT
+                </p>
                 <p>{this.props.results.length} job posts in your area.</p>
               </div>
 
