@@ -1,0 +1,15 @@
+@import '../../../styles/config.css';
+
+.svg svg {
+  width: 22.2px;
+  height: 21px;
+  color: var(--sd-star);
+}
+
+.svg :global .cls-1 {
+  fill: currentColor;
+}
+
+.active :global .cls-1 {
+  fill: var(--sd-star--active);
+}

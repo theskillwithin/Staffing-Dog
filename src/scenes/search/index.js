@@ -7,6 +7,7 @@ import { setTitle } from '@util/document'
 import Card from '@component/card'
 import Filter from '@component/filter'
 import Button from '@component/button'
+import Star from '@component/svg/FavStar'
 
 import appTheme from '../app/theme.css'
 
@@ -105,7 +106,9 @@ class Search extends React.Component {
                         >
                           {job.title}
                         </a>
-                        {job.star && <div className={theme.star}>*</div>}
+                        <div className={theme.star}>
+                          <Star active={job.star} />
+                        </div>
                         <div className={theme.location}>
                           <strong>{job.location}</strong>
                           <span>{job.city}</span>
