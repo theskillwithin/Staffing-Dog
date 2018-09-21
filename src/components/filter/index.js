@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { func, array } from 'prop-types'
+import { func, array, string } from 'prop-types'
 import Select from 'react-select'
 
 class Filter extends Component {
@@ -91,7 +91,7 @@ class Filter extends Component {
       <Select
         options={this.props.options}
         styles={customStyles}
-        placeholder="Distance"
+        placeholder={this.props.placeholder}
         onChange={this.onChange}
         onMenuOpen={this.open}
         onMenuClose={this.close}
@@ -104,6 +104,7 @@ class Filter extends Component {
 Filter.propTypes = {
   onChange: func.isRequired,
   options: array.isRequired,
+  placeholder: string,
 }
 
 export default Filter

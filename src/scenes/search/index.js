@@ -17,7 +17,9 @@ import { getResults, findResults, findLoading, findError } from './store'
 
 class Search extends React.Component {
   state = {
-    value: 'test',
+    distance: '',
+    types: '',
+    position: '',
   }
 
   static propTypes = {
@@ -36,8 +38,8 @@ class Search extends React.Component {
     this.props.getResults()
   }
 
-  handleChange = value => {
-    this.setState({ value })
+  handleChange = (field, value) => {
+    this.setState({ [field]: value })
   }
 
   getQueryParams = (queryString = '', defaultValues = {}) => {
@@ -66,23 +68,42 @@ class Search extends React.Component {
       { label: 'Any Distance', value: '0' },
     ]
 
+    const jobTypes = [
+      { label: 'hygienist', value: 'hygienist' },
+      { label: 'Dentist', value: 'Dentist' },
+      { label: 'Dentist2', value: 'Dentist2' },
+      { label: 'Dentist3', value: 'Dentist3' },
+      { label: 'Dentist4', value: 'Dentist4' },
+    ]
+
+    const jobPositions = [
+      { label: 'hygienist', value: 'hygienist' },
+      { label: 'Dentist', value: 'Dentist' },
+      { label: 'Dentist2', value: 'Dentist2' },
+      { label: 'Dentist3', value: 'Dentist3' },
+      { label: 'Dentist4', value: 'Dentist4' },
+    ]
+
     return (
       <div className={classnames(appTheme.pageContent)}>
         <header className={theme.searchFilters}>
           <Filter
-            onChange={value => this.handleChange(value)}
-            value={this.state.value}
-            options={options}
+            onChange={value => this.handleChange('position', value)}
+            value={this.state.position}
+            options={jobPositions}
+            placeholder="All Position Types"
           />
           <Filter
-            onChange={value => this.handleChange(value)}
-            value={this.state.value}
-            options={options}
+            onChange={value => this.handleChange('types', value)}
+            value={this.state.types}
+            options={jobTypes}
+            placeholder="All Job Types"
           />
           <Filter
-            onChange={value => this.handleChange(value)}
-            value={this.state.value}
+            onChange={value => this.handleChange('distance', value)}
+            value={this.state.distance}
             options={options}
+            placeholder="Distance"
           />
         </header>
 
