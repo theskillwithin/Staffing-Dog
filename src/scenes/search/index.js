@@ -85,7 +85,7 @@ class Search extends React.Component {
     ]
 
     return (
-      <div className={classnames(appTheme.pageContent)}>
+      <div className={classnames(appTheme.pageContent, theme.pageContent)}>
         <header className={theme.searchFilters}>
           <Filter
             onChange={value => this.handleChange('position', value)}

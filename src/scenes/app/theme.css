@@ -5,6 +5,8 @@
   --sd-headerHeight: 61px;
   --sd-backgroundColor: var(--sd-blueGray);
   --sd-containerWidth: 1024px;
+  --sd-pagePaddingBottom: 4em;
+  --sd-pagePaddingTop: 4em;
 }
 
 body {
@@ -156,8 +158,8 @@ h6 {
   width: 100%;
   max-width: var(--sd-containerWidth);
   margin: 0 auto;
-  padding-top: 4em;
-  padding-bottom: 4em;
+  padding-top: var(--sd-pagePaddingTop);
+  padding-bottom: var(--sd-pagePaddingBottom);
 
   &.columns {
     @media (--sd-tablet) {
