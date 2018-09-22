@@ -1,0 +1,16 @@
+/* 
+  Fix for when multiple dropdowns are used and stacked horizontally, the second dropdown stays above the first.  This fix uses z-index to ensure that does not happen.
+  -theskillwithin 9/21/18
+*/
+
+.container {
+  z-index: 3;
+
+  &  ~ .container {
+    z-index: 2;
+
+    & ~ .container {
+      z-index: 1;
+    }
+  }
+}

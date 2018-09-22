@@ -1,9 +1,11 @@
 {
   "presets": [
-    ["babel-preset-env", {
-      "browsers": ["last 2 versions", "> 5%"]
-    }],
-    "babel-preset-stage-0",
-    "babel-preset-react"
+    "@babel/preset-env",
+    "@babel/preset-react"
+  ],
+  "plugins": [
+    "@babel/plugin-transform-runtime",
+    "@babel/plugin-syntax-dynamic-import",
+    "@babel/plugin-proposal-class-properties"
   ]
 }
