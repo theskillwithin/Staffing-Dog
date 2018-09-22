@@ -124,9 +124,13 @@ class Search extends React.Component {
                   Salt Lake City, UT
                 </p>
                 <p>
-                  {(this.props.meta && this.props.meta.count && this.props.meta.count) ||
-                    '0'}{' '}
-                  job posts in your area.
+                  <strong>
+                    {(this.props.meta &&
+                      this.props.meta.count &&
+                      this.props.meta.count) ||
+                      '0'}
+                  </strong>
+                  &nbsp; job posts in your area.
                 </p>
               </div>
 

@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { func, array, string } from 'prop-types'
 import Select from 'react-select'
-// import { Theme } from 'rmwc'
 
 import theme from './theme.css'
 
