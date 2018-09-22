@@ -50,6 +50,10 @@
 .location {
   margin-top: 0.75em;
 
+  span {
+    color: var(--sd-grayLighter)
+  }
+
   > * {
     position: relative;
     margin-right: 1em;
@@ -65,7 +69,7 @@
     background-color: var(--sd-primary);
     width: 4px;
     height: 4px;
-    border-radius: 50px;
+    border-radius: 87px;
   }
 }
 
@@ -133,8 +137,17 @@
 }
 
 .new {
+  position: relative;
+
   &:after {
     content: 'New';
+    position: absolute;
+    right: -7.5em;
+    top: 52%;
+    transform: translateY(-50%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
     text-transform: uppercase;
     width: 58px;
     height: 22px;

@@ -30,6 +30,7 @@ class Search extends React.Component {
     getResults: func.isRequired,
     loading: bool.isRequired,
     error: oneOfType([bool, string]).isRequired,
+    meta: array.isRequired,
   }
 
   componentDidMount() {
@@ -117,7 +118,11 @@ class Search extends React.Component {
                   <Icon use="location_on" />
                   Salt Lake City, UT
                 </p>
-                <p>{this.props.results.length} job posts in your area.</p>
+                <p>
+                  {(this.props.meta && this.props.meta.count && this.props.meta.count) ||
+                    '0'}{' '}
+                  job posts in your area.
+                </p>
               </div>
 
               <div className={theme.searchResultsList}>
@@ -180,6 +185,7 @@ export const mapStateToProps = state => ({
   results: findResults(state),
   loading: findLoading(state),
   error: findError(state),
+  meta: [],
 })
 
 export const mapActionsToProps = { getResults }
