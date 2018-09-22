@@ -51,7 +51,7 @@
   margin-top: 0.75em;
 
   span {
-    color: var(--sd-grayLighter)
+    color: var(--sd-grayLighter);
   }
 
   > * {
@@ -134,6 +134,32 @@
   position: absolute;
   top: 2em;
   right: 2em;
+
+  button {
+    outline: none;
+    background: none;
+    border: unset;
+    cursor: pointer;
+    transition: transform 200ms ease-out;
+
+    &:hover {
+      transform: scale(0.9);
+    }
+  }
+  &.active {
+    animation: scaleup 300ms ease-out;
+  }
+}
+
+@keyframes scaleup {
+  from {
+    transform: scale(1.1);
+    color: var(--sd-star);
+  }
+  to {
+    transform: scale(1);
+    color: var(--sd-star--active);
+  }
 }
 
 .new {

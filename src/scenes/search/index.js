@@ -59,6 +59,11 @@ class Search extends React.Component {
     }, {})
   }
 
+  toggleFav = id => {
+    // this.props.fav(id)
+    console.log(id)
+  }
+
   render() {
     const options = [
       { label: 'Within 5 miles', value: '5' },
@@ -136,8 +141,10 @@ class Search extends React.Component {
                         >
                           {job.title}
                         </a>
-                        <div className={theme.star}>
-                          <Star active={job.star} />
+                        <div className={classnames(theme.star, job.star && theme.active)}>
+                          <button onClick={() => this.toggleFav(job.id)} type="button">
+                            <Star active={job.star} />
+                          </button>
                         </div>
                         <div className={theme.location}>
                           <strong>{job.location}</strong>

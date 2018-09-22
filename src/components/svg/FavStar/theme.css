@@ -11,5 +11,5 @@
 }
 
 .active :global .cls-1 {
-  fill: var(--sd-star--active);
+  color: var(--sd-star--active);
 }
