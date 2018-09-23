@@ -1,10 +1,24 @@
 @import '../../../styles/config.css';
 
+.navContainer {
+    @media (--sd-tablet) {
+    flex: 4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  @media (--desktopMax) {
+    flex: 3;
+  }
+}
+
 .nav {
   display: none;
   list-style-type: none;
   margin: -0.2em 0 0 0;
   padding: 0;
+  flex: 1;
 
   @media (--sd-tablet) {
     flex: 4;
@@ -67,6 +81,19 @@
       align-items: center;
     }
   }
+
+  &.mobileActive {
+    @media (--sd-mobile) {
+      position: absolute;
+      top: 5em;
+      left: 1em;
+      right: 1em;
+      background-color: var(--sd-blackTxt);
+      box-shadow: 0 3px 6px 0 var(--sd-shadowColor);
+      color: white;
+      border-radius: 8px;
+    }
+  }
 }
 
 .contactMobile {
@@ -88,5 +115,7 @@
 }
 
 .mobileActive {
-  display: block;
+  @media (--sd-mobile) {
+    display: block;
+  }
 }
