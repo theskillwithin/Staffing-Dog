@@ -68,3 +68,25 @@
     }
   }
 }
+
+.contactMobile {
+  display: none;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  outline: none;
+
+  i {
+    color: var(--sd-primary);
+    font-weight: bold;
+    font-size: 34px;
+  }
+
+  @media (--sd-mobile) {
+    display: block;
+  }
+}
+
+.mobileActive {
+  display: block;
+}
