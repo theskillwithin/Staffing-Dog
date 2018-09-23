@@ -1,11 +1,11 @@
 import React from 'react'
-import { Route, Link } from 'react-router-dom'
+import { Route } from 'react-router-dom'
 import { object } from 'prop-types'
 import loadable from 'loadable-components'
-import classnames from 'classnames'
 import { setHtmlClass, removeHtmlClass } from '@sdog/utils/document'
 import Logo from '@component/logo'
 import Icon from '@component/icon'
+import MainMenu from '@scene/app/menu'
 import Contact from '@scene/app/contact'
 
 import theme from './theme.css'
@@ -30,11 +30,6 @@ class App extends React.Component {
     removeHtmlClass('html-app')
   }
 
-  isActive(page) {
-    const { pathname } = this.props.location
-    return page.test(pathname)
-  }
-
   render() {
     return (
       <div className={theme.app}>
@@ -48,41 +43,7 @@ class App extends React.Component {
               <Logo />
             </div>
 
-            <ul className={theme.nav}>
-              <li className={theme.navItem}>
-                <Link
-                  className={classnames(
-                    theme.navItemLink,
-                    this.isActive(/^\/$/) && theme.active,
-                  )}
-                  to="/"
-                >
-                  Dashboard
-                </Link>
-              </li>
-              <li className={theme.navItem}>
-                <Link
-                  className={classnames(
-                    theme.navItemLink,
-                    this.isActive(/search/) && theme.active,
-                  )}
-                  to="/search"
-                >
-                  Job Search
-                </Link>
-              </li>
-              <li className={theme.navItem}>
-                <Link
-                  className={classnames(
-                    theme.navItemLink,
-                    this.isActive(/settings/) && theme.active,
-                  )}
-                  to="/settings"
-                >
-                  My Profile
-                </Link>
-              </li>
-            </ul>
+            <MainMenu location={this.props.location} />
 
             <Contact />
           </div>
