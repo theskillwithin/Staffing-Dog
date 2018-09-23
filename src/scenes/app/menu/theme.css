@@ -1,7 +1,7 @@
 @import '../../../styles/config.css';
 
 .navContainer {
-    @media (--sd-tablet) {
+  @media (--sd-tablet) {
     flex: 4;
     display: flex;
     align-items: center;
@@ -42,18 +42,30 @@
       &.active {
         font-weight: var(--sd-fontWeightBold);
         color: var(--sd-blackTxt);
+        @media (--sd-tablet) {
+          &:after {
+            content: '';
+            display: block;
+            position: absolute;
+            bottom: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 4px;
+            border-radius: 2px;
+            background-color: var(--sd-primary);
+          }
+        }
+        @media (--sd-mobile) {
+          color: white;
+        }
+      }
 
-        &:after {
-          content: '';
-          display: block;
-          position: absolute;
-          bottom: -12px;
-          left: 50%;
-          transform: translateX(-50%);
-          width: 20px;
-          height: 4px;
-          border-radius: 2px;
-          background-color: var(--sd-primary);
+      @media (--sd-mobile) {
+        display: block;
+
+        &:hover {
+          background: var(--sd-primary);
         }
       }
     }
@@ -78,16 +90,22 @@
     }
   }
 
-  &.mobileActive {
-    @media (--sd-mobile) {
-      position: absolute;
-      top: 5em;
-      left: 1em;
-      right: 1em;
-      background-color: var(--sd-blackTxt);
-      box-shadow: 0 3px 6px 0 var(--sd-shadowColor);
-      color: white;
-      border-radius: 8px;
+  @media (--sd-mobile) {
+    flex-direction: column;
+    position: absolute;
+    top: 5em;
+    left: 1em;
+    right: 1em;
+    background-color: var(--sd-blackTxt);
+    box-shadow: 0 3px 6px 0 var(--sd-shadowColor);
+    color: white;
+    border-radius: 8px;
+    &.mobileActive {
+      display: flex;
+    }
+
+    a {
+      padding: 1em;
     }
   }
 }
