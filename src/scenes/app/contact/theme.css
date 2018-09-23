@@ -95,6 +95,10 @@
 
       &:hover {
         background: var(--sd-offWhite);
+
+        @media (--sd-mobile) {
+          background: var(--sd-primary);
+        }
       }
     }
 
