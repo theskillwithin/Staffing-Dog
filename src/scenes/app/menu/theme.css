@@ -7,10 +7,6 @@
     align-items: center;
     justify-content: center;
   }
-
-  @media (--desktopMax) {
-    flex: 3;
-  }
 }
 
 .nav {
@@ -27,7 +23,7 @@
     justify-content: center;
   }
 
-  @media (--desktopMax) {
+  @media (--sd-desktopMax) {
     flex: 3;
   }
 
