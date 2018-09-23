@@ -9,6 +9,10 @@
 .logoText {
   font-size: 1.2em;
   margin-left: 0.5em;
+
+  @media (--sd-desktopMax) {
+    font-size: 1em;
+  }
 }
 
 .path {

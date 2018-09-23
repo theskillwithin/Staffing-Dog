@@ -40,7 +40,9 @@ class App extends React.Component {
 
             <MainMenu location={this.props.location} />
 
-            <Contact />
+            <div className={theme.hideMobile}>
+              <Contact />
+            </div>
           </div>
         </header>
 

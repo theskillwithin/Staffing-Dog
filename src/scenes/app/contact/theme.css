@@ -18,10 +18,18 @@
     svg {
       width: 30px;
       color: var(--sd-primary);
+
+      @media (--sd-preBreakTablet) {
+        width: 20px;
+      }
     }
 
     @media (--sd-mobile) {
       color: var(--sd-white);
+    }
+
+    @media (--sd-preBreakTablet) {
+      font-size: 14px;
     }
   }
 

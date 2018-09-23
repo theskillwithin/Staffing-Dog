@@ -37,7 +37,7 @@ class MainMenu extends React.Component {
             )}
             to="/search"
           >
-            Job Search
+            Job&nbsp;Search
           </Link>
         </li>
         <li className={theme.navItem}>
@@ -48,7 +48,7 @@ class MainMenu extends React.Component {
             )}
             to="/settings"
           >
-            My Profile
+            My&nbsp;Profile
           </Link>
         </li>
       </ul>

@@ -17,8 +17,7 @@ body {
   min-height: 100vh;
 }
 
-html,
-.html-app {
+html, .html-app {
   background-color: var(--sd-backgroundColor);
   font-family: 'Helvetica Neue', sans-serif;
   font-weight: var(--sd-fontWeightNormal);
@@ -61,6 +60,10 @@ h6 {
       @media (--sd-tablet) {
         flex: 1;
         display: block;
+      }
+
+      @media (--sd-mobile) {
+        justify-content: flex-start;
       }
     }
   }

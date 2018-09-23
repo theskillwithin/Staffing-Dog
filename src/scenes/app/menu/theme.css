@@ -7,10 +7,14 @@
   padding: 0;
 
   @media (--sd-tablet) {
-    flex: 2;
+    flex: 4;
     display: flex;
     align-items: center;
     justify-content: center;
+  }
+
+  @media (--desktopMax) {
+    flex: 3;
   }
 
   .navItem {
@@ -50,6 +54,10 @@
       &:first-child {
         margin-left: 0;
       }
+    }
+
+    @media (--sd-preBreakTablet) {
+      margin-right: 1em;
     }
   }
 
