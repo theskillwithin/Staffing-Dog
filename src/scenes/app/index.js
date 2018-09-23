@@ -4,7 +4,6 @@ import { object } from 'prop-types'
 import loadable from 'loadable-components'
 import { setHtmlClass, removeHtmlClass } from '@sdog/utils/document'
 import Logo from '@component/logo'
-import Icon from '@component/icon'
 import MainMenu from '@scene/app/menu'
 import Contact from '@scene/app/contact'
 
@@ -35,10 +34,6 @@ class App extends React.Component {
       <div className={theme.app}>
         <header className={theme.appHeader}>
           <div className={theme.appHeaderInner}>
-            <div className={theme.menuTrigger}>
-              <Icon use="menu" />
-            </div>
-
             <div className={theme.logo}>
               <Logo />
             </div>

@@ -17,7 +17,8 @@ body {
   min-height: 100vh;
 }
 
-html, .html-app {
+html,
+.html-app {
   background-color: var(--sd-backgroundColor);
   font-family: 'Helvetica Neue', sans-serif;
   font-weight: var(--sd-fontWeightNormal);
@@ -60,73 +61,6 @@ h6 {
       @media (--sd-tablet) {
         flex: 1;
         display: block;
-      }
-    }
-
-    /* .nav {
-      display: none;
-      list-style-type: none;
-      margin: -0.2em 0 0 0;
-      padding: 0;
-
-      @media (--sd-tablet) {
-        flex: 2;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
-
-      .navItem {
-        margin: 0 3em 0 3em;
-        padding: 0;
-
-        .navItemLink {
-          position: relative;
-          font-size: 14px;
-          font-weight: var(--sd-fontWeightNormal);
-          line-height: 1.21;
-          color: var(--sd-grayLighter);
-          text-decoration: none;
-
-          &.active {
-            font-weight: var(--sd-fontWeightBold);
-            color: var(--sd-blackTxt);
-
-            &:after {
-              content: '';
-              display: block;
-              position: absolute;
-              bottom: -12px;
-              left: 50%;
-              transform: translateX(-50%);
-              width: 20px;
-              height: 4px;
-              border-radius: 2px;
-              background-color: var(--sd-primary);
-            }
-          }
-        }
-
-        @media (--sd-tablet) {
-          margin-left: 2em;
-
-          &:first-child {
-            margin-left: 0;
-          }
-        }
-      }
-
-      .navItemLink {
-        span {
-          display: flex;
-          align-items: center;
-        }
-      }
-    } */
-
-    .menuTrigger {
-      @media (--sd-tablet) {
-        display: none;
       }
     }
   }
