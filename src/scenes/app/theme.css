@@ -40,6 +40,12 @@ h6 {
   right: 0;
   z-index: 100;
 
+  .hideMobile {
+    @media (--sd-mobile) {
+      display: none;
+    }
+  }
+
   .appHeaderInner {
     background-color: var(--sd-white);
     box-shadow: 2px 2px 2px var(--sd-shadowColor);
