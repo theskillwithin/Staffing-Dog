@@ -48,6 +48,7 @@ class MainMenu extends React.Component {
                 this.isActive(/^\/$/) && theme.active,
               )}
               to="/"
+              onClick={this.handleClickOutside}
             >
               Dashboard
             </Link>
@@ -59,6 +60,7 @@ class MainMenu extends React.Component {
                 this.isActive(/search/) && theme.active,
               )}
               to="/search"
+              onClick={this.handleClickOutside}
             >
               Job&nbsp;Search
             </Link>
@@ -70,6 +72,7 @@ class MainMenu extends React.Component {
                 this.isActive(/settings/) && theme.active,
               )}
               to="/settings"
+              onClick={this.handleClickOutside}
             >
               My&nbsp;Profile
             </Link>
