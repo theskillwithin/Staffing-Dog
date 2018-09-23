@@ -1,4 +1,5 @@
 import React from 'react'
+import enhanceWithClickOutside from 'react-click-outside'
 import { Link } from 'react-router-dom'
 import { object } from 'prop-types'
 import classnames from 'classnames'
@@ -83,4 +84,4 @@ MainMenu.propTypes = {
   location: object.isRequired,
 }
 
-export default MainMenu
+export default enhanceWithClickOutside(MainMenu)
