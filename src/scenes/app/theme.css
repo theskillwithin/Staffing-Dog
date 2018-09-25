@@ -40,7 +40,10 @@ h6 {
   right: 0;
   z-index: 100;
 
-  .hideMobile {
+  .contact {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
     @media (--sd-mobile) {
       display: none;
     }
