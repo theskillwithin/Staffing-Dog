@@ -2,7 +2,7 @@
 
 .navContainer {
   @media (--sd-tablet) {
-    flex: 4;
+    flex: 3;
     display: flex;
     align-items: center;
     justify-content: center;
