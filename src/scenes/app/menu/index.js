@@ -77,6 +77,18 @@ class MainMenu extends React.Component {
               My&nbsp;Profile
             </Link>
           </li>
+          <li className={classnames(theme.navItem, theme.mobileOnly)}>
+            <Link
+              className={classnames(
+                theme.navItemLink,
+                this.isActive(/contact/) && theme.active,
+              )}
+              to="/contact"
+              onClick={this.handleClickOutside}
+            >
+              Contact
+            </Link>
+          </li>
         </ul>
       </div>
     )

@@ -63,6 +63,7 @@
 
       @media (--sd-mobile) {
         display: block;
+        padding-left: 3em;
 
         &:hover {
           background: var(--sd-primary);
@@ -81,6 +82,10 @@
     @media (--sd-preBreakTablet) {
       margin-right: 1em;
     }
+
+    @media (--sd-mobile) {
+      margin: 0;
+    }
   }
 
   .navItemLink {
@@ -96,6 +101,7 @@
     top: 5em;
     left: 1em;
     right: 1em;
+    padding: 0.7em 0;
     background-color: var(--sd-blackTxt);
     box-shadow: 0 3px 6px 0 var(--sd-shadowColor);
     color: white;
@@ -129,6 +135,14 @@
 }
 
 .mobileActive {
+  @media (--sd-mobile) {
+    display: block;
+  }
+}
+
+.mobileOnly {
+  display: none;
+
   @media (--sd-mobile) {
     display: block;
   }
