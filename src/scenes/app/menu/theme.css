@@ -71,14 +71,6 @@
       }
     }
 
-    @media (--sd-tablet) {
-      margin-left: 2em;
-
-      &:first-child {
-        margin-left: 0;
-      }
-    }
-
     @media (--sd-preBreakTablet) {
       margin-right: 1em;
     }
