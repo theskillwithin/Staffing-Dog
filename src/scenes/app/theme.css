@@ -40,6 +40,16 @@ h6 {
   right: 0;
   z-index: 100;
 
+  .contact {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+
+    @media (--sd-mobile) {
+      display: none;
+    }
+  }
+
   .appHeaderInner {
     background-color: var(--sd-white);
     box-shadow: 2px 2px 2px var(--sd-shadowColor);
@@ -61,72 +71,9 @@ h6 {
         flex: 1;
         display: block;
       }
-    }
 
-    .nav {
-      display: none;
-      list-style-type: none;
-      margin: -0.2em 0 0 0;
-      padding: 0;
-
-      @media (--sd-tablet) {
-        flex: 2;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
-
-      .navItem {
-        margin: 0 3em 0 3em;
-        padding: 0;
-
-        .navItemLink {
-          position: relative;
-          font-size: 14px;
-          font-weight: var(--sd-fontWeightNormal);
-          line-height: 1.21;
-          color: var(--sd-grayLighter);
-          text-decoration: none;
-
-          &.active {
-            font-weight: var(--sd-fontWeightBold);
-            color: var(--sd-blackTxt);
-
-            &:after {
-              content: '';
-              display: block;
-              position: absolute;
-              bottom: -12px;
-              left: 50%;
-              transform: translateX(-50%);
-              width: 20px;
-              height: 4px;
-              border-radius: 2px;
-              background-color: var(--sd-primary);
-            }
-          }
-        }
-
-        @media (--sd-tablet) {
-          margin-left: 2em;
-
-          &:first-child {
-            margin-left: 0;
-          }
-        }
-      }
-
-      .navItemLink {
-        span {
-          display: flex;
-          align-items: center;
-        }
-      }
-    }
-
-    .menuTrigger {
-      @media (--sd-tablet) {
-        display: none;
+      @media (--sd-mobile) {
+        justify-content: flex-start;
       }
     }
   }

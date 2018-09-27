@@ -1,0 +1,141 @@
+@import '../../../styles/config.css';
+
+.navContainer {
+  @media (--sd-tablet) {
+    flex: 3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+.nav {
+  display: none;
+  list-style-type: none;
+  margin: -0.2em 0 0 0;
+  padding: 0;
+  flex: 1;
+
+  @media (--sd-tablet) {
+    flex: 4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  @media (--sd-desktopMax) {
+    flex: 3;
+  }
+
+  .navItem {
+    margin: 0 3em 0 3em;
+    padding: 0;
+
+    .navItemLink {
+      position: relative;
+      font-size: 14px;
+      font-weight: var(--sd-fontWeightNormal);
+      line-height: 1.21;
+      color: var(--sd-grayLighter);
+      text-decoration: none;
+
+      &.active {
+        font-weight: var(--sd-fontWeightBold);
+        color: var(--sd-blackTxt);
+        @media (--sd-tablet) {
+          &:after {
+            content: '';
+            display: block;
+            position: absolute;
+            bottom: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 4px;
+            border-radius: 2px;
+            background-color: var(--sd-primary);
+          }
+        }
+        @media (--sd-mobile) {
+          color: white;
+        }
+      }
+
+      @media (--sd-mobile) {
+        display: block;
+        padding-left: 3em;
+
+        &:hover {
+          background: var(--sd-primary);
+        }
+      }
+    }
+
+    @media (--sd-preBreakTablet) {
+      margin-right: 1em;
+    }
+
+    @media (--sd-mobile) {
+      margin: 0;
+    }
+  }
+
+  .navItemLink {
+    span {
+      display: flex;
+      align-items: center;
+    }
+  }
+
+  @media (--sd-mobile) {
+    flex-direction: column;
+    position: absolute;
+    top: 5em;
+    left: 1em;
+    right: 1em;
+    padding: 0.7em 0;
+    background-color: var(--sd-blackTxt);
+    box-shadow: 0 3px 6px 0 var(--sd-shadowColor);
+    color: white;
+    border-radius: 8px;
+    &.mobileActive {
+      display: flex;
+    }
+
+    a {
+      padding: 1em;
+    }
+  }
+}
+
+.contactMobile {
+  display: none;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  outline: none;
+
+  i {
+    color: var(--sd-primary);
+    font-weight: bold;
+    font-size: 34px;
+  }
+
+  @media (--sd-mobile) {
+    display: block;
+  }
+}
+
+.mobileActive {
+  @media (--sd-mobile) {
+    display: block;
+  }
+}
+
+.mobileOnly {
+  display: none;
+
+  @media (--sd-mobile) {
+    display: block;
+  }
+}
