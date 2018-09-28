@@ -1,0 +1,6 @@
+@import '../../../../styles/config.css';
+
+:root .pageContent {
+  --sd-containerWidth: 840px;
+  --sd-pagePaddingTop: 1em;
+}
