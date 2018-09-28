@@ -19,12 +19,12 @@ class Dropdown extends Component {
 }
 
 Dropdown.defaultProps = {
-  box: true,
+  outlined: true,
 }
 
 Dropdown.propTypes = {
   onChange: func,
-  box: bool,
+  outlined: bool,
 }
 
 export default Dropdown
