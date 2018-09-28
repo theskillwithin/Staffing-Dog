@@ -28,6 +28,7 @@ const ActionNav = ({ match, history, steps, goToStep, savingStep, loadingNextSte
               }
               disabled={savingStep || loadingNextStep}
               secondary
+              round
             >
               <span>
                 <Icon inButton="left" use="arrow_back" /> Previous Step
@@ -46,6 +47,7 @@ const ActionNav = ({ match, history, steps, goToStep, savingStep, loadingNextSte
               })
             }
             disabled={savingStep || loadingNextStep}
+            round
           >
             <span>
               Next Step <Icon inButton="right" use="arrow_forward" />

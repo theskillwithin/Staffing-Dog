@@ -12,6 +12,7 @@ const Nav = ({ steps, goToStep, history }) => (
         history,
       })
     }
+    round
   >
     Get Started
   </Button>

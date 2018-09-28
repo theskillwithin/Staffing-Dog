@@ -26,7 +26,7 @@ const CompleteNav = () => (
         </div>
 
         <div>
-          <Button primary>
+          <Button primary round>
             Advanced Setup <Icon inButton="right" use="arrow_forward" />
           </Button>
         </div>
