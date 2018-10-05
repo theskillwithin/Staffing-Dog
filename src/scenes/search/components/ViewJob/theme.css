@@ -9,6 +9,36 @@
 .pageContent {
   box-shadow: 0 3px 6px 0 var(--sd-shadowColor);
   background: white;
-  padding: var(--sd-pagePadding);
   border-radius: 4px;
+  
+  section {
+    padding: var(--sd-pagePadding);
+    & + section {
+      border-top: 1px solid var(--sd-borderColor);
+    }
+  }
+
+}
+
+
+.title {
+  display: flex;
+  align-items: center;
+
+  img {
+    margin-right: 2em;
+  }
+
+  h2 {
+    color: var(--sd-blackTxt);
+    font-weight: var(--sd-fontWeightBold);
+    font-size: 24px;
+  }
+
+  h4 {
+    color: var(--sd-grayLighter);
+    font-weight: var(--sd-fontWeightBold);
+    margin-top: -1em;
+    font-size: 14px;
+  }
 }
