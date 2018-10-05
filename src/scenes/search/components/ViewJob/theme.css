@@ -16,16 +16,14 @@
   p {
     color: var(--sd-blackTxt);
   }
-  
+
   section {
     padding: var(--sd-pagePadding);
     & + section {
       border-top: 1px solid var(--sd-borderColor);
     }
   }
-
 }
-
 
 .title {
   display: flex;
@@ -51,7 +49,7 @@
 
 .location {
   font-size: 14px;
-    i {
+  i {
     color: var(--sd-blue);
     margin-right: 6px;
   }
@@ -85,10 +83,9 @@
 }
 
 .details {
-
   .notice {
     padding: 1em;
-    background:  var(--sd-grayLighterer);
+    background: var(--sd-grayLighterer);
     border-radius: 6px;
     margin-bottom: 3em;
     font-size: 15px;
@@ -98,15 +95,31 @@
     color: var(--sd-blackTxt);
     font-weight: var(--sd-fontWeightBold);
     font-size: 20px;
-    margin: 2em 0;
+    margin: 2em 0 1em 0;
   }
 
   ul {
     padding-left: 1em;
+    list-style: none;
+
     li {
+      position: relative;
       color: var(--sd-blackTxt);
       font-size: 14px;
       margin-bottom: 1em;
+
+      &:before {
+        content: '';
+        position: absolute;
+        top: 5px;
+        left: -1em;
+        display: block;
+        margin-right: 1em;
+        width: 6px;
+        height: 6px;
+        border-radius: 50px;
+        background: var(--sd-grayLighter);
+      }
     }
   }
 }
