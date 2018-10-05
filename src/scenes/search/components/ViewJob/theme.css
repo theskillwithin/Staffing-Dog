@@ -3,4 +3,123 @@
 :root .pageContent {
   --sd-containerWidth: 840px;
   --sd-pagePaddingTop: 1em;
+  --sd-pagePaddingBottom: 1em;
+  --sd-pagePadding: 1.5em 2.5em;
+}
+
+.pageContent {
+  box-shadow: 0 3px 6px 0 var(--sd-shadowColor);
+  background: white;
+  border-radius: 4px;
+  margin-bottom: 4em;
+
+  p {
+    color: var(--sd-blackTxt);
+  }
+
+  section {
+    padding: var(--sd-pagePadding);
+    & + section {
+      border-top: 1px solid var(--sd-borderColor);
+    }
+  }
+}
+
+.title {
+  display: flex;
+  align-items: center;
+
+  img {
+    margin-right: 2em;
+  }
+
+  h2 {
+    color: var(--sd-blackTxt);
+    font-weight: var(--sd-fontWeightBold);
+    font-size: 24px;
+  }
+
+  h4 {
+    color: var(--sd-grayLighter);
+    font-weight: var(--sd-fontWeightBold);
+    margin-top: -1em;
+    font-size: 14px;
+  }
+}
+
+.location {
+  font-size: 14px;
+  i {
+    color: var(--sd-blue);
+    margin-right: 6px;
+  }
+}
+
+.details {
+  dl {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  dt {
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.21;
+    color: var(--sd-grayLighter);
+    float: left;
+    margin: 1em 1em 1em 0;
+  }
+  dd {
+    font-size: 14px;
+    margin-right: 4em;
+    color: var(--sd-blackTxt);
+    font-weight: 500;
+  }
+}
+
+.apply {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.details {
+  .notice {
+    padding: 1em;
+    background: var(--sd-grayLighterer);
+    border-radius: 6px;
+    margin-bottom: 3em;
+    font-size: 15px;
+  }
+
+  h2 {
+    color: var(--sd-blackTxt);
+    font-weight: var(--sd-fontWeightBold);
+    font-size: 20px;
+    margin: 2em 0 1em 0;
+  }
+
+  ul {
+    padding-left: 1em;
+    list-style: none;
+
+    li {
+      position: relative;
+      color: var(--sd-blackTxt);
+      font-size: 14px;
+      margin-bottom: 1em;
+
+      &:before {
+        content: '';
+        position: absolute;
+        top: 5px;
+        left: -1em;
+        display: block;
+        margin-right: 1em;
+        width: 6px;
+        height: 6px;
+        border-radius: 50px;
+        background: var(--sd-grayLighter);
+      }
+    }
+  }
 }
