@@ -3,4 +3,12 @@
 :root .pageContent {
   --sd-containerWidth: 840px;
   --sd-pagePaddingTop: 1em;
+  --sd-pagePadding: 2.5em;
+}
+
+.pageContent {
+  box-shadow: 0 3px 6px 0 var(--sd-shadowColor);
+  background: white;
+  padding: var(--sd-pagePadding);
+  border-radius: 4px;
 }
