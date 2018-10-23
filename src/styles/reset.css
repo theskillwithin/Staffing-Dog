@@ -18,6 +18,9 @@ body {
 }
 
 :global {
+  .mdc-floating-label--shake {
+    animation: none !important;
+  }
 
   .mdc-button {
     font-family: 'Helvetica Neue', sans-serif !important;
@@ -56,7 +59,7 @@ body {
       border-radius: 3px !important;
 
       &:hover {
-        border: 1px solid rgba(0, 0, 0, .87) !important;
+        border: 1px solid rgba(0, 0, 0, 0.87) !important;
       }
     }
   }
@@ -67,7 +70,6 @@ body {
   }
 
   .mdc-switch {
-
     .mdc-switch__knob {
       background: var(--sd-primary) !important;
       box-shadow: none;
@@ -93,7 +95,6 @@ body {
   }
 
   .mdc-switch-flip {
-
     .mdc-switch__background {
       margin-right: 0 !important;
     }
@@ -105,7 +106,7 @@ body {
       color: black;
     }
   }
-  
+
   .mdc-switch__native-control:checked ~ .mdc-switch__background .mdc-switch__knob {
     transform: translateX(20px) !important;
   }
@@ -135,8 +136,7 @@ body {
       .mdc-text-field__input {
         padding-left: 16px;
         padding-top: 16px;
-        position: relative;
-        top: 3px;
+        padding-bottom: 0;
       }
     }
   }
@@ -144,7 +144,7 @@ body {
   .mdc-select {
     &--box {
       border-radius: 4px;
-        
+
       .mdc-floating-label {
         line-height: 1.45rem !important;
       }
