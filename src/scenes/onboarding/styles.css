@@ -5,7 +5,7 @@ html,
 body {
   background-color: var(--sd-blueGray);
   font-size: var(--sd-fontSize);
-  font-family: 'Helvetica Neue', sans-serif;
+  font-family: var(--sd-fontName);
   margin: 0;
   padding: 0;
   height: 100vh;

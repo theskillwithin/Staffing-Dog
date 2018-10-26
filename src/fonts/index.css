@@ -1,0 +1,12 @@
+@font-face {
+  font-family: 'Helvetica NeueLTPro-Md';
+  src: url('./HelveticaNeueLTPro-Md.eot');
+  src: url('./HelveticaNeueLTPro-Md.woff2') format('woff2'),
+       url('./HelveticaNeueLTPro-Md.woff') format('woff'),
+       url('./HelveticaNeueLTPro-Md.ttf') format('truetype'),
+       url('./HelveticaNeueLTPro-Md.svg#HelveticaNeueLTPro-Md') format('svg'),
+       url('./HelveticaNeueLTPro-Md.eot?#iefix') format('embedded-opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+

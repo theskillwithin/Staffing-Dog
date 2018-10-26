@@ -8,6 +8,8 @@ import reducers from '@sdog/store/reducers'
 import { interceptAuth } from '@sdog/api/intercepts'
 import { getToken } from '@sdog/api/auth'
 
+import './fonts/index.css'
+
 const OnboardingScene = loadable(() =>
   import(/* webpackChunkName: "onboarding" */ '@sdog/scenes/onboarding'),
 )

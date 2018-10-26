@@ -81,6 +81,36 @@ config.module.rules = [
       },
     ],
   },
+  // TODO: THIS WILL BE AEWSOME!!! Make class names super small like google
+  /**
+   * getLocalIdent: (context, localIdentName, localName, options) => {
+      return 'whatever_random_class_name' pull from a cache with auto building small names
+    } 
+   */
+  // {
+  //   test: /\.css$/,
+  //   include: [
+  //     path.join(paths.nodeModules, 'material-components-web'),
+  //     path.join(paths.nodeModules, '@material'),
+  //     path.join(paths.src),
+  //   ],
+  //   exclude: [/node_modules/],
+  //   use: [
+  //     IS_DEV ? 'style-loader' : MiniCssExtractPlugin.loader,
+  //     'css-loader',
+  //     {
+  //       loader: 'postcss-loader',
+  //       options: {
+  //         ident: 'postcss-all',
+  //         plugins: () => [
+  //           postcssImport(),
+  //           postcssPresetEnv(postCssPresetEnvOptions),
+  //           postcssNested(),
+  //         ],
+  //       },
+  //     },
+  //   ],
+  // },
   {
     test: /\.css$/,
     // only turn on standard global Postcss loader for the material directories
@@ -92,6 +122,7 @@ config.module.rules = [
     exclude: [
       /src\/components\/(.+)\/theme/, // exclude theme.css files
       /src\/scenes\/(.+)\/theme/, // exclude theme.css files
+      /src\/fonts/, // exclude font css files
     ],
     use: [
       IS_DEV ? 'style-loader' : MiniCssExtractPlugin.loader,
@@ -149,10 +180,21 @@ config.module.rules = [
     ],
   },
   {
+    test: /\.(svg|png|jpq|jpeg|gif|eot|woff2|woff|ttf)$/,
+    include: [path.join(paths.src, '/fonts')],
+    exclude: [/node_modules/],
+    use: ['file-loader'],
+  },
+  {
     test: /\.svg$/,
     use: ['raw-loader'],
     include: [paths.src],
   },
+  // {
+  //   test: /\.(png|jpq|jpeg|gif|eot|woff2|woff|ttf)$/,
+  //   use: ['file-loader'],
+  //   include: [paths.src],
+  // },
 ]
 
 config.optimization = {
