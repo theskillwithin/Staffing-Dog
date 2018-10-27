@@ -89,7 +89,7 @@ export const professional = [
     sidebar: {
       title: 'DayHire &tm;',
       description:
-        'Never depend on an early morning phone call again. DayHire  is a location based, on-demand hiring alternative to calling a temp agency.',
+        'Never depend on an early morning phone call again. DayHire is a location based, on-demand hiring alternative to calling a temp agency.',
       svg: 'mobile',
       order: ['svg', 'title', 'description'],
     },

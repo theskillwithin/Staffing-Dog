@@ -18,6 +18,17 @@ export const SAVE_STEP_SUCCESS = `${SAVE_STEP}_SUCCESS`
 export const SAVE_STEP_FAILED = `${SAVE_STEP}_FAILED`
 export const CHECK_STEPS_COMPLETE = `${BASE}_CHECK_STEPS_COMPLETE`
 
+export const areStepsComplete = (step, values) =>
+  (step.fields || []).reduce((previousIsComplete, currentStep) => {
+    if (currentStep.fields && currentStep.fields.length) {
+      return areStepsComplete(currentStep, values)
+    }
+
+    return currentStep.required && isEmpty(values[currentStep.name])
+      ? false
+      : previousIsComplete
+  }, true)
+
 // Initial State
 export const INITIAL_STATE = {
   saving: false,
@@ -51,11 +62,9 @@ export const reducers = {
     ...state,
     steps: {
       ...state.steps,
-      [state.type]: state.steps[state.stepType].map(step => ({
+      [state.type]: state.steps[state.type].map(step => ({
         ...step,
-        complete: step.fields.reduce((p, c) => {
-          return c.required && isEmpty(state.values[c.name]) ? false : p
-        }, true),
+        complete: areStepsComplete(step, state.values),
       })),
     },
   }),
@@ -173,7 +182,7 @@ export const saveStep = ({ step, onSuccess = false, onFail = false }) => (
 
   return updateProfile({
     step,
-    values: getState.values,
+    values: getState().values,
   }).then(res => {
     if (res && res.data && res.data.success) {
       dispatch(
