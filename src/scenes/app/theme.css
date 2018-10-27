@@ -19,7 +19,7 @@ body {
 
 html, .html-app {
   background-color: var(--sd-backgroundColor);
-  font-family: 'Helvetica Neue', sans-serif;
+  font-family: var(--sd-fontName);
   font-weight: var(--sd-fontWeightNormal);
   min-height: 100%;
 }

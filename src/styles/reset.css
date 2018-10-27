@@ -11,10 +11,12 @@
 html {
   box-sizing: border-box;
   font-size: 16px;
+  font-family: var(--sd-fontName);
 }
 
 body {
   margin: 0;
+  font-family: var(--sd-fontName);
 }
 
 :global {
@@ -23,7 +25,7 @@ body {
   }
 
   .mdc-button {
-    font-family: 'Helvetica Neue', sans-serif !important;
+    font-family: var(--sd-fontName) !important;
     letter-spacing: inherit !important;
   }
 
@@ -66,7 +68,7 @@ body {
 
   .mdc-tab {
     text-transform: none !important;
-    font-family: 'Helvetica Neue', sans-serif !important;
+    font-family: var(--sd-fontName) !important;
   }
 
   .mdc-switch {
