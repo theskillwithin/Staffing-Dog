@@ -24,11 +24,15 @@ class Dropdown extends Component {
   render() {
     const { onChange, ...props } = this.props
 
+    const value =
+      this.props.value && typeof this.props.value === 'string'
+        ? { label: this.props.value, value: this.props.value }
+        : value
+
     const customStyles = {
       option: (base, state) => ({
         ...base,
         cursor: state.isDisabled ? 'not-allowed' : 'pointer',
-        paddingLeft: '1em',
       }),
       control: styles => ({
         ...styles,
@@ -36,14 +40,16 @@ class Dropdown extends Component {
         height: this.props.height,
         zIndex: this.state.open ? 90 : 'inherit',
         minWidth: 100,
+        width: this.props.width ? this.props.width : 'auto',
       }),
       value: styles => ({ ...styles, background: '#0072FF', color: 'white' }),
       valueContainer: styles => ({ ...styles, paddingLeft: '1em' }),
       dropdownIndicator: styles => ({
         ...styles,
-        paddingRight: '1em',
+        padding: this.props.small ? 0 : 8,
       }),
       indicatorSeparator: () => ({ display: 'none' }),
+      singleValue: styles => ({ ...styles, top: this.props.small ? '54%' : '51%' }),
     }
 
     return (
@@ -53,6 +59,7 @@ class Dropdown extends Component {
         placeholder={props.placeholder || props.label}
         onMenuOpen={this.open}
         onMenuClose={this.close}
+        value={value}
         {...props}
       />
     )
