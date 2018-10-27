@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { bool, func, string, object, oneOfType } from 'prop-types'
+import { bool, func, string, object, number, oneOfType } from 'prop-types'
 import Select from 'react-select'
 
 class Dropdown extends Component {
@@ -33,7 +33,7 @@ class Dropdown extends Component {
       control: styles => ({
         ...styles,
         cursor: 'pointer',
-        minHeight: 48,
+        height: this.props.height,
         zIndex: this.state.open ? 90 : 'inherit',
       }),
       value: styles => ({ ...styles, background: '#0072FF', color: 'white' }),
@@ -61,12 +61,14 @@ class Dropdown extends Component {
 Dropdown.defaultProps = {
   outlined: true,
   value: '',
+  height: 48,
 }
 
 Dropdown.propTypes = {
   onChange: func,
   outlined: bool,
   value: oneOfType([string, object]),
+  height: number,
 }
 
 export default Dropdown

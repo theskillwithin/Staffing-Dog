@@ -33,6 +33,7 @@ const WeekRow = ({ day, schedule, onChange }) => (
           options={time}
           box={false}
           disabled={!schedule.active}
+          height={33}
         />
       </div>
       <Icon secondary use="arrow_forward" />
@@ -43,6 +44,7 @@ const WeekRow = ({ day, schedule, onChange }) => (
           options={time}
           box={false}
           disabled={!schedule.active}
+          height={33}
         />
       </div>
     </div>
