@@ -31,7 +31,6 @@ const WeekRow = ({ day, schedule, onChange }) => (
           value={schedule.from}
           onChange={value => onChange('from', value, day)}
           options={time}
-          box={false}
           disabled={!schedule.active}
           height={33}
         />
@@ -42,7 +41,6 @@ const WeekRow = ({ day, schedule, onChange }) => (
           value={schedule.to}
           onChange={value => onChange('to', value, day)}
           options={time}
-          box={false}
           disabled={!schedule.active}
           height={33}
         />

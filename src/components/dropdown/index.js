@@ -35,6 +35,7 @@ class Dropdown extends Component {
         cursor: 'pointer',
         height: this.props.height,
         zIndex: this.state.open ? 90 : 'inherit',
+        minWidth: 100,
       }),
       value: styles => ({ ...styles, background: '#0072FF', color: 'white' }),
       valueContainer: styles => ({ ...styles, paddingLeft: '1em' }),
