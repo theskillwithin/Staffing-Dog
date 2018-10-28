@@ -27,6 +27,7 @@ class Input extends Component {
       invalid,
       valid,
       value,
+      disabled,
       ...props
     } = this.props
 
@@ -38,6 +39,7 @@ class Input extends Component {
             s.input,
             outlined && s.outlined,
             value && value.length > 0 && s.filled,
+            disabled && s.disabled,
           )}
           onChange={this.onChange}
           type={textarea ? 'textarea' : type}
@@ -58,6 +60,7 @@ Input.defaultProps = {
   type: 'text',
   invalid: false,
   valid: false,
+  disabled: false,
 }
 
 Input.propTypes = {
@@ -71,6 +74,7 @@ Input.propTypes = {
   invalid: bool,
   valid: bool,
   value: oneOfType([string, number]),
+  disabled: bool,
 }
 
 export default Input

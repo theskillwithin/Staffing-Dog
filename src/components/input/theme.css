@@ -54,3 +54,7 @@
     border: solid 1px var(--sd-green);
   }
 }
+
+.disabled {
+  opacity: 0.6;
+}
