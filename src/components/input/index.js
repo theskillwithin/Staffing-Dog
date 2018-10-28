@@ -19,7 +19,7 @@ class Input extends Component {
     const { label, id, theme, outlined, textarea, onChange, type, ...props } = this.props
 
     return (
-      <div className={theme}>
+      <div className={classnames(s.root, theme)}>
         <input
           id={this.id}
           className={classnames(s.input, outlined && s.outlined)}
@@ -27,7 +27,7 @@ class Input extends Component {
           type={textarea ? 'textarea' : type}
           {...props}
         />
-        <label className={s.root} htmlFor={this.id}>
+        <label className={s.label} htmlFor={this.id}>
           {label}
         </label>
       </div>
