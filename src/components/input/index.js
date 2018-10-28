@@ -1,37 +1,44 @@
 import React, { Component } from 'react'
-import { func, string, object } from 'prop-types'
+import { func, string, object, bool } from 'prop-types'
+import classnames from 'classnames'
 
 import s from './theme.css'
 
 class Input extends Component {
   onChange = e => {
     if (this.props.onChange) {
-      const ref = this.inputRef
-
-      this.props.onChange(ref ? ref.value : null, ref, e)
+      this.props.onChange(e.target.value)
     }
   }
 
   render() {
-    const { label, id, theme, ...props } = this.props
+    const { label, id, theme, outlined, textarea, ...props } = this.props
 
     return (
       <div className={theme}>
-        <input
-          id={id || label.replace(/\s/g, '')}
-          inputRef={input => {
-            this.inputRef = input
-          }}
-          className={s.input}
-          onChange={this.onChange}
-          {...props}
-        />
-        <label className={s.root} htmlFor={id || label.replace(/\s/g, '')}>
-          {label}
-        </label>
+        {!textarea ? (
+          <React.Fragment>
+            <input
+              id={id || label.replace(/\s/g, '')}
+              className={classnames(s.input, outlined && s.outlined)}
+              onChange={this.onChange}
+              {...props}
+            />
+            <label className={s.root} htmlFor={id || label.replace(/\s/g, '')}>
+              {label}
+            </label>
+          </React.Fragment>
+        ) : (
+          <textarea />
+        )}
       </div>
     )
   }
+}
+
+Input.defaultProps = {
+  outlined: true,
+  textarea: false,
 }
 
 Input.propTypes = {
@@ -39,6 +46,8 @@ Input.propTypes = {
   id: string,
   onChange: func,
   theme: object,
+  outlined: bool,
+  textarea: bool,
 }
 
 export default Input
