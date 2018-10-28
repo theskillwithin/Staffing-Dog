@@ -1,0 +1,9 @@
+.root {
+  height: 48px;
+  position: relative;
+}
+
+.input {
+  height: 48px;
+  background: red;
+}

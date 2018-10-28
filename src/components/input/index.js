@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
-import { bool, func } from 'prop-types'
-import { TextField } from 'rmwc/TextField'
+import { func, string, object } from 'prop-types'
 
-import './styles.css'
+import s from './theme.css'
 
 class Input extends Component {
   onChange = e => {
@@ -14,27 +13,32 @@ class Input extends Component {
   }
 
   render() {
-    const { onChange, ...props } = this.props
+    const { label, id, theme, ...props } = this.props
 
     return (
-      <TextField
-        inputRef={input => {
-          this.inputRef = input
-        }}
-        onChange={this.onChange}
-        {...props}
-      />
+      <div className={theme}>
+        <input
+          id={id || label.replace(/\s/g, '')}
+          inputRef={input => {
+            this.inputRef = input
+          }}
+          className={s.input}
+          onChange={this.onChange}
+          {...props}
+        />
+        <label className={s.root} htmlFor={id || label.replace(/\s/g, '')}>
+          {label}
+        </label>
+      </div>
     )
   }
 }
 
-Input.defaultProps = {
-  outlined: true,
-}
-
 Input.propTypes = {
-  outlined: bool,
+  label: string.isRequired,
+  id: string,
   onChange: func,
+  theme: object,
 }
 
 export default Input

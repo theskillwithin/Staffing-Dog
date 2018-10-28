@@ -28,6 +28,11 @@
         "semi": false
       }
     ],
+    "jsx-a11y/label-has-for": [ 2, {
+      "required": {
+          "every": [ "id" ]
+      }
+    }],
     "arrow-body-style": "off",
     "default-case": "off",
     "func-names": "off",
