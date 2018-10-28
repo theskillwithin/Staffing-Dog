@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { func, string, bool } from 'prop-types'
+import { func, string, bool, number, oneOfType } from 'prop-types'
 import classnames from 'classnames'
 
 import s from './theme.css'
@@ -26,6 +26,7 @@ class Input extends Component {
       type,
       invalid,
       valid,
+      value,
       ...props
     } = this.props
 
@@ -33,9 +34,14 @@ class Input extends Component {
       <div className={classnames(s.root, theme, invalid && s.invalid, valid && s.valid)}>
         <input
           id={this.id}
-          className={classnames(s.input, outlined && s.outlined)}
+          className={classnames(
+            s.input,
+            outlined && s.outlined,
+            value && value.length > 0 && s.filled,
+          )}
           onChange={this.onChange}
           type={textarea ? 'textarea' : type}
+          value={value}
           {...props}
         />
         <label className={s.label} htmlFor={this.id}>
@@ -64,6 +70,7 @@ Input.propTypes = {
   type: string,
   invalid: bool,
   valid: bool,
+  value: oneOfType([string, number]),
 }
 
 export default Input

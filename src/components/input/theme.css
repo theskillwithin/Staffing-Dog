@@ -11,16 +11,24 @@
   font-size: 15px;
   color: var(--sd-blackTxt);
   border-radius: 3px;
+  &:focus ~ label,
+  &.filled ~ label {
+    top: 8px;
+    left: 16px;
+    font-size: 11px;
+    transform: translateY(0%);
+  }
 }
 
 .label {
   position: absolute;
-  top: 8px;
+  top: 54%;
+  transform: translateY(-50%);
   left: 16px;
-  font-size: 11px;
   font-weight: 500;
-  line-height: 1.18;
+  line-height: 1;
   color: var(--sd-gray);
+  transition: 0.1s ease-in-out;
 }
 
 .outlined {
