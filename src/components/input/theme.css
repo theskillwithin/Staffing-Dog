@@ -30,3 +30,19 @@
     border: 1px solid var(--sd-primary);
   }
 }
+
+.invalid {
+  input {
+    border: solid 1px var(--sd-red);
+  }
+
+  label {
+    color: var(--sd-red);
+  }
+}
+
+.valid {
+  input {
+    border: solid 1px var(--sd-green);
+  }
+}

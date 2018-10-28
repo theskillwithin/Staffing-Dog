@@ -16,10 +16,21 @@ class Input extends Component {
   }
 
   render() {
-    const { label, id, theme, outlined, textarea, onChange, type, ...props } = this.props
+    const {
+      label,
+      id,
+      theme,
+      outlined,
+      textarea,
+      onChange,
+      type,
+      invalid,
+      valid,
+      ...props
+    } = this.props
 
     return (
-      <div className={classnames(s.root, theme)}>
+      <div className={classnames(s.root, theme, invalid && s.invalid, valid && s.valid)}>
         <input
           id={this.id}
           className={classnames(s.input, outlined && s.outlined)}
@@ -39,6 +50,8 @@ Input.defaultProps = {
   outlined: true,
   textarea: false,
   type: 'text',
+  invalid: false,
+  valid: false,
 }
 
 Input.propTypes = {
@@ -49,6 +62,8 @@ Input.propTypes = {
   outlined: bool,
   textarea: bool,
   type: string,
+  invalid: bool,
+  valid: bool,
 }
 
 export default Input
