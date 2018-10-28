@@ -5,7 +5,7 @@ import classnames from 'classnames'
 import s from './theme.css'
 
 class Input extends Component {
-  id = `input-atom-id-${Math.random()
+  id = `input-id-${Math.random()
     .toString()
     .slice(2)}`
 
@@ -38,7 +38,7 @@ class Input extends Component {
 Input.defaultProps = {
   outlined: true,
   textarea: false,
-  type: 'input',
+  type: 'text',
 }
 
 Input.propTypes = {
