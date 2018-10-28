@@ -32,14 +32,22 @@ class Input extends Component {
     } = this.props
 
     return (
-      <div className={classnames(s.root, theme, invalid && s.invalid, valid && s.valid)}>
+      <div
+        className={classnames(
+          s.root,
+          theme,
+          invalid && s.invalid,
+          valid && s.valid,
+          (textarea || type === 'textarea') && s.textarea,
+          disabled && s.disabled,
+        )}
+      >
         <input
           id={this.id}
           className={classnames(
             s.input,
             outlined && s.outlined,
             value && value.length > 0 && s.filled,
-            disabled && s.disabled,
           )}
           onChange={this.onChange}
           type={textarea ? 'textarea' : type}

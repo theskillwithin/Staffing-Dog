@@ -77,7 +77,7 @@
   display: flex;
   margin-bottom: 22px;
 
-  textarea {
+  input[type="textarea"] {
     min-height: 200px;
   }
 
