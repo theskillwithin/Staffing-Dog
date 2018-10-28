@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { func, string, object, bool } from 'prop-types'
+import { func, string, bool } from 'prop-types'
 import classnames from 'classnames'
 
 import s from './theme.css'
@@ -45,7 +45,7 @@ Input.propTypes = {
   label: string.isRequired,
   id: string,
   onChange: func,
-  theme: object,
+  theme: string,
   outlined: bool,
   textarea: bool,
   type: string,
