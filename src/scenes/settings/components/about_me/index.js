@@ -168,7 +168,6 @@ class SettingsAboutMe extends React.Component {
               value={form.description}
               onChange={value => this.handleChange('description', value)}
               textarea
-              outlined={false}
             />
           </div>
           <div className={theme.spacer} />

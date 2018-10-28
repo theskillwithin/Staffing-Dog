@@ -1,17 +1,16 @@
 .root {
   position: relative;
+  display: flex;
+  flex: 1;
 }
 
 .input {
+  flex: 1;
   height: 48px;
   padding: 20px 16px 9px 16px;
   font-size: 15px;
   color: var(--sd-blackTxt);
   border-radius: 3px;
-  border: 1px solid var(--sd-grayLighter);
-  &:focus {
-    border: 1px solid var(--sd-primary);
-  }
 }
 
 .label {
@@ -26,4 +25,8 @@
 
 .outlined {
   outline: none;
+  border: 1px solid var(--sd-grayLighter);
+  &:focus {
+    border: 1px solid var(--sd-primary);
+  }
 }
