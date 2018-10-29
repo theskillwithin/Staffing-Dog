@@ -42,18 +42,32 @@ class Input extends Component {
           disabled && s.disabled,
         )}
       >
-        <input
-          id={this.id}
-          className={classnames(
-            s.input,
-            outlined && s.outlined,
-            value && value.length > 0 && s.filled,
-          )}
-          onChange={this.onChange}
-          type={textarea ? 'textarea' : type}
-          value={value}
-          {...props}
-        />
+        {textarea ? (
+          <textarea
+            id={this.id}
+            className={classnames(
+              s.input,
+              outlined && s.outlined,
+              value && value.length > 0 && s.filled,
+            )}
+            onChange={this.onChange}
+            value={value}
+            {...props}
+          />
+        ) : (
+          <input
+            id={this.id}
+            className={classnames(
+              s.input,
+              outlined && s.outlined,
+              value && value.length > 0 && s.filled,
+            )}
+            onChange={this.onChange}
+            type={type}
+            value={value}
+            {...props}
+          />
+        )}
         <label className={s.label} htmlFor={this.id}>
           {label}
         </label>

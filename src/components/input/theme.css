@@ -22,7 +22,7 @@
 
 .label {
   position: absolute;
-  top: 54%;
+  top: 50%;
   transform: translateY(-50%);
   left: 16px;
   font-weight: 500;
@@ -57,6 +57,7 @@
 
 .textarea label {
   top: 20px;
+  transform: translateY(0%);
 }
 
 .disabled {
