@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import { func, string, bool, number, oneOfType } from 'prop-types'
 import classnames from 'classnames'
 
+import Check from '../svg/Check'
+
 import s from './theme.css'
 
 class Input extends Component {
@@ -71,6 +73,11 @@ class Input extends Component {
         <label className={s.label} htmlFor={this.id}>
           {label}
         </label>
+        {valid && (
+          <div className={s.check}>
+            <Check />
+          </div>
+        )}
       </div>
     )
   }
