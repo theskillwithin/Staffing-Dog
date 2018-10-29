@@ -2,15 +2,12 @@
 
 .svg {
   svg {
-    color: var(--sd-primary);
-    width: 20px;
-    height: 21px;
     vertical-align: middle;
+    width: 12.5px;
   }
-
   :global {
     .cls-1 {
-      fill: currentColor;
+      fill: var(--sd-red);
     }
   }
 }

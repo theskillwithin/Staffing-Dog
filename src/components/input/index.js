@@ -3,6 +3,7 @@ import { func, string, bool, number, oneOfType } from 'prop-types'
 import classnames from 'classnames'
 
 import Check from '../svg/Check'
+import Invalid from '../svg/Invalid'
 
 import s from './theme.css'
 
@@ -76,6 +77,11 @@ class Input extends Component {
         {valid && (
           <div className={s.check}>
             <Check />
+          </div>
+        )}
+        {invalid && (
+          <div className={s.invalidStar}>
+            <Invalid />
           </div>
         )}
       </div>

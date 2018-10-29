@@ -41,7 +41,7 @@
     li {
       position: relative;
       max-width: 487px;
-      text-indent: -.7em;
+      text-indent: -0.7em;
       padding-left: 1em;
     }
 
@@ -62,7 +62,6 @@
     }
   }
 }
-
 
 .formContainer {
   max-width: 520px;
@@ -105,6 +104,4 @@
       max-width: 18em;
     }
   }
-
 }
-

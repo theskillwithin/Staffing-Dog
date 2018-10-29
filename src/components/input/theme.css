@@ -55,7 +55,8 @@
   }
 }
 
-.check {
+.check,
+.invalidStar {
   position: absolute;
   top: 50%;
   right: 9px;
