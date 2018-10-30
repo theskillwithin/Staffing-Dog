@@ -13,15 +13,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    width: 55%;
-  }
-
-  .dropdown {
-    margin-top: -2em;
-  }
-
-  i {
-    margin-top: -0.5em;
+    width: 60%;
   }
 
 }

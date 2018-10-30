@@ -8,10 +8,10 @@ import Icon from '@component/icon'
 import theme from './theme.css'
 
 const time = [
-  { label: '7:00 am', value: '7:00' },
-  { label: '7:30 am', value: '7:30' },
-  { label: '8:00 am', value: '8:00' },
-  { label: '8:30 am', value: '8:30' },
+  { label: '7:00 am', value: '7:00 am' },
+  { label: '7:30 am', value: '7:30 am' },
+  { label: '8:00 am', value: '8:00 am' },
+  { label: '8:30 am', value: '8:30 am' },
 ]
 
 const WeekRow = ({ day, schedule, onChange }) => (
@@ -31,8 +31,9 @@ const WeekRow = ({ day, schedule, onChange }) => (
           value={schedule.from}
           onChange={value => onChange('from', value, day)}
           options={time}
-          box={false}
           disabled={!schedule.active}
+          height={33}
+          small
         />
       </div>
       <Icon secondary use="arrow_forward" />
@@ -41,8 +42,9 @@ const WeekRow = ({ day, schedule, onChange }) => (
           value={schedule.to}
           onChange={value => onChange('to', value, day)}
           options={time}
-          box={false}
           disabled={!schedule.active}
+          height={33}
+          small
         />
       </div>
     </div>

@@ -28,38 +28,38 @@ class JobSchedule extends React.Component {
       schedule: {
         sun: {
           active: false,
-          from: '7:00',
-          to: '8:00',
+          from: { label: '7:00 am', value: '7:00 am' },
+          to: { label: '7:00 am', value: '7:00 am' },
         },
         mon: {
           active: true,
-          from: '7:00',
-          to: '7:00',
+          from: { label: '7:00 am', value: '7:00 am' },
+          to: { label: '7:00 am', value: '7:00 am' },
         },
         tue: {
           active: true,
-          from: '7:00',
-          to: '7:00',
+          from: { label: '7:00 am', value: '7:00 am' },
+          to: { label: '7:00 am', value: '7:00 am' },
         },
         wed: {
           active: true,
-          from: '7:00',
-          to: '7:00',
+          from: { label: '7:00 am', value: '7:00 am' },
+          to: { label: '7:00 am', value: '7:00 am' },
         },
         thu: {
           active: true,
-          from: '7:00',
-          to: '7:00',
+          from: { label: '7:00 am', value: '7:00 am' },
+          to: { label: '7:00 am', value: '7:00 am' },
         },
         fri: {
           active: true,
-          from: '7:00',
-          to: '7:00',
+          from: { label: '7:00 am', value: '7:00 am' },
+          to: { label: '7:00 am', value: '7:00 am' },
         },
         sat: {
           active: true,
-          from: '7:00',
-          to: '7:00',
+          from: { label: '7:00 am', value: '7:00 am' },
+          to: { label: '7:00 am', value: '7:00 am' },
         },
       },
     },
@@ -110,10 +110,11 @@ class JobSchedule extends React.Component {
           <span>Days out I can be scheduled</span>
           <div className={theme.dropdown}>
             <Dropdown
-              value={state.daysScheduled}
+              value={state.form.daysScheduled}
               onChange={value => this.handleChange('daysScheduled', value)}
               options={this.days}
-              box={false}
+              height={33}
+              width={120}
             />
           </div>
         </div>
