@@ -33,7 +33,7 @@
 
 .outlined {
   outline: none;
-  border: 1px solid var(--sd-grayLighter);
+  border: 1px solid var(--sd-borderColorDark);
   &:focus {
     border: 1px solid var(--sd-primary);
   }
