@@ -1,0 +1,8 @@
+@import '../../../styles/config.css';
+
+.svg {
+  svg {
+    vertical-align: middle;
+    width: 13px;
+  }
+}

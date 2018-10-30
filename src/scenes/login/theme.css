@@ -47,8 +47,12 @@ html {
   margin: 0.55em 0;
   width: 100%;
 
+  div {
+    margin-top: 22px;
+  }
+
   button {
-    margin-top: 1em;
+    margin-top: 22px;
   }
 }
 

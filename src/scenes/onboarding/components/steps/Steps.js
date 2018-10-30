@@ -52,7 +52,7 @@ class Steps extends React.Component {
       value: getValue(field.name),
       onChange: v => onChange(field.name, v),
       label: field.label,
-      className: theme.element,
+      theme: theme.element,
     }
 
     if (field.fullWidth) {

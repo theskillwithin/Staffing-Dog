@@ -1,0 +1,74 @@
+.root {
+  position: relative;
+  display: flex;
+  flex: 1;
+}
+
+.input {
+  flex: 1;
+  height: 48px;
+  padding: 20px 16px 9px 16px;
+  font-size: 15px;
+  color: var(--sd-blackTxt);
+  border-radius: 3px;
+  &:focus ~ label,
+  &.filled ~ label {
+    top: 8px;
+    left: 16px;
+    font-size: 11px;
+    transform: translateY(0%);
+  }
+}
+
+.label {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 16px;
+  font-weight: 500;
+  line-height: 1;
+  color: var(--sd-gray);
+  transition: 0.1s ease-in-out;
+}
+
+.outlined {
+  outline: none;
+  border: 1px solid var(--sd-grayLighter);
+  &:focus {
+    border: 1px solid var(--sd-primary);
+  }
+}
+
+.invalid {
+  input {
+    border: solid 1px var(--sd-red);
+  }
+
+  label {
+    color: var(--sd-red);
+  }
+}
+
+.valid {
+  input {
+    border: solid 1px var(--sd-green);
+  }
+}
+
+.check,
+.invalidStar {
+  position: absolute;
+  top: 50%;
+  right: 9px;
+  transform: translateY(-50%);
+  width: 13px;
+}
+
+.textarea label {
+  top: 20px;
+  transform: translateY(0%);
+}
+
+.disabled {
+  opacity: 0.6;
+}

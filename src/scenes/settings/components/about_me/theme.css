@@ -41,7 +41,7 @@
     li {
       position: relative;
       max-width: 487px;
-      text-indent: -.7em;
+      text-indent: -0.7em;
       padding-left: 1em;
     }
 
@@ -63,7 +63,6 @@
   }
 }
 
-
 .formContainer {
   max-width: 520px;
   width: 100%;
@@ -75,7 +74,7 @@
 
 .inputRow {
   display: flex;
-  margin-bottom: 0.55em;
+  margin-bottom: 22px;
 
   textarea {
     min-height: 200px;
@@ -105,6 +104,4 @@
       max-width: 18em;
     }
   }
-
 }
-
