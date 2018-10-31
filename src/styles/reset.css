@@ -20,50 +20,9 @@ body {
 }
 
 :global {
-  .mdc-floating-label--shake {
-    animation: none !important;
-  }
-
   .mdc-button {
     font-family: var(--sd-fontName) !important;
     letter-spacing: inherit !important;
-  }
-
-  .mdc-text-field--outlined .mdc-floating-label--float-above {
-    transform: translateY(-175%) scale(0.75) !important;
-  }
-
-  .mdc-text-field {
-    margin-top: inherit !important;
-    margin-bottom: inherit !important;
-    height: 51px !important;
-
-    &.mdc-text-field--textarea {
-      height: auto !important;
-    }
-
-    label {
-      line-height: 0.85rem !important;
-    }
-  }
-
-  .mdc-select--box:not(.mdc-select--disabled) {
-    background-color: #fff !important;
-  }
-
-  .mdc-select--box {
-    position: relative;
-    height: 48px !important;
-    .mdc-select__native-control {
-      padding-top: 15px;
-      height: 48px !important;
-      border: 1px solid var(--sd-gray) !important;
-      border-radius: 3px !important;
-
-      &:hover {
-        border: 1px solid rgba(0, 0, 0, 0.87) !important;
-      }
-    }
   }
 
   .mdc-tab {
@@ -71,95 +30,7 @@ body {
     font-family: var(--sd-fontName) !important;
   }
 
-  .mdc-switch {
-    .mdc-switch__knob {
-      background: var(--sd-primary) !important;
-      box-shadow: none;
-      top: 0;
-      border: none;
-
-      &:before {
-        display: none;
-      }
-    }
-
-    .mdc-switch__background {
-      margin-right: 0.75em;
-      height: 20px;
-      width: 40px;
-      background-color: var(--sd-switchBg);
-      border-radius: 50px;
-
-      &:before {
-        display: none;
-      }
-    }
-  }
-
-  .mdc-switch-flip {
-    .mdc-switch__background {
-      margin-right: 0 !important;
-    }
-
-    .mdc-form-field > label {
-      order: -1;
-      margin-right: 0.75em;
-      padding-left: 0;
-      color: black;
-    }
-  }
-
-  .mdc-switch__native-control:checked ~ .mdc-switch__background .mdc-switch__knob {
-    transform: translateX(20px) !important;
-  }
-
   .mdc-button {
     text-transform: inherit !important;
-  }
-
-  .mdc-text-field {
-    > *,
-    &,
-    &:before,
-    &:after {
-      box-sizing: content-box;
-    }
-
-    .mdc-floating-label {
-      background: transparent none;
-      border: none;
-    }
-
-    &--outlined {
-      .mdc-floating-label--float-above {
-        transform: translateY(-60%) scale(0.75);
-      }
-
-      .mdc-text-field__input {
-        padding-left: 16px;
-        padding-top: 16px;
-        padding-bottom: 0;
-      }
-    }
-  }
-
-  .mdc-select {
-    &--box {
-      border-radius: 4px;
-
-      .mdc-floating-label {
-        line-height: 1.45rem !important;
-      }
-
-      .mdc-select__surface {
-        border-radius: 4px;
-        border: 1px solid var(--sd-grayLight);
-        background-color: transparent !important;
-      }
-
-      .mdc-select__bottom-line {
-        display: none !important;
-      }
-    }
   }
 }

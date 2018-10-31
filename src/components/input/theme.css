@@ -1,3 +1,5 @@
+@import '../../styles/config.css';
+
 .root {
   position: relative;
   display: flex;
