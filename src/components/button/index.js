@@ -2,7 +2,6 @@ import React from 'react'
 import { bool, string, oneOfType, func, node, oneOf } from 'prop-types'
 import classnames from 'classnames'
 
-import './styles.css'
 import theme from './theme.css'
 
 const Button = ({
@@ -25,6 +24,8 @@ const Button = ({
       round && theme.round,
       short && theme.short,
       className && className,
+      primary && primary,
+      secondary && secondary,
     )}
     onClick={onClick}
     type={type}
