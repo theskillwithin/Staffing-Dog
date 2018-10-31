@@ -18,6 +18,7 @@
   --sd-grayLighter: rgb(152, 160, 178);
   --sd-grayLighterer:  rgb(238, 241, 246);
   --sd-blue: #0072ff;
+  --sd-blueDark: #005ed1; /* guessing this color for button hover */
   --sd-blueGray: #eef1f6;
   --sd-green: #33cb74; /* rgb(51, 203, 116) */
   --sd-red: #ed4f32;
