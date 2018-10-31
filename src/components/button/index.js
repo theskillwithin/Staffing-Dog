@@ -15,6 +15,7 @@ const Button = ({
   loading,
   children,
   type,
+  size,
   ...props
 }) => (
   // eslint-disable-next-line react/button-has-type
@@ -23,9 +24,10 @@ const Button = ({
       theme.button,
       round && theme.round,
       short && theme.short,
+      primary && theme.primary,
+      secondary && theme.secondary,
       className && className,
-      primary && primary,
-      secondary && secondary,
+      size && theme[size],
     )}
     onClick={onClick}
     type={type}
@@ -48,6 +50,7 @@ Button.defaultProps = {
   className: false,
   disabled: false,
   loading: false,
+  size: 'mediumSmall',
 }
 
 Button.propTypes = {
@@ -61,6 +64,7 @@ Button.propTypes = {
   disabled: bool,
   type: oneOf(['button', 'submit', 'reset']),
   loading: bool,
+  size: oneOf(['small', 'mediumSmall', 'medium', 'large']),
 }
 
 export default Button

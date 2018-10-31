@@ -4,6 +4,10 @@
   border-radius: 1.5em;
   padding-left: 2em;
   padding-right: 2em;
+  border: none;
+  outline: none;
+  font-size: 14px;
+  cursor: pointer;
 
   &.round {
     border-radius: 3em;
@@ -13,6 +17,29 @@
     height: 32px;
     line-height: 1;
   }
-
 }
 
+.primary {
+  background: var(--sd-primary);
+  color: white;
+
+  &:hover {
+    background: var(--sd-blueDark);
+  }
+}
+
+.large {
+  line-height: 48px;
+}
+
+.medium {
+  line-height: 40px;
+}
+
+.mediumSmall {
+  line-height: 32px;
+}
+
+.small {
+  line-height: 30px;
+}
