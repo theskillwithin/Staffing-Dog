@@ -39,9 +39,6 @@ const Button = ({
   </button>
 )
 
-// theme={secondary ? 'secondary-bg' : ''}
-// unelevated={primary || secondary}
-
 Button.defaultProps = {
   type: 'submit',
   primary: true,
