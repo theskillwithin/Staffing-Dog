@@ -13,6 +13,7 @@
   --sd-white: #ffffff;
   --sd-black: #000000;
   --sd-blackTxt: rgb(31, 39, 64); /* #1F2740 */
+  --sd-grayDark: #b0b5c1; /* guessing this color for button hover */
   --sd-gray: rgb(187, 193, 209);
   --sd-grayLight: color(var(--sd-gray) tint(25%));
   --sd-grayLighter: rgb(152, 160, 178);
