@@ -29,6 +29,15 @@
   }
 }
 
+.secondary {
+  background: var(--sd-gray);
+  color: white;
+
+  &:hover {
+    background: var(--sd-grayDark);
+  }
+}
+
 .large {
   line-height: calc(48px - var(--font-offset));
 }
