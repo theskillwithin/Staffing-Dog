@@ -17,7 +17,7 @@ const Button = ({
   type,
   ...props
 }) => (
-  /* eslint-disable  react/button-has-type */
+  /* eslint-disable react/button-has-type */
   <button
     className={classnames(
       theme.button,
