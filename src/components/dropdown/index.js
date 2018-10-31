@@ -41,15 +41,31 @@ class Dropdown extends Component {
         zIndex: this.state.open ? 90 : 'inherit',
         minWidth: 100,
         width: this.props.width ? this.props.width : 'auto',
+        border: '1px solid rgba(152, 160, 178, 0.54)',
+        borderRadius: 3,
+        boxShadow: 0,
       }),
-      value: styles => ({ ...styles, background: '#0072FF', color: 'white' }),
-      valueContainer: styles => ({ ...styles, paddingLeft: '1em' }),
+      value: styles => ({ ...styles, background: '#0072FF', color: 'rgb(31, 39, 64)' }),
+
+      valueContainer: styles => ({
+        ...styles,
+        paddingLeft: '1em',
+      }),
+      placeholder: styles => ({
+        ...styles,
+        color: 'rgb(187, 193, 209)',
+      }),
       dropdownIndicator: styles => ({
         ...styles,
         padding: this.props.small ? 0 : 8,
       }),
       indicatorSeparator: () => ({ display: 'none' }),
-      singleValue: styles => ({ ...styles, top: this.props.small ? '54%' : '51%' }),
+      singleValue: styles => ({
+        ...styles,
+        top: this.props.small ? '54%' : '51%',
+        fontWeight: 300,
+        color: 'rgb(31, 39, 64)',
+      }),
     }
 
     return (
