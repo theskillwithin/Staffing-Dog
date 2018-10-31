@@ -117,7 +117,7 @@ class Search extends React.Component {
           {this.props.loading ? (
             <p>Loading</p>
           ) : (
-            <React.Fragment>
+            <>
               <div className={theme.searchResultsMeta}>
                 <p>
                   <Icon use="location_on" />
@@ -136,7 +136,7 @@ class Search extends React.Component {
 
               <div className={theme.searchResultsList}>
                 {this.props.results && this.props.results.length ? (
-                  <React.Fragment>
+                  <>
                     {this.props.results.map(job => (
                       <Card key={job.location + job.id} type="large">
                         <Link
@@ -177,14 +177,14 @@ class Search extends React.Component {
                         </div>
                       </Card>
                     ))}
-                  </React.Fragment>
+                  </>
                 ) : (
                   <div className={theme.empty}>
                     <h2>No Search Results</h2>
                   </div>
                 )}
               </div>
-            </React.Fragment>
+            </>
           )}
         </div>
       </div>
