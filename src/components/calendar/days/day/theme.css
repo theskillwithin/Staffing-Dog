@@ -1,7 +1,7 @@
 @import '../../../../styles/config';
 
 .active {
-  font-weight: 700;
+  font-weight: var(--sd-fontWeightBold);
   border-radius: 50px;
   
   &:after {

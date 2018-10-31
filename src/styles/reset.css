@@ -17,9 +17,14 @@ html {
 body {
   margin: 0;
   font-family: var(--sd-fontName);
+  -webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
 }
 
 :global {
+  b, strong {
+    font-weight: var(--sd-fontWeightBold);
+  }
   button {
     font-family: var(--sd-fontName) !important;
   }
