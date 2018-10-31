@@ -4,7 +4,7 @@ import classnames from 'classnames'
 
 import theme from './theme.css'
 
-const id = `input-id-${Math.random()
+const id = `inputs-id-${Math.random()
   .toString()
   .slice(2)}`
 
