@@ -20,17 +20,12 @@ body {
 }
 
 :global {
-  .mdc-button {
+  button {
     font-family: var(--sd-fontName) !important;
-    letter-spacing: inherit !important;
   }
 
   .mdc-tab {
     text-transform: none !important;
     font-family: var(--sd-fontName) !important;
-  }
-
-  .mdc-button {
-    text-transform: inherit !important;
   }
 }

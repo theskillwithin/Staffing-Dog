@@ -28,6 +28,7 @@ const Button = ({
       secondary && theme.secondary,
       className && className,
       size && theme[size],
+      disabled && theme.disabled,
     )}
     onClick={onClick}
     type={type}
