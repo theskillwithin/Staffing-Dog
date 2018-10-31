@@ -30,7 +30,7 @@ const ActionNav = ({ match, history, steps, goToStep, savingStep, loadingNextSte
               secondary
               round
             >
-              <span>
+              <span className={theme.iconLeft}>
                 <Icon inButton="left" use="arrow_back" /> Previous Step
               </span>
             </Button>
@@ -49,7 +49,7 @@ const ActionNav = ({ match, history, steps, goToStep, savingStep, loadingNextSte
             disabled={savingStep || loadingNextStep}
             round
           >
-            <span>
+            <span className={theme.iconRight}>
               Next Step <Icon inButton="right" use="arrow_forward" />
             </span>
           </Button>
