@@ -73,8 +73,9 @@ class JobSchedule extends React.Component {
     this.setState({ updateSchedule: new Date().time() })
   }
 
-  handleToggle = () => {
-    this.setState(state => ({ form: { ...state.form, switch: !state.form.switch } }))
+  handleToggle = value => {
+    console.log(value)
+    this.setState(state => ({ form: { ...state.form, switch: value } }))
   }
 
   handleScheduleChange = (type, value, day) => {
@@ -102,7 +103,7 @@ class JobSchedule extends React.Component {
       >
         <div className={theme.inputRow}>
           <span>Same day job requests</span>
-          <Switch checked={state.form.switch} onChange={this.handleToggle} flip>
+          <Switch checked={state.form.switch} onChange={this.handleToggle}>
             {state.form.switch ? 'Yes' : 'No'}
           </Switch>
         </div>

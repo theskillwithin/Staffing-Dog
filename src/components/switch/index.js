@@ -1,30 +1,43 @@
 import React from 'react'
 import { bool, func, node, string, oneOfType } from 'prop-types'
-import { Switch as MSwitch } from 'rmwc/Switch'
 
-// import './styles.css'
+import theme from './theme.css'
 
-const Switch = ({ checked, onChange, children, left, flip, ...props }) => (
-  <div className={flip && 'mdc-switch-flip'}>
-    <MSwitch checked={checked} onChange={onChange} {...props}>
-      {children && children}
-    </MSwitch>
+const id = `input-id-${Math.random()
+  .toString()
+  .slice(2)}`
+
+const Switch = ({ checked, onChange, children, label, ...props }) => (
+  <div className={theme.root}>
+    {label ||
+      (children && (
+        <label className={theme.label} htmlFor={id}>
+          {label || children}
+        </label>
+      ))}
+    <input
+      id={id}
+      type="checkbox"
+      className={theme.checkbox}
+      onChange={e => onChange(e.target.checked)}
+      checked={checked}
+      {...props}
+    />
+    <div className={theme.knobs} />
+    <div className={theme.layer} />
   </div>
 )
 
 Switch.defaultProps = {
-  checked: false,
-  children: false,
-  left: false,
-  flip: false,
+  children: null,
+  label: null,
 }
 
 Switch.propTypes = {
-  checked: bool,
-  left: bool,
+  label: string,
+  checked: bool.isRequired,
   onChange: func.isRequired,
-  children: oneOfType([string, node, bool]),
-  flip: bool,
+  children: oneOfType([string, node]),
 }
 
 export default Switch
