@@ -17,7 +17,7 @@ const Button = ({
   type,
   ...props
 }) => (
-  /* eslint-disable react/button-has-type */
+  // eslint-disable-next-line react/button-has-type
   <button
     className={classnames(
       theme.button,
@@ -32,8 +32,6 @@ const Button = ({
     {children}
   </button>
 )
-
-/* eslint-enable */
 
 // theme={secondary ? 'secondary-bg' : ''}
 // unelevated={primary || secondary}
