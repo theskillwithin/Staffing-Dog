@@ -1,5 +1,6 @@
 import React from 'react'
 import { bool, func, node, string, oneOfType } from 'prop-types'
+import classnames from 'classnames'
 
 import theme from './theme.css'
 
@@ -7,8 +8,8 @@ const id = `input-id-${Math.random()
   .toString()
   .slice(2)}`
 
-const Switch = ({ checked, onChange, children, label, ...props }) => (
-  <div className={theme.root}>
+const Switch = ({ checked, onChange, children, label, disabled, ...props }) => (
+  <div className={classnames(theme.root, disabled && theme.disabled)}>
     {label ||
       (children && (
         <label className={theme.label} htmlFor={id}>
@@ -21,6 +22,7 @@ const Switch = ({ checked, onChange, children, label, ...props }) => (
       className={theme.checkbox}
       onChange={e => onChange(e.target.checked)}
       checked={checked}
+      disabled={disabled}
       {...props}
     />
     <div className={theme.knobs} />
@@ -31,6 +33,7 @@ const Switch = ({ checked, onChange, children, label, ...props }) => (
 Switch.defaultProps = {
   children: null,
   label: null,
+  disabled: false,
 }
 
 Switch.propTypes = {
@@ -38,6 +41,7 @@ Switch.propTypes = {
   checked: bool.isRequired,
   onChange: func.isRequired,
   children: oneOfType([string, node]),
+  disabled: bool,
 }
 
 export default Switch
