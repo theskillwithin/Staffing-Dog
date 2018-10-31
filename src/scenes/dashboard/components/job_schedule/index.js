@@ -74,7 +74,6 @@ class JobSchedule extends React.Component {
   }
 
   handleToggle = value => {
-    console.log(value)
     this.setState(state => ({ form: { ...state.form, switch: value } }))
   }
 
