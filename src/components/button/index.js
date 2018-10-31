@@ -13,6 +13,7 @@ const Button = ({
   className,
   onClick,
   disabled,
+  loading,
   children,
   type,
   ...props
@@ -27,6 +28,7 @@ const Button = ({
     )}
     onClick={onClick}
     type={type}
+    disabled={disabled || loading}
     {...props}
   >
     {children}
@@ -44,6 +46,7 @@ Button.defaultProps = {
   short: false,
   className: false,
   disabled: false,
+  loading: false,
 }
 
 Button.propTypes = {
@@ -56,6 +59,7 @@ Button.propTypes = {
   children: oneOfType([string, node]),
   disabled: bool,
   type: oneOf(['button', 'submit', 'reset']),
+  loading: bool,
 }
 
 export default Button
