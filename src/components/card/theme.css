@@ -9,7 +9,6 @@
 
 .card {
   box-shadow: 0 3px 6px 0 var(--sd-shadowColor);
-  border: 1px solid rgb(220, 220, 220);
   border-radius: 4px;
   background-color: rgb(255, 255, 255);
 
