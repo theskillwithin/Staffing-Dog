@@ -7,18 +7,18 @@
   border: none;
   outline: none;
   cursor: pointer;
-  margin-left: -2em;
-  width: calc(100% + 4em);
+  margin-left: -1.5em;
+  width: calc(100% + 3em);
   padding: 0 1em;
   border-bottom: solid 1px var(--sd-borderColor);
-  background: white;  /* FF and safari */
+  background: white; /* FF and safari */
 }
 
 .event h2 {
   position: relative;
   padding-left: 1em;
   font-size: 26px;
-  font-weight: normal;
+  font-weight: var(--sd-fontWeightNormal);
   line-height: 1.23;
 }
 
@@ -35,7 +35,6 @@
 }
 
 .red:before {
-
   background-color: var(--sd-red);
 }
 
@@ -53,9 +52,10 @@
 
   h5 {
     font-size: 14px;
-    font-weight: var(--sd-fontWeightBold);
+    font-weight: var(--sd-fontWeightMedium);
     line-height: 1.21;
     margin: 0 0 4px 0;
+    text-align: left;
   }
 
   h6 {
@@ -63,10 +63,11 @@
     line-height: 1.14;
     font-weight: 100;
     color: var(--sd-grayLighter);
+    font-weight: var(--sd-fontWeightNormal);
     margin: 2px 0 0 0;
+    text-align: left;
   }
 }
-
 
 .map {
   visibility: hidden;

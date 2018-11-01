@@ -44,6 +44,7 @@ class Dropdown extends Component {
         border: '1px solid rgba(152, 160, 178, 0.54)',
         borderRadius: 3,
         boxShadow: 0,
+        fontWeight: 500,
       }),
       value: styles => ({ ...styles, background: '#0072FF', color: 'rgb(31, 39, 64)' }),
 
@@ -57,13 +58,13 @@ class Dropdown extends Component {
       }),
       dropdownIndicator: styles => ({
         ...styles,
-        padding: this.props.small ? 0 : 8,
+        padding: this.props.small ? 4 : 8,
       }),
       indicatorSeparator: () => ({ display: 'none' }),
       singleValue: styles => ({
         ...styles,
-        top: this.props.small ? '54%' : '51%',
-        fontWeight: 300,
+        marginLeft: this.props.small ? '-4px' : '0',
+        fontWeight: 500,
         color: 'rgb(31, 39, 64)',
       }),
     }

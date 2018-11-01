@@ -12,7 +12,7 @@
     line-height: 34px;
     position: relative;
     font-size: 16px;
-    font-weight: var(--sd-fontWeightBold);
+    font-weight: var(--sd-fontWeightMedium);
     outline: none;
 
     &.label {

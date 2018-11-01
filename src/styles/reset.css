@@ -1,3 +1,4 @@
+@import './normalize.css';
 @import './config.css';
 
 * {
@@ -24,9 +25,6 @@ body {
 :global {
   b, strong {
     font-weight: var(--sd-fontWeightBold);
-  }
-  button {
-    font-family: var(--sd-fontName) !important;
   }
 
   .mdc-tab {

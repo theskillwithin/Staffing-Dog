@@ -34,13 +34,13 @@
     .navItemLink {
       position: relative;
       font-size: 14px;
-      font-weight: var(--sd-fontWeightNormal);
+      font-weight: var(--sd-fontWeightMedium);
       line-height: 1.21;
       color: var(--sd-grayLighter);
       text-decoration: none;
 
       &.active {
-        font-weight: var(--sd-fontWeightBold);
+        font-weight: var(--sd-fontWeightMedium);
         color: var(--sd-blackTxt);
         @media (--sd-tablet) {
           &:after {

@@ -119,7 +119,7 @@ class Search extends React.Component {
           ) : (
             <>
               <div className={theme.searchResultsMeta}>
-                <p>
+                <p className={theme.cityMeta}>
                   <Icon use="location_on" />
                   Salt Lake City, UT
                 </p>
@@ -151,7 +151,7 @@ class Search extends React.Component {
                           </button>
                         </div>
                         <div className={theme.location}>
-                          <strong>{job.location}</strong>
+                          <span>{job.location}</span>
                           <span>{job.city}</span>
                           <span>{job.distance} miles away</span>
                         </div>

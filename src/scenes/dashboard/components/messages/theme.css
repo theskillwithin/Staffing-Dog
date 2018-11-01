@@ -146,7 +146,7 @@
     display: flex;
     align-items: center;
     font-size: 14px;
-    font-weight: var(--sd-fontWeightBold);
+    font-weight: var(--sd-fontWeightMedium);
     color: var(--sd-blackTxt);
     margin-bottom: 0.5em;
 

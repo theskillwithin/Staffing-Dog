@@ -5,7 +5,7 @@
   display: flex;
   align-items: center;
   font-size: 14px;
-  font-weight: var(--sd-fontWeightBold);
+  font-weight: var(--sd-fontWeightMedium);
   span {
     flex: 1;
   }
