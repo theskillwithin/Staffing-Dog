@@ -7,8 +7,9 @@
 }
 
 .logoText {
-  font-size: 1.2em;
+  font-size: 18px;
   margin-left: 0.5em;
+  font-weight: var(--sd-fontWeightMedium);
 
   @media (--sd-desktopMax) {
     font-size: 1em;

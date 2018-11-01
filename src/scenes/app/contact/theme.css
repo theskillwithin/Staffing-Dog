@@ -146,6 +146,7 @@
   }
 
   .contactDesktop {
+    font-weight: var(--sd-fontWeightMedium);
     @media (--sd-mobile) {
       display: none;
     }
