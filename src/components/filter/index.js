@@ -51,6 +51,8 @@ class Filter extends Component {
         padding: 5,
         cursor: state.isDisabled ? 'not-allowed' : 'pointer',
         paddingLeft: '1em',
+        fontWeight: 500,
+        fontSize: 14,
       }),
       menu: styles => ({
         ...styles,
@@ -70,6 +72,8 @@ class Filter extends Component {
         boxShadow: 'none',
         borderWidth: 0,
         minHeight: 40,
+        fontWeight: 500,
+        fontSize: 14,
       }),
       value: styles => ({ ...styles, background: '#0072FF', color: 'white' }),
       valueContainer: styles => ({ ...styles, paddingLeft: '1em' }),

@@ -21,11 +21,17 @@
 .searchResultsMeta {
   display: flex;
   justify-content: space-between;
+  font-size: 14px;
 
   i {
     color: var(--sd-blue);
     margin-right: 6px;
+    margin-top: -3px;
   }
+}
+
+.cityMeta {
+  font-weight: var(--sd-fontWeightMedium);
 }
 
 .searchResultsList {
@@ -49,9 +55,15 @@
 
 .location {
   margin-top: 0.75em;
+  font-weight: var(--sd-fontWeightMedium);
 
   span {
     color: var(--sd-grayLighter);
+    font-weight: var(--sd-fontWeightMedium);
+
+    &:first-child {
+      color: var(--sd-blackTxt);
+    }
   }
 
   > * {
@@ -81,16 +93,17 @@
   }
   dt {
     font-size: 14px;
-    font-weight: var(--sd-fontWeightBold);
+    font-weight: var(--sd-fontWeightMedium);
     line-height: 1.21;
     color: var(--sd-grayLighter);
     float: left;
     margin: 0 1em 1em 0;
   }
   dd {
+    font-size: 14px;
     margin-right: 2em;
     color: var(--sd-blackTxt);
-    font-weight: var(--sd-fontWeightBold);
+    font-weight: var(--sd-fontWeightMedium);
   }
 }
 
@@ -112,6 +125,7 @@
   border-top: solid 1px var(--sd-borderColor);
   padding: 0 2.8em;
   height: 51px;
+  font-weight: var(--sd-fontWeightMedium);
 
   > * {
     min-width: 122px;
@@ -169,7 +183,7 @@
     content: 'New';
     position: absolute;
     right: -7.5em;
-    top: 52%;
+    top: 58%;
     transform: translateY(-50%);
     display: flex;
     justify-content: center;
