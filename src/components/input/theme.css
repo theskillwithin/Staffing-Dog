@@ -15,7 +15,7 @@
   border-radius: 3px;
   &:focus ~ label,
   &.filled ~ label {
-    top: 8px;
+    top: 6px;
     left: 16px;
     font-size: 11px;
     transform: translateY(0%);
