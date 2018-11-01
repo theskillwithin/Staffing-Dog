@@ -1,7 +1,4 @@
 @import '../../styles/config.css';
-:root {
-  --font-offset: 3px;
-}
 
 .button {
   border-radius: 1.5em;
@@ -16,7 +13,7 @@
   }
 
   &.short {
-    line-height: calc(32px - var(--font-offset));
+    line-height: 32px;
   }
 }
 
@@ -39,19 +36,19 @@
 }
 
 .large {
-  line-height: calc(48px - var(--font-offset));
+  line-height: 48px;
 }
 
 .medium {
-  line-height: calc(40px - var(--font-offset));
+  line-height: 40px;
 }
 
 .mediumSmall {
-  line-height: calc(32px - var(--font-offset));
+  line-height: 32px;
 }
 
 .small {
-  line-height: calc(30px - var(--font-offset));
+  line-height: 30px;
 }
 
 .disabled {
