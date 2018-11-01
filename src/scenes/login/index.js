@@ -2,7 +2,7 @@ import React from 'react'
 import { setTitle, setHtmlClass, removeHtmlClass } from '@sdog/utils/document'
 import Contact from '@scene/app/contact'
 import Logo from '@component/logo'
-import { TabBar, Tab } from '@component/tab_bar'
+import Tabs from '@component/tab_bar'
 import Input from '@component/input'
 import Button from '@component/button'
 import Icon from '@sd/components/icon'
@@ -54,16 +54,13 @@ class Login extends React.Component {
         <div className={theme.signin}>
           <h2>Sign In</h2>
           <div>
-            <TabBar
+            <Tabs
               activeTabIndex={this.state.activeTabIndex}
-              onChange={tab => this.handleChangeTab(tab)}
-              underline={false}
-              left={false}
-              exact={false}
+              onSelect={tab => this.handleChangeTab(tab)}
             >
-              <Tab>Dental Professional</Tab>
-              <Tab>Dental Provider</Tab>
-            </TabBar>
+              <div>Dental Professional</div>
+              <div>Dental Provider</div>
+            </Tabs>
 
             <form className={theme.form} onSubmit={this.submit}>
               <Input

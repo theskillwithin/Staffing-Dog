@@ -1,7 +1,7 @@
 import React from 'react'
 import classnames from 'classnames'
 import { setTitle } from '@util/document'
-import { TabBar, Tab } from '@component/tab_bar'
+import Tabs from '@component/tab_bar'
 import Card from '@component/card'
 
 import appTheme from '../app/theme.css'
@@ -24,16 +24,16 @@ class Settings extends React.Component {
       <div className={classnames(appTheme.pageContent)}>
         <Card type="large">
           <Header />
-          <TabBar
+          <Tabs
             activeTabIndex={this.state.activeTabIndex}
-            onChange={tab => this.setState({ activeTabIndex: tab })}
+            onSelect={tab => this.setState({ activeTabIndex: tab })}
           >
-            <Tab>About Me</Tab>
-            <Tab>My Resume</Tab>
-            <Tab>References</Tab>
-            <Tab>Notifications</Tab>
-            <Tab>Security</Tab>
-          </TabBar>
+            <div>About Me</div>
+            <div>My Resume</div>
+            <div>References</div>
+            <div>Notifications</div>
+            <div>Security</div>
+          </Tabs>
 
           {this.state.activeTabIndex === 0 && <AboutMe />}
           {this.state.activeTabIndex === 1 && <h1>My Resume</h1>}
