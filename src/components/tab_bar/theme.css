@@ -1,45 +1,42 @@
 @import '../../styles/config.css';
 
-.tabBar {
+.root {
+  position: relative;
+  width: 100%;
   font-size: 15px;
 
-  > div {
-    letter-spacing: normal;
+  border-bottom: 2px inset var(--sd-borderColor);
+
+  span {
+    margin-bottom: -2px;
   }
+}
 
-  &.underline {
-    border-bottom: 2px inset var(--sd-borderColor);
+.tab {
+  display: flex;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(4em, 1fr));
+  width: 100%;
+  justify-content: space-between;
+  cursor: pointer;
+}
 
-    span {
-      margin-bottom: -2px;
-    }
-  }
+.tab > div {
+  width: 100%;
+  text-align: center;
+  margin: auto;
+  font-weight: 500;
+  transition: color 0.14s;
+  outline: none;
+}
 
-  &.left {
-    width: 100%;
-    display: flex;
+.underline {
+  border-bottom: 2px solid var(--sd-primary);
+  position: absolute;
+  margin-top: -2px;
+  transition: width 0.3s, left 0.3s;
+}
 
-    > div {
-      line-height: 2.95rem;
-      min-width: auto;
-    }
-  }
-
-  &.exact {
-    > div {
-      min-width: auto;
-      padding-left: 4px;
-      padding-right: 4px;
-      margin-right: 1.2em;
-      margin-left: 1.2em;
-
-      &:first-child {
-        margin-left: 0;
-      }
-
-      &:last-child {
-        margin-right: 0;
-      }
-    }
-  }
+.tab > .active {
+  color: var(--sd-primary);
 }

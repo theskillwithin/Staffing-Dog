@@ -1,41 +1,43 @@
 import React from 'react'
-import { bool, node, number, func } from 'prop-types'
-import { TabBar as MTabBar, Tab } from 'rmwc/Tabs'
-import classnames from 'classnames'
+import { node, number, func } from 'prop-types'
 
-import './styles.css'
 import theme from './theme.css'
 
-const TabBar = ({ activeTabIndex, onChange, underline, left, exact, ...props }) => (
-  <MTabBar
-    className={classnames(
-      theme.tabBar,
-      underline && theme.underline,
-      left && theme.left,
-      exact && theme.exact,
-    )}
-    activeTabIndex={activeTabIndex}
-    onActivate={evt => onChange(evt.detail.index)}
-    {...props}
-  >
-    {props.children}
-  </MTabBar>
-)
-
-TabBar.defaultProps = {
-  underline: true,
-  left: true,
-  exact: true,
+class Tabs extends React.Component {
+  render() {
+    const { activeTabIndex, children, onSelect } = this.props
+    const tabs = React.Children.toArray(children).filter(Boolean)
+    return (
+      <div className={theme.root}>
+        <div className={theme.tab}>
+          {tabs.map((x, i) => (
+            <div
+              key={x}
+              onClick={() => onSelect(i)}
+              className={i === activeTabIndex ? theme.active : null}
+              role="button"
+              tabIndex={i}
+            >
+              {x}
+            </div>
+          ))}
+        </div>
+        <div
+          className={theme.underline}
+          style={{
+            width: `${100 / tabs.length}%`,
+            left: `${(100 / tabs.length) * activeTabIndex}%`,
+          }}
+        />
+      </div>
+    )
+  }
 }
 
-TabBar.propTypes = {
-  underline: bool,
-  secondary: bool,
-  left: bool,
-  exact: bool,
-  children: node.isRequired,
+Tabs.propTypes = {
   activeTabIndex: number.isRequired,
-  onChange: func.isRequired,
+  onSelect: func.isRequired,
+  children: node.isRequired,
 }
 
-export { TabBar, Tab }
+export default Tabs
