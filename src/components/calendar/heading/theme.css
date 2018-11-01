@@ -45,5 +45,9 @@
     font-size: 18px;
     line-height: 66px;
     user-select: none;
+
+    strong {
+      font-weight: var(--sd-fontWeightMedium);
+    }
   }
 }
