@@ -17,20 +17,20 @@ html {
 body {
   margin: 0;
   font-family: var(--sd-fontName);
+  -webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
 }
 
 :global {
-  .mdc-button {
+  b, strong {
+    font-weight: var(--sd-fontWeightBold);
+  }
+  button {
     font-family: var(--sd-fontName) !important;
-    letter-spacing: inherit !important;
   }
 
   .mdc-tab {
     text-transform: none !important;
     font-family: var(--sd-fontName) !important;
-  }
-
-  .mdc-button {
-    text-transform: inherit !important;
   }
 }

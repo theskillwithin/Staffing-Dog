@@ -81,7 +81,7 @@
   }
   dt {
     font-size: 14px;
-    font-weight: 500;
+    font-weight: var(--sd-fontWeightBold);
     line-height: 1.21;
     color: var(--sd-grayLighter);
     float: left;
@@ -90,7 +90,7 @@
   dd {
     margin-right: 2em;
     color: var(--sd-blackTxt);
-    font-weight: 500;
+    font-weight: var(--sd-fontWeightBold);
   }
 }
 
@@ -98,6 +98,7 @@
   color: var(--sd-blackTxt);
   font-size: 15px;
   margin-bottom: 4em;
+  font-weight: normal;
 }
 
 .actions {
@@ -119,7 +120,6 @@
 
 .readMore {
   font-size: 14px;
-  font-weight: 500;
   font-style: normal;
   font-stretch: normal;
   line-height: 3;

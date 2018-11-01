@@ -117,7 +117,7 @@
 
   i {
     color: var(--sd-primary);
-    font-weight: bold;
+    font-weight: var(--sd-fontWeightBold);
     font-size: 34px;
   }
 

@@ -16,11 +16,13 @@
   --sd-white: #ffffff;
   --sd-black: #000000;
   --sd-blackTxt: rgb(31, 39, 64); /* #1F2740 */
+  --sd-grayDark: #b0b5c1; /* guessing this color for button hover */
   --sd-gray: rgb(187, 193, 209);
   --sd-grayLight: color(var(--sd-gray) tint(25%));
   --sd-grayLighter: rgb(152, 160, 178);
   --sd-grayLighterer:  rgb(238, 241, 246);
   --sd-blue: #0072ff;
+  --sd-blueDark: #005ed1; /* guessing this color for button hover */
   --sd-blueGray: #eef1f6;
   --sd-green: #33cb74; /* rgb(51, 203, 116) */
   --sd-red: #ed4f32;

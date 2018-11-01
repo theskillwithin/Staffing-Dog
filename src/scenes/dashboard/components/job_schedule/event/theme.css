@@ -11,6 +11,7 @@
   width: calc(100% + 4em);
   padding: 0 1em;
   border-bottom: solid 1px var(--sd-borderColor);
+  background: white;  /* FF and safari */
 }
 
 .event h2 {
@@ -52,7 +53,7 @@
 
   h5 {
     font-size: 14px;
-    font-weight: 600;
+    font-weight: var(--sd-fontWeightBold);
     line-height: 1.21;
     margin: 0 0 4px 0;
   }

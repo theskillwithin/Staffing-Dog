@@ -2,17 +2,60 @@
 
 .button {
   border-radius: 1.5em;
-  padding-left: 2em;
-  padding-right: 2em;
+  padding: 0 2em;
+  border: none;
+  outline: none;
+  font-size: 14px;
+  cursor: pointer;
 
   &.round {
     border-radius: 3em;
   }
 
   &.short {
-    height: 32px;
-    line-height: 1;
+    line-height: 32px;
   }
-
 }
 
+.primary {
+  background: var(--sd-primary);
+  color: white;
+
+  &:hover {
+    background: var(--sd-blueDark);
+  }
+}
+
+.secondary {
+  background: var(--sd-gray);
+  color: white;
+
+  &:hover {
+    background: var(--sd-grayDark);
+  }
+}
+
+.large {
+  line-height: 48px;
+}
+
+.medium {
+  line-height: 40px;
+}
+
+.mediumSmall {
+  line-height: 32px;
+}
+
+.small {
+  line-height: 30px;
+}
+
+.disabled {
+  background: var(--sd-gray);
+  cursor: not-allowed;
+
+  &:hover {
+    background: var(--sd-gray);
+  }
+}
