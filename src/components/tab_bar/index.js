@@ -12,7 +12,7 @@ class Tabs extends React.Component {
         <div className={theme.tab}>
           {tabs.map((x, i) => (
             <div
-              key={x}
+              key={x.key}
               onClick={() => onSelect(i)}
               className={i === activeTabIndex ? theme.active : null}
               role="button"
