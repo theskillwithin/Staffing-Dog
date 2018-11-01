@@ -1,4 +1,7 @@
 @import '../../styles/config.css';
+:root {
+  --font-offset: 0px;
+}
 
 .button {
   border-radius: 1.5em;
