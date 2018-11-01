@@ -1,5 +1,5 @@
 :root {
-  --sd-fontName: 'Helvetica NeueLTPro-Md', sans-serif;
+  --sd-fontName: 'Helvetica Neue', sans-serif;
   --sd-fontSizeS: 0.75em;
   --sd-fontSize: 1em;
   --sd-fontSizeM: 1.25em;
@@ -7,9 +7,12 @@
   --sd-fontSizeXL: 1.75em;
   --sd-fontSizeXXL: 2em;
   --sd-fontSizeIconXL: 5em;
+  --sd-fontWeightUltraLight: 100;
+  --sd-fontWeightThin: 200;
   --sd-fontWeightLight: 300;
   --sd-fontWeightNormal: 400;
-  --sd-fontWeightBold: 500;
+  --sd-fontWeightMedium: 500;
+  --sd-fontWeightBold: 700;
   --sd-white: #ffffff;
   --sd-black: #000000;
   --sd-blackTxt: rgb(31, 39, 64); /* #1F2740 */
