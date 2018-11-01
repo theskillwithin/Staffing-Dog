@@ -2,7 +2,7 @@
 
 .button {
   border-radius: 1.5em;
-  padding: var(--font-offset) 2em 0 2em;
+  padding: 0 2em;
   border: none;
   outline: none;
   font-size: 14px;
