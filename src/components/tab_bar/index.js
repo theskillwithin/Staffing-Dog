@@ -5,12 +5,11 @@ import classnames from 'classnames'
 import theme from './theme.css'
 
 class Tabs extends React.Component {
-  constructor(props) {
-    super(props)
-    this.myRefs = this.props.children.map(() => React.createRef())
-    this.underlineRef = React.createRef()
-    this.tabs = React.Children.toArray(this.props.children).filter(Boolean)
-  }
+  myRefs = this.props.children.map(() => React.createRef())
+
+  underlineRef = React.createRef()
+
+  tabs = React.Children.toArray(this.props.children).filter(Boolean)
 
   componentDidMount() {
     const { activeTabIndex } = this.props
