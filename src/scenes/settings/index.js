@@ -30,6 +30,7 @@ class Settings extends React.Component {
             underline
             left
             exactWidthTab
+            settingsTabs
           >
             <div>About Me</div>
             <div>My Resume</div>

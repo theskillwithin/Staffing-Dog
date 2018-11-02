@@ -34,3 +34,7 @@ aligns tabs left instead of centering them
 ### exactWidthTab
 
 not padding on tabs, spaced with margin so the underline is exactly the same size as the text of the tab
+
+### settingsTabs
+
+a prop to define tabs used on the settings scene

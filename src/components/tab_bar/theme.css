@@ -66,3 +66,7 @@
     margin-right: 2em;
   }
 }
+
+.settingsTabs .tab > div {
+  padding-bottom: 20px;
+}
