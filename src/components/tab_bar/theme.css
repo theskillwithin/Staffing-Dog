@@ -1,45 +1,72 @@
 @import '../../styles/config.css';
 
-.tabBar {
+.root {
+  position: relative;
+  width: 100%;
   font-size: 15px;
+}
 
-  > div {
-    letter-spacing: normal;
+.tab {
+  display: flex;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(4em, 1fr));
+  width: 100%;
+  justify-content: space-between;
+}
+
+.tab > div {
+  padding: 1em;
+  width: 100%;
+  text-align: center;
+  margin: auto;
+  font-weight: 500;
+  transition: color 0.14s;
+  outline: none;
+  font-weight: var(--sd-fontWeightNormal);
+  cursor: pointer;
+  color: var(--sd-grayLighter);
+  user-select: none;
+}
+
+.underline {
+  border-bottom: 2px solid var(--sd-primary);
+  position: absolute;
+  transition: width 0.3s, left 0.3s;
+}
+
+.tab > .active {
+  color: var(--sd-primary);
+}
+
+.hasUnderline {
+  border-bottom: 2px inset var(--sd-borderColor);
+
+  span {
+    margin-bottom: -2px;
   }
+}
 
-  &.underline {
-    border-bottom: 2px inset var(--sd-borderColor);
-
-    span {
-      margin-bottom: -2px;
-    }
-  }
-
-  &.left {
-    width: 100%;
+.left {
+  .tab {
     display: flex;
+    justify-content: flex-start;
+    width: auto;
 
-    > div {
-      line-height: 2.95rem;
-      min-width: auto;
+    & > div {
+      width: auto;
+      margin: 0;
     }
   }
+}
 
-  &.exact {
-    > div {
-      min-width: auto;
-      padding-left: 4px;
-      padding-right: 4px;
-      margin-right: 1.2em;
-      margin-left: 1.2em;
-
-      &:first-child {
-        margin-left: 0;
-      }
-
-      &:last-child {
-        margin-right: 0;
-      }
-    }
+.exactWidthTab {
+  .tab > div {
+    padding-left: 0;
+    padding-right: 0;
+    margin-right: 2em;
   }
+}
+
+.settingsTabs .tab > div {
+  padding-bottom: 20px;
 }

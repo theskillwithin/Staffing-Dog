@@ -1,41 +1,99 @@
 import React from 'react'
-import { bool, node, number, func } from 'prop-types'
-import { TabBar as MTabBar, Tab } from 'rmwc/Tabs'
+import { node, number, func, bool } from 'prop-types'
 import classnames from 'classnames'
 
-import './styles.css'
 import theme from './theme.css'
 
-const TabBar = ({ activeTabIndex, onChange, underline, left, exact, ...props }) => (
-  <MTabBar
-    className={classnames(
-      theme.tabBar,
-      underline && theme.underline,
-      left && theme.left,
-      exact && theme.exact,
-    )}
-    activeTabIndex={activeTabIndex}
-    onActivate={evt => onChange(evt.detail.index)}
-    {...props}
-  >
-    {props.children}
-  </MTabBar>
-)
+class Tabs extends React.Component {
+  myRefs = this.props.children.map(() => React.createRef())
 
-TabBar.defaultProps = {
-  underline: true,
-  left: true,
-  exact: true,
+  underlineRef = React.createRef()
+
+  tabs = React.Children.toArray(this.props.children).filter(Boolean)
+
+  componentDidMount() {
+    const { activeTabIndex } = this.props
+    this.calculateTab(activeTabIndex)
+  }
+
+  handleOnClick = i => {
+    const { onSelect } = this.props
+    onSelect(i)
+    this.calculateTab(i)
+  }
+
+  calculateTab(index) {
+    const { left, exactWidthTab } = this.props
+    const totalWidth = this.myRefs
+      .slice(0, index)
+      .map(x => x.current.offsetWidth)
+      .reduce((a, b) => a + b, 0)
+
+    const width = left
+      ? `${this.myRefs[index].current.offsetWidth}px`
+      : `${100 / this.tabs.length}%`
+
+    const leftOffset = left ? `${totalWidth}px` : `${(100 / this.tabs.length) * index}%`
+
+    // this is calculating a margin-right of 2em on exact tabs fz15
+    const exactOffset = 30
+    const leftOffsetExact = left
+      ? index > 0
+        ? `${totalWidth + exactOffset * index}px`
+        : `${totalWidth}px`
+      : `${(100 / this.tabs.length) * index}%`
+
+    this.underlineRef.current.style.width = width
+    this.underlineRef.current.style.left = exactWidthTab ? leftOffsetExact : leftOffset
+  }
+
+  render() {
+    const { activeTabIndex, underline, left, exactWidthTab, settingsTabs } = this.props
+    return (
+      <div
+        className={classnames(
+          theme.root,
+          underline && theme.hasUnderline,
+          left && theme.left,
+          exactWidthTab && theme.exactWidthTab,
+          settingsTabs && theme.settingsTabs,
+        )}
+      >
+        <div className={theme.tab}>
+          {this.tabs.map((x, i) => (
+            <div
+              key={x && x.key != null ? x.key : `96oDczda__${i}`}
+              onClick={() => this.handleOnClick(i)}
+              className={i === activeTabIndex ? theme.active : null}
+              role="button"
+              tabIndex={i}
+              ref={this.myRefs[i]}
+            >
+              {x}
+            </div>
+          ))}
+        </div>
+        <div className={theme.underline} ref={this.underlineRef} />
+      </div>
+    )
+  }
 }
 
-TabBar.propTypes = {
-  underline: bool,
-  secondary: bool,
-  left: bool,
-  exact: bool,
-  children: node.isRequired,
+Tabs.propTypes = {
+  underline: false,
+  left: false,
+  exactWidthTab: false,
+  settingsTabs: false,
+}
+
+Tabs.propTypes = {
   activeTabIndex: number.isRequired,
-  onChange: func.isRequired,
+  onSelect: func.isRequired,
+  children: node.isRequired,
+  underline: bool,
+  left: bool,
+  exactWidthTab: bool,
+  settingsTabs: bool,
 }
 
-export { TabBar, Tab }
+export default Tabs
