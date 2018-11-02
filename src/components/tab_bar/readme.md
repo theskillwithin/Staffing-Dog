@@ -20,3 +20,17 @@ usage:
 {this.state.activeTabIndex === 3 && <h1>Notifications</h1>}
 {this.state.activeTabIndex === 4 && <h1>Security</h1>}
 ```
+
+## Props
+
+### underline
+
+Gives ENTIRE tab bar a gray underline when not active state
+
+### left
+
+aligns tabs left instead of centering them
+
+### exactWidthTab
+
+not padding on tabs, spaced with margin so the underline is exactly the same size as the text of the tab

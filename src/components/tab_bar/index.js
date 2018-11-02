@@ -41,13 +41,14 @@ class Tabs extends React.Component {
   }
 
   render() {
-    const { activeTabIndex, underline, left } = this.props
+    const { activeTabIndex, underline, left, exactWidthTab } = this.props
     return (
       <div
         className={classnames(
           theme.root,
           underline && theme.hasUnderline,
           left && theme.left,
+          exactWidthTab && theme.exactWidthTab,
         )}
       >
         <div className={theme.tab}>
@@ -73,6 +74,7 @@ class Tabs extends React.Component {
 Tabs.propTypes = {
   underline: false,
   left: false,
+  exactWidthTab: false,
 }
 
 Tabs.propTypes = {
@@ -81,6 +83,7 @@ Tabs.propTypes = {
   children: node.isRequired,
   underline: bool,
   left: bool,
+  exactWidthTab: bool,
 }
 
 export default Tabs

@@ -29,6 +29,7 @@ class Settings extends React.Component {
             onSelect={tab => this.setState({ activeTabIndex: tab })}
             underline
             left
+            exactWidthTab
           >
             <div>About Me</div>
             <div>My Resume</div>
