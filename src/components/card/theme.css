@@ -6,12 +6,10 @@
   --sd-cardPaddingLarge: 2em 2.8em 2em 2.8em;
 }
 
-
 .card {
   box-shadow: 0 3px 6px 0 var(--sd-shadowColor);
   border-radius: 4px;
   background-color: rgb(255, 255, 255);
-
 }
 
 .cardHeader {
@@ -56,7 +54,7 @@
   }
 }
 
-nav.loadingBar {
+.loadingBar {
   position: absolute;
   top: -2px;
   left: 0;
@@ -65,7 +63,6 @@ nav.loadingBar {
 }
 
 .large {
-
   .cardContent {
     padding: var(--sd-cardPaddingLarge);
   }

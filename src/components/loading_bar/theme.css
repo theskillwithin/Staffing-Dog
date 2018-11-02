@@ -1,0 +1,29 @@
+@import '../../styles/config.css';
+
+.bar {
+  position: relative;
+  background: var(--sd-gray);
+  height: 4px;
+}
+
+.progress {
+  position: absolute;
+  background: var(--sd-primary);
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: auto;
+}
+
+.round {
+  border-radius: 50px;
+  span {
+    border-radius: 8px 0 0 8px;
+  }
+}
+
+.round.complete {
+  span {
+    border-radius: 8px;
+  }
+}
