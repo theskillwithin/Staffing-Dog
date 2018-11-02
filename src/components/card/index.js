@@ -47,9 +47,7 @@ const Card = ({
       )}
 
       <section className={theme.cardContent}>
-        {progress && (
-          <LoadingBar className={theme.loadingBar} progress={progress} determinate />
-        )}
+        {progress && <LoadingBar className={theme.loadingBar} progress={progress} />}
         {children}
       </section>
     </div>

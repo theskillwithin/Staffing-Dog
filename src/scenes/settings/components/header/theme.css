@@ -18,19 +18,14 @@
     align-items: center;
     text-align: center;
     margin: 0 0 0.5em 0;
-  }
 
-  span {
-    font-size: 12px;
-    margin-left: 0.5em;
+    span {
+      font-size: 12px;
+      margin-left: 0.5em;
+    }
   }
 }
 
 .loadingBar {
   height: 8px;
-  border-radius: 50px;
-
-  :global(.mdc-linear-progress__bar-inner) {
-    border-radius: 50px;
-  }
 }

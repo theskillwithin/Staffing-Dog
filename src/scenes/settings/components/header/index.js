@@ -11,7 +11,7 @@ const SettingsHeader = ({ progress }) => (
       <h4>
         {progress * 100}% <span>Complete</span>
       </h4>
-      <LoadingBar determinate progress={progress} className={theme.loadingBar} />
+      <LoadingBar round progress={progress} className={theme.loadingBar} />
     </div>
   </div>
 )
