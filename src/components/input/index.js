@@ -76,7 +76,7 @@ class Input extends Component {
         </label>
         {valid && (
           <div className={s.check}>
-            <Check />
+            <Check color="green" />
           </div>
         )}
         {invalid && (

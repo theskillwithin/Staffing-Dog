@@ -1,8 +1,18 @@
 @import '../../../styles/config.css';
 
 .svg {
+  :global .cls-1 {
+    fill: currentColor;
+  }
   svg {
     vertical-align: middle;
-    width: 13px;
+  }
+
+  &.green svg {
+    color: var(--sd-green);
+  }
+
+  &.white svg {
+    color: white;
   }
 }
