@@ -63,7 +63,7 @@ class Tabs extends React.Component {
         <div className={theme.tab}>
           {this.tabs.map((x, i) => (
             <div
-              key={x.key}
+              key={x && x.key != null ? x.key : `96oDczda__${i}`}
               onClick={() => this.handleOnClick(i)}
               className={i === activeTabIndex ? theme.active : null}
               role="button"
