@@ -15,6 +15,7 @@ class Tabs extends React.Component {
   componentDidMount() {
     const { activeTabIndex } = this.props
     this.calculateTab(activeTabIndex)
+    console.log(this.myRefs)
   }
 
   handleOnClick = i => {
@@ -24,7 +25,7 @@ class Tabs extends React.Component {
   }
 
   calculateTab(index) {
-    const { left } = this.props
+    const { left, exactWidthTab } = this.props
     const totalWidth = this.myRefs
       .slice(0, index)
       .map(x => x.current.offsetWidth)
@@ -36,8 +37,16 @@ class Tabs extends React.Component {
 
     const leftOffset = left ? `${totalWidth}px` : `${(100 / this.tabs.length) * index}%`
 
+    // this is calculating a margin-right of 2em on exact tabs fz15
+    const exactOffset = 30
+    const leftOffsetExact = left
+      ? index > 0
+        ? `${totalWidth + exactOffset * index}px`
+        : `${totalWidth}px`
+      : `${(100 / this.tabs.length) * index}%`
+
     this.underlineRef.current.style.width = width
-    this.underlineRef.current.style.left = leftOffset
+    this.underlineRef.current.style.left = exactWidthTab ? leftOffsetExact : leftOffset
   }
 
   render() {
