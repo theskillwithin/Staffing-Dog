@@ -27,6 +27,8 @@ class Settings extends React.Component {
           <Tabs
             activeTabIndex={this.state.activeTabIndex}
             onSelect={tab => this.setState({ activeTabIndex: tab })}
+            underline
+            left
           >
             <div>About Me</div>
             <div>My Resume</div>

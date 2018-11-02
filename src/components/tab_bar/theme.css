@@ -4,12 +4,6 @@
   position: relative;
   width: 100%;
   font-size: 15px;
-
-  border-bottom: 2px inset var(--sd-borderColor);
-
-  span {
-    margin-bottom: -2px;
-  }
 }
 
 .tab {
@@ -22,21 +16,44 @@
 }
 
 .tab > div {
+  padding: 1em;
   width: 100%;
   text-align: center;
   margin: auto;
   font-weight: 500;
   transition: color 0.14s;
   outline: none;
+  font-weight: var(--sd-fontWeightNormal);
+  color: var(--sd-grayLighter);
 }
 
 .underline {
   border-bottom: 2px solid var(--sd-primary);
   position: absolute;
-  margin-top: -2px;
   transition: width 0.3s, left 0.3s;
 }
 
 .tab > .active {
   color: var(--sd-primary);
+}
+
+.hasUnderline {
+  border-bottom: 2px inset var(--sd-borderColor);
+
+  span {
+    margin-bottom: -2px;
+  }
+}
+
+.left {
+  .tab {
+    display: flex;
+    justify-content: flex-start;
+    width: auto;
+
+    & > div {
+      width: auto;
+      margin: 0;
+    }
+  }
 }
