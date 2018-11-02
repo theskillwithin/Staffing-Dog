@@ -15,7 +15,6 @@ class Tabs extends React.Component {
   componentDidMount() {
     const { activeTabIndex } = this.props
     this.calculateTab(activeTabIndex)
-    console.log(this.myRefs)
   }
 
   handleOnClick = i => {
