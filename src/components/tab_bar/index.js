@@ -9,52 +9,39 @@ class Tabs extends React.Component {
     super(props)
     this.myRefs = this.props.children.map(() => React.createRef())
     this.underlineRef = React.createRef()
+    this.tabs = React.Children.toArray(this.props.children).filter(Boolean)
   }
 
   componentDidMount() {
-    const { activeTabIndex, left, children } = this.props
-    const tabs = React.Children.toArray(children).filter(Boolean)
-
-    const totalWidth = this.myRefs
-      .slice(0, activeTabIndex)
-      .map(x => x.current.offsetWidth)
-      .reduce((a, b) => a + b, 0)
-
-    const width = left
-      ? `${this.myRefs[activeTabIndex].current.offsetWidth}px`
-      : `${100 / tabs.length}%`
-
-    const leftOffset = left
-      ? `${totalWidth}px`
-      : `${(100 / tabs.length) * activeTabIndex}%`
-
-    this.underlineRef.current.style.width = width
-    this.underlineRef.current.style.left = leftOffset
+    const { activeTabIndex } = this.props
+    this.calculateTab(activeTabIndex)
   }
 
   handleOnClick = i => {
-    const { left, onSelect, children } = this.props
-    const tabs = React.Children.toArray(children).filter(Boolean)
+    const { onSelect } = this.props
     onSelect(i)
+    this.calculateTab(i)
+  }
 
+  calculateTab(index) {
+    const { left } = this.props
     const totalWidth = this.myRefs
-      .slice(0, i)
+      .slice(0, index)
       .map(x => x.current.offsetWidth)
       .reduce((a, b) => a + b, 0)
 
     const width = left
-      ? `${this.myRefs[i].current.offsetWidth}px`
-      : `${100 / tabs.length}%`
+      ? `${this.myRefs[index].current.offsetWidth}px`
+      : `${100 / this.tabs.length}%`
 
-    const leftOffset = left ? `${totalWidth}px` : `${(100 / tabs.length) * i}%`
+    const leftOffset = left ? `${totalWidth}px` : `${(100 / this.tabs.length) * index}%`
 
     this.underlineRef.current.style.width = width
     this.underlineRef.current.style.left = leftOffset
   }
 
   render() {
-    const { activeTabIndex, children, underline, left } = this.props
-    const tabs = React.Children.toArray(children).filter(Boolean)
+    const { activeTabIndex, underline, left } = this.props
     return (
       <div
         className={classnames(
@@ -64,7 +51,7 @@ class Tabs extends React.Component {
         )}
       >
         <div className={theme.tab}>
-          {tabs.map((x, i) => (
+          {this.tabs.map((x, i) => (
             <div
               key={x.key}
               onClick={() => this.handleOnClick(i)}

@@ -12,7 +12,6 @@
   grid-template-columns: repeat(auto-fit, minmax(4em, 1fr));
   width: 100%;
   justify-content: space-between;
-  cursor: pointer;
 }
 
 .tab > div {
@@ -24,7 +23,9 @@
   transition: color 0.14s;
   outline: none;
   font-weight: var(--sd-fontWeightNormal);
+  cursor: pointer;
   color: var(--sd-grayLighter);
+  user-select: none;
 }
 
 .underline {
