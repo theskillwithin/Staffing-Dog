@@ -5,7 +5,8 @@ import ContactSVG from '@component/svg/Contact'
 import HeadsetSVG from '@component/svg/Headset'
 import EmailUsSVG from '@component/svg/EmailUs'
 import LiveChatSVG from '@component/svg/LiveChat'
-import Icon from '@component/icon'
+import CloseIcon from '@component/svg/Close'
+import Hambuger from '@component/svg/Hamburger'
 import { Link } from 'react-router-dom'
 
 import theme from './theme.css'
@@ -40,7 +41,7 @@ class Contact extends React.Component {
             className={theme.contactMobile}
             type="button"
           >
-            {this.state.mobileActive ? <Icon use="close" /> : <Icon use="menu" />}
+            {this.state.mobileActive ? <CloseIcon /> : <Hambuger />}
           </button>
         </div>
         <div
