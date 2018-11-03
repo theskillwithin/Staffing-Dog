@@ -1,5 +1,9 @@
 @import '../../styles/config.css';
 
+.link {
+  text-decoration: none;
+  color: var(--sd-blackTxt);
+}
 
 .logo {
   display: flex;
@@ -10,6 +14,7 @@
   font-size: 18px;
   margin-left: 0.5em;
   font-weight: var(--sd-fontWeightMedium);
+  color: var(--sd-blackTxt);
 
   @media (--sd-desktopMax) {
     font-size: 1em;
@@ -17,9 +22,9 @@
 }
 
 .path {
-  fill: #3FA9F5;
+  fill: #3fa9f5;
 }
 
 .path2 {
-  fill: #0072FF;
+  fill: #0072ff;
 }
