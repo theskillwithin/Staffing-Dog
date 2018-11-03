@@ -100,9 +100,14 @@ html {
     }
   }
 
-  i {
+  .signupMobile {
     display: none;
     color: white;
+    margin-left: 0.5em;
+
+    svg {
+      width: 20px;
+    }
 
     @media (--sd-mobile) {
       display: inline-block;

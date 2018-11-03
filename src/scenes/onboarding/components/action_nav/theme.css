@@ -1,6 +1,5 @@
 @import '../../../../styles/config';
 
-
 .actionNav {
   display: flex;
   width: 100%;
@@ -11,12 +10,27 @@
     flex: 1 1 50%;
   }
 
+  .iconRight,
   .iconLeft {
-    margin-left: -1em;
+    display: flex;
+    svg {
+      width: 20px;
+    }
+  }
+
+  .iconLeft {
+    margin-right: -0.9em;
+    span {
+      margin-left: -0.7em;
+      margin-right: 0.5em;
+    }
   }
 
   .iconRight {
-    margin-right: -1em;
+    margin-left: -1em;
+    span {
+      margin-right: -1em;
+    }
   }
 }
 

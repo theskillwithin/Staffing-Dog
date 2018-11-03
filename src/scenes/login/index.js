@@ -5,7 +5,7 @@ import Logo from '@component/logo'
 import Tabs from '@component/tab_bar'
 import Input from '@component/input'
 import Button from '@component/button'
-import Icon from '@sd/components/icon'
+import Arrow from '@component/svg/Arrow'
 
 import appTheme from '../app/theme.css'
 
@@ -85,7 +85,7 @@ class Login extends React.Component {
                 <a href="/signup">
                   Don’t have an account? Sign Up{' '}
                   <span className={theme.signupMobile}>
-                    <Icon use="arrow_right_alt" />
+                    <Arrow color="white" />
                   </span>
                 </a>
               </div>

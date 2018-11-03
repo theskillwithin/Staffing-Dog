@@ -8,7 +8,8 @@ import find from 'lodash/find'
 import classnames from 'classnames'
 import ProfilePhotoSVG from '@component/svg/ProfilePhoto'
 import ReplySVG from '@component/svg/Reply'
-import Icon from '@component/icon'
+import Icon from '@component/icon' // todo to remove
+import Arrow from '@component/svg/Arrow'
 import Button from '@component/button'
 import Select from '@component/select'
 import { getThreads, findThreads } from '@store/messages'
@@ -132,7 +133,7 @@ class Messages extends React.Component {
           </div>
           <div className={theme.messages}>
             <button type="button" className={theme.back} onClick={this.back}>
-              <Icon use="arrow_back" />
+              <Arrow direction="left" />
             </button>
             {this.state.active === 'new' && (
               <div className={theme.users}>

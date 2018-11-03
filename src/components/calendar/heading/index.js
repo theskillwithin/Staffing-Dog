@@ -1,5 +1,6 @@
 import React from 'react'
 import { object, func } from 'prop-types'
+import Arrow from '@component/svg/Arrow'
 
 import theme from './theme.css'
 
@@ -10,7 +11,7 @@ const Heading = ({ date, changeMonth, resetDate }) => (
       className={theme.left}
       onClick={() => changeMonth(date.month() - 1)}
     >
-      &#8249;
+      <Arrow direction="left" />
     </button>
     <button type="button" onClick={() => resetDate()}>
       <h1>
@@ -23,7 +24,7 @@ const Heading = ({ date, changeMonth, resetDate }) => (
       className={theme.right}
       onClick={() => changeMonth(date.month() + 1)}
     >
-      &#8250;
+      <Arrow direction="right" />
     </button>
   </nav>
 )
