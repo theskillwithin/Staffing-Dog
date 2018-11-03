@@ -31,10 +31,6 @@ const alias = {
   '@util': path.join(paths.src, 'utils'),
 }
 
-const postCssPresetEnvOptions = {
-  stage: 1,
-}
-
 /**
  * Basic Config object for webpack
  */
@@ -87,62 +83,10 @@ config.module.rules = [
       return 'whatever_random_class_name' pull from a cache with auto building small names
     } 
    */
-  // {
-  //   test: /\.css$/,
-  //   include: [
-  //     path.join(paths.nodeModules, 'material-components-web'),
-  //     path.join(paths.nodeModules, '@material'),
-  //     path.join(paths.src),
-  //   ],
-  //   exclude: [/node_modules/],
-  //   use: [
-  //     IS_DEV ? 'style-loader' : MiniCssExtractPlugin.loader,
-  //     'css-loader',
-  //     {
-  //       loader: 'postcss-loader',
-  //       options: {
-  //         ident: 'postcss-all',
-  //         plugins: () => [
-  //           postcssImport(),
-  //           postcssPresetEnv(postCssPresetEnvOptions),
-  //           postcssNested(),
-  //         ],
-  //       },
-  //     },
-  //   ],
-  // },
-  {
-    test: /\.css$/,
-    // only turn on standard global Postcss loader for the material directories
-    include: [path.join(paths.src)],
-    exclude: [
-      /src\/components\/(.+)\/theme/, // exclude theme.css files
-      /src\/scenes\/(.+)\/theme/, // exclude theme.css files
-      /src\/fonts/, // exclude font css files
-    ],
-    use: [
-      IS_DEV ? 'style-loader' : MiniCssExtractPlugin.loader,
-      'css-loader',
-      {
-        loader: 'postcss-loader',
-        options: {
-          plugins: () => [
-            postcssImport(),
-            postcssPresetEnv(postCssPresetEnvOptions),
-            postcssNested(),
-          ],
-        },
-      },
-    ],
-  },
   {
     test: /\.css$/,
     include: [paths.src],
-    exclude: [
-      /node_modules/,
-      /src\/components\/(.+)\/styles/, // exclude style.css files
-      /src\/scenes\/(.+)\/styles/, // exclude style.css files
-    ],
+    exclude: [/node_modules/],
     use: [
       IS_DEV ? 'style-loader' : MiniCssExtractPlugin.loader,
       {
@@ -159,15 +103,7 @@ config.module.rules = [
           ident: 'postcss-app',
           plugins: () => [
             postcssImport(),
-            postcssPresetEnv({
-              ...postCssPresetEnvOptions,
-              features: {
-                customProperties: {
-                  preserve: true,
-                  warnings: false,
-                },
-              },
-            }),
+            postcssPresetEnv({ stage: 1 }),
             postcssNested(),
           ],
         },
@@ -185,11 +121,6 @@ config.module.rules = [
     use: ['raw-loader'],
     include: [paths.src],
   },
-  // {
-  //   test: /\.(png|jpq|jpeg|gif|eot|woff2|woff|ttf)$/,
-  //   use: ['file-loader'],
-  //   include: [paths.src],
-  // },
 ]
 
 config.optimization = {
