@@ -159,12 +159,6 @@
     cursor: pointer;
     outline: none;
 
-    i {
-      color: var(--sd-primary);
-      font-weight: var(--sd-fontWeightBold);
-      font-size: 34px;
-    }
-
     @media (--sd-mobile) {
       display: block;
     }
