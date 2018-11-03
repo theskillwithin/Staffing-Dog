@@ -114,11 +114,7 @@ config.module.rules = [
   {
     test: /\.css$/,
     // only turn on standard global Postcss loader for the material directories
-    include: [
-      path.join(paths.nodeModules, 'material-components-web'),
-      path.join(paths.nodeModules, '@material'),
-      path.join(paths.src),
-    ],
+    include: [path.join(paths.src)],
     exclude: [
       /src\/components\/(.+)\/theme/, // exclude theme.css files
       /src\/scenes\/(.+)\/theme/, // exclude theme.css files
@@ -130,7 +126,6 @@ config.module.rules = [
       {
         loader: 'postcss-loader',
         options: {
-          ident: 'postcss-rmwc',
           plugins: () => [
             postcssImport(),
             postcssPresetEnv(postCssPresetEnvOptions),
