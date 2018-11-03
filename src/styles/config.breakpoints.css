@@ -1,6 +1,7 @@
 @custom-media --sd-tablet only screen and (min-width: 600px);
 @custom-media --sd-desktop only screen and (min-width: 1024px);
 @custom-media --sd-desktopMax only screen and (max-width: 1023px);
+@custom-media --sd-desktopDashMax (max-width: 1040px);
 @custom-media --sd-desktopLarge only screen and (min-wdith: 1400px);
 @custom-media --sd-mobile (max-width: 600px);
 @custom-media --sd-notMobile (min-width: 600px);
