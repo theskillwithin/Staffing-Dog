@@ -102,6 +102,7 @@ class Filter extends Component {
           onChange={this.onChange}
           onMenuOpen={this.open}
           onMenuClose={this.close}
+          isSearchable={false}
           {...this.props}
         />
       </div>
