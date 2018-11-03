@@ -10,6 +10,7 @@ import ProfilePhotoSVG from '@component/svg/ProfilePhoto'
 import ReplySVG from '@component/svg/Reply'
 import Icon from '@component/icon' // todo to remove
 import Arrow from '@component/svg/Arrow'
+import MessagesIcon from '@component/svg/Chat'
 import Button from '@component/button'
 import Select from '@component/select'
 import { getThreads, findThreads } from '@store/messages'
@@ -61,7 +62,7 @@ class Messages extends React.Component {
     return (
       <Card
         title="Messages"
-        icon="chat"
+        icon={MessagesIcon}
         action="New Message"
         actionCb={this.newMessage}
         actionProps={{ round: true, secondary: true, short: true }}

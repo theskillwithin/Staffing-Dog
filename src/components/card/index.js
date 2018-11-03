@@ -27,7 +27,7 @@ const Card = ({
             {icon &&
               !header && (
                 <div className={theme.icon}>
-                  {typeof icon === 'string' ? icon : <IconComponent />}
+                  <IconComponent />
                 </div>
               )}
             {title && !header && <h2 className={theme.title}>{title}</h2>}
@@ -69,7 +69,7 @@ Card.defaultProps = {
 
 Card.propTypes = {
   title: string,
-  icon: oneOfType([string, node]),
+  icon: node,
   header: oneOfType([func, bool]),
   children: node.isRequired,
   actionCb: oneOfType([func, bool]),
