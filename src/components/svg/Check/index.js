@@ -6,7 +6,7 @@ import SVGCheck from '../files/check.svg'
 
 import theme from './theme.css'
 
-const Circle = ({ className, color, width }) => (
+const Check = ({ className, color, width }) => (
   <span
     className={classnames(className, theme.svg, color && theme[color])}
     dangerouslySetInnerHTML={{ __html: SVGCheck }}
@@ -14,16 +14,16 @@ const Circle = ({ className, color, width }) => (
   />
 )
 
-Circle.defaultProps = {
+Check.defaultProps = {
   className: '',
   color: null,
   width: 13,
 }
 
-Circle.propTypes = {
+Check.propTypes = {
   className: string,
   color: oneOf(['green', 'white']),
   width: number,
 }
 
-export default Circle
+export default Check
