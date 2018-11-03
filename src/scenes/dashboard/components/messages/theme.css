@@ -1,4 +1,4 @@
-@import "../../../../styles/config.css";
+@import '../../../../styles/config.css';
 
 .threadsContainer {
   width: calc(100% + 3em);
@@ -65,12 +65,21 @@
   }
 
   button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     position: absolute;
     top: 1em;
     right: 1em;
+    color: var(--sd-primary);
 
-    i {
-      font-size: 22px;
+    &:hover {
+      color: var(--sd-blueDark);
+    }
+
+    span {
+      margin-top: -15px;
+      margin-left: 21px;
     }
   }
 }
@@ -162,7 +171,7 @@
       color: var(--sd-gray);
 
       &:before {
-        content: "";
+        content: '';
         display: block;
         margin-right: 0.5em;
         background: var(--sd-primary);
@@ -181,12 +190,10 @@
 }
 
 .threadContainer {
-
   &.quickReplyActive {
     box-shadow: 0 0 10px 0 rgba(93, 98, 107, 0.16);
   }
 }
-
 
 .thread {
   display: flex;
@@ -199,7 +206,7 @@
 
   &.unread {
     &:before {
-      content: "";
+      content: '';
       background: var(--sd-primary);
       height: 5em;
       width: 4px;
@@ -216,7 +223,6 @@
     background: var(--sd-blueGray);
   }
 }
-
 
 .message {
   display: flex;

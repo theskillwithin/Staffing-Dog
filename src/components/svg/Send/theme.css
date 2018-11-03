@@ -1,0 +1,12 @@
+@import '../../../styles/config.css';
+
+.svg {
+  :global .cls-1 {
+    fill: white;
+  }
+
+  svg {
+    vertical-align: middle;
+    width: 23.4px;
+  }
+}

@@ -8,8 +8,8 @@ import find from 'lodash/find'
 import classnames from 'classnames'
 import ProfilePhotoSVG from '@component/svg/ProfilePhoto'
 import ReplySVG from '@component/svg/Reply'
-import Icon from '@component/icon' // todo to remove
 import Arrow from '@component/svg/Arrow'
+import SendIcon from '@component/svg/Send'
 import MessagesIcon from '@component/svg/Chat'
 import Button from '@component/button'
 import Select from '@component/select'
@@ -124,7 +124,8 @@ class Messages extends React.Component {
                         onChange={e => this.handleChange(e.target.value)}
                       />
                       <Button primary round>
-                        <Icon use="send" />
+                        Send
+                        <SendIcon />
                       </Button>
                     </div>
                   </div>
@@ -184,7 +185,8 @@ class Messages extends React.Component {
                 onChange={e => this.handleChange(e.target.value)}
               />
               <Button primary round>
-                <Icon use="send" />
+                Send
+                <SendIcon />
               </Button>
             </div>
           </div>
