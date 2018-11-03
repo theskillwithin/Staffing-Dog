@@ -39,9 +39,9 @@ class Settings extends React.Component {
           </Tabs>
 
           {this.state.activeTabIndex === 0 && <AboutMe />}
-          {this.state.activeTabIndex === 2 && <h1>References</h1>}
-          {this.state.activeTabIndex === 3 && <h1>Notifications</h1>}
-          {this.state.activeTabIndex === 4 && <h1>Security</h1>}
+          {this.state.activeTabIndex === 1 && <h1>References</h1>}
+          {this.state.activeTabIndex === 2 && <h1>Notifications</h1>}
+          {this.state.activeTabIndex === 3 && <h1>Security</h1>}
         </Card>
       </div>
     )
