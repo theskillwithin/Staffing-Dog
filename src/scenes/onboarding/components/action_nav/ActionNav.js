@@ -2,9 +2,9 @@ import React from 'react'
 import { object, bool, func, array, string, shape } from 'prop-types'
 import find from 'lodash/find'
 import classnames from 'classnames'
+import Arrow from '@component/svg/Arrow'
 
 import Button from '../../../../components/button'
-import Icon from '../../../../components/icon'
 
 import theme from './theme.css'
 
@@ -31,7 +31,10 @@ const ActionNav = ({ match, history, steps, goToStep, savingStep, loadingNextSte
               round
             >
               <span className={theme.iconLeft}>
-                <Icon inButton="left" use="arrow_back" /> Previous Step
+                <span>
+                  <Arrow small direction="left" color="white" />
+                </span>{' '}
+                Previous Step
               </span>
             </Button>
           </div>
@@ -50,7 +53,10 @@ const ActionNav = ({ match, history, steps, goToStep, savingStep, loadingNextSte
             round
           >
             <span className={theme.iconRight}>
-              Next Step <Icon inButton="right" use="arrow_forward" />
+              Next Step{' '}
+              <span>
+                <Arrow small color="white" />
+              </span>
             </span>
           </Button>
         </div>

@@ -1,0 +1,21 @@
+@import '../../../styles/config.css';
+
+.svg {
+  :global .cls-1,
+  :global .cls-2 {
+    fill: var(--sd-primary);
+  }
+
+  :global .cls-3 {
+    stroke: none;
+  }
+
+  :global .cls-4 {
+    fill: none;
+  }
+
+  svg {
+    vertical-align: middle;
+    width: 18px;
+  }
+}

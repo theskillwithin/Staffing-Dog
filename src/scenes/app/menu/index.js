@@ -3,7 +3,8 @@ import enhanceWithClickOutside from 'react-click-outside'
 import { Link } from 'react-router-dom'
 import { object } from 'prop-types'
 import classnames from 'classnames'
-import Icon from '@component/icon'
+import CloseIcon from '@component/svg/Close'
+import Hambuger from '@component/svg/Hamburger'
 
 import theme from './theme.css'
 
@@ -36,7 +37,7 @@ class MainMenu extends React.Component {
           className={theme.contactMobile}
           type="button"
         >
-          {this.state.mobileActive ? <Icon use="close" /> : <Icon use="menu" />}
+          {this.state.mobileActive ? <CloseIcon /> : <Hambuger />}
         </button>
         <ul
           className={classnames(theme.nav, this.state.mobileActive && theme.mobileActive)}

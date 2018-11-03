@@ -3,7 +3,7 @@ import { string, object, func } from 'prop-types'
 import classnames from 'classnames'
 import Dropdown from '@component/dropdown'
 import Button from '@component/button'
-import Icon from '@component/icon'
+import Arrow from '@component/svg/Arrow'
 
 import theme from './theme.css'
 
@@ -36,7 +36,7 @@ const WeekRow = ({ day, schedule, onChange }) => (
           small
         />
       </div>
-      <Icon secondary use="arrow_forward" />
+      <Arrow />
       <div className={theme.dropdown}>
         <Dropdown
           value={schedule.to}

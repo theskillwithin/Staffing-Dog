@@ -2,6 +2,8 @@ import React from 'react'
 import { array } from 'prop-types'
 import classnames from 'classnames'
 
+import Check from '../svg/Check'
+
 import theme from './theme.css'
 
 const Checklist = ({ list }) => (
@@ -12,6 +14,7 @@ const Checklist = ({ list }) => (
         className={classnames(theme.li, li.checked && theme.checked)}
       >
         {li.name}
+        <Check color="white" className={theme.check} width={16} />
       </li>
     ))}
   </ul>

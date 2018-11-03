@@ -49,8 +49,7 @@
 
 .location {
   font-size: 14px;
-  i {
-    color: var(--sd-blue);
+  svg {
     margin-right: 6px;
   }
 }

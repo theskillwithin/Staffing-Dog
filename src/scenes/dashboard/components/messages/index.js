@@ -8,7 +8,9 @@ import find from 'lodash/find'
 import classnames from 'classnames'
 import ProfilePhotoSVG from '@component/svg/ProfilePhoto'
 import ReplySVG from '@component/svg/Reply'
-import Icon from '@component/icon'
+import Arrow from '@component/svg/Arrow'
+import SendIcon from '@component/svg/Send'
+import MessagesIcon from '@component/svg/Chat'
 import Button from '@component/button'
 import Select from '@component/select'
 import { getThreads, findThreads } from '@store/messages'
@@ -60,7 +62,7 @@ class Messages extends React.Component {
     return (
       <Card
         title="Messages"
-        icon="chat"
+        icon={MessagesIcon}
         action="New Message"
         actionCb={this.newMessage}
         actionProps={{ round: true, secondary: true, short: true }}
@@ -122,7 +124,8 @@ class Messages extends React.Component {
                         onChange={e => this.handleChange(e.target.value)}
                       />
                       <Button primary round>
-                        <Icon use="send" />
+                        Send
+                        <SendIcon />
                       </Button>
                     </div>
                   </div>
@@ -132,7 +135,7 @@ class Messages extends React.Component {
           </div>
           <div className={theme.messages}>
             <button type="button" className={theme.back} onClick={this.back}>
-              <Icon use="arrow_back" />
+              <Arrow direction="left" />
             </button>
             {this.state.active === 'new' && (
               <div className={theme.users}>
@@ -182,7 +185,8 @@ class Messages extends React.Component {
                 onChange={e => this.handleChange(e.target.value)}
               />
               <Button primary round>
-                <Icon use="send" />
+                Send
+                <SendIcon />
               </Button>
             </div>
           </div>

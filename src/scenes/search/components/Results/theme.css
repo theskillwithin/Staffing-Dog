@@ -23,9 +23,9 @@
   justify-content: space-between;
   font-size: 14px;
 
-  i {
+  svg {
     color: var(--sd-blue);
-    margin-right: 6px;
+    margin-right: 8px;
     margin-top: -3px;
   }
 }

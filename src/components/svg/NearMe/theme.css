@@ -1,0 +1,16 @@
+@import '../../../styles/config.css';
+
+.svg {
+  :global .cls-1 {
+    fill: var(--sd-primary);
+    stroke: var(--sd-primary);
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-miterlimit: 10;
+  }
+
+  svg {
+    vertical-align: middle;
+    width: 23.4px;
+  }
+}

@@ -5,6 +5,7 @@ import Card from '@component/card'
 import Switch from '@component/switch'
 import Dropdown from '@component/dropdown'
 import { findScheduledEvents, getScheduledEvents } from '@store/jobs'
+import CalendarIcon from '@component/svg/Calendar'
 import Calendar from '@component/calendar'
 
 import WeekRow from './weeks'
@@ -94,7 +95,7 @@ class JobSchedule extends React.Component {
     const { state } = this
     return (
       <Card
-        icon="date_range"
+        icon={CalendarIcon}
         title="Job Schedule"
         action="Update Schedule"
         actionCb={this.updateSchedule}

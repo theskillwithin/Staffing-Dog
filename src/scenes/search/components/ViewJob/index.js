@@ -1,7 +1,7 @@
 import React from 'react'
 import classnames from 'classnames'
 import Button from '@component/button'
-import Icon from '@component/icon'
+import LocationOnIcon from '@component/svg/location'
 
 import appTheme from '../../../app/theme.css'
 
@@ -25,7 +25,7 @@ const ViewJob = () => (
         the dentist as required (i.e. x-rays, impressions, etc)
       </p>
       <div className={theme.location}>
-        <Icon use="location_on" />
+        <LocationOnIcon />
         <strong>Salt Lake City, UT</strong>
       </div>
       <div className={theme.details}>

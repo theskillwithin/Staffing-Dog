@@ -4,7 +4,7 @@ import classnames from 'classnames'
 import SVGCertification from '../../../../components/svg/files/certification.svg'
 import SVGPlantTall from '../../../../components/svg/files/plant_tall.svg'
 import Button from '../../../../components/button'
-import Icon from '../../../../components/icon'
+import Arrow from '../../../../components/svg/Arrow'
 
 import theme from './theme.css'
 
@@ -27,7 +27,7 @@ const CompleteNav = () => (
 
         <div>
           <Button primary round>
-            Advanced Setup <Icon inButton="right" use="arrow_forward" />
+            Advanced Setup <Arrow />
           </Button>
         </div>
       </div>

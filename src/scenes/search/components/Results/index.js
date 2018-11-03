@@ -8,7 +8,7 @@ import Card from '@component/card'
 import Filter from '@component/filter'
 import Button from '@component/button'
 import Star from '@component/svg/FavStar'
-import Icon from '@component/icon'
+import LocationOnIcon from '@component/svg/location'
 
 import appTheme from '../../../app/theme.css'
 import { getResults, findResults, findLoading, findError } from '../../store'
@@ -120,7 +120,7 @@ class Search extends React.Component {
             <>
               <div className={theme.searchResultsMeta}>
                 <p className={theme.cityMeta}>
-                  <Icon use="location_on" />
+                  <LocationOnIcon />
                   Salt Lake City, UT
                 </p>
                 <p>

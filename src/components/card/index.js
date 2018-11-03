@@ -2,7 +2,6 @@ import React from 'react'
 import { node, string, func, object, number, bool, oneOfType } from 'prop-types'
 import ErrorBoundry from '@component/error_boundry'
 import classnames from 'classnames'
-import Icon from '@sd/components/icon'
 import Button from '@sd/components/button'
 import LoadingBar from '@sd/components/loading_bar'
 
@@ -18,45 +17,48 @@ const Card = ({
   actionProps,
   progress,
   type,
-}) => (
-  <ErrorBoundry>
-    <div className={classnames(theme.card, type && theme[type])}>
-      {(title || header) && (
-        <header className={theme.cardHeader}>
-          {icon &&
-            !header && (
-              <div className={theme.icon}>
-                <Icon primary use={icon} />
-              </div>
+}) => {
+  const IconComponent = icon
+  return (
+    <ErrorBoundry>
+      <div className={classnames(theme.card, type && theme[type])}>
+        {(title || header) && (
+          <header className={theme.cardHeader}>
+            {icon &&
+              !header && (
+                <div className={theme.icon}>
+                  <IconComponent />
+                </div>
+              )}
+            {title && !header && <h2 className={theme.title}>{title}</h2>}
+            {header && !title && header({ style: theme })}
+            {action &&
+              actionCb && (
+                <Button {...actionProps} onClick={() => actionCb()}>
+                  {action}
+                </Button>
+              )}
+            {progress && (
+              <h2 className={theme.progress}>
+                {progress * 100}% &nbsp;
+                <span>Complete</span>
+              </h2>
             )}
-          {title && !header && <h2 className={theme.title}>{title}</h2>}
-          {header && !title && header({ style: theme })}
-          {action &&
-            actionCb && (
-              <Button {...actionProps} onClick={() => actionCb()}>
-                {action}
-              </Button>
-            )}
-          {progress && (
-            <h2 className={theme.progress}>
-              {progress * 100}% &nbsp;
-              <span>Complete</span>
-            </h2>
-          )}
-        </header>
-      )}
+          </header>
+        )}
 
-      <section className={theme.cardContent}>
-        {progress && <LoadingBar className={theme.loadingBar} progress={progress} />}
-        {children}
-      </section>
-    </div>
-  </ErrorBoundry>
-)
+        <section className={theme.cardContent}>
+          {progress && <LoadingBar className={theme.loadingBar} progress={progress} />}
+          {children}
+        </section>
+      </div>
+    </ErrorBoundry>
+  )
+}
 
 Card.defaultProps = {
   title: '',
-  icon: false,
+  icon: null,
   header: false,
   action: false,
   actionCb: false,
@@ -67,7 +69,7 @@ Card.defaultProps = {
 
 Card.propTypes = {
   title: string,
-  icon: oneOfType([string, bool]),
+  icon: node,
   header: oneOfType([func, bool]),
   children: node.isRequired,
   actionCb: oneOfType([func, bool]),

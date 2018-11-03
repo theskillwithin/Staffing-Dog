@@ -25,20 +25,23 @@
       display: block;
       border-radius: 50px;
       height: 28px;
-      width:  28px;
+      width: 28px;
       border: solid 2px #bbc1d1;
     }
 
     &.checked:before {
-      font-family: 'Material Icons';
-      content: 'check';
-      -webkit-font-feature-settings: 'liga';
       color: white;
       background-color: var(--sd-green);
       border: solid 2px var(--sd-green);
       font-size: 1.3em;
       padding-left: 3px;
       padding-top: 1px;
+    }
+
+    .check {
+      position: absolute;
+      top: 0.94em;
+      left: -1.51em;
     }
   }
 }
