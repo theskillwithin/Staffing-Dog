@@ -1,7 +1,7 @@
 import React from 'react'
 import { object } from 'prop-types'
 import classnames from 'classnames'
-import Icon from '@component/icon'
+import NearMeIcon from '@component/svg/NearMe'
 import Map from '@component/map'
 
 import theme from './theme.css'
@@ -28,7 +28,7 @@ class JobScheduleEvent extends React.Component {
             </h5>
             <h6>{event.address}</h6>
           </div>
-          <Icon primary use="near_me" />
+          <NearMeIcon />
         </button>
         <div className={classnames(theme.map, this.state.open && theme.open)}>
           <Map
