@@ -36,6 +36,10 @@
   }
 }
 
+.secondaryDark {
+  color: black;
+}
+
 .large {
   line-height: 48px;
 }
@@ -50,6 +54,12 @@
 
 .small {
   line-height: 30px;
+}
+
+.width {
+  padding-left: 0;
+  padding-right: 0;
+  text-align: center;
 }
 
 .disabled {
