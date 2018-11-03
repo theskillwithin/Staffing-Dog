@@ -1,5 +1,5 @@
 import React from 'react'
-import { bool, string, oneOfType, func, node, oneOf, number } from 'prop-types'
+import { bool, string, oneOfType, func, node, oneOf } from 'prop-types'
 import classnames from 'classnames'
 
 import theme from './theme.css'
@@ -56,7 +56,7 @@ Button.defaultProps = {
   disabled: false,
   loading: false,
   size: 'mediumSmall',
-  width: 'auto',
+  width: null,
 }
 
 Button.propTypes = {
@@ -72,7 +72,7 @@ Button.propTypes = {
   type: oneOf(['button', 'submit', 'reset']),
   loading: bool,
   size: oneOf(['small', 'mediumSmall', 'medium', 'large']),
-  width: oneOfType([string, number]),
+  width: string,
 }
 
 export default Button
