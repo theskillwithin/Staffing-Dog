@@ -2,6 +2,7 @@ import React from 'react'
 import { array, bool, oneOfType } from 'prop-types'
 import Card from '@component/card'
 import Checklist from '@component/checklist'
+import ListIcon from '@component/svg/list'
 import filter from 'lodash/filter'
 
 const list = [
@@ -20,7 +21,7 @@ const progressPercent = (collection, search) => {
 const ToDoList = () => (
   <Card
     title="To Do List"
-    icon="list"
+    icon={ListIcon}
     progress={progressPercent(list, { checked: true })}
   >
     <Checklist list={list} />
