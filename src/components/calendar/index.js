@@ -62,6 +62,8 @@ class Calendar extends React.Component {
   render() {
     const { date, startDate, endDate } = this.state
 
+    const dates = [...this.props.activeDates, ...this.props.blackoutDates]
+
     return (
       <div className={theme.calendar}>
         <Heading date={date} changeMonth={this.changeMonth} resetDate={this.resetDate} />
@@ -71,7 +73,7 @@ class Calendar extends React.Component {
           date={date}
           startDate={startDate}
           endDate={endDate}
-          activeDates={this.props.activeDates}
+          activeDates={dates}
           editable={this.props.editable}
         />
       </div>
@@ -81,11 +83,14 @@ class Calendar extends React.Component {
 
 Calendar.defaultProps = {
   editable: false,
+  activeDates: [],
+  blackoutDates: [],
 }
 
 Calendar.propTypes = {
   editable: bool,
-  activeDates: array.isRequired,
+  activeDates: array,
+  blackoutDates: array,
   onChangeMonth: func,
 }
 

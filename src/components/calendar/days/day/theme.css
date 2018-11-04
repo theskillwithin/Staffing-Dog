@@ -1,19 +1,5 @@
 @import '../../../../styles/config';
 
-.active {
-  font-weight: var(--sd-fontWeightBold);
-  border-radius: 50px;
-  
-  &:after {
-    content: '';
-    display: block;
-    width: 20px;
-    height: 2px;
-    background: var(--sd-red);
-    margin: -2px auto auto auto;
-  }
-}
-
 .muted {
   color: rgba(0, 0, 0, 0.3);
 }
@@ -22,8 +8,10 @@
   border-radius: 0;
 }
 
-.start, .between, .end {
-  background-color: var(--sd-grayLight);
+.start,
+.between,
+.end {
+  background-color: var(--sd-primary);
   color: #fff;
 }
 
@@ -39,38 +27,59 @@
   border-radius: 50px;
 }
 
-.between:nth-child(7n):after, .start:nth-child(7n):after {
-  content: "";
+.between:nth-child(7n):after,
+.start:nth-child(7n):after {
+  content: '';
   position: absolute;
   top: 0;
   bottom: 0;
   left: 100%;
-  background-color: var(--sd-grayLight);
+  background-color: var(--sd-primary);
   width: 20px;
 }
 
-.between:nth-child(7n + 1):after, .end:nth-child(7n + 1):after {
-  content: "";
+.between:nth-child(7n + 1):after,
+.end:nth-child(7n + 1):after {
+  content: '';
   position: absolute;
   top: 0;
   bottom: 0;
   right: 100%;
-  background-color: var(--sd-grayLight);
+  background-color: var(--sd-primary);
   width: 20px;
 }
 
-.between.primary:nth-child(7n):after, .start.primary:nth-child(7n):after {
-  background-color: var(--sd-primary);
+.between.blackout:nth-child(7n):after,
+.start.blackout:nth-child(7n):after {
+  background-color: var(--sd-grayLighter);
 }
 
-.between.primary:nth-child(7n + 1):after, .end.primary:nth-child(7n + 1):after {
-  background-color: var(--sd-primary);
+.between.blackout:nth-child(7n + 1):after,
+.end.blackout:nth-child(7n + 1):after {
+  background-color: var(--sd-grayLighter);
 }
 
 .start.end:after {
   display: none;
 }
 
-.primary {
-  background-color: var(--sd-primary);
+.blackout {
+  background-color: var(--sd-grayLighter);
+}
+
+.active {
+  position: relative;
+  font-weight: var(--sd-fontWeightBold);
+
+  &:before {
+    content: '';
+    display: block;
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 20px;
+    height: 2px;
+    background: var(--sd-red);
+  }
 }
