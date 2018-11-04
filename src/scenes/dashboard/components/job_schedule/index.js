@@ -131,7 +131,6 @@ class JobSchedule extends React.Component {
         </div>
         <hr className={theme.divider} />
         <Calendar activeDates={this.props.events} />
-        <hr className={theme.divider} />
         <div className={theme.events}>
           {this.props.events.map(event => (
             <Event key={event.id} event={event} />
