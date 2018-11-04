@@ -63,7 +63,6 @@ class Calendar extends React.Component {
     const { date, startDate, endDate } = this.state
 
     const dates = [...this.props.activeDates, ...this.props.blackoutDates]
-    console.log(dates)
 
     return (
       <div className={theme.calendar}>
