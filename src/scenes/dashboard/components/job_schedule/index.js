@@ -25,6 +25,7 @@ class JobSchedule extends React.Component {
   daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
 
   state = {
+    showSchedule: false,
     form: {
       switch: false,
       daysScheduled: false,
@@ -71,7 +72,7 @@ class JobSchedule extends React.Component {
   componentDidMount = () => this.getCalendarEvents(new Date())
 
   updateSchedule = () => {
-    this.setState({ updateSchedule: new Date().time() })
+    this.setState(({ showSchedule }) => ({ showSchedule: !showSchedule }))
   }
 
   getCalendarEvents = date => {
@@ -97,54 +98,66 @@ class JobSchedule extends React.Component {
   }
 
   render() {
-    const { state } = this
+    const {
+      days,
+      daysOfWeek,
+      state,
+      updateSchedule,
+      handleToggle,
+      handleChange,
+      handleScheduleChange,
+    } = this
+
     return (
       <Card
         icon={CalendarIcon}
         title="Job Schedule"
-        action="Update Schedule"
-        actionCb={this.updateSchedule}
+        action={`${state.showSchedule ? 'Hide' : 'Show'} Schedule`}
+        actionCb={updateSchedule}
         actionProps={{ round: true, secondary: true, short: true }}
       >
-        <div className={theme.inputRow}>
-          <span>Same day job requests</span>
-          <Switch checked={state.form.switch} onChange={this.handleToggle}>
-            {state.form.switch ? 'Yes' : 'No'}
-          </Switch>
-        </div>
-        <div className={theme.inputRow}>
-          <span>Days out I can be scheduled</span>
-          <div className={theme.dropdown}>
-            <Dropdown
-              value={state.form.daysScheduled}
-              onChange={value => this.handleChange('daysScheduled', value)}
-              options={this.days}
-              height={33}
-              width={120}
-            />
-          </div>
-        </div>
-        <div className={theme.scheduler}>
-          {this.daysOfWeek.map(day => (
-            <WeekRow
-              key={day}
-              day={day.toLowerCase()}
-              schedule={state.form.schedule[day.toLowerCase()]}
-              onChange={this.handleScheduleChange}
-            />
-          ))}
-        </div>
-        <hr className={theme.divider} />
+        {state.showSchedule && (
+          <>
+            <div className={theme.inputRow}>
+              <span>Same day job requests</span>
+              <Switch checked={state.form.switch} onChange={handleToggle}>
+                {state.form.switch ? 'Yes' : 'No'}
+              </Switch>
+            </div>
+            <div className={theme.inputRow}>
+              <span>Days out I can be scheduled</span>
+              <div className={theme.dropdown}>
+                <Dropdown
+                  value={state.form.daysScheduled}
+                  onChange={value => handleChange('daysScheduled', value)}
+                  options={days}
+                  height={33}
+                  width={120}
+                />
+              </div>
+            </div>
+            <div className={theme.scheduler}>
+              {daysOfWeek.map(day => (
+                <WeekRow
+                  key={day}
+                  day={day.toLowerCase()}
+                  schedule={state.form.schedule[day.toLowerCase()]}
+                  onChange={handleScheduleChange}
+                />
+              ))}
+            </div>
+            <hr className={theme.divider} />
+          </>
+        )}
 
         <Calendar
           activeDates={this.props.events}
           onChangeMonth={this.getCalendarEvents}
         />
 
-        <hr className={theme.divider} />
         <div className={theme.events}>
-          {this.props.events.map(event => (
-            <Event key={event.id} event={event} />
+          {this.props.events.map((event, eventIndex) => (
+            <Event key={event.id} event={event} open={eventIndex === 0} />
           ))}
         </div>
       </Card>
