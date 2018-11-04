@@ -4,15 +4,11 @@ import classnames from 'classnames'
 import Dropdown from '@component/dropdown'
 import Button from '@component/button'
 import Arrow from '@component/svg/Arrow'
+import { timesOfDay } from '@sdog/utils/dates'
 
 import theme from './theme.css'
 
-const time = [
-  { label: '7:00 am', value: '7:00 am' },
-  { label: '7:30 am', value: '7:30 am' },
-  { label: '8:00 am', value: '8:00 am' },
-  { label: '8:30 am', value: '8:30 am' },
-]
+const time = timesOfDay().map(hour => ({ label: hour, value: hour }))
 
 const WeekRow = ({ day, schedule, onChange }) => (
   <div className={classnames(theme.day, schedule.active && theme.active)}>

@@ -1,10 +1,12 @@
 import React from 'react'
 import { func, array } from 'prop-types'
 import { connect } from 'react-redux'
+import moment from 'moment'
 import Card from '@component/card'
 import Switch from '@component/switch'
 import Dropdown from '@component/dropdown'
 import { findScheduledEvents, getScheduledEvents } from '@store/jobs'
+import { findSchedule, getSchedule } from '@store/user'
 import CalendarIcon from '@component/svg/Calendar'
 import Calendar from '@component/calendar'
 
@@ -30,49 +32,52 @@ class JobSchedule extends React.Component {
       schedule: {
         sun: {
           active: false,
-          from: { label: '7:00 am', value: '7:00 am' },
-          to: { label: '7:00 am', value: '7:00 am' },
+          from: { label: '06:00', value: '06:00' },
+          to: { label: '17:00', value: '17:00' },
         },
         mon: {
           active: true,
-          from: { label: '7:00 am', value: '7:00 am' },
-          to: { label: '7:00 am', value: '7:00 am' },
+          from: { label: '06:00', value: '06:00' },
+          to: { label: '17:00', value: '17:00' },
         },
         tue: {
           active: true,
-          from: { label: '7:00 am', value: '7:00 am' },
-          to: { label: '7:00 am', value: '7:00 am' },
+          from: { label: '06:00', value: '06:00' },
+          to: { label: '17:00', value: '17:00' },
         },
         wed: {
           active: true,
-          from: { label: '7:00 am', value: '7:00 am' },
-          to: { label: '7:00 am', value: '7:00 am' },
+          from: { label: '06:00', value: '06:00' },
+          to: { label: '17:00', value: '17:00' },
         },
         thu: {
           active: true,
-          from: { label: '7:00 am', value: '7:00 am' },
-          to: { label: '7:00 am', value: '7:00 am' },
+          from: { label: '06:00', value: '06:00' },
+          to: { label: '17:00', value: '17:00' },
         },
         fri: {
           active: true,
-          from: { label: '7:00 am', value: '7:00 am' },
-          to: { label: '7:00 am', value: '7:00 am' },
+          from: { label: '06:00', value: '06:00' },
+          to: { label: '17:00', value: '17:00' },
         },
         sat: {
           active: true,
-          from: { label: '7:00 am', value: '7:00 am' },
-          to: { label: '7:00 am', value: '7:00 am' },
+          from: { label: '06:00', value: '06:00' },
+          to: { label: '17:00', value: '17:00' },
         },
       },
     },
   }
 
-  componentDidMount() {
-    this.props.getScheduledEvents()
-  }
+  componentDidMount = () => this.getCalendarEvents(new Date())
 
   updateSchedule = () => {
     this.setState(({ showSchedule }) => ({ showSchedule: !showSchedule }))
+  }
+
+  getCalendarEvents = date => {
+    this.props.getScheduledEvents(moment(date).format())
+    this.props.getSchedule(moment(date).format())
   }
 
   handleToggle = value => {
@@ -145,7 +150,10 @@ class JobSchedule extends React.Component {
           </>
         )}
 
-        <Calendar activeDates={this.props.events} />
+        <Calendar
+          activeDates={this.props.events}
+          onChangeMonth={this.getCalendarEvents}
+        />
 
         <div className={theme.events}>
           {this.props.events.map((event, eventIndex) => (
@@ -159,12 +167,14 @@ class JobSchedule extends React.Component {
 
 JobSchedule.propTypes = {
   getScheduledEvents: func.isRequired,
+  getSchedule: func.isRequired,
   events: array.isRequired,
 }
 
 export default connect(
   state => ({
     events: findScheduledEvents(state),
+    schedule: findSchedule(state),
   }),
-  { getScheduledEvents },
+  { getScheduledEvents, getSchedule },
 )(JobSchedule)

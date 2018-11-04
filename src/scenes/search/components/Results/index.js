@@ -61,7 +61,7 @@ class Search extends React.Component {
 
   toggleFav = id => {
     // this.props.fav(id)
-    console.log(id)
+    console.log('fav', id)
   }
 
   render() {
