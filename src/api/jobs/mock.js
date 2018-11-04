@@ -12,7 +12,6 @@ export const events = [
     type: 'red',
     startDate: '2018-11-02',
     endDate: '2018-11-05',
-    primary: false,
   },
   {
     id: 1,
@@ -23,7 +22,6 @@ export const events = [
     type: 'blue',
     startDate: '2018-11-12',
     endDate: '2018-11-19',
-    primary: true,
   },
   {
     id: 2,
@@ -32,9 +30,8 @@ export const events = [
     time: '9:30 AM - 5 PM',
     address: '286 East 12200 South Draper, UT 84020',
     type: 'grey',
-    startDate: '2018-11-29',
-    endDate: '2018-12-04',
-    primary: true,
+    startDate: '2018-11-28',
+    endDate: '2018-11-28',
   },
 ]
 

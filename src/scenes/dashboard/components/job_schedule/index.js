@@ -15,6 +15,14 @@ import Event from './event'
 import theme from './theme.css'
 
 class JobSchedule extends React.Component {
+  backoutDates = [
+    {
+      startDate: '2018-11-29',
+      endDate: '2018-12-04',
+      blackout: true,
+    },
+  ]
+
   days = [
     { label: '30 Days', value: '30' },
     { label: '60 Days', value: '60' },
@@ -152,6 +160,7 @@ class JobSchedule extends React.Component {
 
         <Calendar
           activeDates={this.props.events}
+          blackoutDates={this.backoutDates}
           onChangeMonth={this.getCalendarEvents}
         />
 

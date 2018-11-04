@@ -11,7 +11,7 @@
 .start,
 .between,
 .end {
-  background-color: var(--sd-grayLight);
+  background-color: var(--sd-primary);
   color: #fff;
 }
 
@@ -34,7 +34,7 @@
   top: 0;
   bottom: 0;
   left: 100%;
-  background-color: var(--sd-grayLight);
+  background-color: var(--sd-primary);
   width: 20px;
 }
 
@@ -45,18 +45,18 @@
   top: 0;
   bottom: 0;
   right: 100%;
-  background-color: var(--sd-grayLight);
+  background-color: var(--sd-primary);
   width: 20px;
 }
 
 .between.primary:nth-child(7n):after,
 .start.primary:nth-child(7n):after {
-  background-color: var(--sd-primary);
+  background-color: var(--sd-grayLighter);
 }
 
 .between.primary:nth-child(7n + 1):after,
 .end.primary:nth-child(7n + 1):after {
-  background-color: var(--sd-primary);
+  background-color: var(--sd-grayLighter);
 }
 
 .start.end:after {
@@ -64,7 +64,7 @@
 }
 
 .primary {
-  background-color: var(--sd-primary);
+  background-color: var(--sd-grayLighter);
 }
 
 .active {
