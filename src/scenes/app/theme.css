@@ -109,19 +109,30 @@ h6 {
   padding-bottom: var(--sd-pagePaddingBottom);
 
   &.columns {
-    @media (--sd-tablet) {
+    padding-right: 1em;
+    padding-left: 1em;
+    @media (--sd-desktop) {
       display: flex;
       align-items: flex-start;
       justify-content: space-between;
+      padding-right: 0;
+      padding-left: 0;
     }
 
     .column {
-      flex: 0 1 475px;
+      flex: 0 1 487px;
 
       > * {
         margin-top: 50px;
 
         &:first-child {
+          margin-top: 0;
+        }
+      }
+
+      & + .column {
+        margin-top: 50px;
+        @media (--sd-desktop) {
           margin-top: 0;
         }
       }

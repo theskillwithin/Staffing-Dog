@@ -19,16 +19,12 @@ body {
   margin: 0;
   font-family: var(--sd-fontName);
   -webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 :global {
-  b, strong {
+  b,
+  strong {
     font-weight: var(--sd-fontWeightBold);
-  }
-
-  .mdc-tab {
-    text-transform: none !important;
-    font-family: var(--sd-fontName) !important;
   }
 }

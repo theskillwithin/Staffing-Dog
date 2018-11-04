@@ -19,7 +19,8 @@ const WeekRow = ({ day, schedule, onChange }) => (
     <div>
       <Button
         onClick={() => onChange('active', !schedule.active, day)}
-        secondary={!schedule.active}
+        secondaryDark={!schedule.active}
+        width="67px"
         round
       >
         {day.toUpperCase()}

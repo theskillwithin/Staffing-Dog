@@ -7,6 +7,7 @@ import theme from './theme.css'
 const Button = ({
   primary,
   secondary,
+  secondaryDark,
   round,
   short,
   className,
@@ -16,6 +17,7 @@ const Button = ({
   children,
   type,
   size,
+  width,
   ...props
 }) => (
   // eslint-disable-next-line react/button-has-type
@@ -26,13 +28,17 @@ const Button = ({
       short && theme.short,
       primary && theme.primary,
       secondary && theme.secondary,
+      secondaryDark && theme.secondary,
+      secondaryDark && theme.secondaryDark,
       className && className,
       size && theme[size],
+      width && theme.width,
       disabled && theme.disabled,
     )}
     onClick={onClick}
     type={type}
     disabled={disabled || loading}
+    style={{ width }}
     {...props}
   >
     {children}
@@ -43,18 +49,21 @@ Button.defaultProps = {
   type: 'submit',
   primary: true,
   secondary: false,
+  secondaryDark: false,
   round: false,
   short: false,
   className: false,
   disabled: false,
   loading: false,
   size: 'mediumSmall',
+  width: null,
 }
 
 Button.propTypes = {
   onClick: func.isRequired,
   primary: bool,
   secondary: bool,
+  secondaryDark: bool,
   round: bool,
   short: bool,
   className: oneOfType([string, bool]),
@@ -63,6 +72,7 @@ Button.propTypes = {
   type: oneOf(['button', 'submit', 'reset']),
   loading: bool,
   size: oneOf(['small', 'mediumSmall', 'medium', 'large']),
+  width: string,
 }
 
 export default Button
