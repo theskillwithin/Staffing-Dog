@@ -60,12 +60,14 @@ html {
   display: flex;
   flex-direction: column;
 
-  @media (--sd-mobile) {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 130px;
+  .signup {
+    @media (--sd-mobile) {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 50px;
+    }
   }
 }
 

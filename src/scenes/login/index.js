@@ -72,6 +72,7 @@ class Login extends React.Component {
                 label="Password"
                 value={this.state.form.password}
                 onChange={value => this.handleChange('password', value)}
+                type="password"
               />
               <Button primary round type="submit">
                 Sign In
