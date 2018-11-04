@@ -62,6 +62,8 @@ class Calendar extends React.Component {
   render() {
     const { date, startDate, endDate } = this.state
 
+    console.log(this.props.activeDates)
+
     return (
       <div className={theme.calendar}>
         <Heading date={date} changeMonth={this.changeMonth} resetDate={this.resetDate} />
