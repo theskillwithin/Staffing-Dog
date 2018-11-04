@@ -2,7 +2,7 @@ import React from 'react'
 import { array, bool, oneOfType } from 'prop-types'
 import Card from '@component/card'
 import Checklist from '@component/checklist'
-import ListIcon from '@component/svg/list'
+import ListIcon from '@component/svg/List'
 import filter from 'lodash/filter'
 
 const list = [
