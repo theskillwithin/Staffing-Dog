@@ -1,5 +1,5 @@
 import React from 'react'
-import { bool, array } from 'prop-types'
+import { bool, array, func } from 'prop-types'
 import moment from 'moment'
 
 import Heading from './heading'
@@ -20,11 +20,18 @@ class Calendar extends React.Component {
   }
 
   changeMonth = month => {
-    const { date } = this.state
+    const {
+      state: { date },
+      props: { onChangeMonth },
+    } = this
 
     date.month(month)
 
     this.setState(date)
+
+    if (onChangeMonth) {
+      onChangeMonth(date)
+    }
   }
 
   changeDate = date => {
@@ -79,6 +86,7 @@ Calendar.defaultProps = {
 Calendar.propTypes = {
   editable: bool,
   activeDates: array.isRequired,
+  onChangeMonth: func,
 }
 
 export default Calendar

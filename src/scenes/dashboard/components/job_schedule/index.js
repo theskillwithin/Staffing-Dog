@@ -1,10 +1,12 @@
 import React from 'react'
 import { func, array } from 'prop-types'
 import { connect } from 'react-redux'
+import moment from 'moment'
 import Card from '@component/card'
 import Switch from '@component/switch'
 import Dropdown from '@component/dropdown'
 import { findScheduledEvents, getScheduledEvents } from '@store/jobs'
+import { findSchedule, getSchedule } from '@store/user'
 import CalendarIcon from '@component/svg/Calendar'
 import Calendar from '@component/calendar'
 
@@ -66,12 +68,15 @@ class JobSchedule extends React.Component {
     },
   }
 
-  componentDidMount() {
-    this.props.getScheduledEvents()
-  }
+  componentDidMount = () => this.getCalendarEvents(new Date())
 
   updateSchedule = () => {
     this.setState({ updateSchedule: new Date().time() })
+  }
+
+  getCalendarEvents = date => {
+    this.props.getScheduledEvents(moment(date).format())
+    this.props.getSchedule(moment(date).format())
   }
 
   handleToggle = value => {
@@ -130,7 +135,12 @@ class JobSchedule extends React.Component {
           ))}
         </div>
         <hr className={theme.divider} />
-        <Calendar activeDates={this.props.events} />
+
+        <Calendar
+          activeDates={this.props.events}
+          onChangeMonth={this.getCalendarEvents}
+        />
+
         <hr className={theme.divider} />
         <div className={theme.events}>
           {this.props.events.map(event => (
@@ -144,12 +154,14 @@ class JobSchedule extends React.Component {
 
 JobSchedule.propTypes = {
   getScheduledEvents: func.isRequired,
+  getSchedule: func.isRequired,
   events: array.isRequired,
 }
 
 export default connect(
   state => ({
     events: findScheduledEvents(state),
+    schedule: findSchedule(state),
   }),
-  { getScheduledEvents },
+  { getScheduledEvents, getSchedule },
 )(JobSchedule)
