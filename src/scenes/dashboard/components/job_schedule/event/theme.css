@@ -10,7 +10,7 @@
   margin-left: -1.5em;
   width: calc(100% + 3em);
   padding: 0 1em;
-  border-top: solid 1px var(--sd-borderColor);
+  border-bottom: solid 1px var(--sd-borderColor);
   background: white; /* FF and safari */
 }
 
