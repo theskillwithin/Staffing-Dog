@@ -111,7 +111,18 @@ config.module.rules = [
     ],
   },
   {
-    test: /\.(svg|png|jpq|jpeg|gif|eot|woff2|woff|ttf)$/,
+    test: /\.(svg|png|jpq|jpeg|gif)$/,
+    include: [path.join(paths.src, '/images')],
+    exclude: [/node_modules/],
+    use: {
+      loader: 'file-loader',
+      options: {
+        name: '[name].[ext]',
+      },
+    },
+  },
+  {
+    test: /\.(svg|eot|woff2|woff|ttf)$/,
     include: [path.join(paths.src, '/fonts')],
     exclude: [/node_modules/],
     use: ['file-loader'],

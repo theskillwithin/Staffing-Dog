@@ -28,17 +28,12 @@ class Filter extends Component {
       alignItems: 'center',
       display: 'flex',
       ':before': {
-        fontFamily: selected ? 'Material Icons' : 'Inherit',
-        backgroundColor: selected ? 'white' : 'transparent',
-        borderRadius: 10,
-        border: '2px solid white',
-        content: selected ? '"check"' : '""',
-        WebkitFontFeatureSettings: 'liga',
+        content: selected ? `url('/src/images/check.svg')` : '""',
         display: 'block',
         marginRight: '1em',
         height: 18,
         width: 18,
-        color: '#0072FF',
+        color: 'white',
       },
     })
 
