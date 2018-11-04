@@ -79,7 +79,7 @@ class Filter extends Component {
       valueContainer: styles => ({ ...styles, paddingLeft: '1em' }),
       dropdownIndicator: styles => ({
         ...styles,
-        color: this.state.open ? 'white' : 'black',
+        color: this.state.open ? 'white !important' : 'black !important',
         paddingRight: '1em',
       }),
       indicatorSeparator: () => ({ display: 'none' }),
