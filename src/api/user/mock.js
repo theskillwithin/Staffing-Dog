@@ -34,7 +34,7 @@ export const mock = {
     return {
       events: schedule.map(event => ({
         ...event,
-        date: date.date(event.date),
+        date: date.date(event.date).format(),
       })),
     }
   },

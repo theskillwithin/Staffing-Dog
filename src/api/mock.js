@@ -7,7 +7,7 @@ import userMock from '@sdog/api/user/mock'
 import log from '@sdog/utils/log'
 
 const mock = new MockAdapter(axios)
-const endpoints = [...messagesMock, ...jobsMock, ...searchMock, userMock]
+const endpoints = [...messagesMock, ...jobsMock, ...searchMock, ...userMock]
 const getResponse = (response, config) =>
   typeof response === 'function' ? response(config) : response
 
