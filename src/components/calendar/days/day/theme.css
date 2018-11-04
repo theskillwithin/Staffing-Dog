@@ -49,13 +49,13 @@
   width: 20px;
 }
 
-.between.primary:nth-child(7n):after,
-.start.primary:nth-child(7n):after {
+.between.blackout:nth-child(7n):after,
+.start.blackout:nth-child(7n):after {
   background-color: var(--sd-grayLighter);
 }
 
-.between.primary:nth-child(7n + 1):after,
-.end.primary:nth-child(7n + 1):after {
+.between.blackout:nth-child(7n + 1):after,
+.end.blackout:nth-child(7n + 1):after {
   background-color: var(--sd-grayLighter);
 }
 
@@ -63,7 +63,7 @@
   display: none;
 }
 
-.primary {
+.blackout {
   background-color: var(--sd-grayLighter);
 }
 

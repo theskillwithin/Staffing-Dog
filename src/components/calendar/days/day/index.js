@@ -25,7 +25,7 @@ const Day = ({ currentDate, date, startDate, endDate, activeDates, onClick }) =>
 
   const muted = !date.isSame(currentDate, 'month')
 
-  const primary =
+  const blackout =
     filter(activeBetween, x => x.blackout === true).length > 0 ||
     filter(activeStart, x => x.blackout === true).length > 0 ||
     filter(activeEnd, x => x.blackout === true).length > 0
@@ -39,7 +39,7 @@ const Day = ({ currentDate, date, startDate, endDate, activeDates, onClick }) =>
         between && theme.between,
         end && theme.end,
         muted && theme.muted,
-        primary && theme.primary,
+        blackout && theme.blackout,
       )}
       role="button"
       tabIndex={0}
