@@ -48,6 +48,9 @@ class Filter extends Component {
         paddingLeft: '1em',
         fontWeight: 500,
         fontSize: 14,
+        ':active': {
+          backgroundColor: 'rgb(0, 159, 253)',
+        },
       }),
       menu: styles => ({
         ...styles,
