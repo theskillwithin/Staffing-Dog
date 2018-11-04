@@ -4,7 +4,7 @@ import classnames from 'classnames'
 
 import theme from './theme.css'
 
-const Logo = props => (
+const LogoInternals = props => (
   <div className={classnames(props.className, theme.logo)}>
     <svg
       width={props.width}
@@ -24,16 +24,33 @@ const Logo = props => (
   </div>
 )
 
-Logo.defaultProps = {
+const Logo = props => {
+  if (props.disabledLink) return <LogoInternals {...props} />
+  return (
+    <a href="/" className={theme.link}>
+      <LogoInternals {...props} />
+    </a>
+  )
+}
+
+LogoInternals.defaultProps = {
   width: '60px',
   className: '',
   hideText: false,
 }
 
-Logo.propTypes = {
+LogoInternals.propTypes = {
   width: string,
   className: string,
   hideText: bool,
+}
+
+Logo.defaultProps = {
+  disableLink: false,
+}
+
+Logo.propTypes = {
+  disableLink: bool,
 }
 
 export default Logo

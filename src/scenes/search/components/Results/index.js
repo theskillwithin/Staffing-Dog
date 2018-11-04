@@ -8,7 +8,7 @@ import Card from '@component/card'
 import Filter from '@component/filter'
 import Button from '@component/button'
 import Star from '@component/svg/FavStar'
-import LocationOnIcon from '@component/svg/location'
+import LocationOnIcon from '@component/svg/Location'
 
 import appTheme from '../../../app/theme.css'
 import { getResults, findResults, findLoading, findError } from '../../store'

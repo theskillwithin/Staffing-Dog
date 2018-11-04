@@ -28,17 +28,12 @@ class Filter extends Component {
       alignItems: 'center',
       display: 'flex',
       ':before': {
-        fontFamily: selected ? 'Material Icons' : 'Inherit',
-        backgroundColor: selected ? 'white' : 'transparent',
-        borderRadius: 10,
-        border: '2px solid white',
-        content: selected ? '"check"' : '""',
-        WebkitFontFeatureSettings: 'liga',
+        content: selected ? `url('/src/images/check.svg')` : '""',
         display: 'block',
-        marginRight: '1em',
+        marginRight: '0.8em',
         height: 18,
-        width: 18,
-        color: '#0072FF',
+        width: 11,
+        color: 'white',
       },
     })
 
@@ -47,12 +42,15 @@ class Filter extends Component {
         ...base,
         ...dot(state.isSelected),
         color: 'white',
-        background: state.isFocused ? 'rgb(0, 175, 253)' : '#0072FF',
+        background: state.isFocused || state.isSelected ? 'rgb(0, 152, 253)' : '#0072FF',
         padding: 5,
         cursor: state.isDisabled ? 'not-allowed' : 'pointer',
         paddingLeft: '1em',
         fontWeight: 500,
         fontSize: 14,
+        ':active': {
+          backgroundColor: 'rgb(0, 159, 253)',
+        },
       }),
       menu: styles => ({
         ...styles,
@@ -76,10 +74,10 @@ class Filter extends Component {
         fontSize: 14,
       }),
       value: styles => ({ ...styles, background: '#0072FF', color: 'white' }),
-      valueContainer: styles => ({ ...styles, paddingLeft: '1em' }),
+      valueContainer: styles => ({ ...styles, paddingLeft: '1.4em' }),
       dropdownIndicator: styles => ({
         ...styles,
-        color: this.state.open ? 'white' : 'black',
+        color: this.state.open ? 'white !important' : 'black !important',
         paddingRight: '1em',
       }),
       indicatorSeparator: () => ({ display: 'none' }),
@@ -102,6 +100,7 @@ class Filter extends Component {
           onChange={this.onChange}
           onMenuOpen={this.open}
           onMenuClose={this.close}
+          isSearchable={false}
           {...this.props}
         />
       </div>

@@ -6,7 +6,7 @@
   --sd-backgroundColor: var(--sd-blueGray);
   --sd-containerWidth: 1024px;
   --sd-pagePaddingBottom: 4em;
-  --sd-pagePaddingTop: 4em;
+  --sd-pagePaddingTop: 50px;
 }
 
 body {
@@ -17,7 +17,8 @@ body {
   min-height: 100vh;
 }
 
-html, .html-app {
+html,
+.html-app {
   background-color: var(--sd-backgroundColor);
   font-family: var(--sd-fontName);
   font-weight: var(--sd-fontWeightNormal);
@@ -78,7 +79,7 @@ h6 {
     }
   }
 
-  &::after {
+  /* &::after {
     content: '';
     display: block;
     width: 100%;
@@ -93,12 +94,11 @@ h6 {
       var(--sd-backgroundColor),
       rgba(255, 255, 255, 0)
     );
-  }
+  } */
 }
 
 .appContent {
   margin-top: var(--sd-headerHeight);
-  padding-top: 2em;
 }
 
 .pageContent {
@@ -109,19 +109,30 @@ h6 {
   padding-bottom: var(--sd-pagePaddingBottom);
 
   &.columns {
-    @media (--sd-tablet) {
+    padding-right: 1em;
+    padding-left: 1em;
+    @media (--sd-desktop) {
       display: flex;
       align-items: flex-start;
       justify-content: space-between;
+      padding-right: 0;
+      padding-left: 0;
     }
 
     .column {
-      flex: 0 1 475px;
+      flex: 0 1 487px;
 
       > * {
-        margin-top: 3em;
+        margin-top: 50px;
 
         &:first-child {
+          margin-top: 0;
+        }
+      }
+
+      & + .column {
+        margin-top: 50px;
+        @media (--sd-desktop) {
           margin-top: 0;
         }
       }
