@@ -43,6 +43,7 @@ class Input extends Component {
           valid && s.valid,
           (textarea || type === 'textarea') && s.textarea,
           disabled && s.disabled,
+          !invalid && !valid && type === 'password' && s.password,
         )}
       >
         {textarea ? (

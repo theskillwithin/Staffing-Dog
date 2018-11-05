@@ -47,7 +47,7 @@ html {
   margin: 0.55em 0;
   width: 100%;
 
-  div {
+  > div {
     margin-top: 22px;
   }
 
