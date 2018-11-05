@@ -68,6 +68,9 @@ class Contact extends React.Component {
               <LiveChatSVG />
               Live Chat
             </a>
+            <a href="/legal" className={theme.legal}>
+              Legal
+            </a>
           </div>
         </div>
       </div>

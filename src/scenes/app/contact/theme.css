@@ -63,6 +63,7 @@
   }
 
   .mobileOption {
+    position: relative;
     display: none;
     background-color: var(--sd-primary);
     border-radius: 8px 8px 0 0;
@@ -115,6 +116,25 @@
       }
     }
 
+    .legal {
+      display: none;
+      position: absolute;
+      bottom: 1em;
+      right: 1em;
+      text-align: right;
+      background: var(--sd-grayLighter);
+      width: 100px;
+      height: 28px;
+      border-radius: 50px;
+      text-align: center;
+      justify-content: center;
+      align-items: center;
+
+      @media (--sd-mobile) {
+        display: flex;
+      }
+    }
+
     &:before {
       content: '';
       display: block;
@@ -131,7 +151,7 @@
     }
 
     @media (--sd-mobile) {
-      height: 185px;
+      height: 200px;
       width: 100%;
       background-color: var(--sd-blackTxt);
       box-shadow: 0 3px 6px 0 var(--sd-shadowColor);
