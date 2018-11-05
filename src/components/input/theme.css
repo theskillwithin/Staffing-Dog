@@ -74,3 +74,15 @@
 .disabled {
   opacity: 0.6;
 }
+
+.password {
+  &:after {
+    content: url('/src/images/thumbprint.svg');
+    display: block;
+    position: absolute;
+    right: 1em;
+    top: 55%;
+    transform: translateY(-50%);
+    width: 30px;
+  }
+}
