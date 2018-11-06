@@ -1,0 +1,21 @@
+image: node:10.13.0
+
+pipelines:
+  branches:
+    master:
+      - step:
+          name: Run Build
+          caches:
+            - node
+          script:
+            - yarn
+            - yarn build:mock
+          artifacts:
+            - dist/**  
+      - step:
+          name: Deploy to Test Server
+          deployment: test
+          image: python:3.5.1
+          script:
+            - python deploy-to-test.py
+        
