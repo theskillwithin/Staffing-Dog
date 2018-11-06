@@ -15,7 +15,8 @@ pipelines:
       - step:
           name: Deploy to Test Server
           deployment: test
-          image: python:3.5.1
           script:
-            - python deploy-to-test.py
+            - export APP_BUILD=$(date +%s)
+            - scp -r dist/ deploy@app.dev.staffing.dog:/home/deploy/$(printenv APP_BUILD)
+            - ssh deploy@app.dev.staffing.dog rm -rf /var/www/app && ln -s /home/deploy/$(printenv APP_BUILD) /var/www/app
         
