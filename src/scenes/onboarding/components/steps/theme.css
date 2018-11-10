@@ -18,7 +18,7 @@
 
   &.hasDropdown {
     margin-top: 1em;
-    margin-bottom: 0.70em;
+    margin-bottom: 0.7em;
   }
 
   .element {
@@ -29,14 +29,27 @@
     display: flex;
     justify-content: space-between;
 
+    @media (--sd-mobile) {
+      flex-wrap: wrap;
+    }
+
     .formRow {
       display: flex;
       justify-content: space-between;
 
+      @media (--sd-mobile) {
+        & + .formRow {
+          margin-top: 1.5em;
+        }
+      }
+
       &::after {
-        content: "";
+        content: '';
         width: 5%;
         display: block;
+        @media (--sd-mobile) {
+          display: none;
+        }
       }
 
       &:last-child {
@@ -47,7 +60,6 @@
     }
   }
 }
-
 
 .formRow + .formRow {
   margin-top: 22px;
