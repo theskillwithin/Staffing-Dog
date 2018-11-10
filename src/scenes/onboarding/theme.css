@@ -92,6 +92,8 @@
   padding: 0.25em;
 
   .logo {
+    display: flex;
+    justify-content: center;
     padding: 0.5em 0;
   }
 }
