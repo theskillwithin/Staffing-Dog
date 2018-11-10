@@ -5,7 +5,7 @@ import loadable from 'loadable-components'
 import { setHtmlClass, removeHtmlClass } from '@sdog/utils/document'
 import Logo from '@component/logo'
 import MainMenu from '@scene/app/menu'
-import Contact from '@scene/app/contact'
+import Contact from '@component/contact'
 
 import theme from './theme.css'
 import './styles.css'

@@ -11,6 +11,10 @@
 }
 
 .app {
+  background: white;
+  @media (--sd-tablet) {
+    background: inherit;
+  }
   .onboardingApp {
     @media (--sd-tablet) {
       height: 100vh;
@@ -37,10 +41,9 @@
     'appFooter';
 
   @media (--sd-tablet) {
-    grid-template-rows: 4px auto minmax(50px, 80px) minmax(auto, min-content) minmax(
-        20px,
-        65px
-      ) auto;
+    grid-template-rows:
+      4px auto minmax(50px, 80px) minmax(auto, min-content) minmax(20px, 65px)
+      auto;
     grid-template-areas:
       'appTop'
       '.'
@@ -89,6 +92,8 @@
   padding: 0.25em;
 
   .logo {
+    display: flex;
+    justify-content: center;
     padding: 0.5em 0;
   }
 }
@@ -193,10 +198,18 @@
 
   .footerCenter {
     flex: 3;
+    color: var(--sd-grayLighter);
+    font-size: 12px;
+    font-weight: 500;
   }
 
   .footerRight {
     flex: 1;
+    a {
+      color: var(--sd-grayLighter);
+      font-size: 12px;
+      font-weight: 500;
+    }
   }
 }
 
@@ -313,5 +326,16 @@
     transform: translateX(-100%) translateZ(0);
     transition: transform 300ms ease-in-out;
     position: relative !important;
+  }
+}
+
+.contactUs {
+  position: absolute;
+  top: 1.5em;
+  right: 3em;
+
+  @media (--sd-mobile) {
+    top: 1em;
+    right: 1em;
   }
 }

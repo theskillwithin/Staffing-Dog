@@ -1,6 +1,6 @@
 import React from 'react'
 import { setTitle, setHtmlClass, removeHtmlClass } from '@sdog/utils/document'
-import Contact from '@scene/app/contact'
+import Contact from '@component/contact'
 import Logo from '@component/logo'
 import Tabs from '@component/tab_bar'
 import Input from '@component/input'
@@ -74,7 +74,7 @@ class Login extends React.Component {
                 onChange={value => this.handleChange('password', value)}
                 type="password"
               />
-              <Button primary round type="submit">
+              <Button primary round type="submit" size="medium">
                 Sign In
               </Button>
             </form>
