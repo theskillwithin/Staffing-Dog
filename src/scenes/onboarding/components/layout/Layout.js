@@ -5,6 +5,7 @@ import classnames from 'classnames'
 import Logo from '@sd/components/logo'
 import LoadingBar from '@sd/components/loading_bar'
 import { setTitle } from '@util/document'
+import Contact from '@component/contact'
 
 import Steps from '../steps'
 import StepsSidebar from '../steps_sidebar'
@@ -56,6 +57,10 @@ class Onboarding extends Component {
           <div className={classnames(theme.appTop, loading && theme.appTopLoading)}>
             <div className={theme.appTopInner}>
               <LoadingBar />
+            </div>
+
+            <div className={theme.contactUs}>
+              <Contact />
             </div>
 
             {error && (

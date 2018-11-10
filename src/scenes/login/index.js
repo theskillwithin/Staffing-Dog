@@ -1,6 +1,6 @@
 import React from 'react'
 import { setTitle, setHtmlClass, removeHtmlClass } from '@sdog/utils/document'
-import Contact from '@scene/app/contact'
+import Contact from '@component/contact'
 import Logo from '@component/logo'
 import Tabs from '@component/tab_bar'
 import Input from '@component/input'
