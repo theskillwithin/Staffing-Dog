@@ -198,10 +198,18 @@
 
   .footerCenter {
     flex: 3;
+    color: var(--sd-grayLighter);
+    font-size: 12px;
+    font-weight: 500;
   }
 
   .footerRight {
     flex: 1;
+    a {
+      color: var(--sd-grayLighter);
+      font-size: 12px;
+      font-weight: 500;
+    }
   }
 }
 
