@@ -74,6 +74,10 @@ class Onboarding extends Component {
             <div className={theme.logo}>
               <Logo />
             </div>
+
+            <div className={classnames(theme.stepSidebar, theme.stepSidebarMobile)}>
+              <Route path={`${match.path}/step/:step(\\d)`} component={Nav} />
+            </div>
           </div>
 
           <div className={theme.appContent}>
