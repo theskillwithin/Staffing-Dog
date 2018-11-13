@@ -75,11 +75,19 @@
     content: '';
     display: block;
     position: absolute;
-    bottom: 0;
+    bottom: 3px;
     left: 50%;
     transform: translateX(-50%);
     width: 20px;
     height: 2px;
     background: var(--sd-red);
+  }
+}
+
+.start.active,
+.between.active,
+.end.active {
+  &:before {
+    background: white;
   }
 }
