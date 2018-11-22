@@ -180,25 +180,30 @@ export const saveStep = ({ step, onSuccess = false, onFail = false }) => (
 ) => {
   dispatch(actions.saveStep(step))
 
-  return updateProfile({
-    step,
-    values: getState().values,
-  }).then(res => {
-    if (res && res.data && res.data.success) {
-      dispatch(
-        actions.saveStepSuccess({
-          step,
-          data: res.data,
-        }),
-      )
+  return updateProfile
+    .send({
+      step,
+      values: findStepValues(getState()),
+    })
+    .then(res => {
+      if (res && res.data && res.data.success) {
+        dispatch(
+          actions.saveStepSuccess({
+            step,
+            data: res.data,
+          }),
+        )
 
-      if (onSuccess) onSuccess()
-    } else {
-      dispatch(actions.saveStepApiFail(res, step))
+        if (onSuccess) onSuccess()
+      } else {
+        dispatch(actions.saveStepApiFail(res, step))
 
-      if (onFail) onFail()
-    }
-  })
+        if (onFail) onFail()
+      }
+    })
+    .catch(e => {
+      if (onFail) onFail(e.message || e)
+    })
 }
 
 export const goToStep = ({ currentStep, nextStep, history }) => (dispatch, getState) => {
