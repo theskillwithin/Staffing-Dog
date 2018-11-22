@@ -38,6 +38,9 @@ export const mock = {
       })),
     }
   },
+  updateProfile: {
+    status: 'success',
+  },
 }
 
 export const apiMocks = mockBuilder(userApi, mock)

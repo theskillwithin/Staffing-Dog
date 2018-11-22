@@ -18,7 +18,8 @@ export const getProfile = createApi(
 
 export const updateProfile = createApi(
   { type: 'POST', url: API_USER_PROFILE_UPDATE },
-  api.post,
+  (url, { type = 'professional', ...data }) =>
+    api.post(createPath(url, { type: `${type}_profile` }), { type, ...data }),
 )
 
 export const getSchedule = createApi(
