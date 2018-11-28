@@ -15,21 +15,21 @@
 }
 
 .stepButton {
-  color: #1F2740;
+  color: var(--sd-blackTxt);
   border-radius: 50%;
   padding: 0.25em 0.65em;
   text-decoration: none;
 
   &:hover {
-    background-color: color(var(--sd-blueGray) shade(10%));
+    background-color: var(--sd-blueGrayShade10);
   }
 }
 
 .stepButtonActive {
-  color: #FFFFFF;
-  background-color: #0072FF;
+  color: #ffffff;
+  background-color: var(--sd-blue);
 
   &:hover {
-    background-color: color(#0072FF shade(10%));
+    background-color: var(--sd-blueShade10);
   }
 }
