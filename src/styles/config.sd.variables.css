@@ -18,7 +18,7 @@
   --sd-blackTxt: rgb(31, 39, 64); /* #1F2740 */
   --sd-grayDark: #b0b5c1; /* guessing this color for button hover */
   --sd-gray: rgb(187, 193, 209);
-  --sd-grayLight: rgb(204, 209, 221); /* this is not working for some reason */
+  --sd-grayLight: rgb(204, 209, 221);
   --sd-grayLighter: rgb(152, 160, 178);
   --sd-grayLighterer: rgb(238, 241, 246);
   --sd-blue: #0072ff;
