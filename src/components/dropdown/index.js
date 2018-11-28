@@ -77,6 +77,7 @@ class Dropdown extends Component {
         onMenuOpen={this.open}
         onMenuClose={this.close}
         value={value}
+        isDisabled={props.disabled}
         {...props}
       />
     )
