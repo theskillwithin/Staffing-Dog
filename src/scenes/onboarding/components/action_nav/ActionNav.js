@@ -33,7 +33,7 @@ const ActionNav = ({ match, history, steps, goToStep, savingStep, loadingNextSte
               <span>
                 <Arrow small direction="left" color="white" />
               </span>{' '}
-              Previous Step
+              Previous
             </span>
           </Button>
         </div>
