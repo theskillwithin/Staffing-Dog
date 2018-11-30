@@ -15,6 +15,7 @@
     display: flex;
     svg {
       width: 20px;
+      margin-top: -3px;
     }
   }
 
@@ -30,7 +31,11 @@
     margin-left: -1em;
     span {
       margin-right: -1em;
+      padding-left: 3px;
+      padding-right: 5px;
     }
+    display: block; /* FF fix */
+    white-space: nowrap; /* FF fix */
   }
 }
 
