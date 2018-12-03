@@ -17,4 +17,6 @@ export const createPath = (url, args, rootPath = API_ROOT) => {
   return `${rootPath}${builtPath}`
 }
 
+export { API_ROOT }
+
 export default axios
