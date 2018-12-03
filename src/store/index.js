@@ -3,6 +3,8 @@ import thunkMiddleware from 'redux-thunk'
 import { IS_DEV } from '@util/env'
 
 import reduxRegister from './register'
+import buildStore from './build'
+import { apiActionMiddleware, createActionTypes } from './apiActionMiddleware'
 
 const isBrowser = typeof window !== 'undefined'
 
@@ -30,13 +32,15 @@ const reduxCombine = (reducers, initialState = {}) => {
   return combineReducers(reduxReducers)
 }
 
+export { buildStore, reduxRegister, createActionTypes }
+
 export default (storeData = {}, reducers = {}) => {
   reduxRegister.setInitialReducers(reducers)
 
   const store = createStore(
     reduxCombine(reducers, storeData),
     storeData,
-    composeEnhancers(applyMiddleware(thunkMiddleware)),
+    composeEnhancers(applyMiddleware(thunkMiddleware, apiActionMiddleware)),
   )
 
   // replace redux store based on newely updated list of reducers
