@@ -2,13 +2,13 @@
 
 .days {
   font-size: 0;
-  
+
   span {
     width: 14.28571%;
     display: inline-block;
     text-align: center;
     user-select: none;
-    margin: 8px 0;
+    margin: 6px 0;
     line-height: 34px;
     position: relative;
     font-size: 16px;

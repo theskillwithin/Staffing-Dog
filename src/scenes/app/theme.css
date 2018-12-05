@@ -119,8 +119,27 @@ h6 {
       padding-left: 0;
     }
 
-    .column {
-      flex: 0 1 487px;
+    .columnA {
+      flex: 0 1 515px;
+
+      > * {
+        margin-top: 50px;
+
+        &:first-child {
+          margin-top: 0;
+        }
+      }
+
+      & + .column {
+        margin-top: 50px;
+        @media (--sd-desktop) {
+          margin-top: 0;
+        }
+      }
+    }
+
+    .columnB {
+      flex: 0 1 464px;
 
       > * {
         margin-top: 50px;

@@ -21,12 +21,12 @@ class Dashboard extends React.Component {
   render() {
     return (
       <div className={classnames(theme.pageContent, theme.columns)}>
-        <div className={theme.column}>
+        <div className={theme.columnA}>
           <ToDoList />
           <Messages />
         </div>
 
-        <div className={theme.column}>
+        <div className={theme.columnB}>
           <JobSchedule />
         </div>
       </div>
