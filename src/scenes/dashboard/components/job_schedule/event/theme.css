@@ -13,7 +13,7 @@
   border-top: solid 1px var(--sd-borderColor);
   background: white; /* FF and safari */
 }
-
+ 
 .event h2 {
   position: relative;
   padding-left: .8em;
