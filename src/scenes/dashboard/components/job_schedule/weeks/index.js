@@ -12,7 +12,7 @@ const time = timesOfDay().map(hour => ({ label: hour, value: hour }))
 
 const WeekRow = ({ day, schedule, onChange }) => (
   <div className={classnames(theme.day, schedule.active && theme.active)}>
-    <div>
+    <div className={theme.dayButton}>
       <Button
         onClick={() => onChange('active', !schedule.active, day)}
         secondaryDark={!schedule.active}

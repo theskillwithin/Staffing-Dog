@@ -1,3 +1,5 @@
+@import '../../../../../styles/config';
+
 .day {
   display: flex;
   align-items: center;
@@ -20,5 +22,23 @@
     align-items: center;
     justify-content: space-between;
     width: 60%;
+
+    @media (--sd-mobile) {
+      width: auto;
+
+      span {
+        margin: auto 3px;
+      }
+
+      .dropdown {
+        max-width: 99px;
+      }
+    }
+  }
+
+  .dayButton button {
+    @media (--sd-mobile) {
+      max-width: 60px;
+    }
   }
 }
