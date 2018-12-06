@@ -10,6 +10,7 @@
   justify-content: space-around;
   flex-wrap: wrap;
   padding: 0 4em;
+  margin-top: 18px;
 
   > * {
     width: 25%;
@@ -22,6 +23,8 @@
   display: flex;
   justify-content: space-between;
   font-size: 14px;
+  margin-top: 12px;
+  margin-bottom: 10px;
 
   svg {
     color: var(--sd-blue);
@@ -37,7 +40,7 @@
 .searchResultsList {
   > * {
     position: relative;
-    margin-bottom: 1em;
+    margin-bottom: 1.8em;
   }
 }
 
