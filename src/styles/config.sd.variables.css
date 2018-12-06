@@ -32,6 +32,7 @@
   --sd-orange: #ef7229;
   --sd-contentMaxWidth: 900px;
   --sd-headerHeight: 61px;
+  --sd-contentTopMargin: 56px;
   --sd-primary: var(--sd-blue);
   --sd-borderColor: rgb(228, 230, 237); /*  rgba(187, 193, 209, 0.4) */
   --sd-borderColorDark: rgba(152, 160, 178, 0.54);
