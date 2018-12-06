@@ -55,12 +55,16 @@ h6 {
     background-color: var(--sd-white);
     box-shadow: 2px 2px 2px var(--sd-shadowColor);
     height: var(--sd-headerHeight);
-    padding: 1em;
+    padding: 1em 1.5em;
     position: relative;
     z-index: 10;
     display: flex;
     align-items: center;
     justify-content: space-between;
+
+    @media (--sd-mobile) {
+      padding: 1em;
+    }
 
     .logo {
       flex: 2;

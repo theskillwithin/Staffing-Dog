@@ -20,7 +20,7 @@ const LogoInternals = props => (
       </g>
     </svg>
 
-    {!props.hideText ? <span className={theme.logoText}>Staffing Dog</span> : null}
+    {!props.hideText ? <span className={theme.logoText}>StaffingDog</span> : null}
   </div>
 )
 
@@ -34,7 +34,7 @@ const Logo = props => {
 }
 
 LogoInternals.defaultProps = {
-  width: '60px',
+  width: '54px',
   className: '',
   hideText: false,
 }
