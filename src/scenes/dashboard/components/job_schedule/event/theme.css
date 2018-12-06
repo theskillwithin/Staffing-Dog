@@ -9,14 +9,14 @@
   cursor: pointer;
   margin-left: -1.5em;
   width: calc(100% + 3em);
-  padding: 0 1em;
+  padding: 0 1.5em 0 .45em;
   border-top: solid 1px var(--sd-borderColor);
   background: white; /* FF and safari */
 }
 
 .event h2 {
   position: relative;
-  padding-left: 1em;
+  padding-left: .8em;
   font-size: 26px;
   font-weight: var(--sd-fontWeightNormal);
   line-height: 1.23;
@@ -48,7 +48,7 @@
 
 .eventDetails {
   flex: 1;
-  margin-left: 2em;
+  margin-left: 1.5em;
 
   h5 {
     font-size: 14px;
@@ -64,7 +64,7 @@
     font-weight: 100;
     color: var(--sd-grayLighter);
     font-weight: var(--sd-fontWeightNormal);
-    margin: 2px 0 0 0;
+    margin: 4px 0 0 0;
     text-align: left;
   }
 }
@@ -81,6 +81,6 @@
     max-height: 500px;
     visibility: visible;
     opacity: 1;
-    border-bottom: solid 1px var(--sd-borderColor);
+    border-top: solid 1px var(--sd-borderColor);
   }
 }

@@ -55,12 +55,16 @@ h6 {
     background-color: var(--sd-white);
     box-shadow: 2px 2px 2px var(--sd-shadowColor);
     height: var(--sd-headerHeight);
-    padding: 1em;
+    padding: 1em 1.5em;
     position: relative;
     z-index: 10;
     display: flex;
     align-items: center;
     justify-content: space-between;
+
+    @media (--sd-mobile) {
+      padding: 1em;
+    }
 
     .logo {
       flex: 2;
@@ -98,7 +102,7 @@ h6 {
 }
 
 .appContent {
-  margin-top: var(--sd-headerHeight);
+  margin-top: var(--sd-contentTopMargin);
 }
 
 .pageContent {
@@ -123,7 +127,7 @@ h6 {
       flex: 0 1 515px;
 
       > * {
-        margin-top: 50px;
+        margin-top: 45px;
 
         &:first-child {
           margin-top: 0;
@@ -142,7 +146,7 @@ h6 {
       flex: 0 1 464px;
 
       > * {
-        margin-top: 50px;
+        margin-top: 45px;
 
         &:first-child {
           margin-top: 0;
