@@ -250,6 +250,7 @@
 
 .stepTitle {
   text-align: center;
+  font-weight: var(--sd-fontWeightLight);
   font-size: var(--sd-fontSizeL);
 }
 
