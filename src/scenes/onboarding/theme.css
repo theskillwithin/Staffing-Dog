@@ -225,6 +225,19 @@
       font-size: 12px;
       font-weight: 500;
     }
+
+    @media (--sd-mobile) {
+      display: none;
+    }
+  }
+
+  @media (--sd-mobile) {
+    margin-top: auto;
+    margin-bottom: 2em;
+
+    .footerLeft {
+      display: none;
+    }
   }
 }
 
