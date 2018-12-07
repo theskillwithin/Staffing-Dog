@@ -1,0 +1,12 @@
+.letsGetStartedButton {
+  position: relative;
+  width: 268px;
+  height: 40px;
+
+  span {
+    position: absolute;
+    top: 50%;
+    right: 5px;
+    transform: translateY(-50%);
+  }
+}

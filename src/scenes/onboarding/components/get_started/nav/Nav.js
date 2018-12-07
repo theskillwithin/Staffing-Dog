@@ -1,5 +1,8 @@
 import React from 'react'
 import { object, func, array } from 'prop-types'
+import Arrow from '@component/svg/Arrow'
+
+import theme from './theme.css'
 
 import Button from '../../../../../components/button'
 
@@ -13,8 +16,12 @@ const Nav = ({ steps, goToStep, history }) => (
       })
     }
     round
+    className={theme.letsGetStartedButton}
   >
-    Get Started
+    Let&apos;s Get Started{' '}
+    <span>
+      <Arrow small color="white" />
+    </span>
   </Button>
 )
 
