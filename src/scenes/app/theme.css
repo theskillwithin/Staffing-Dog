@@ -7,6 +7,10 @@
   --sd-containerWidth: 1024px;
   --sd-pagePaddingBottom: 4em;
   --sd-pagePaddingTop: 50px;
+
+  @media (--sd-mobile) {
+    --sd-backgroundColor: white;
+  }
 }
 
 body {
