@@ -52,6 +52,11 @@
       'appFooter'
       '.';
   }
+
+  @media (--sd-mobile) {
+    display: flex;
+    flex-direction: column;
+  }
 }
 
 .appTop {
@@ -130,6 +135,11 @@
           'stepNav stepSidebar';
       }
     }
+
+    @media (--sd-mobile) {
+      display: flex;
+      flex-direction: column;
+    }
   }
 
   .stepContent {
@@ -156,6 +166,11 @@
 
     @media (--sd-tablet) {
       padding-bottom: 2em;
+    }
+
+    @media (--sd-mobile) {
+      width: 100%;
+      margin: 0 auto;
     }
 
     .stepButtons {
@@ -210,6 +225,19 @@
       font-size: 12px;
       font-weight: 500;
     }
+
+    @media (--sd-mobile) {
+      display: none;
+    }
+  }
+
+  @media (--sd-mobile) {
+    margin-top: auto;
+    margin-bottom: 2em;
+
+    .footerLeft {
+      display: none;
+    }
   }
 }
 
@@ -235,6 +263,7 @@
 
 .stepTitle {
   text-align: center;
+  font-weight: var(--sd-fontWeightLight);
   font-size: var(--sd-fontSizeL);
 }
 

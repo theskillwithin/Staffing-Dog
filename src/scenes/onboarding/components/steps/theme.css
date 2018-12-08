@@ -3,8 +3,14 @@
 .stepsContent {
   padding: 2em;
 
+  @media (--sd-mobile) {
+    padding-top: 0;
+    margin-top: -2em;
+  }
+
   .stepTitle {
     font-size: var(--sd-fontSizeXL);
+    font-weight: var(--sd-fontWeightLight);
     text-align: center;
   }
 }
