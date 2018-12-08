@@ -1,4 +1,6 @@
 import React from 'react'
+import { func } from 'prop-types'
+import { connect } from 'react-redux'
 import { setTitle, setHtmlClass, removeHtmlClass } from '@sdog/utils/document'
 import Contact from '@component/contact'
 import Logo from '@component/logo'
@@ -7,11 +9,14 @@ import Input from '@component/input'
 import Button from '@component/button'
 import Arrow from '@component/svg/Arrow'
 
+import { login } from '../../store/user'
 import appTheme from '../app/theme.css'
 
 import theme from './theme.css'
 
 class Login extends React.Component {
+  static propTypes = { login: func.isRequired }
+
   state = {
     activeTabIndex: 0,
     form: {
@@ -38,8 +43,19 @@ class Login extends React.Component {
   }
 
   submit = () => {
-    // const type = this.state.activeTabIndex === 0 ? 'Professional' : 'Provider'
-    // this.props.submit(this.state.form, type)
+    const { email, password } = this.state.form
+
+    // TODO: find a better way to do this instead of callbacks
+    this.props.login({
+      email,
+      password,
+      onSuccess: () => {
+        window.location = '/'
+      },
+      onError: error => {
+        console.log(error)
+      },
+    })
   }
 
   render = () => (
@@ -101,4 +117,9 @@ class Login extends React.Component {
   )
 }
 
-export default Login
+const mapActionsToProps = { login }
+
+export default connect(
+  null,
+  mapActionsToProps,
+)(Login)
