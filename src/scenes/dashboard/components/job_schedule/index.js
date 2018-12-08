@@ -128,19 +128,19 @@ class JobSchedule extends React.Component {
       >
         {state.showSchedule && (
           <>
-            <Tabs
-              activeTabIndex={this.state.activeTabIndex}
-              onSelect={tab => this.setState({ activeTabIndex: tab })}
-              underline
-              left
-              exactWidthTab
-              settingsTabs
-            >
-              <div>Schedule</div>
-              <div>Exceptions</div>
-            </Tabs>
+            <div className={theme.tabsContainer}>
+              <Tabs
+                activeTabIndex={this.state.activeTabIndex}
+                onSelect={tab => this.setState({ activeTabIndex: tab })}
+                underline
+                settingsTabs
+              >
+                <div>Schedule</div>
+                <div>Exceptions</div>
+              </Tabs>
+            </div>
             {this.state.activeTabIndex === 0 && (
-              <>
+              <div className={theme.schedule}>
                 <div className={theme.inputRow}>
                   <span>Same day job requests</span>
                   <Switch checked={state.form.switch} onChange={handleToggle}>
@@ -169,7 +169,7 @@ class JobSchedule extends React.Component {
                     />
                   ))}
                 </div>
-              </>
+              </div>
             )}
             {this.state.activeTabIndex === 1 && <h2>Exceptions</h2>}
             <hr className={theme.divider} />

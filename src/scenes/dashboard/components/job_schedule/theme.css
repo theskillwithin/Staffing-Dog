@@ -34,3 +34,14 @@
     margin-bottom: -1em;
   }
 }
+
+.schedule {
+  padding-top: 1em;
+}
+
+.tabsContainer {
+  height: 52px;
+  width: calc(100% + 3em);
+  margin-left: -1.5em;
+  margin-top: -1em;
+}
