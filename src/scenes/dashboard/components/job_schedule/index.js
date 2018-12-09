@@ -2,6 +2,7 @@ import React from 'react'
 import { func, array } from 'prop-types'
 import { connect } from 'react-redux'
 import moment from 'moment'
+import Tabs from '@component/tab_bar'
 import Card from '@component/card'
 import Switch from '@component/switch'
 import Dropdown from '@component/dropdown'
@@ -33,6 +34,7 @@ class JobSchedule extends React.Component {
   daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
 
   state = {
+    activeTabIndex: 0,
     showSchedule: false,
     form: {
       switch: false,
@@ -126,34 +128,51 @@ class JobSchedule extends React.Component {
       >
         {state.showSchedule && (
           <>
-            <div className={theme.inputRow}>
-              <span>Same day job requests</span>
-              <Switch checked={state.form.switch} onChange={handleToggle}>
-                {state.form.switch ? 'Yes' : 'No'}
-              </Switch>
+            <div className={theme.tabsContainer}>
+              <Tabs
+                activeTabIndex={this.state.activeTabIndex}
+                onSelect={tab => this.setState({ activeTabIndex: tab })}
+                underline
+                jobSchedule
+                fw500
+              >
+                <div>Schedule</div>
+                <div>Exceptions</div>
+              </Tabs>
             </div>
-            <div className={theme.inputRow}>
-              <span>Days out I can be scheduled</span>
-              <div className={theme.dropdown}>
-                <Dropdown
-                  value={state.form.daysScheduled}
-                  onChange={value => handleChange('daysScheduled', value)}
-                  options={days}
-                  height={33}
-                  width={120}
-                />
+            {this.state.activeTabIndex === 0 && (
+              <div className={theme.schedule}>
+                <div className={theme.inputRow}>
+                  <span>Same day job requests</span>
+                  <Switch checked={state.form.switch} onChange={handleToggle}>
+                    {state.form.switch ? 'Yes' : 'No'}
+                  </Switch>
+                </div>
+                <div className={theme.inputRow}>
+                  <span>Days out I can be scheduled</span>
+                  <div className={theme.dropdown}>
+                    <Dropdown
+                      value={state.form.daysScheduled}
+                      onChange={value => handleChange('daysScheduled', value)}
+                      options={days}
+                      height={33}
+                      width={120}
+                    />
+                  </div>
+                </div>
+                <div className={theme.scheduler}>
+                  {daysOfWeek.map(day => (
+                    <WeekRow
+                      key={day}
+                      day={day.toLowerCase()}
+                      schedule={state.form.schedule[day.toLowerCase()]}
+                      onChange={handleScheduleChange}
+                    />
+                  ))}
+                </div>
               </div>
-            </div>
-            <div className={theme.scheduler}>
-              {daysOfWeek.map(day => (
-                <WeekRow
-                  key={day}
-                  day={day.toLowerCase()}
-                  schedule={state.form.schedule[day.toLowerCase()]}
-                  onChange={handleScheduleChange}
-                />
-              ))}
-            </div>
+            )}
+            {this.state.activeTabIndex === 1 && <h2>Exceptions</h2>}
             <hr className={theme.divider} />
           </>
         )}

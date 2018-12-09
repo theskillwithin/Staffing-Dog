@@ -31,6 +31,7 @@ class Settings extends React.Component {
             left
             exactWidthTab
             settingsTabs
+            fw500
           >
             <div>About Me</div>
             <div>References</div>
