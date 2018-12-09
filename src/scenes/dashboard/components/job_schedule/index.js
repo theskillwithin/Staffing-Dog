@@ -133,7 +133,8 @@ class JobSchedule extends React.Component {
                 activeTabIndex={this.state.activeTabIndex}
                 onSelect={tab => this.setState({ activeTabIndex: tab })}
                 underline
-                settingsTabs
+                jobSchedule
+                fw500
               >
                 <div>Schedule</div>
                 <div>Exceptions</div>
