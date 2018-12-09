@@ -103,7 +103,7 @@ class Steps extends React.Component {
 
           <div className={theme.stepForm}>
             {isComplete
-              ? Steps.renderComplete(currentStep)
+              ? this.renderComplete(currentStep)
               : this.renderFields(currentStep.fields)}
           </div>
         </div>
