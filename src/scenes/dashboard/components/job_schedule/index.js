@@ -125,6 +125,7 @@ class JobSchedule extends React.Component {
         action={`${state.showSchedule ? 'Hide' : 'Show'} Schedule`}
         actionCb={updateSchedule}
         actionProps={{ round: true, secondary: true, short: true }}
+        overflowHidden
       >
         {state.showSchedule && (
           <>

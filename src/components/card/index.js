@@ -17,27 +17,32 @@ const Card = ({
   actionProps,
   progress,
   type,
+  overflowHidden,
 }) => {
   const IconComponent = icon
   return (
     <ErrorBoundry>
-      <div className={classnames(theme.card, type && theme[type])}>
+      <div
+        className={classnames(
+          theme.card,
+          type && theme[type],
+          overflowHidden && theme.overflowHidden,
+        )}
+      >
         {(title || header) && (
           <header className={theme.cardHeader}>
-            {icon &&
-              !header && (
-                <div className={theme.icon}>
-                  <IconComponent />
-                </div>
-              )}
+            {icon && !header && (
+              <div className={theme.icon}>
+                <IconComponent />
+              </div>
+            )}
             {title && !header && <h2 className={theme.title}>{title}</h2>}
             {header && !title && header({ style: theme })}
-            {action &&
-              actionCb && (
-                <Button {...actionProps} onClick={() => actionCb()}>
-                  {action}
-                </Button>
-              )}
+            {action && actionCb && (
+              <Button {...actionProps} onClick={() => actionCb()}>
+                {action}
+              </Button>
+            )}
             {progress && (
               <h2 className={theme.progress}>
                 {progress * 100}% &nbsp;
