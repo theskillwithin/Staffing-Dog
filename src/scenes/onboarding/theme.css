@@ -96,6 +96,10 @@
   text-align: center;
   padding: 0.25em;
 
+  @media (--sd-mobile) {
+    padding-top: 3em;
+  }
+
   .logo {
     display: flex;
     justify-content: center;
@@ -364,8 +368,8 @@
   right: 3em;
 
   @media (--sd-mobile) {
-    top: 1em;
-    right: 1em;
+    top: 1.5em;
+    right: 2em;
   }
 }
 

@@ -44,7 +44,7 @@
     display: none;
     position: absolute;
     z-index: 1;
-    top: 23px;
+    top: 0;
     left: -40px;
 
     @media (--sd-notMobile) {
@@ -54,8 +54,8 @@
     }
 
     @media (--sd-mobile) {
-      left: calc(-80vw + 2em);
-      right: 0;
+      left: calc(-100vw + 5em);
+      right: 5px;
     }
   }
 
@@ -92,6 +92,7 @@
       display: flex;
       align-items: center;
       font-size: 14px;
+      padding-left: 8px;
 
       i,
       svg {
@@ -149,10 +150,14 @@
       background-color: var(--sd-white);
       box-shadow: 0 3px 6px 0 var(--sd-shadowColor);
       z-index: -1;
+
+      @media (--sd-mobile) {
+        display: none;
+      }
     }
 
     @media (--sd-mobile) {
-      height: 200px;
+      height: 217px;
       width: 100%;
       background-color: var(--sd-blackTxt);
       box-shadow: 0 3px 6px 0 var(--sd-shadowColor);
@@ -174,6 +179,10 @@
   }
 
   .contactMobile {
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: 999;
     display: none;
     border: none;
     background: transparent;
