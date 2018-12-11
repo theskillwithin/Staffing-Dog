@@ -150,6 +150,10 @@
       background-color: var(--sd-white);
       box-shadow: 0 3px 6px 0 var(--sd-shadowColor);
       z-index: -1;
+
+      @media (--sd-mobile) {
+        display: none;
+      }
     }
 
     @media (--sd-mobile) {
@@ -178,7 +182,7 @@
     position: absolute;
     right: 0;
     top: 0;
-    z-index: 999999;
+    z-index: 999;
     display: none;
     border: none;
     background: transparent;
