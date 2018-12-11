@@ -28,8 +28,8 @@ class Settings extends React.Component {
             activeTabIndex={this.state.activeTabIndex}
             onSelect={tab => this.setState({ activeTabIndex: tab })}
             underline
-            left
             exactWidthTab
+            left
             settingsTabs
             fw500
           >

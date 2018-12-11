@@ -133,6 +133,7 @@ class JobSchedule extends React.Component {
                 activeTabIndex={this.state.activeTabIndex}
                 onSelect={tab => this.setState({ activeTabIndex: tab })}
                 underline
+                exactWidthTab
                 jobSchedule
                 fw500
               >

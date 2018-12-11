@@ -64,6 +64,8 @@
 
 .exactWidthTab {
   .tab > div {
+    display: flex;
+    justify-content: center;
     padding-left: 0;
     padding-right: 0;
     margin-right: 2em;
@@ -72,10 +74,4 @@
 
 .settingsTabs .tab > div {
   padding-bottom: 20px;
-}
-
-.tabsUnderline {
-  max-width: 90px;
-  text-align: center;
-  transform: translateX(80%);
 }

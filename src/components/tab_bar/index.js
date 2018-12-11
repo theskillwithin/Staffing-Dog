@@ -29,9 +29,18 @@ class Tabs extends React.Component {
       .map(x => x.current.offsetWidth)
       .reduce((a, b) => a + b, 0)
 
-    const width = left
-      ? `${this.myRefs[index].current.offsetWidth}px`
-      : `${100 / this.tabs.length}%`
+    // const width = left
+    //   ? `${this.myRefs[index].current.offsetWidth}px`
+    //   : `${100 / this.tabs.length}%`
+
+    const width = exactWidthTab
+      ? `${this.myRefs[index].current.childNodes[0].offsetWidth}px`
+      : `${this.myRefs[index].current.offsetWidth}px`
+
+    const calcSingleOffsetForExactWidth =
+      (this.myRefs[index].current.offsetWidth -
+        this.myRefs[index].current.childNodes[0].offsetWidth) /
+      2
 
     const leftOffset = left ? `${totalWidth}px` : `${(100 / this.tabs.length) * index}%`
 
@@ -41,7 +50,9 @@ class Tabs extends React.Component {
       ? index > 0
         ? `${totalWidth + exactOffset * index}px`
         : `${totalWidth}px`
-      : `${(100 / this.tabs.length) * index}%`
+      : `calc(${(100 / this.tabs.length) * index}% + ${
+          exactWidthTab ? calcSingleOffsetForExactWidth : 0
+        }px)`
 
     this.underlineRef.current.style.width = width
     this.underlineRef.current.style.left = exactWidthTab ? leftOffsetExact : leftOffset
