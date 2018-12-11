@@ -54,8 +54,8 @@
     }
 
     @media (--sd-mobile) {
-      left: calc(-80vw + 2em);
-      right: 0;
+      left: calc(-100vw + 5em);
+      right: 5px;
     }
   }
 
@@ -175,6 +175,9 @@
   }
 
   .contactMobile {
+    position: absolute;
+    right: 0;
+    top: 0;
     z-index: 999999;
     display: none;
     border: none;

@@ -368,7 +368,7 @@
   right: 3em;
 
   @media (--sd-mobile) {
-    top: 1em;
+    top: 1.5em;
     right: 2em;
   }
 }
