@@ -150,3 +150,8 @@ GitHub.sublime-settings
 
 
 # End of https://www.gitignore.io/api/osx,node,linux,sublimetext,visualstudiocode
+
+# Cypress
+
+cypress/videos
+cypress/screenshots

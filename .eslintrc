@@ -5,7 +5,8 @@
     "jsx-a11y",
     "jest",
     "import",
-    "prettier"
+    "prettier",
+    "eslint-plugin-cypress"
   ],
   "extends": [
     "airbnb",
@@ -16,7 +17,8 @@
     "es6": true,
     "browser": true,
     "node": true,
-    "jest": true
+    "jest": true,
+    "cypress/globals": true
   },
   "rules": {
     "prettier/prettier": [
