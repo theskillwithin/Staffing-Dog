@@ -92,6 +92,7 @@
       display: flex;
       align-items: center;
       font-size: 14px;
+      padding-left: 8px;
 
       i,
       svg {

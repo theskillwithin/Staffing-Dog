@@ -369,7 +369,7 @@
 
   @media (--sd-mobile) {
     top: 1em;
-    right: 1em;
+    right: 2em;
   }
 }
 
