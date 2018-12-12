@@ -10,15 +10,30 @@
 
   &Item {
     padding: 0;
-    margin: 2px;
+    margin: 2px 7px;
+
+    @media (--sd-mobile) {
+      margin: 2px 10px;
+    }
   }
 }
 
 .stepButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: var(--sd-fontWeightMedium);
   color: var(--sd-blackTxt);
   border-radius: 50%;
-  padding: 0.25em 0.65em;
+  width: 27px;
+  height: 27px;
+  line-height: 26px;
+  display: block;
   text-decoration: none;
+
+  &.visited {
+    color: var(--sd-grayLighter);
+  }
 
   &:hover {
     background-color: var(--sd-blueGrayShade10);
@@ -27,7 +42,12 @@
 
 .stepButtonActive {
   color: #ffffff;
+
   background-color: var(--sd-blue);
+
+  &.visited {
+    color: white;
+  }
 
   &:hover {
     background-color: var(--sd-blueShade10);

@@ -9,39 +9,59 @@ import theme from './theme.css'
 
 const pInt = n => parseInt(n, 10)
 
-const stepLinkClasses = (currentStep, step) => {
+const stepLinkClasses = (currentStep, step, visited) => {
   return classnames(
     pInt(currentStep) === pInt(step) && theme.stepButtonActive,
     theme.stepButton,
+    visited >= pInt(step) && theme.visited,
   )
 }
 
-const Nav = ({ steps, goToStep, exclude, match, history, className }) => (
-  <ul className={classnames(theme.stepLinks, className)}>
-    {map(
-      steps,
-      step =>
-        indexOf(exclude, step.step) === -1 ? (
-          <li key={`stepNav:item:${step.step}`} className={theme.stepLinksItem}>
-            <Link
-              to={`/step/${step.step}`}
-              className={stepLinkClasses(match.params.step, step.step)}
-              onClick={e => {
-                e.preventDefault()
-                goToStep({
-                  currentStep: match.params.step,
-                  nextStep: step.step,
-                  history,
-                })
-              }}
-            >
-              {step.step}
-            </Link>
-          </li>
-        ) : null,
-    )}
-  </ul>
-)
+class Nav extends React.Component {
+  state = {
+    visited: 1,
+  }
+
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (nextProps.match.params.step > prevState.visited) {
+      return { visited: nextProps.match.params.step }
+    }
+    return null
+  }
+
+  render() {
+    const { steps, goToStep, exclude, match, history, className } = this.props
+
+    return (
+      <ul className={classnames(theme.stepLinks, className)}>
+        {map(steps, step =>
+          indexOf(exclude, step.step) === -1 ? (
+            <li key={`stepNav:item:${step.step}`} className={theme.stepLinksItem}>
+              <Link
+                to={`/step/${step.step}`}
+                className={stepLinkClasses(
+                  match.params.step,
+                  step.step,
+                  this.state.visited,
+                )}
+                onClick={e => {
+                  e.preventDefault()
+                  goToStep({
+                    currentStep: match.params.step,
+                    nextStep: step.step,
+                    history,
+                  })
+                }}
+              >
+                {step.step}
+              </Link>
+            </li>
+          ) : null,
+        )}
+      </ul>
+    )
+  }
+}
 
 Nav.defaultProps = {
   exclude: ['complete'],
