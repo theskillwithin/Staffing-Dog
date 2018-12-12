@@ -27,6 +27,7 @@ class Input extends Component {
       textarea,
       onChange,
       type,
+      thumbprint,
       invalid,
       valid,
       value,
@@ -43,7 +44,7 @@ class Input extends Component {
           valid && s.valid,
           (textarea || type === 'textarea') && s.textarea,
           disabled && s.disabled,
-          !invalid && !valid && type === 'password' && s.password,
+          !invalid && !valid && thumbprint && s.password,
         )}
       >
         {textarea ? (
@@ -97,6 +98,7 @@ Input.defaultProps = {
   invalid: false,
   valid: false,
   disabled: false,
+  thumbprint: false,
 }
 
 Input.propTypes = {
@@ -111,6 +113,7 @@ Input.propTypes = {
   valid: bool,
   value: oneOfType([string, number]),
   disabled: bool,
+  thumbprint: bool,
 }
 
 export default Input
