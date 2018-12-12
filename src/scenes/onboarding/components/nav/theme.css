@@ -42,14 +42,12 @@
 
 .stepButtonActive {
   color: #ffffff;
+  pointer-events: none;
+  cursor: default;
 
   background-color: var(--sd-blue);
 
   &.visited {
     color: white;
-  }
-
-  &:hover {
-    background-color: var(--sd-blueShade10);
   }
 }
