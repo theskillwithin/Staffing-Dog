@@ -6,6 +6,12 @@
   align-items: center;
   justify-content: space-between;
 
+  @media (--sd-notMobile) {
+    button {
+      padding: 0 3.3em;
+    }
+  }
+
   .step {
     flex: 1 1 50%;
   }
