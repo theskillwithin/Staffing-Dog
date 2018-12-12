@@ -121,6 +121,7 @@
       'stepContent'
       'stepNav';
     width: 100%;
+    min-height: 540px;
 
     @media (--sd-tablet) {
       border: 1px solid var(--sd-borderColor);
@@ -143,6 +144,7 @@
     @media (--sd-mobile) {
       display: flex;
       flex-direction: column;
+      min-height: inherit;
     }
   }
 
