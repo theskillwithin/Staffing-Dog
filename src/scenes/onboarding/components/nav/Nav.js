@@ -18,27 +18,25 @@ const stepLinkClasses = (currentStep, step) => {
 
 const Nav = ({ steps, goToStep, exclude, match, history, className }) => (
   <ul className={classnames(theme.stepLinks, className)}>
-    {map(
-      steps,
-      step =>
-        indexOf(exclude, step.step) === -1 ? (
-          <li key={`stepNav:item:${step.step}`} className={theme.stepLinksItem}>
-            <Link
-              to={`/step/${step.step}`}
-              className={stepLinkClasses(match.params.step, step.step)}
-              onClick={e => {
-                e.preventDefault()
-                goToStep({
-                  currentStep: match.params.step,
-                  nextStep: step.step,
-                  history,
-                })
-              }}
-            >
-              {step.step}
-            </Link>
-          </li>
-        ) : null,
+    {map(steps, step =>
+      indexOf(exclude, step.step) === -1 ? (
+        <li key={`stepNav:item:${step.step}`} className={theme.stepLinksItem}>
+          <Link
+            to={`/step/${step.step}`}
+            className={stepLinkClasses(match.params.step, step.step)}
+            onClick={e => {
+              e.preventDefault()
+              goToStep({
+                currentStep: match.params.step,
+                nextStep: step.step,
+                history,
+              })
+            }}
+          >
+            {step.step}
+          </Link>
+        </li>
+      ) : null,
     )}
   </ul>
 )
