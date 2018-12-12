@@ -31,7 +31,7 @@
   display: block;
   text-decoration: none;
 
-  &.visited, &:visited {
+  &.visited {
     color: var(--sd-grayLighter);
   }
 
@@ -42,7 +42,12 @@
 
 .stepButtonActive {
   color: #ffffff;
+
   background-color: var(--sd-blue);
+
+  &.visited {
+    color: white;
+  }
 
   &:hover {
     background-color: var(--sd-blueShade10);
