@@ -175,7 +175,7 @@
 
     @media (--sd-mobile) {
       width: 100%;
-      margin: 0 auto;
+      margin: auto auto 0 auto;
     }
 
     .stepButtons {
@@ -237,7 +237,7 @@
   }
 
   @media (--sd-mobile) {
-    margin-top: auto;
+    margin-top: 2em;
     margin-bottom: 2em;
 
     .footerLeft {
