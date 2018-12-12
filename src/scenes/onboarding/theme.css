@@ -124,7 +124,6 @@
 
     @media (--sd-tablet) {
       border: 1px solid var(--sd-borderColor);
-      overflow: hidden;
       max-width: 900px;
       margin: 0 auto;
       background-color: var(--sd-white);
