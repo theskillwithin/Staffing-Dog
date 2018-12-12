@@ -26,6 +26,7 @@ const ActionNav = ({ match, history, steps, goToStep, savingStep, loadingNextSte
               })
             }
             disabled={savingStep || loadingNextStep}
+            size="medium"
             secondary
             round
           >
@@ -49,6 +50,7 @@ const ActionNav = ({ match, history, steps, goToStep, savingStep, loadingNextSte
               })
             }
             disabled={savingStep || loadingNextStep}
+            size="medium"
             round
           >
             <span className={theme.iconRight}>
