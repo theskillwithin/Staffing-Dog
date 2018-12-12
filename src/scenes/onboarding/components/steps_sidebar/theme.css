@@ -18,6 +18,47 @@
 
 .item {
   margin: 8px 0;
+  text-align: center;
+
+  h2 {
+    color: var(--sd-blackTxt);
+    margin-bottom: 1em;
+  }
+
+  p {
+    line-height: 1.25;
+    max-width: 267px;
+    color: var(--sd-blackTxt);
+    padding: 0;
+    margin: auto;
+  }
+
+  svg {
+    margin-bottom: 1em;
+  }
+
+  strong {
+    font-weight: var(--sd-fontWeightMedium);
+  }
+}
+
+.stepOne {
+  .item {
+    h2 {
+      margin-bottom: 0;
+    }
+
+    p {
+      max-width: 164px;
+    }
+  }
+}
+
+.stepTwo {
+  .item:first-child {
+    margin-top: -1em;
+    margin-right: -0.3em;
+  }
 }
 
 .title {

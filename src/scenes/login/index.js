@@ -73,6 +73,7 @@ class Login extends React.Component {
                 value={this.state.form.password}
                 onChange={value => this.handleChange('password', value)}
                 type="password"
+                thumbprint
               />
               <Button primary round type="submit" size="medium">
                 Sign In

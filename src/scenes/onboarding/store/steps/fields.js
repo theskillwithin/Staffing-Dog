@@ -87,7 +87,7 @@ export const professional = [
     needsComplete: true,
     title: 'Address Information',
     sidebar: {
-      title: 'DayHire &tm;',
+      title: '<strong>DayHire &trade;</strong>',
       description:
         'Never depend on an early morning phone call again. DayHire is a location based, on-demand hiring alternative to calling a temp agency.',
       svg: 'mobile',
@@ -128,7 +128,7 @@ export const professional = [
     needsComplete: true,
     title: 'Profession Information',
     sidebar: {
-      title: 'Work When you Want',
+      title: '<strong>Work When you Want</strong>',
       titleSubLarge: 'Make What you Need',
       description:
         'Temping with StaffingDog is flexible and rewarding, helping dental professionals meet their career and financial goals.',

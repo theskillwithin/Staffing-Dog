@@ -43,7 +43,14 @@ const StepsSidebar = ({ match, steps }) => {
     <div className={theme.sidebar}>
       <Nav className={theme.sidebarNav} />
 
-      <div className={theme.sidebarContent}>
+      <div
+        className={classnames(
+          theme.sidebarContent,
+          parseInt(match.params.step, 10) === 1 && theme.stepOne,
+          parseInt(match.params.step, 10) === 2 && theme.stepTwo,
+          parseInt(match.params.step, 10) === 3 && theme.stepThree,
+        )}
+      >
         {map(currentStep.sidebar.order, (item, i) => (
           <div className={theme.item} key={`item:${i + 1}`}>
             {renderItem(item, currentStep.sidebar[item])}
