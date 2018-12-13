@@ -1,5 +1,19 @@
 @import '../../../../styles/config';
 
+.iconRight {
+  margin-left: -1em;
+  span {
+    margin-right: -1em;
+    padding-left: 3px;
+    padding-right: 5px;
+
+    svg {
+      margin-bottom: 2px;
+    }
+  }
+  display: block; /* FF fix */
+  white-space: nowrap; /* FF fix */
+}
 
 .stepNavComplete {
   padding: 1em 4em;
