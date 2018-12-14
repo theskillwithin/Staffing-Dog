@@ -1,7 +1,11 @@
 import { API_ROOT } from '../../api'
 import { createActionTypes } from '../createAction'
 import { buildStore, reduxRegister } from '../index'
-import { getUserId } from '../storage'
+import {
+  getUserId,
+  setToken as setTokenInCookie,
+  setUserId as setUserIdCookie,
+} from '../storage'
 
 export const INITIAL_STATE = {
   auth: {
@@ -18,9 +22,7 @@ export const INITIAL_STATE = {
   profile: {
     loading: false,
     error: false,
-    user: {
-      id: 'c8332196-8c47-46d4-b97d-0ed42d4786d0',
-    },
+    user: {},
   },
 }
 
@@ -30,6 +32,15 @@ let reducers = {}
  * SET USER TOKEN
  */
 export const USER_SET_TOKEN = 'USER_SET_TOKEN'
+
+export const setToken = token => dispatch => {
+  setTokenInCookie(token)
+
+  dispatch({
+    type: USER_SET_TOKEN,
+    payload: { token },
+  })
+}
 
 reducers = {
   ...reducers,
@@ -48,14 +59,31 @@ reducers = {
 export const USER_LOGIN = 'USER_LOGIN'
 export const userLoginTypes = createActionTypes(USER_LOGIN)
 
-export const login = ({ email, password, onSuccess, onError }) => ({
+export const login = ({
+  email,
+  password,
+  history = false,
+  onSuccess = false,
+  onError = false,
+}) => ({
   type: USER_LOGIN,
   api: {
     url: `${API_ROOT}/login`,
-    type: 'POST',
+    method: 'POST',
     data: { email, password },
     callbacks: {
-      success: onSuccess,
+      success: res => {
+        setUserIdCookie(res.data.user.id)
+        if (onSuccess) onSuccess(res)
+
+        if (history) {
+          if (res.data.user.onboarding_status === 'incomplete') {
+            history.push(`/onboarding/${res.data.user.type}/step/1`)
+          } else {
+            history.push('/')
+          }
+        }
+      },
       error: onError,
     },
   },
@@ -94,7 +122,7 @@ export const getUserProfile = (id = false) => (dispatch, getState) =>
     type: USER_GET_PROFILE,
     api: {
       url: `${API_ROOT}/profiles`,
-      type: 'GET',
+      method: 'GET',
       params: { id: id || findUserId(getState()) || getUserId() },
     },
   })
@@ -134,7 +162,7 @@ export const getSchedule = date => ({
   type: USER_GET_SCHEDULE,
   api: {
     url: `${API_ROOT}/schedule`,
-    type: 'POST',
+    method: 'POST',
     data: { date },
   },
 })
@@ -165,6 +193,7 @@ reduxRegister.register('user', reducer)
 /**
  * Find State
  */
+
 export const findState = state => state.user
 export const findUserAuth = state => findState(state).auth
 export const findSchedule = state => findState(state).schedule

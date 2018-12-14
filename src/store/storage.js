@@ -1,13 +1,14 @@
+import { getItem, setItem } from '../utils/cookies'
+
 export const TOKEN_KEY = 'sdJWT'
 export const FINGERPRINT_KEY = 'sdFP'
 export const USER_ID_KEY = 'sdUID'
 
-export const getToken = () => localStorage.getItem(TOKEN_KEY) || false
-export const setToken = token => localStorage.setItem(TOKEN_KEY, token)
+export const getToken = () => getItem(TOKEN_KEY) || false
+export const setToken = token => setItem(TOKEN_KEY, token)
 
-export const getFingerprint = () => localStorage.getItem(FINGERPRINT_KEY)
-export const setFingerprint = fingerprint =>
-  localStorage.setItem(FINGERPRINT_KEY, fingerprint)
+export const getFingerprint = () => getItem(FINGERPRINT_KEY)
+export const setFingerprint = fingerprint => setItem(FINGERPRINT_KEY, fingerprint)
 
-export const getUserId = () => localStorage.getItem(USER_ID_KEY) || false
-export const setUserId = id => localStorage.setItem(USER_ID_KEY, id)
+export const getUserId = () => getItem(USER_ID_KEY) || false
+export const setUserId = id => setItem(USER_ID_KEY, id)

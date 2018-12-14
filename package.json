@@ -66,6 +66,7 @@
     "axios-mock-adapter": "^1.15.0",
     "classnames": "^2.2.6",
     "eslint-config-prettier": "^3.3.0",
+    "history": "^4.7.2",
     "loadable-components": "^2.2.3",
     "lodash": "^4.17.11",
     "moment": "^2.22.2",

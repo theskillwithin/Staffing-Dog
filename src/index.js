@@ -5,7 +5,6 @@ import { HashRouter as Router, Route, Switch } from 'react-router-dom'
 import loadable from 'loadable-components'
 import createStore from '@sdog/store'
 import reducers from '@sdog/store/reducers'
-import { interceptAuth } from '@sdog/api/intercepts'
 
 import { getToken, getFingerprint, setFingerprint } from './store/storage'
 import createFingerprint from './utils/fingerprint'
@@ -22,8 +21,6 @@ const App = loadable(() => import(/* webpackChunkName: "app" */ '@sdog/scenes/ap
 const LoginScene = loadable(() =>
   import(/* webpackChunkName: "login" */ '@sdog/scenes/login'),
 )
-
-interceptAuth()
 
 if (process.env.MOCK_DATA) {
   require('@sdog/api/mock') // eslint-disable-line

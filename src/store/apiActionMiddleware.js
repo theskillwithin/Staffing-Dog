@@ -1,10 +1,11 @@
-import axios, { IS_DEV } from '../api/index'
+import axios from '../api/index'
 
 import { createActionTypes } from './createAction'
 import { setToken, getToken } from './storage'
 import { USER_SET_TOKEN, findToken, findFingerprint } from './user'
 
 const AUTH_TOKEN_NAME = 'X-AUTH-TOKEN'
+const AUTH_TOKEN_NAME_LOWER = AUTH_TOKEN_NAME.toLowerCase()
 
 export default ({ dispatch, getState }) => next => async action => {
   const { type, api = false, payload = {} } = action
@@ -21,7 +22,7 @@ export default ({ dispatch, getState }) => next => async action => {
     const fingerprint = findFingerprint(getState())
     const token = findToken(getState())
 
-    const apiConfig = { method: 'get', ...api }
+    const apiConfig = { headers: {}, method: 'get', ...api }
 
     if ('get' === apiConfig.method.toLowerCase()) {
       apiConfig.params = {
@@ -35,24 +36,22 @@ export default ({ dispatch, getState }) => next => async action => {
       }
     }
 
-    if (!IS_DEV) {
-      apiConfig.headers = {
-        ...(apiConfig.headers || {}),
-        [AUTH_TOKEN_NAME]: token,
-      }
+    if (token) {
+      apiConfig.headers = { ...apiConfig.headers, [AUTH_TOKEN_NAME]: token }
     }
 
     const response = await axios(apiConfig)
-    const { headers = {} } = response
 
     // if we get a token in the headers and it is different than the current one, set it
     if (
-      headers &&
-      headers[AUTH_TOKEN_NAME] &&
-      headers[AUTH_TOKEN_NAME] !== getToken(getState())
+      response.headers[AUTH_TOKEN_NAME_LOWER] &&
+      response.headers[AUTH_TOKEN_NAME_LOWER] !== getToken(getState())
     ) {
-      setToken(headers[AUTH_TOKEN_NAME])
-      dispatch({ type: USER_SET_TOKEN, payload: { token: headers[AUTH_TOKEN_NAME] } })
+      setToken(response.headers[AUTH_TOKEN_NAME_LOWER])
+      dispatch({
+        type: USER_SET_TOKEN,
+        payload: { token: response.headers[AUTH_TOKEN_NAME_LOWER] },
+      })
     }
 
     dispatch({ type: actionTypes.SUCCESS, payload: response })
