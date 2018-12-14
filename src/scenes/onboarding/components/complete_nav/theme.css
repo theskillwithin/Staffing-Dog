@@ -18,6 +18,10 @@
 .stepNavComplete {
   padding: 1em 4em;
   width: 100%;
+
+  @media (--sd-mobile) {
+    padding: 1em 0;
+  }
 }
 
 .stepNavCompleteInner {
