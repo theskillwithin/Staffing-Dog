@@ -80,7 +80,12 @@ class Onboarding extends Component {
             </div>
           </div>
 
-          <div className={theme.appContent}>
+          <div
+            className={classnames(
+              theme.appContent,
+              /complete/.test(location.pathname) && theme.appContentComplete,
+            )}
+          >
             <div className={classnames(theme.box, showSidebar && theme.showSidebar)}>
               <div className={theme.stepContent}>
                 <div className={theme.stepLinksHolder}>
