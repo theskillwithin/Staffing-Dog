@@ -3,7 +3,7 @@
 .starTitle {
   position: relative;
   display: inline-block;
-  margin: 0 auto 1em auto;
+  margin: 1em auto 1em auto;
   padding: 0.25em 1em;
   font-size: 40px;
   color: var(--sd-blackTxt);
