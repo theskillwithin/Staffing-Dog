@@ -4,7 +4,7 @@ import { IS_DEV } from '@util/env'
 
 import reduxRegister from './register'
 import buildStore from './build'
-import { apiActionMiddleware, createActionTypes } from './apiActionMiddleware'
+import apiActionMiddleware from './apiActionMiddleware'
 
 const isBrowser = typeof window !== 'undefined'
 
@@ -32,7 +32,7 @@ const reduxCombine = (reducers, initialState = {}) => {
   return combineReducers(reduxReducers)
 }
 
-export { buildStore, reduxRegister, createActionTypes }
+export { buildStore, reduxRegister }
 
 export default (storeData = {}, reducers = {}) => {
   reduxRegister.setInitialReducers(reducers)
