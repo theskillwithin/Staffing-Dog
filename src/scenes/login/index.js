@@ -1,4 +1,7 @@
 import React from 'react'
+import { func, shape } from 'prop-types'
+import { withRouter } from 'react-router-dom'
+import { connect } from 'react-redux'
 import { setTitle, setHtmlClass, removeHtmlClass } from '@sdog/utils/document'
 import Contact from '@component/contact'
 import Logo from '@component/logo'
@@ -7,11 +10,18 @@ import Input from '@component/input'
 import Button from '@component/button'
 import Arrow from '@component/svg/Arrow'
 
+import { login, setToken } from '../../store/user'
 import appTheme from '../app/theme.css'
 
 import theme from './theme.css'
 
 class Login extends React.Component {
+  static propTypes = {
+    login: func.isRequired,
+    setToken: func.isRequired,
+    history: shape({ push: func.isRequired }).isRequired,
+  }
+
   state = {
     activeTabIndex: 0,
     form: {
@@ -38,8 +48,14 @@ class Login extends React.Component {
   }
 
   submit = () => {
-    // const type = this.state.activeTabIndex === 0 ? 'Professional' : 'Provider'
-    // this.props.submit(this.state.form, type)
+    const {
+      state: {
+        form: { email, password },
+      },
+      props: { history },
+    } = this
+
+    this.props.login({ email, password, history })
   }
 
   render = () => (
@@ -102,4 +118,11 @@ class Login extends React.Component {
   )
 }
 
-export default Login
+const mapActionsToProps = { login, setToken }
+
+export default withRouter(
+  connect(
+    null,
+    mapActionsToProps,
+  )(Login),
+)

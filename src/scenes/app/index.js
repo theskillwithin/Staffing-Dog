@@ -1,11 +1,13 @@
 import React from 'react'
-import { Route } from 'react-router-dom'
-import { object } from 'prop-types'
+import { Route, withRouter } from 'react-router-dom'
+import { connect } from 'react-redux'
+import { object, func } from 'prop-types'
 import loadable from 'loadable-components'
 import { setHtmlClass, removeHtmlClass } from '@sdog/utils/document'
 import Logo from '@component/logo'
 import MainMenu from '@scene/app/menu'
 import Contact from '@component/contact'
+import { getUserProfile } from '@sdog/store/user'
 
 import theme from './theme.css'
 import './styles.css'
@@ -23,6 +25,7 @@ const SettingsScene = loadable(() =>
 class App extends React.Component {
   componentDidMount() {
     setHtmlClass('html-app')
+    this.props.getUserProfile()
   }
 
   componentWillUnmount() {
@@ -58,6 +61,14 @@ class App extends React.Component {
 
 App.propTypes = {
   location: object.isRequired,
+  getUserProfile: func.isRequired,
 }
 
-export default App
+export const mapActionsToProps = { getUserProfile }
+
+export default withRouter(
+  connect(
+    null,
+    mapActionsToProps,
+  )(App),
+)

@@ -1,7 +1,7 @@
 import axios from 'axios'
 import pathToRegex from 'path-to-regexp'
 
-import { API_ROOT } from './config'
+import { API_ROOT, IS_DEV } from './config'
 
 const sdNoop = () => {}
 
@@ -17,6 +17,6 @@ export const createPath = (url, args, rootPath = API_ROOT) => {
   return `${rootPath}${builtPath}`
 }
 
-export { API_ROOT }
+export { API_ROOT, IS_DEV }
 
 export default axios

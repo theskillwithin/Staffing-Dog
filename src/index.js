@@ -5,8 +5,10 @@ import { HashRouter as Router, Route, Switch } from 'react-router-dom'
 import loadable from 'loadable-components'
 import createStore from '@sdog/store'
 import reducers from '@sdog/store/reducers'
-import { interceptAuth } from '@sdog/api/intercepts'
-import { getToken } from '@sdog/api/auth'
+
+import { getToken, getFingerprint, setFingerprint } from './store/storage'
+import createFingerprint from './utils/fingerprint'
+import AuthRoute from './components/AuthRoute'
 
 import './fonts/index.css'
 
@@ -20,14 +22,21 @@ const LoginScene = loadable(() =>
   import(/* webpackChunkName: "login" */ '@sdog/scenes/login'),
 )
 
-interceptAuth()
-
 if (process.env.MOCK_DATA) {
   require('@sdog/api/mock') // eslint-disable-line
 }
 
-const token = getToken()
-const storeData = token ? { auth: { token } } : { auth: { token: 'test' } }
+const fingerprint = getFingerprint() || createFingerprint()
+setFingerprint(fingerprint)
+
+const storeData = {
+  user: {
+    auth: {
+      token: getToken(),
+      fingerprint,
+    },
+  },
+}
 
 const store = createStore(storeData, reducers)
 
@@ -37,7 +46,7 @@ render(
       <Switch>
         <Route path="/onboarding" component={OnboardingScene} />
         <Route path="/login" component={LoginScene} />
-        <Route path="/" component={App} />
+        <AuthRoute path="/" component={App} to="/login" />
       </Switch>
     </Router>
   </Provider>,
