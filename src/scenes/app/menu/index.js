@@ -13,6 +13,12 @@ class MainMenu extends React.Component {
     mobileActive: false,
   }
 
+  componentDidMount() {
+    if ('ontouchstart' in document.documentElement) {
+      document.body.style.cursor = 'pointer'
+    }
+  }
+
   handleMobileToggle = () => {
     this.setState(state => ({ mobileActive: !state.mobileActive }))
   }

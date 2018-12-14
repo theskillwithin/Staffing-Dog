@@ -48,6 +48,8 @@
     left: -40px;
 
     @media (--sd-notMobile) {
+      top: 5px;
+
       &:hover {
         display: block;
       }
@@ -83,7 +85,7 @@
     height: 136px;
     border-radius: 8px;
     background-color: var(--sd-white);
-    box-shadow: 0 3px 6px 0 var(--sd-shadowColor);
+    filter: drop-shadow(0 3px 6px var(--sd-shadowColorContact));
 
     a {
       height: 35px;
@@ -92,7 +94,6 @@
       display: flex;
       align-items: center;
       font-size: 14px;
-      padding-left: 8px;
 
       i,
       svg {
@@ -110,11 +111,17 @@
           background: var(--sd-primary);
         }
       }
+
+      @media (--sd-mobile) {
+        padding-left: 8px;
+      }
     }
 
     .mobileOption {
       a {
         height: 40px;
+        margin-top: 3px;
+        margin-bottom: 2px;
       }
     }
 
@@ -141,14 +148,13 @@
       content: '';
       display: block;
       position: absolute;
-      top: 28px;
+      top: 25px;
       right: 10px;
       transform-origin: top;
       transform: rotate(45deg) translate(-50%, -50%);
       width: 35.4px;
       height: 35.4px;
       background-color: var(--sd-white);
-      box-shadow: 0 3px 6px 0 var(--sd-shadowColor);
       z-index: -1;
 
       @media (--sd-mobile) {
