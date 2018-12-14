@@ -13,7 +13,8 @@
     font-weight: var(--sd-fontWeightLight);
     text-align: center;
     color: var(--sd-blackTxt);
-    margin-bottom: 2em;
+    margin-top: 1.3em;
+    margin-bottom: 2.2em;
 
     @media (--sd-mobile) {
       padding-top: 0;
