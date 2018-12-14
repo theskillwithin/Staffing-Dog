@@ -5,6 +5,11 @@
   --sd-left-offset: 50px;
   --sd-top-offset: -10px;
   --sd-bottom-offset: 5px;
+
+  @media (--sd-mobile) {
+    --sd-right-offset: 90px;
+    --sd-left-offset: 90px;
+  }
 }
 
 .starTitle {
@@ -42,6 +47,11 @@
     &:nth-child(2) {
       bottom: calc(-10px + var(--sd-bottom-offset));
       left: calc(-65px + var(--sd-left-offset));
+
+      @media (--sd-mobile) {
+        bottom: calc(-10px + var(--sd-bottom-offset));
+        left: calc(-55px + var(--sd-left-offset));
+      }
     }
 
     &:nth-child(3) {
@@ -74,11 +84,21 @@
       svg {
         width: 10px;
       }
+
+      @media (--sd-mobile) {
+        bottom: calc(-15px + var(--sd-bottom-offset));
+        left: calc(-30px + var(--sd-left-offset));
+      }
     }
 
     &:nth-child(3) {
       bottom: calc(-35px + var(--sd-bottom-offset));
       left: calc(-50px + var(--sd-left-offset));
+
+      @media (--sd-mobile) {
+        bottom: calc(-35px + var(--sd-bottom-offset));
+        left: calc(-40px + var(--sd-left-offset));
+      }
     }
 
     &:nth-child(4) {
