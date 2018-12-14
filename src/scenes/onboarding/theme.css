@@ -134,7 +134,7 @@
 
     &.showSidebar {
       @media (--sd-tablet) {
-        grid-template-columns: minmax(50%, auto) 300px;
+        grid-template-columns: minmax(50%, auto) 268.5px;
         grid-template-areas:
           'stepContent stepSidebar'
           'stepNav stepSidebar';
