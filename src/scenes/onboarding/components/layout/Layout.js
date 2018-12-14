@@ -51,8 +51,6 @@ class Onboarding extends Component {
     const hasStep = RegExp('/step/([0-9]+)')
     const showSidebar = hasStep.test(location.pathname)
 
-    console.log(/complete/.test(location.pathname))
-
     return (
       <div className={theme.app}>
         <div className={theme.appInner}>
