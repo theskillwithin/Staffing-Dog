@@ -176,7 +176,6 @@
 
     @media (--sd-mobile) {
       width: 100%;
-      margin: auto auto 0 auto;
     }
 
     .stepButtons {
