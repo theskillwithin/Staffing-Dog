@@ -26,7 +26,7 @@ class GetStarted extends Component {
   render() {
     return (
       <div className={theme.gettingStarted}>
-        <StarTitle title="Welcome!" />
+        <StarTitle title="Power to the Professional" />
 
         <div className={theme.svgScene}>
           <span className={classnames(theme.group, theme.groupPlant)}>

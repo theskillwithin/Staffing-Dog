@@ -5,7 +5,9 @@
   display: inline-block;
   margin: 0 auto 1em auto;
   padding: 0.25em 1em;
-  font-size: var(--sd-fontSizeXXL);
+  font-size: 40px;
+  color: var(--sd-blackTxt);
+  font-weight: var(--sd-fontWeightNormal);
 
   .star,
   .circle {
