@@ -12,6 +12,14 @@
     font-size: var(--sd-fontSizeXL);
     font-weight: var(--sd-fontWeightLight);
     text-align: center;
+    color: var(--sd-blackTxt);
+  }
+
+  &Complete {
+    @media (--sd-mobile) {
+      padding: 0;
+      margin: 0;
+    }
   }
 }
 
@@ -84,4 +92,8 @@
   width: 80%;
   margin: 0 auto;
   height: 200px;
+
+  @media (--sd-mobile) {
+    width: 100vw;
+  }
 }

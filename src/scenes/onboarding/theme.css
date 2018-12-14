@@ -149,6 +149,11 @@
 
   .stepContent {
     grid-area: stepContent;
+
+    @media (--sd-mobile) {
+      display: flex;
+      justify-content: center;
+    }
   }
 
   .stepSidebar {
@@ -198,6 +203,15 @@
           margin-left: 0;
         }
       }
+    }
+  }
+
+  &Complete {
+    @media (--sd-mobile) {
+      max-width: 100vw;
+      display: flex;
+      padding: 0;
+      margin-top: -1em;
     }
   }
 }
@@ -270,6 +284,7 @@
   text-align: center;
   font-weight: var(--sd-fontWeightLight);
   font-size: var(--sd-fontSizeL);
+  color: var(--sd-blackTxt);
 }
 
 /* Step Complete Route */
