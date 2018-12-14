@@ -7,8 +7,10 @@
   --sd-bottom-offset: 5px;
 
   @media (--sd-mobile) {
-    --sd-right-offset: 90px;
-    --sd-left-offset: 90px;
+    --sd-right-offset: 82px;
+    --sd-left-offset: 82px;
+    --sd-top-offset: -8px;
+    --sd-bottom-offset: 5px;
   }
 }
 
@@ -50,7 +52,7 @@
 
       @media (--sd-mobile) {
         bottom: calc(-10px + var(--sd-bottom-offset));
-        left: calc(-55px + var(--sd-left-offset));
+        left: calc(-50px + var(--sd-left-offset));
       }
     }
 
