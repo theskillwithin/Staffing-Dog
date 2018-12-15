@@ -6,12 +6,10 @@
   --sd-top-offset: -10px;
   --sd-bottom-offset: 5px;
 
-  @media (--sd-mobile) {
-    --sd-right-offset: 82px;
-    --sd-left-offset: 82px;
-    --sd-top-offset: -8px;
-    --sd-bottom-offset: 5px;
-  }
+  --sd-right-offset-mobile: 82px;
+  --sd-left-offset-mobile: 82px;
+  --sd-top-offset-mobile: -8px;
+  --sd-bottom-offset-mobile: 5px;
 }
 
 .starTitle {
@@ -44,6 +42,11 @@
     &:nth-child(1) {
       top: calc(-30px + var(--sd-top-offset));
       left: calc(-13px + var(--sd-left-offset));
+
+      @media (--sd-mobile) {
+        top: calc(-30px + var(--sd-top-offset-mobile));
+        left: calc(-13px + var(--sd-left-offset-mobile));
+      }
     }
 
     &:nth-child(2) {
@@ -51,19 +54,29 @@
       left: calc(-65px + var(--sd-left-offset));
 
       @media (--sd-mobile) {
-        bottom: calc(-10px + var(--sd-bottom-offset));
-        left: calc(-50px + var(--sd-left-offset));
+        bottom: calc(-10px + var(--sd-bottom-offset-mobile));
+        left: calc(-50px + var(--sd-left-offset-mobile));
       }
     }
 
     &:nth-child(3) {
       top: calc(-39px + var(--sd-top-offset));
       right: calc(-50px + var(--sd-right-offset));
+
+      @media (--sd-mobile) {
+        top: calc(-39px + var(--sd-top-offset-mobile));
+        right: calc(-50px + var(--sd-right-offset-mobile));
+      }
     }
 
     &:nth-child(4) {
       bottom: calc(-20px + var(--sd-bottom-offset));
       right: calc(-36px + var(--sd-right-offset));
+
+      @media (--sd-mobile) {
+        bottom: calc(-20px + var(--sd-bottom-offset-mobile));
+        right: calc(-36px + var(--sd-right-offset-mobile));
+      }
     }
   }
 
@@ -77,6 +90,11 @@
     &:nth-child(1) {
       top: calc(-22px + var(--sd-top-offset));
       left: calc(-31px + var(--sd-left-offset));
+
+      @media (--sd-mobile) {
+        top: calc(-22px + var(--sd-top-offset-mobile));
+        left: calc(-31px + var(--sd-left-offset-mobile));
+      }
     }
 
     &:nth-child(2) {
@@ -88,8 +106,8 @@
       }
 
       @media (--sd-mobile) {
-        bottom: calc(-15px + var(--sd-bottom-offset));
-        left: calc(-30px + var(--sd-left-offset));
+        bottom: calc(-15px + var(--sd-bottom-offset-mobile));
+        left: calc(-30px + var(--sd-left-offset-mobile));
       }
     }
 
@@ -98,14 +116,19 @@
       left: calc(-50px + var(--sd-left-offset));
 
       @media (--sd-mobile) {
-        bottom: calc(-35px + var(--sd-bottom-offset));
-        left: calc(-40px + var(--sd-left-offset));
+        bottom: calc(-35px + var(--sd-bottom-offset-mobile));
+        left: calc(-40px + var(--sd-left-offset-mobile));
       }
     }
 
     &:nth-child(4) {
       top: calc(-32px + var(--sd-top-offset));
       right: calc(-23px + var(--sd-right-offset));
+
+      @media (--sd-mobile) {
+        top: calc(-32px + var(--sd-top-offset-mobile));
+        right: calc(-23px + var(--sd-right-offset-mobile));
+      }
     }
 
     &:nth-child(5) {
@@ -115,11 +138,21 @@
       svg {
         width: 10px;
       }
+
+      @media (--sd-mobile) {
+        top: calc(-16px + var(--sd-top-offset-mobile));
+        right: calc(-42px + var(--sd-right-offset-mobile));
+      }
     }
 
     &:nth-child(6) {
       bottom: calc(-33px + var(--sd-bottom-offset));
       right: calc(-48px + var(--sd-right-offset));
+
+      @media (--sd-mobile) {
+        bottom: calc(-33px + var(--sd-bottom-offset-mobile));
+        right: calc(-48px + var(--sd-right-offset-mobile));
+      }
     }
   }
 }
