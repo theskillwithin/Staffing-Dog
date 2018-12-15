@@ -171,4 +171,16 @@ config.plugins = [
   }),
 ]
 
+// DevServer
+config.devServer = {
+  stats: {
+    children: false,
+    chunks: false,
+    chunkModules: false,
+    modules: false,
+    reasons: false,
+    useExports: false,
+  },
+}
+
 export default config
