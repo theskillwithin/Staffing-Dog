@@ -19,6 +19,7 @@ import theme from '../../theme.css'
 
 class Onboarding extends Component {
   componentDidMount() {
+    window.scrollTo(0, 0)
     const {
       match: {
         params: { type },
@@ -42,6 +43,10 @@ class Onboarding extends Component {
     if (prevProps.match.params.type !== type) {
       setType(type)
       setTitle(`Onboarding - ${type}`)
+    }
+
+    if (prevProps.location.pathname !== this.props.location.pathname) {
+      window.scrollTo(0, 0)
     }
   }
 

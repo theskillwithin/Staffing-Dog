@@ -122,10 +122,11 @@
       'stepNav';
     width: 100%;
     min-height: 540px;
+    max-width: 800px;
+    width: 100%;
 
     @media (--sd-tablet) {
       border: 1px solid var(--sd-borderColor);
-      max-width: 900px;
       margin: 0 auto;
       background-color: var(--sd-white);
       border-radius: 8px;
@@ -133,7 +134,7 @@
 
     &.showSidebar {
       @media (--sd-tablet) {
-        grid-template-columns: minmax(50%, auto) 300px;
+        grid-template-columns: minmax(50%, auto) 268.5px;
         grid-template-areas:
           'stepContent stepSidebar'
           'stepNav stepSidebar';
@@ -175,7 +176,6 @@
 
     @media (--sd-mobile) {
       width: 100%;
-      margin: auto auto 0 auto;
     }
 
     .stepButtons {
