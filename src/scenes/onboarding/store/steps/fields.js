@@ -113,7 +113,7 @@ export const professional = [
         required: true,
       },
       {
-        name: 'postal_code',
+        name: 'zip',
         label: 'Postal Code',
         type: 'input',
         formType: 'number',

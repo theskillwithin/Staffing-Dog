@@ -14,6 +14,8 @@ export default ({ dispatch, getState }) => next => async action => {
     return next(action)
   }
 
+  const { callbacks = {}, ...apiSettings } = api
+
   const actionTypes = createActionTypes(type)
 
   dispatch({ type: actionTypes.LOADING, payload })
@@ -22,7 +24,7 @@ export default ({ dispatch, getState }) => next => async action => {
     const fingerprint = findFingerprint(getState())
     const token = findToken(getState())
 
-    const apiConfig = { headers: {}, method: 'get', ...api }
+    const apiConfig = { headers: {}, method: 'get', ...apiSettings }
 
     if ('get' === apiConfig.method.toLowerCase()) {
       apiConfig.params = {
@@ -55,13 +57,13 @@ export default ({ dispatch, getState }) => next => async action => {
     }
 
     dispatch({ type: actionTypes.SUCCESS, payload: response })
-    if (api.callbacks && api.callbacks.success) {
-      api.callbacks.success(response)
+    if (callbacks && callbacks.success) {
+      callbacks.success(response)
     }
   } catch (err) {
     dispatch({ type: actionTypes.ERROR, payload: err })
-    if (api.callbacks && api.callbacks.error) {
-      api.callbacks.error(err)
+    if (callbacks && callbacks.error) {
+      callbacks.error(err)
     }
   }
 

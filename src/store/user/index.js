@@ -22,9 +22,14 @@ export const INITIAL_STATE = {
   profile: {
     loading: false,
     error: false,
-    user: {},
+  },
+  register: {
+    loading: false,
+    error: false,
   },
 }
+
+const spreadLoadingError = (loading, error) => ({ loading, error })
 
 let reducers = {}
 
@@ -99,16 +104,111 @@ reducers = {
     ...state,
     auth: { ...state.auth, loading: false, error: true },
   }),
-  [userLoginTypes.SUCCESS]: (state, { data }) => ({
+  [userLoginTypes.SUCCESS]: (
+    state,
+    {
+      data: {
+        user,
+        full_profile: { user: userProfile, ...userFullProfile },
+      },
+    },
+  ) => ({
     ...state,
     auth: { ...state.auth, loading: true, error: false },
     profile: {
       ...state.profile,
       loading: false,
       error: false,
-      ...data,
+      ...(user || {}),
+      ...(userProfile || {}),
+      ...(userFullProfile || {}),
     },
   }),
+}
+
+/**
+ * REGISTER USER
+ */
+export const USER_REGISTER = 'USER_REGISTER'
+export const userRegisterTypes = createActionTypes(USER_REGISTER)
+
+export const registerUser = ({ onSuccess = false, onError = false, ...data }) => ({
+  type: USER_REGISTER,
+  api: {
+    url: `${API_ROOT}/register`,
+    method: 'POST',
+    data,
+    callbacks: {
+      success: onSuccess,
+      error: onError,
+    },
+  },
+})
+
+reducers = {
+  ...reducers,
+  [userRegisterTypes.LOADING]: state => ({
+    ...state,
+    register: {
+      ...state.register,
+      ...spreadLoadingError(true, false),
+    },
+  }),
+  [userRegisterTypes.SUCCESS]: (
+    state,
+    {
+      data: {
+        user,
+        full_profile: { user: userProfile, ...userFullProfile },
+      },
+    },
+  ) => ({
+    ...state,
+    register: {
+      ...state,
+      ...spreadLoadingError(false, false),
+    },
+    profile: {
+      ...state.profile,
+      ...spreadLoadingError(false, false),
+      ...(user || {}),
+      ...(userProfile || {}),
+      ...(userFullProfile || {}),
+    },
+  }),
+  [userRegisterTypes.ERROR]: (state, { error }) => ({
+    ...state,
+    register: {
+      ...state.register,
+      ...spreadLoadingError(false, error),
+    },
+  }),
+}
+
+/**
+ * Update Registered User
+ */
+export const USER_REGISTER_UPDATE = 'USER_REGISTER_UPDATE'
+export const userRegisterUpdateTypes = createActionTypes(USER_REGISTER_UPDATE)
+
+export const updateRegisterUser = ({ onSuccess = false, onError = false, ...data }) => ({
+  type: USER_REGISTER_UPDATE,
+  api: {
+    url: `${API_ROOT}/register`,
+    method: 'PUT',
+    data,
+    callbacks: {
+      success: onSuccess,
+      error: onError,
+    },
+  },
+})
+
+reducers = {
+  ...reducers,
+  [userRegisterUpdateTypes.LOADING]: reducers[userRegisterTypes.LOADING],
+  [userRegisterUpdateTypes.SUCCESS]: reducers[userRegisterTypes.SUCCESS],
+  [userRegisterUpdateTypes.ERROR]: reducers[userRegisterTypes.ERROR],
 }
 
 /**
@@ -131,23 +231,34 @@ reducers = {
   ...reducers,
   [userGetProfileTypes.LOADING]: state => ({
     ...state,
-    profile: { ...state.profile, loading: true, error: false },
+    profile: {
+      ...state.profile,
+      ...spreadLoadingError(true, false),
+    },
   }),
   [userGetProfileTypes.ERROR]: (state, payload) => ({
     ...state,
     profile: {
       ...state.profile,
-      loading: false,
-      error: payload.error || 'error',
+      ...spreadLoadingError(false, payload.error || 'error'),
     },
   }),
-  [userGetProfileTypes.SUCCESS]: (state, { data }) => ({
+  [userGetProfileTypes.SUCCESS]: (
+    state,
+    {
+      data: {
+        user,
+        full_profile: { user: userProfile, ...userFullProfile },
+      },
+    },
+  ) => ({
     ...state,
     profile: {
       ...state.profile,
-      loading: false,
-      error: false,
-      ...data,
+      ...spreadLoadingError(false, false),
+      ...(user || {}),
+      ...(userProfile || {}),
+      ...(userFullProfile || {}),
     },
   }),
 }
@@ -171,15 +282,24 @@ reducers = {
   ...reducers,
   [userGetScheduleTypes.LOADING]: state => ({
     ...state,
-    schedule: { ...state.schedule, loading: true, error: false },
+    schedule: {
+      ...state.schedule,
+      ...spreadLoadingError(true, false),
+    },
   }),
   [userGetScheduleTypes.ERROR]: state => ({
     ...state,
-    schedule: { ...state.schedule, loading: false, error: true },
+    schedule: {
+      ...state.schedule,
+      ...spreadLoadingError(false, true),
+    },
   }),
   [userGetScheduleTypes.SUCCESS]: state => ({
     ...state,
-    schedule: { ...state.schedule, loading: false, error: true },
+    schedule: {
+      ...state.schedule,
+      ...spreadLoadingError(false, false),
+    },
   }),
 }
 
@@ -206,6 +326,6 @@ export const findScheduleError = state => findSchedule(state).error
 export const findToken = state => findUserAuth(state).token
 export const findFingerprint = state => findUserAuth(state).fingerprint
 
-export const findUserId = state => findUserProfile(state).user.id
+export const findUserId = state => findUserProfile(state).id
 
 export default reducer

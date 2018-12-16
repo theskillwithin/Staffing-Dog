@@ -26,7 +26,7 @@ class Onboarding extends Component {
       setType,
     } = this.props
 
-    setTitle(`Onboarding - ${type}`)
+    setTitle(`Onboarding - set - ${type}`)
 
     setType(type)
   }

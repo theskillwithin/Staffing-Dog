@@ -1,8 +1,8 @@
-import auth from './auth'
+// import auth from './auth'
 import user from './user'
 
 const reducers = {
-  auth,
+  // auth,
   user,
 }
 
