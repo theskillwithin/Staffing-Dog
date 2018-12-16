@@ -19,6 +19,7 @@ import theme from '../../theme.css'
 
 class Onboarding extends Component {
   componentDidMount() {
+    window.scrollTo(0, 0)
     const {
       match: {
         params: { type },
@@ -42,6 +43,10 @@ class Onboarding extends Component {
     if (prevProps.match.params.type !== type) {
       setType(type)
       setTitle(`Onboarding - ${type}`)
+    }
+
+    if (prevProps.location.pathname !== this.props.location.pathname) {
+      window.scrollTo(0, 0)
     }
   }
 
@@ -80,7 +85,12 @@ class Onboarding extends Component {
             </div>
           </div>
 
-          <div className={theme.appContent}>
+          <div
+            className={classnames(
+              theme.appContent,
+              /complete/.test(location.pathname) && theme.appContentComplete,
+            )}
+          >
             <div className={classnames(theme.box, showSidebar && theme.showSidebar)}>
               <div className={theme.stepContent}>
                 <div className={theme.stepLinksHolder}>

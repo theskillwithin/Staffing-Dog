@@ -1,7 +1,7 @@
 @import '../../../../styles/config.css';
 
 .stepLinks {
-  margin: 0;
+  margin: -7px 0 0 0;
   padding: 0;
   list-style-type: none;
   display: flex;
@@ -36,7 +36,10 @@
   }
 
   &:hover {
-    background-color: var(--sd-blueGrayShade10);
+
+    @media (--sd-notMobile) {
+      background-color: var(--sd-blueGrayShade10);
+    }
   }
 }
 

@@ -98,7 +98,12 @@ class Steps extends React.Component {
 
     return (
       <div className={theme.steps}>
-        <div className={theme.stepsContent}>
+        <div
+          className={classnames(
+            theme.stepsContent,
+            /complete/.test(currentStep.step) && theme.stepsContentComplete,
+          )}
+        >
           <h2 className={theme.stepTitle}>{currentStep.title}</h2>
 
           <div className={theme.stepForm}>

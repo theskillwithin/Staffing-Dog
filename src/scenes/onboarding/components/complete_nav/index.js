@@ -26,8 +26,13 @@ const CompleteNav = () => (
         </div>
 
         <div>
-          <Button primary round>
-            Advanced Setup <Arrow />
+          <Button primary round size="medium">
+            <span className={theme.iconRight}>
+              Profile Setup{' '}
+              <span>
+                <Arrow small color="white" />
+              </span>
+            </span>
           </Button>
         </div>
       </div>

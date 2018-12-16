@@ -1,11 +1,26 @@
 @import '../../styles/config.css';
 
+:root {
+  --sd-right-offset: 50px;
+  --sd-left-offset: 50px;
+  --sd-top-offset: -10px;
+  --sd-bottom-offset: 5px;
+
+  --sd-right-offset-mobile: 82px;
+  --sd-left-offset-mobile: 82px;
+  --sd-top-offset-mobile: -8px;
+  --sd-bottom-offset-mobile: 5px;
+}
+
 .starTitle {
   position: relative;
   display: inline-block;
-  margin: 0 auto 1em auto;
+  margin: 0.8em auto 1em auto;
   padding: 0.25em 1em;
-  font-size: var(--sd-fontSizeXXL);
+  font-size: 40px;
+  color: var(--sd-blackTxt);
+  font-weight: var(--sd-fontWeightNormal);
+  letter-spacing: -0.4px;
 
   .star,
   .circle {
@@ -25,57 +40,119 @@
     position: absolute;
 
     &:nth-child(1) {
-      top: -30px;
-      left: -5px;
+      top: calc(-30px + var(--sd-top-offset));
+      left: calc(-13px + var(--sd-left-offset));
+
+      @media (--sd-mobile) {
+        top: calc(-30px + var(--sd-top-offset-mobile));
+        left: calc(-13px + var(--sd-left-offset-mobile));
+      }
     }
 
     &:nth-child(2) {
-      bottom: -10px;
-      left: -45px;
+      bottom: calc(-10px + var(--sd-bottom-offset));
+      left: calc(-65px + var(--sd-left-offset));
+
+      @media (--sd-mobile) {
+        bottom: calc(-10px + var(--sd-bottom-offset-mobile));
+        left: calc(-50px + var(--sd-left-offset-mobile));
+      }
     }
 
     &:nth-child(3) {
-      top: -40px;
-      right: -45px;
+      top: calc(-39px + var(--sd-top-offset));
+      right: calc(-50px + var(--sd-right-offset));
+
+      @media (--sd-mobile) {
+        top: calc(-39px + var(--sd-top-offset-mobile));
+        right: calc(-50px + var(--sd-right-offset-mobile));
+      }
     }
 
     &:nth-child(4) {
-      bottom: -20px;
-      right: -10px;
+      bottom: calc(-20px + var(--sd-bottom-offset));
+      right: calc(-36px + var(--sd-right-offset));
+
+      @media (--sd-mobile) {
+        bottom: calc(-20px + var(--sd-bottom-offset-mobile));
+        right: calc(-36px + var(--sd-right-offset-mobile));
+      }
     }
   }
 
   .circles .circle {
     position: absolute;
 
+    svg {
+      width: 8px;
+    }
+
     &:nth-child(1) {
-      top: -20px;
-      left: -25px;
+      top: calc(-22px + var(--sd-top-offset));
+      left: calc(-31px + var(--sd-left-offset));
+
+      @media (--sd-mobile) {
+        top: calc(-22px + var(--sd-top-offset-mobile));
+        left: calc(-31px + var(--sd-left-offset-mobile));
+      }
     }
 
     &:nth-child(2) {
-      bottom: -15px;
-      left: -25px;
+      bottom: calc(-15px + var(--sd-bottom-offset));
+      left: calc(-40px + var(--sd-left-offset));
+
+      svg {
+        width: 10px;
+      }
+
+      @media (--sd-mobile) {
+        bottom: calc(-15px + var(--sd-bottom-offset-mobile));
+        left: calc(-30px + var(--sd-left-offset-mobile));
+      }
     }
 
     &:nth-child(3) {
-      bottom: -30px;
-      left: -40px;
+      bottom: calc(-35px + var(--sd-bottom-offset));
+      left: calc(-50px + var(--sd-left-offset));
+
+      @media (--sd-mobile) {
+        bottom: calc(-35px + var(--sd-bottom-offset-mobile));
+        left: calc(-40px + var(--sd-left-offset-mobile));
+      }
     }
 
     &:nth-child(4) {
-      top: -30px;
-      right: -20px;
+      top: calc(-32px + var(--sd-top-offset));
+      right: calc(-23px + var(--sd-right-offset));
+
+      @media (--sd-mobile) {
+        top: calc(-32px + var(--sd-top-offset-mobile));
+        right: calc(-23px + var(--sd-right-offset-mobile));
+      }
     }
 
     &:nth-child(5) {
-      top: -15px;
-      right: -40px;
+      top: calc(-16px + var(--sd-top-offset));
+      right: calc(-42px + var(--sd-right-offset));
+
+      svg {
+        width: 10px;
+      }
+
+      @media (--sd-mobile) {
+        top: calc(-16px + var(--sd-top-offset-mobile));
+        right: calc(-42px + var(--sd-right-offset-mobile));
+      }
     }
 
     &:nth-child(6) {
-      bottom: -35px;
-      right: -30px;
+      bottom: calc(-33px + var(--sd-bottom-offset));
+      right: calc(-48px + var(--sd-right-offset));
+
+      @media (--sd-mobile) {
+        bottom: calc(-33px + var(--sd-bottom-offset-mobile));
+        right: calc(-48px + var(--sd-right-offset-mobile));
+      }
     }
   }
 }
