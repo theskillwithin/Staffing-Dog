@@ -20,28 +20,28 @@ export default ({ dispatch, getState }) => next => async action => {
 
   dispatch({ type: actionTypes.LOADING, payload })
 
+  const fingerprint = findFingerprint(getState())
+  const token = findToken(getState())
+
+  const apiConfig = { headers: {}, method: 'GET', ...apiSettings }
+
+  if ('get' === apiConfig.method.toLowerCase()) {
+    apiConfig.params = {
+      ...(apiConfig.params || {}),
+      fingerprint,
+    }
+  } else {
+    apiConfig.data = {
+      ...(apiConfig.data || {}),
+      fingerprint,
+    }
+  }
+
+  if (token) {
+    apiConfig.headers = { ...apiConfig.headers, [AUTH_TOKEN_NAME]: token }
+  }
+
   try {
-    const fingerprint = findFingerprint(getState())
-    const token = findToken(getState())
-
-    const apiConfig = { headers: {}, method: 'get', ...apiSettings }
-
-    if ('get' === apiConfig.method.toLowerCase()) {
-      apiConfig.params = {
-        ...(apiConfig.params || {}),
-        fingerprint,
-      }
-    } else {
-      apiConfig.data = {
-        ...(apiConfig.data || {}),
-        fingerprint,
-      }
-    }
-
-    if (token) {
-      apiConfig.headers = { ...apiConfig.headers, [AUTH_TOKEN_NAME]: token }
-    }
-
     const response = await axios(apiConfig)
 
     // if we get a token in the headers and it is different than the current one, set it
@@ -57,6 +57,7 @@ export default ({ dispatch, getState }) => next => async action => {
     }
 
     dispatch({ type: actionTypes.SUCCESS, payload: response })
+
     if (callbacks && callbacks.success) {
       callbacks.success(response)
     }

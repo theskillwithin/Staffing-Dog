@@ -8,7 +8,7 @@ import {
   findToken,
   findUserProfile,
   userRegisterTypes,
-  userUpdateRegisterTypes,
+  userRegisterUpdateTypes,
   userGetProfileTypes,
 } from '@store/user'
 import reduxRegister from '@store/register'
@@ -197,7 +197,7 @@ export const reducers = {
   }),
   // When Updating the user, we want to make sure to update the steps data as well
   [userRegisterTypes.SUCCESS]: updateStepValuesFromRegister,
-  [userUpdateRegisterTypes.SUCCESS]: updateStepValuesFromRegister,
+  [userRegisterUpdateTypes.SUCCESS]: updateStepValuesFromRegister,
   [userGetProfileTypes.SUCCESS]: updateStepValuesFromRegister,
 }
 

@@ -2,11 +2,11 @@ import React, { Component } from 'react'
 import { string, bool, object, func, oneOfType, shape } from 'prop-types'
 import { Route, Switch } from 'react-router-dom'
 import classnames from 'classnames'
-import Logo from '@sd/components/logo'
-import LoadingBar from '@sd/components/loading_bar'
-import { setTitle } from '@util/document'
-import Contact from '@component/contact'
 
+import Logo from '../../../../components/logo'
+import LoadingBar from '../../../../components/loading_bar'
+import Contact from '../../../../components/contact'
+import { setTitle } from '../../../../utils/document'
 import Steps from '../steps'
 import StepsSidebar from '../steps_sidebar'
 import GetStarted from '../get_started'
@@ -18,8 +18,27 @@ import '../../styles.css'
 import theme from '../../theme.css'
 
 class Onboarding extends Component {
+  static propTypes = {
+    error: oneOfType([bool, string]),
+    loading: oneOfType([bool, string]),
+    location: object.isRequired,
+    match: shape({
+      path: string.isRequired,
+      params: shape({
+        type: string.isRequired,
+      }),
+    }),
+    setType: func.isRequired,
+  }
+
+  static defaultProps = {
+    error: false,
+    loading: false,
+  }
+
   componentDidMount() {
     window.scrollTo(0, 0)
+
     const {
       match: {
         params: { type },
@@ -28,7 +47,6 @@ class Onboarding extends Component {
     } = this.props
 
     setTitle(`Onboarding - set - ${type}`)
-
     setType(type)
   }
 
@@ -130,24 +148,6 @@ class Onboarding extends Component {
       </div>
     )
   }
-}
-
-Onboarding.defaultProps = {
-  error: false,
-  loading: false,
-}
-
-Onboarding.propTypes = {
-  error: oneOfType([bool, string]),
-  loading: oneOfType([bool, string]),
-  location: object.isRequired,
-  match: shape({
-    path: string.isRequired,
-    params: shape({
-      type: string.isRequired,
-    }),
-  }),
-  setType: func.isRequired,
 }
 
 export default Onboarding

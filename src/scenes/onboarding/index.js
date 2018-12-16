@@ -1,7 +1,7 @@
 import React from 'react'
 import { string, shape, func } from 'prop-types'
 import { connect } from 'react-redux'
-import { Route, Redirect, Switch, withRouter } from 'react-router-dom'
+import { Route, Redirect, Switch } from 'react-router-dom'
 
 import { setHtmlClass, removeHtmlClass } from '../../utils/document'
 import { getUserProfile } from '../../store/user'
@@ -39,9 +39,7 @@ class Onboarding extends React.Component {
 
 export const mapActionsToProps = { getUserProfile }
 
-export default withRouter(
-  connect(
-    null,
-    mapActionsToProps,
-  )(Onboarding),
-)
+export default connect(
+  null,
+  mapActionsToProps,
+)(Onboarding)

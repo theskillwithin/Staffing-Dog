@@ -145,6 +145,17 @@ export const registerUser = ({ onSuccess = false, onError = false, ...data }) =>
   },
 })
 
+const formatProfileData = (
+  profile,
+  { user, full_profile: { user: userProfile, ...userFullProfile } },
+) => ({
+  ...profile,
+  ...spreadLoadingError(false, false),
+  ...(user || {}),
+  ...(userProfile || {}),
+  ...(userFullProfile || {}),
+})
+
 reducers = {
   ...reducers,
   [userRegisterTypes.LOADING]: state => ({
@@ -154,27 +165,9 @@ reducers = {
       ...spreadLoadingError(true, false),
     },
   }),
-  [userRegisterTypes.SUCCESS]: (
-    state,
-    {
-      data: {
-        user,
-        full_profile: { user: userProfile, ...userFullProfile },
-      },
-    },
-  ) => ({
+  [userRegisterTypes.SUCCESS]: (state, { data }) => ({
     ...state,
-    register: {
-      ...state,
-      ...spreadLoadingError(false, false),
-    },
-    profile: {
-      ...state.profile,
-      ...spreadLoadingError(false, false),
-      ...(user || {}),
-      ...(userProfile || {}),
-      ...(userFullProfile || {}),
-    },
+    profile: formatProfileData(state.profile, data),
   }),
   [userRegisterTypes.ERROR]: (state, { error }) => ({
     ...state,
@@ -206,9 +199,28 @@ export const updateRegisterUser = ({ onSuccess = false, onError = false, ...data
 
 reducers = {
   ...reducers,
-  [userRegisterUpdateTypes.LOADING]: reducers[userRegisterTypes.LOADING],
-  [userRegisterUpdateTypes.SUCCESS]: reducers[userRegisterTypes.SUCCESS],
-  [userRegisterUpdateTypes.ERROR]: reducers[userRegisterTypes.ERROR],
+  [userRegisterUpdateTypes.LOADING]: state => ({
+    ...state,
+    register: {
+      ...state.register,
+      ...spreadLoadingError(true, false),
+    },
+  }),
+  [userRegisterUpdateTypes.SUCCESS]: (state, { data }) => ({
+    ...state,
+    register: {
+      ...state.register,
+      ...spreadLoadingError(false, false),
+    },
+    profile: formatProfileData(state.profile, data),
+  }),
+  [userRegisterUpdateTypes.ERROR]: (state, { error }) => ({
+    ...state,
+    register: {
+      ...state.register,
+      ...spreadLoadingError(false, error),
+    },
+  }),
 }
 
 /**
@@ -218,14 +230,16 @@ export const USER_GET_PROFILE = 'USER_GET_PROFILE'
 export const userGetProfileTypes = createActionTypes(USER_GET_PROFILE)
 
 export const getUserProfile = (id = false) => (dispatch, getState) =>
-  dispatch({
-    type: USER_GET_PROFILE,
-    api: {
-      url: `${API_ROOT}/profiles`,
-      method: 'GET',
-      params: { id: id || findUserId(getState()) || getUserId() },
-    },
-  })
+  Promise.resolve(
+    dispatch({
+      type: USER_GET_PROFILE,
+      api: {
+        url: `${API_ROOT}/profiles`,
+        method: 'GET',
+        params: { id: id || findUserId(getState()) || getUserId() },
+      },
+    }),
+  )
 
 reducers = {
   ...reducers,
@@ -236,29 +250,15 @@ reducers = {
       ...spreadLoadingError(true, false),
     },
   }),
+  [userGetProfileTypes.SUCCESS]: (state, { data }) => ({
+    ...state,
+    profile: formatProfileData(state.profile, data),
+  }),
   [userGetProfileTypes.ERROR]: (state, payload) => ({
     ...state,
     profile: {
       ...state.profile,
       ...spreadLoadingError(false, payload.error || 'error'),
-    },
-  }),
-  [userGetProfileTypes.SUCCESS]: (
-    state,
-    {
-      data: {
-        user,
-        full_profile: { user: userProfile, ...userFullProfile },
-      },
-    },
-  ) => ({
-    ...state,
-    profile: {
-      ...state.profile,
-      ...spreadLoadingError(false, false),
-      ...(user || {}),
-      ...(userProfile || {}),
-      ...(userFullProfile || {}),
     },
   }),
 }
