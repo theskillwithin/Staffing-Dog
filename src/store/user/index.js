@@ -229,8 +229,15 @@ reducers = {
 export const USER_GET_PROFILE = 'USER_GET_PROFILE'
 export const userGetProfileTypes = createActionTypes(USER_GET_PROFILE)
 
-export const getUserProfile = (id = false) => (dispatch, getState) =>
-  Promise.resolve(
+export const getUserProfile = (id = false) => (dispatch, getState) => {
+  const userId = id || findUserId(getState()) || getUserId()
+
+  if (!userId) {
+    dispatch({
+      type: userGetProfileTypes.ERROR,
+      payload: { error: 'No User' },
+    })
+  } else {
     dispatch({
       type: USER_GET_PROFILE,
       api: {
@@ -238,8 +245,9 @@ export const getUserProfile = (id = false) => (dispatch, getState) =>
         method: 'GET',
         params: { id: id || findUserId(getState()) || getUserId() },
       },
-    }),
-  )
+    })
+  }
+}
 
 reducers = {
   ...reducers,
@@ -250,9 +258,13 @@ reducers = {
       ...spreadLoadingError(true, false),
     },
   }),
-  [userGetProfileTypes.SUCCESS]: (state, { data }) => ({
+  [userGetProfileTypes.SUCCESS]: (state, { data: { user, ...data } }) => ({
     ...state,
-    profile: formatProfileData(state.profile, data),
+    profile: {
+      ...state.profile,
+      ...data,
+      ...user,
+    },
   }),
   [userGetProfileTypes.ERROR]: (state, payload) => ({
     ...state,

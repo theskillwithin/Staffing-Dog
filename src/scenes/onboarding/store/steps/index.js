@@ -198,7 +198,28 @@ export const reducers = {
   // When Updating the user, we want to make sure to update the steps data as well
   [userRegisterTypes.SUCCESS]: updateStepValuesFromRegister,
   [userRegisterUpdateTypes.SUCCESS]: updateStepValuesFromRegister,
-  [userGetProfileTypes.SUCCESS]: updateStepValuesFromRegister,
+  [userGetProfileTypes.SUCCESS]: (state, { data }) => ({
+    ...state,
+    values: {
+      ...state.values,
+      first_name: get(data, 'user.first_name', state.values.first_name),
+      last_name: get(data, 'user.last_name', state.values.last_name),
+      email: get(data, 'user.email', state.values.email),
+      ...formatDataFromApi(data, state.values, state.type),
+    },
+    steps: {
+      ...state.steps,
+      [state.type]: state.steps[state.type].map(step => ({
+        ...step,
+        ...(step.step === '1' // Allows us to skip step 1 since we have already created the user
+          ? {
+              needsComplete: false,
+              complete: true,
+            }
+          : {}),
+      })),
+    },
+  }),
 }
 
 // Actions Creators
