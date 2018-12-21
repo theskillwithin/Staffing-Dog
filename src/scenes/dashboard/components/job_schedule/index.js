@@ -11,6 +11,7 @@ import { findSchedule, getSchedule } from '@store/user'
 import CalendarIcon from '@component/svg/Calendar'
 import Calendar from '@component/calendar'
 
+import Excpetions from './exceptions'
 import WeekRow from './weeks'
 import Event from './event'
 import theme from './theme.css'
@@ -174,7 +175,7 @@ class JobSchedule extends React.Component {
                 </div>
               </div>
             )}
-            {this.state.activeTabIndex === 1 && <h2>Exceptions</h2>}
+            {this.state.activeTabIndex === 1 && <Excpetions />}
             <hr className={theme.divider} />
           </>
         )}
