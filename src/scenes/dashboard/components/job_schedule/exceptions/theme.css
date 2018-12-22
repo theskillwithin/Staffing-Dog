@@ -1,1 +1,9 @@
 @import '../../../../../styles/config';
+
+.inputRow {
+  display: flex;
+
+  span {
+    margin-right: 4em;
+  }
+}
