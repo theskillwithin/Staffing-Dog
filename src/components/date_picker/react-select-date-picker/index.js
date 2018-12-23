@@ -1,26 +1,8 @@
 import React, { Component } from 'react'
-import moment from 'moment'
 import chrono from 'chrono-node'
 import Select, { components as SelectComponents } from 'react-select'
 
 import s from './theme.css'
-
-const createCalendarOptions = (date = new Date()) => {
-  // const makeArray = Array.apply(null, {
-  //   length: moment(date).daysInMonth(),
-  // })
-  const makeArray = (Array.length = moment(date).daysInMonth())
-  const daysInMonth = makeArray.map((_, i) => {
-    const d = moment(date).date(i + 1)
-    return { ...this.props.createOptionForDate(d), display: 'calendar' }
-  })
-  return {
-    label: moment(date).format('MMMM YYYY'),
-    options: daysInMonth,
-  }
-}
-
-this.props.defaultOptions.push(createCalendarOptions())
 
 const suggestions = [
   'sunday',
@@ -151,7 +133,10 @@ class DatePicker extends Component {
     const date = chrono.parseDate(suggest(value.toLowerCase()))
     if (date) {
       this.setState({
-        options: [this.props.createOptionForDate(date), createCalendarOptions(date)],
+        options: [
+          this.props.createOptionForDate(date),
+          this.props.createCalendarOptions(date),
+        ],
       })
     } else {
       this.setState({

@@ -24,9 +24,25 @@ const defaultOptions = ['today', 'tomorrow', 'yesterday'].map(i =>
   createOptionForDate(chrono.parseDate(i)),
 )
 
+const createCalendarOptions = (date = new Date()) => {
+  const makeArray = new Array(moment(date).daysInMonth())
+  const daysInMonth = makeArray.map((_, i) => {
+    const d = moment(date).date(i + 1)
+    return { ...this.props.createOptionForDate(d), display: 'calendar' }
+  })
+  return {
+    label: moment(date).format('MMMM YYYY'),
+    options: daysInMonth,
+  }
+}
+
 export default class Experimental extends Component {
   state = {
     value: defaultOptions[0],
+  }
+
+  componentDidMount() {
+    defaultOptions.push(createCalendarOptions())
   }
 
   handleChange = value => {
@@ -44,6 +60,7 @@ export default class Experimental extends Component {
           onChange={this.handleChange}
           defaultOptions={defaultOptions}
           createOptionForDate={createOptionForDate}
+          createCalendarOptions={createCalendarOptions}
         />
       </div>
     )
