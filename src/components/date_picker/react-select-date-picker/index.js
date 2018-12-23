@@ -54,7 +54,7 @@ const Group = props => {
     theme,
   } = props
   return (
-    <div aria-label={label} css={getStyles('group', props)} {...innerProps}>
+    <div aria-label={label} style={getStyles('group', props)} {...innerProps}>
       <Heading theme={theme} getStyles={getStyles} cx={cx} {...headingProps}>
         {label}
       </Heading>
@@ -84,6 +84,7 @@ const Option = props => {
   if (data.display === 'calendar') {
     const defaultStyles = getStyles('option', props)
     const styles = getOptionStyles(defaultStyles)
+
     if (data.date.date() === 1) {
       const indentBy = data.date.day()
       if (indentBy) {
@@ -91,7 +92,7 @@ const Option = props => {
       }
     }
     return (
-      <span {...innerProps} css={styles} ref={innerRef}>
+      <span {...innerProps} style={styles} ref={innerRef}>
         {data.date.format('D')}
       </span>
     )
