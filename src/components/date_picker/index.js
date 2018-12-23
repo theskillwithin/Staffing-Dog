@@ -25,10 +25,14 @@ const defaultOptions = ['today', 'tomorrow', 'yesterday'].map(i =>
 )
 
 const createCalendarOptions = (date = new Date()) => {
-  const makeArray = new Array(moment(date).daysInMonth())
+  // eslint-disable-next-line
+  const makeArray = Array.apply(null, {
+    length: moment(date).daysInMonth(),
+  })
+  // const makeArray = new Array(moment(date).daysInMonth())
   const daysInMonth = makeArray.map((_, i) => {
     const d = moment(date).date(i + 1)
-    return { ...this.props.createOptionForDate(d), display: 'calendar' }
+    return { ...createOptionForDate(d), display: 'calendar' }
   })
   return {
     label: moment(date).format('MMMM YYYY'),
@@ -37,12 +41,12 @@ const createCalendarOptions = (date = new Date()) => {
 }
 
 export default class Experimental extends Component {
-  state = {
-    value: defaultOptions[0],
-  }
-
-  componentDidMount() {
+  constructor(props) {
+    super(props)
     defaultOptions.push(createCalendarOptions())
+    this.state = {
+      value: defaultOptions[0],
+    }
   }
 
   handleChange = value => {
