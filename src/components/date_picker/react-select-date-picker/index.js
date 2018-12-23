@@ -3,6 +3,8 @@ import moment from 'moment'
 import chrono from 'chrono-node'
 import Select, { components as SelectComponents } from 'react-select'
 
+import s from './theme.css'
+
 const createCalendarOptions = (date = new Date()) => {
   // const makeArray = Array.apply(null, {
   //   length: moment(date).daysInMonth(),
@@ -58,26 +60,26 @@ const suggest = str =>
 
 const days = ['S', 'M', 'T', 'W', 'T', 'F', 'S']
 
-const daysHeaderStyles = {
-  marginTop: '5px',
-  paddingTop: '5px',
-  paddingLeft: '2%',
-  borderTop: '1px solid #eee',
-}
-const daysHeaderItemStyles = {
-  color: '#999',
-  cursor: 'default',
-  fontSize: '75%',
-  fontWeight: '500',
-  display: 'inline-block',
-  width: '12%',
-  margin: '0 1%',
-  textAlign: 'center',
-}
-const daysContainerStyles = {
-  paddingTop: '5px',
-  paddingLeft: '2%',
-}
+// const daysHeaderStyles = {
+//   marginTop: '5px',
+//   paddingTop: '5px',
+//   paddingLeft: '2%',
+//   borderTop: '1px solid #eee',
+// }
+// const daysHeaderItemStyles = {
+//   color: '#999',
+//   cursor: 'default',
+//   fontSize: '75%',
+//   fontWeight: '500',
+//   display: 'inline-block',
+//   width: '12%',
+//   margin: '0 1%',
+//   textAlign: 'center',
+// }
+// const daysContainerStyles = {
+//   paddingTop: '5px',
+//   paddingLeft: '2%',
+// }
 
 const Group = props => {
   const {
@@ -95,14 +97,14 @@ const Group = props => {
       <Heading theme={theme} getStyles={getStyles} cx={cx} {...headingProps}>
         {label}
       </Heading>
-      <div css={daysHeaderStyles}>
+      <div className={s.daysHeaderStyles}>
         {days.map((day, i) => (
-          <span key={`${i + 1}-${day}`} css={daysHeaderItemStyles}>
+          <span key={`${i + 1}-${day}`} className={s.daysHeaderItemStyles}>
             {day}
           </span>
         ))}
       </div>
-      <div css={daysContainerStyles}>{children}</div>
+      <div className={s.daysContainerStyles}>{children}</div>
     </div>
   )
 }
