@@ -65,6 +65,7 @@ export default class Experimental extends Component {
           defaultOptions={defaultOptions}
           createOptionForDate={createOptionForDate}
           createCalendarOptions={createCalendarOptions}
+          width={222}
         />
       </div>
     )
