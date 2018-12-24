@@ -45,9 +45,7 @@ export default (storeData = {}, reducers = {}) => {
 
   // replace redux store based on newely updated list of reducers
   reduxRegister.setChangeListener(updatedListOfReducers => {
-    store.dispatch({ type: '@@INIT' })
     store.replaceReducer(reduxCombine(updatedListOfReducers, storeData))
-    store.dispatch({ type: '@@INIT' })
   })
 
   return store
