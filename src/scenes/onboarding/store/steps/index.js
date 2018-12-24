@@ -72,6 +72,18 @@ export const formatDataFromApi = (apiData, values, type = INITIAL_STATE.type) =>
       }),
 })
 
+export const formatDataFromOnboardingForRegister = (
+  values = {},
+  type = INITIAL_STATE.type,
+) => ({
+  first_name: values.first_name,
+  last_name: values.last_name,
+  email: values.email,
+  password: values.password,
+  password_confirmation: values.password_confirmation,
+  type,
+})
+
 // format data from redux to use for api
 export const formatDataFromOnboarding = (values, profile, type = INITIAL_STATE.type) => ({
   addresses: {
@@ -202,10 +214,10 @@ export const reducers = {
     ...state,
     values: {
       ...state.values,
+      ...formatDataFromApi(data, state.values, state.type),
       first_name: get(data, 'user.first_name', state.values.first_name),
       last_name: get(data, 'user.last_name', state.values.last_name),
       email: get(data, 'user.email', state.values.email),
-      ...formatDataFromApi(data, state.values, state.type),
     },
     steps: {
       ...state.steps,
@@ -312,22 +324,30 @@ export const saveStep = ({ step, onSuccess = false, onFail = false }) => (
   }
 
   const onApiError = res => {
-    dispatch(actions.saveStepApiFail(res, step))
+    dispatch(actions.saveStepApiFailed(res, step))
 
     if (onFail) onFail()
   }
 
-  const apiCall = findToken(getState()) ? updateRegisterUser : registerUser
-
-  return apiCall({
-    data: formatDataFromOnboarding(
-      findStepValues(getState()),
-      findUserProfile(getState()),
-      findType(getState()),
-    ),
-    onSuccess: onApiSuccess,
-    onError: onApiError,
-  })
+  const isInitialRegister = !findToken(getState())
+  const apiCall = isInitialRegister ? registerUser : updateRegisterUser
+  const data = isInitialRegister
+    ? formatDataFromOnboardingForRegister(
+        findStepValues(getState()),
+        findType(getState()),
+      )
+    : formatDataFromOnboarding(
+        findStepValues(getState()),
+        findUserProfile(getState()),
+        findType(getState()),
+      )
+  dispatch(
+    apiCall({
+      data,
+      onSuccess: onApiSuccess,
+      onError: onApiError,
+    }),
+  )
 }
 
 export const goToStep = ({ currentStep, nextStep, history }) => (dispatch, getState) => {

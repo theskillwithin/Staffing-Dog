@@ -72,7 +72,7 @@ export const professional = [
         required: true,
       },
       {
-        name: 'verify_password',
+        name: 'password_confirmation',
         label: 'Verify Password',
         type: 'input',
         formType: 'password',
@@ -233,7 +233,7 @@ export const practice = [
         required: true,
       },
       {
-        name: 'verify_password',
+        name: 'password_confirmation',
         label: 'Verify Password',
         type: 'input',
         formType: 'password',
