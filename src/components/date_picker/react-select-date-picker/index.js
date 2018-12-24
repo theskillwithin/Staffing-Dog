@@ -115,6 +115,15 @@ DropdownIndicator.propTypes = {
 class DatePicker extends Component {
   state = {
     options: this.props.defaultOptions,
+    open: false,
+  }
+
+  open = () => {
+    this.setState({ open: true })
+  }
+
+  close = () => {
+    this.setState({ open: false })
   }
 
   handleInputChange = value => {
@@ -157,6 +166,10 @@ class DatePicker extends Component {
         boxShadow: 0,
         fontWeight: 500,
       }),
+      menu: styles => ({
+        ...styles,
+        zIndex: 20,
+      }),
       value: styles => ({ ...styles, background: '#0072FF', color: 'rgb(31, 39, 64)' }),
 
       valueContainer: styles => ({
@@ -166,10 +179,6 @@ class DatePicker extends Component {
       placeholder: styles => ({
         ...styles,
         color: 'rgb(187, 193, 209)',
-      }),
-      dropdownIndicator: styles => ({
-        ...styles,
-        padding: 8,
       }),
       indicatorSeparator: () => ({ display: 'none' }),
       singleValue: styles => ({
@@ -193,6 +202,8 @@ class DatePicker extends Component {
         options={options}
         value={value}
         styles={customStyles}
+        onMenuOpen={this.open}
+        onMenuClose={this.close}
       />
     )
   }
