@@ -58,7 +58,7 @@ export default class Experimental extends Component {
     const displayValue = value && value.value ? value.value.toString() : 'null'
     return (
       <div>
-        <pre>Value: {displayValue}</pre>
+        <div>Value: {displayValue}</div>
         <DatePicker
           value={value}
           onChange={this.handleChange}

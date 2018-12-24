@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
+import { bool } from 'prop-types'
 import chrono from 'chrono-node'
 import Select, { components as SelectComponents } from 'react-select'
+import CalSVG from '@component/svg/Cal'
 
 import s from './theme.css'
 
@@ -100,6 +102,16 @@ const Option = props => {
   return <SelectComponents.Option {...props} />
 }
 
+const DropdownIndicator = ({ isFocused }) => (
+  <span className={s.icon}>
+    <CalSVG active={isFocused} />
+  </span>
+)
+
+DropdownIndicator.propTypes = {
+  isFocused: bool,
+}
+
 class DatePicker extends Component {
   state = {
     options: this.props.defaultOptions,
@@ -157,20 +169,21 @@ class DatePicker extends Component {
       }),
       dropdownIndicator: styles => ({
         ...styles,
-        padding: this.props.small ? 4 : 8,
+        padding: 8,
       }),
       indicatorSeparator: () => ({ display: 'none' }),
       singleValue: styles => ({
         ...styles,
         marginLeft: this.props.small ? '-4px' : '0',
         fontWeight: 500,
+        maxWidth: 'calc(100% - 2.7em)',
         color: 'rgb(31, 39, 64)',
       }),
     }
     return (
       <Select
         {...this.props}
-        components={{ Group, Option }}
+        components={{ Group, Option, DropdownIndicator }}
         filterOption={null}
         isMulti={false}
         isOptionSelected={(o, v) => v.some(i => i.date.isSame(o.date, 'day'))}

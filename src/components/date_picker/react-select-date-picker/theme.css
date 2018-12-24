@@ -22,3 +22,9 @@
   padding-top: 5px;
   padding-left: 2%;
 }
+
+.icon {
+  margin-left: -1.5em;
+  z-index: 10;
+  background: white;
+}
