@@ -1,6 +1,6 @@
 import React from 'react'
 import { func, shape } from 'prop-types'
-import { withRouter } from 'react-router-dom'
+import { Link, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { setTitle, setHtmlClass, removeHtmlClass } from '@sdog/utils/document'
 import Contact from '@component/contact'
@@ -91,7 +91,7 @@ class Login extends React.Component {
                 type="password"
                 thumbprint
               />
-              <Button primary round type="submit" size="medium">
+              <Button primary round type="submit" size="medium" onClick={() => {}}>
                 Sign In
               </Button>
             </form>
@@ -100,12 +100,12 @@ class Login extends React.Component {
                 Forgot Password?
               </a>
               <div className={theme.signup}>
-                <a href="/signup">
+                <Link to="/onboarding">
                   Don’t have an account? Sign Up{' '}
                   <span className={theme.signupMobile}>
                     <Arrow color="white" />
                   </span>
-                </a>
+                </Link>
               </div>
             </div>
           </div>
