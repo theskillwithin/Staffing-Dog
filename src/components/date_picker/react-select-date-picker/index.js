@@ -171,7 +171,6 @@ class DatePicker extends Component {
         zIndex: 20,
       }),
       value: styles => ({ ...styles, background: '#0072FF', color: 'rgb(31, 39, 64)' }),
-
       valueContainer: styles => ({
         ...styles,
         paddingLeft: '1em',
