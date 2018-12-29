@@ -1,48 +1,12 @@
-export const convertToHour = (hour, timeType = '24h') => {
-  const hourNumber = parseInt(hour, 10)
-  const hourString = `${hourNumber}`
+const hMM = (hours, minutes, is24h = false) =>
+  `${String(is24h ? hours % 24 : (hours % 12) + 1)}:${String(minutes).padStart(2, '0')}${
+    is24h ? '' : hours >= 12 ? ' pm' : ' am'
+  }`
 
-  if ('24h' === timeType) {
-    return hourNumber < 10 ? `0${hourNumber}` : hourString
-  }
-
-  return hourNumber > 12 ? `${hourNumber - 12}` : hourString
-}
-
-export const timesOfDay = (timeType = '24h') => {
-  return Array(24)
-    .fill(0)
-    .reduce(
-      (times, _value, index) => [
-        ...times,
-        `${convertToHour(index, timeType)}:00`,
-        `${convertToHour(index, timeType)}:30`,
-      ],
-      [],
-    )
-}
-
-export const hoursOfDay = (timeType = '24h') => {
-  const am = Array(12)
-    .fill(0)
-    .reduce(
-      (times, _value, index) => [
-        ...times,
-        `${parseInt(convertToHour(index, timeType), 10) + 1} am`,
-      ],
-      [],
-    )
-  const pm = Array(12)
-    .fill(0)
-    .reduce(
-      (times, _value, index) => [
-        ...times,
-        `${parseInt(convertToHour(index, timeType), 10) + 1} am`,
-      ],
-      [],
-    )
-  return [...am, ...pm]
-}
+export const timesOfDay = (is24h = false) =>
+  Array.from({ length: 24 }, (_, i) => i)
+    .map(x => [hMM(x, 0, is24h), hMM(x, 30, is24h)])
+    .reduce((xs, ys) => xs.concat(ys), [])
 
 export const minBy15 = ['00', '15', '30', '45', '60']
 
