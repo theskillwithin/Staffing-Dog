@@ -86,7 +86,7 @@
     "react": "^16.6.3",
     "react-click-outside": "^3.0.1",
     "react-dom": "^16.6.3",
-    "react-dropzone": "^8.0.1",
+    "react-dropzone": "^8.0.3",
     "react-google-maps": "^9.4.5",
     "react-redux": "^6.0.0",
     "react-router-dom": "^4.3.1",
