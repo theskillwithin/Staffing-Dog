@@ -22,4 +22,28 @@ export const timesOfDay = (timeType = '24h') => {
     )
 }
 
+export const hoursOfDay = (timeType = '24h') => {
+  const am = Array(12)
+    .fill(0)
+    .reduce(
+      (times, _value, index) => [
+        ...times,
+        `${parseInt(convertToHour(index, timeType), 10) + 1} am`,
+      ],
+      [],
+    )
+  const pm = Array(12)
+    .fill(0)
+    .reduce(
+      (times, _value, index) => [
+        ...times,
+        `${parseInt(convertToHour(index, timeType), 10) + 1} am`,
+      ],
+      [],
+    )
+  return [...am, ...pm]
+}
+
+export const minBy15 = ['00', '15', '30', '45', '60']
+
 export default timesOfDay

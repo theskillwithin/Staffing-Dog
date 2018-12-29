@@ -1,9 +1,25 @@
 @import '../../../../../styles/config';
 
+.root {
+  h4 {
+    font-size: 14px;
+    font-weight: var(--sd-fontWeightMedium);
+    line-height: 1.21;
+    color: var(--sd-blackTxt);
+    margin: 3em 0 2.5em 0;
+  }
+}
+
 .inputRow {
   display: flex;
+  margin: 2em 0;
 
   span {
     margin-right: 4em;
   }
+}
+
+.exceptionRow {
+  display: flex;
+  margin: 1em 0;
 }
