@@ -38,6 +38,7 @@ class Exceptions extends React.Component {
             height={33}
             small
           />
+          <span>:</span>
           <Dropdown
             value={this.state.form.startMin}
             onChange={value => this.handleChange('startMin', value)}
@@ -56,6 +57,7 @@ class Exceptions extends React.Component {
             height={33}
             small
           />
+          <span>:</span>
           <Dropdown
             value={this.state.form.endMin}
             onChange={value => this.handleChange('endMin', value)}

@@ -22,4 +22,10 @@
 .exceptionRow {
   display: flex;
   margin: 1em 0;
+
+  span {
+    color: var(--sd-grayLighter);
+    font-size: 28px;
+    margin: 0 0.2em;
+  }
 }
