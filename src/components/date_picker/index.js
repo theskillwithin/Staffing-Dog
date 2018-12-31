@@ -25,11 +25,9 @@ const defaultOptions = ['today', 'tomorrow', 'yesterday'].map(i =>
 )
 
 const createCalendarOptions = (date = new Date()) => {
-  // eslint-disable-next-line
-  const makeArray = Array.apply(null, {
+  const makeArray = Array.from({
     length: moment(date).daysInMonth(),
   })
-  // const makeArray = new Array(moment(date).daysInMonth())
   const daysInMonth = makeArray.map((_, i) => {
     const d = moment(date).date(i + 1)
     return { ...createOptionForDate(d), display: 'calendar' }
