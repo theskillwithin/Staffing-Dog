@@ -21,11 +21,17 @@
 
 .exceptionRow {
   display: flex;
+  align-items: center;
+  justify-content: space-between;
   margin: 1em 0;
 
-  span {
+  > div:first-child {
+    margin-right: 20px;
+  }
+
+  > span {
     color: var(--sd-grayLighter);
     font-size: 28px;
-    margin: 0 0.2em;
+    margin: 0 0.1em;
   }
 }

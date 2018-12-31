@@ -38,13 +38,11 @@ const createCalendarOptions = (date = new Date()) => {
   }
 }
 
-export default class Experimental extends Component {
-  constructor(props) {
-    super(props)
-    defaultOptions.push(createCalendarOptions())
-    this.state = {
-      value: defaultOptions[0],
-    }
+defaultOptions.push(createCalendarOptions())
+
+class Experimental extends Component {
+  state = {
+    value: defaultOptions[0],
   }
 
   handleChange = value => {
@@ -69,3 +67,5 @@ export default class Experimental extends Component {
     )
   }
 }
+
+export default Experimental

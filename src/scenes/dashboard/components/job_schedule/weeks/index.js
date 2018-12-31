@@ -30,6 +30,7 @@ const WeekRow = ({ day, schedule, onChange }) => (
           options={time}
           disabled={!schedule.active}
           height={33}
+          width={100}
           small
         />
       </div>
@@ -41,6 +42,7 @@ const WeekRow = ({ day, schedule, onChange }) => (
           options={time}
           disabled={!schedule.active}
           height={33}
+          width={100}
           small
         />
       </div>

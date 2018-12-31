@@ -36,6 +36,7 @@ class Exceptions extends React.Component {
             onChange={value => this.handleChange('startTime', value)}
             options={time}
             height={33}
+            width={84}
             small
           />
           <span>:</span>
@@ -44,6 +45,7 @@ class Exceptions extends React.Component {
             onChange={value => this.handleChange('startMin', value)}
             options={min}
             height={33}
+            width={61}
             small
           />
         </div>
@@ -55,6 +57,7 @@ class Exceptions extends React.Component {
             onChange={value => this.handleChange('endTime', value)}
             options={time}
             height={33}
+            width={84}
             small
           />
           <span>:</span>
@@ -63,6 +66,7 @@ class Exceptions extends React.Component {
             onChange={value => this.handleChange('endMin', value)}
             options={min}
             height={33}
+            width={61}
             small
           />
         </div>
