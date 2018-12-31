@@ -20,7 +20,7 @@ const createOptionForDate = d => {
   }
 }
 
-const defaultOptions = ['today', 'tomorrow', 'yesterday'].map(i =>
+const dayOptions = ['today', 'tomorrow', 'yesterday'].map(i =>
   createOptionForDate(chrono.parseDate(i)),
 )
 
@@ -38,7 +38,7 @@ const createCalendarOptions = (date = new Date()) => {
   }
 }
 
-defaultOptions.push(createCalendarOptions())
+const defaultOptions = [...dayOptions, createCalendarOptions()]
 
 class Experimental extends Component {
   state = {
