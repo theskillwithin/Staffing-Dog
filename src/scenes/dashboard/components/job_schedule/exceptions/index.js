@@ -6,7 +6,7 @@ import { timesOfDay, minBy15 } from '@sdog/utils/dates'
 
 import theme from './theme.css'
 
-const time = timesOfDay().map(hour => ({ label: hour, value: hour }))
+const time = timesOfDay(false, true).map(hour => ({ label: hour, value: hour }))
 const min = minBy15.map(hour => ({ label: hour, value: hour }))
 
 class Exceptions extends React.Component {
