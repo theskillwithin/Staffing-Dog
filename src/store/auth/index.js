@@ -1,4 +1,4 @@
-import buildStore from '../build'
+import { buildStore } from '../tools'
 
 export const BASE = '@SD/AUTH'
 export const SET_TOKEN = `${BASE}_SET_TOKEN`

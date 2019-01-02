@@ -1,6 +1,6 @@
-import buildStore from '@sdog/store/build'
-import reduxRegister from '@sdog/store/register'
 import * as messagesApi from '@sdog/api/messages'
+
+import { buildStore, reduxRegister } from '../tools'
 
 export const BASE = '@SD/MESSAGES'
 export const FETCH = `${BASE}_FETCH`

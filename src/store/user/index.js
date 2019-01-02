@@ -1,6 +1,5 @@
 import { API_ROOT } from '../../api'
-import { createActionTypes } from '../createAction'
-import { buildStore, reduxRegister } from '../index'
+import { createActionTypes, reduxRegister, buildStore } from '../tools'
 import {
   getUserId,
   setToken as setTokenInCookie,
