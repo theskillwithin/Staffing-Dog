@@ -140,6 +140,7 @@ config.optimization = {
     chunks: 'all',
     name: 'vendor',
   },
+  minimize: IS_PROD || false,
   minimizer: IS_PROD
     ? [
         new UglifyJsPlugin({
