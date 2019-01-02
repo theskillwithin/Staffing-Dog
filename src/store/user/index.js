@@ -22,9 +22,14 @@ export const INITIAL_STATE = {
   profile: {
     loading: false,
     error: false,
-    user: {},
+  },
+  register: {
+    loading: false,
+    error: false,
   },
 }
+
+const spreadLoadingError = (loading, error) => ({ loading, error })
 
 let reducers = {}
 
@@ -99,14 +104,124 @@ reducers = {
     ...state,
     auth: { ...state.auth, loading: false, error: true },
   }),
-  [userLoginTypes.SUCCESS]: (state, { data }) => ({
+  [userLoginTypes.SUCCESS]: (
+    state,
+    {
+      data: {
+        user,
+        full_profile: { user: userProfile, ...userFullProfile },
+      },
+    },
+  ) => ({
     ...state,
     auth: { ...state.auth, loading: true, error: false },
     profile: {
       ...state.profile,
       loading: false,
       error: false,
-      ...data,
+      ...(user || {}),
+      ...(userProfile || {}),
+      ...(userFullProfile || {}),
+    },
+  }),
+}
+
+/**
+ * REGISTER USER
+ */
+export const USER_REGISTER = 'USER_REGISTER'
+export const userRegisterTypes = createActionTypes(USER_REGISTER)
+
+export const registerUser = ({ onSuccess = false, onError = false, ...data }) => ({
+  type: USER_REGISTER,
+  api: {
+    url: `${API_ROOT}/register`,
+    method: 'POST',
+    data,
+    callbacks: {
+      success: res => {
+        setUserIdCookie(res.data.user.id)
+        if (onSuccess) onSuccess(res)
+      },
+      error: onError,
+    },
+  },
+})
+
+const formatProfileData = (
+  profile,
+  { user, full_profile: { user: userProfile, ...userFullProfile } },
+) => ({
+  ...profile,
+  ...spreadLoadingError(false, false),
+  ...(user || {}),
+  ...(userProfile || {}),
+  ...(userFullProfile || {}),
+})
+
+reducers = {
+  ...reducers,
+  [userRegisterTypes.LOADING]: state => ({
+    ...state,
+    register: {
+      ...state.register,
+      ...spreadLoadingError(true, false),
+    },
+  }),
+  [userRegisterTypes.SUCCESS]: (state, { data }) => ({
+    ...state,
+    profile: formatProfileData(state.profile, data),
+  }),
+  [userRegisterTypes.ERROR]: (state, { error }) => ({
+    ...state,
+    register: {
+      ...state.register,
+      ...spreadLoadingError(false, error),
+    },
+  }),
+}
+
+/**
+ * Update Registered User
+ */
+export const USER_REGISTER_UPDATE = 'USER_REGISTER_UPDATE'
+export const userRegisterUpdateTypes = createActionTypes(USER_REGISTER_UPDATE)
+
+export const updateRegisterUser = ({ onSuccess = false, onError = false, ...data }) => ({
+  type: USER_REGISTER_UPDATE,
+  api: {
+    url: `${API_ROOT}/register`,
+    method: 'PUT',
+    data,
+    callbacks: {
+      success: onSuccess,
+      error: onError,
+    },
+  },
+})
+
+reducers = {
+  ...reducers,
+  [userRegisterUpdateTypes.LOADING]: state => ({
+    ...state,
+    register: {
+      ...state.register,
+      ...spreadLoadingError(true, false),
+    },
+  }),
+  [userRegisterUpdateTypes.SUCCESS]: (state, { data }) => ({
+    ...state,
+    register: {
+      ...state.register,
+      ...spreadLoadingError(false, false),
+    },
+    profile: formatProfileData(state.profile, data),
+  }),
+  [userRegisterUpdateTypes.ERROR]: (state, { error }) => ({
+    ...state,
+    register: {
+      ...state.register,
+      ...spreadLoadingError(false, error),
     },
   }),
 }
@@ -117,37 +232,56 @@ reducers = {
 export const USER_GET_PROFILE = 'USER_GET_PROFILE'
 export const userGetProfileTypes = createActionTypes(USER_GET_PROFILE)
 
-export const getUserProfile = (id = false) => (dispatch, getState) =>
-  dispatch({
-    type: USER_GET_PROFILE,
-    api: {
-      url: `${API_ROOT}/profiles`,
-      method: 'GET',
-      params: { id: id || findUserId(getState()) || getUserId() },
-    },
-  })
+export const getUserProfile = ({
+  id = false,
+  onSuccess = false,
+  onError = false,
+} = {}) => (dispatch, getState) => {
+  const userId = id || findUserId(getState()) || getUserId()
+
+  if (!userId) {
+    dispatch({
+      type: userGetProfileTypes.ERROR,
+      payload: { error: 'No User' },
+    })
+  } else {
+    dispatch({
+      type: USER_GET_PROFILE,
+      api: {
+        url: `${API_ROOT}/profiles`,
+        method: 'GET',
+        params: { id: id || findUserId(getState()) || getUserId() },
+        callbacks: {
+          success: onSuccess,
+          error: onError,
+        },
+      },
+    })
+  }
+}
 
 reducers = {
   ...reducers,
   [userGetProfileTypes.LOADING]: state => ({
     ...state,
-    profile: { ...state.profile, loading: true, error: false },
+    profile: {
+      ...state.profile,
+      ...spreadLoadingError(true, false),
+    },
+  }),
+  [userGetProfileTypes.SUCCESS]: (state, { data: { user, ...data } }) => ({
+    ...state,
+    profile: {
+      ...state.profile,
+      ...data,
+      ...user,
+    },
   }),
   [userGetProfileTypes.ERROR]: (state, payload) => ({
     ...state,
     profile: {
       ...state.profile,
-      loading: false,
-      error: payload.error || 'error',
-    },
-  }),
-  [userGetProfileTypes.SUCCESS]: (state, { data }) => ({
-    ...state,
-    profile: {
-      ...state.profile,
-      loading: false,
-      error: false,
-      ...data,
+      ...spreadLoadingError(false, payload.error || 'error'),
     },
   }),
 }
@@ -171,15 +305,24 @@ reducers = {
   ...reducers,
   [userGetScheduleTypes.LOADING]: state => ({
     ...state,
-    schedule: { ...state.schedule, loading: true, error: false },
+    schedule: {
+      ...state.schedule,
+      ...spreadLoadingError(true, false),
+    },
   }),
   [userGetScheduleTypes.ERROR]: state => ({
     ...state,
-    schedule: { ...state.schedule, loading: false, error: true },
+    schedule: {
+      ...state.schedule,
+      ...spreadLoadingError(false, true),
+    },
   }),
   [userGetScheduleTypes.SUCCESS]: state => ({
     ...state,
-    schedule: { ...state.schedule, loading: false, error: true },
+    schedule: {
+      ...state.schedule,
+      ...spreadLoadingError(false, false),
+    },
   }),
 }
 
@@ -206,6 +349,6 @@ export const findScheduleError = state => findSchedule(state).error
 export const findToken = state => findUserAuth(state).token
 export const findFingerprint = state => findUserAuth(state).fingerprint
 
-export const findUserId = state => findUserProfile(state).user.id
+export const findUserId = state => findUserProfile(state).id
 
 export default reducer
