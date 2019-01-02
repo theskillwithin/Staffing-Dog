@@ -37,6 +37,7 @@ class Onboarding extends Component {
   }
 
   componentDidMount() {
+    // TODO: Check if the user has already completed any steps. Go to the next step required
     window.scrollTo(0, 0)
 
     const {

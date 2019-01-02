@@ -14,6 +14,7 @@ import {
 import reduxRegister from '@store/register'
 
 import { professional, practice } from './fields'
+import { findUserId } from '../../../../store/user'
 
 export const BASE = '@SD/OB/STEPS'
 export const SET_VALUE = `${BASE}_SET_VALUE`
@@ -324,7 +325,7 @@ export const saveStep = ({ step, onSuccess = false, onFail = false }) => (
   }
 
   const onApiError = res => {
-    dispatch(actions.saveStepApiFailed(res, step))
+    dispatch(actions.saveStepApiFailed(step, res))
 
     if (onFail) onFail()
   }
@@ -341,9 +342,13 @@ export const saveStep = ({ step, onSuccess = false, onFail = false }) => (
         findUserProfile(getState()),
         findType(getState()),
       )
+
+  const id = isInitialRegister ? null : findUserId(getState())
+
   dispatch(
     apiCall({
       data,
+      id,
       onSuccess: onApiSuccess,
       onError: onApiError,
     }),
@@ -360,7 +365,11 @@ export const goToStep = ({ currentStep, nextStep, history }) => (dispatch, getSt
 
   if (step && nextStep === step.nextStep) {
     // check if current step is complete
-    if (step.needsComplete && !step.complete) {
+    if (
+      step.needsComplete &&
+      (step.needsCompleteIfToken && findToken(getState())) &&
+      !step.complete
+    ) {
       return Promise.resolve(
         dispatch(
           actions.goToStepFailed({

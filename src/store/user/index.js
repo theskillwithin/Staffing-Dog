@@ -139,7 +139,10 @@ export const registerUser = ({ onSuccess = false, onError = false, ...data }) =>
     method: 'POST',
     data,
     callbacks: {
-      success: onSuccess,
+      success: res => {
+        setUserIdCookie(res.data.user.id)
+        if (onSuccess) onSuccess(res)
+      },
       error: onError,
     },
   },
@@ -229,7 +232,11 @@ reducers = {
 export const USER_GET_PROFILE = 'USER_GET_PROFILE'
 export const userGetProfileTypes = createActionTypes(USER_GET_PROFILE)
 
-export const getUserProfile = (id = false) => (dispatch, getState) => {
+export const getUserProfile = ({
+  id = false,
+  onSuccess = false,
+  onError = false,
+} = {}) => (dispatch, getState) => {
   const userId = id || findUserId(getState()) || getUserId()
 
   if (!userId) {
@@ -244,6 +251,10 @@ export const getUserProfile = (id = false) => (dispatch, getState) => {
         url: `${API_ROOT}/profiles`,
         method: 'GET',
         params: { id: id || findUserId(getState()) || getUserId() },
+        callbacks: {
+          success: onSuccess,
+          error: onError,
+        },
       },
     })
   }
