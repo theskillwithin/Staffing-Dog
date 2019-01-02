@@ -32,6 +32,7 @@ export const professional = [
     nextStep: '2',
     complete: false,
     needsComplete: true,
+    needsCompleteIfToken: false,
     title: 'Contact Information',
     sidebar: {
       title: 'Sign Up Today',
@@ -72,7 +73,7 @@ export const professional = [
         required: true,
       },
       {
-        name: 'verify_password',
+        name: 'password_confirmation',
         label: 'Verify Password',
         type: 'input',
         formType: 'password',
@@ -85,6 +86,7 @@ export const professional = [
     nextStep: '3',
     complete: false,
     needsComplete: true,
+    needsCompleteIfToken: true,
     title: 'Address Information',
     sidebar: {
       title: '<strong>DayHire &trade;</strong>',
@@ -113,7 +115,7 @@ export const professional = [
         required: true,
       },
       {
-        name: 'postal_code',
+        name: 'zip',
         label: 'Postal Code',
         type: 'input',
         formType: 'number',
@@ -126,6 +128,7 @@ export const professional = [
     nextStep: 'complete',
     complete: false,
     needsComplete: true,
+    needsCompleteIfToken: true,
     title: 'Profession Information',
     sidebar: {
       title: '<strong>Work When you Want</strong>',
@@ -181,6 +184,7 @@ export const professional = [
     step: 'complete',
     complete: false,
     needsComplete: false,
+    needsCompleteIfToken: false,
     title: 'Setup Complete',
   },
 ]
@@ -192,6 +196,7 @@ export const practice = [
     nextStep: '2',
     complete: false,
     needsComplete: true,
+    needsCompleteIfToken: false,
     title: 'Account Information',
     sidebar: {
       title: 'Sign Up Today',
@@ -233,7 +238,7 @@ export const practice = [
         required: true,
       },
       {
-        name: 'verify_password',
+        name: 'password_confirmation',
         label: 'Verify Password',
         type: 'input',
         formType: 'password',
@@ -246,6 +251,7 @@ export const practice = [
     nextStep: '3',
     complete: false,
     needsComplete: true,
+    needsCompleteIfToken: true,
     title: 'Practice Address',
     sidebar: {
       title: 'DayHire &tm;',
@@ -287,6 +293,7 @@ export const practice = [
     nextStep: 'complete',
     complete: false,
     needsComplete: true,
+    needsCompleteIfToken: true,
     title: 'Practice Information',
     sidebar: {
       title: 'Work When you Want',
@@ -347,6 +354,7 @@ export const practice = [
     step: 'complete',
     complete: false,
     needsComplete: false,
+    needsCompleteIfToken: false,
     title: 'Setup Complete',
   },
 ]

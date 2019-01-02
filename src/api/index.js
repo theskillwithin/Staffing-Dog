@@ -3,7 +3,18 @@ import pathToRegex from 'path-to-regexp'
 
 import { API_ROOT, IS_DEV } from './config'
 
-const sdNoop = () => {}
+const sdNoop = () => {
+  const error = 'No Api Method Found:'
+  return Promise.reject(error)
+}
+
+axios.interceptors.response.use(res => {
+  if (res.status >= 400 && res.status <= 499) {
+    return Promise.reject(res)
+  }
+
+  return res
+}, Promise.reject)
 
 export const createApi = (options = {}, apiCall = sdNoop) => ({
   ...options,

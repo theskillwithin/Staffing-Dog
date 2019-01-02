@@ -1,10 +1,20 @@
 import find from 'lodash/find'
+import get from 'lodash/get'
 import isEmpty from 'lodash/isEmpty'
 import build from '@store/build'
+import {
+  registerUser,
+  updateRegisterUser,
+  findToken,
+  findUserProfile,
+  userRegisterTypes,
+  userRegisterUpdateTypes,
+  userGetProfileTypes,
+} from '@store/user'
 import reduxRegister from '@store/register'
-import { updateProfile } from '@api/user'
 
 import { professional, practice } from './fields'
+import { findUserId } from '../../../../store/user'
 
 export const BASE = '@SD/OB/STEPS'
 export const SET_VALUE = `${BASE}_SET_VALUE`
@@ -18,17 +28,6 @@ export const SAVE_STEP_SUCCESS = `${SAVE_STEP}_SUCCESS`
 export const SAVE_STEP_FAILED = `${SAVE_STEP}_FAILED`
 export const CHECK_STEPS_COMPLETE = `${BASE}_CHECK_STEPS_COMPLETE`
 
-export const areStepsComplete = (step, values) =>
-  (step.fields || []).reduce((previousIsComplete, currentStep) => {
-    if (currentStep.fields && currentStep.fields.length) {
-      return areStepsComplete(currentStep, values)
-    }
-
-    return currentStep.required && isEmpty(values[currentStep.name])
-      ? false
-      : previousIsComplete
-  }, true)
-
 // Initial State
 export const INITIAL_STATE = {
   saving: false,
@@ -40,6 +39,111 @@ export const INITIAL_STATE = {
   type: 'professional',
   values: {},
 }
+
+// take data from api and format for the onboarding redux store
+export const formatDataFromApi = (apiData, values, type = INITIAL_STATE.type) => ({
+  street: get(apiData, 'addresses.street', values.street),
+  state: get(apiData, 'addresses.state', values.state),
+  city: get(apiData, 'addresses.city', values.city),
+  zip: get(apiData, 'addresses.zip', values.zip),
+  ...('professional' === type
+    ? {
+        profession: get(apiData, 'meta.summary.profession.type', values.profession),
+        speciality: get(apiData, 'meta.summary.profession.speciality', values.speciality),
+        availability: get(apiData, 'meta.summary.capacity', values.availability),
+      }
+    : {
+        practice_name: get(apiData, 'meta.summary.practice_name', values.practice_name),
+        practice_type: get(apiData, 'meta.summary.practice_type', values.practice_type),
+        practice_first_name: get(
+          apiData,
+          'meta.summary.practice_first_name',
+          values.practice_first_name,
+        ),
+        practice_last_name: get(
+          apiData,
+          'meta.summary.practice_last_name',
+          values.practice_last_name,
+        ),
+        practice_email: get(
+          apiData,
+          'meta.summary.practice_email',
+          values.practice_email,
+        ),
+      }),
+})
+
+export const formatDataFromOnboardingForRegister = (
+  values = {},
+  type = INITIAL_STATE.type,
+) => ({
+  first_name: values.first_name,
+  last_name: values.last_name,
+  email: values.email,
+  password: values.password,
+  password_confirmation: values.password_confirmation,
+  type,
+})
+
+// format data from redux to use for api
+export const formatDataFromOnboarding = (values, profile, type = INITIAL_STATE.type) => ({
+  addresses: {
+    ...(profile.addresses || {}),
+    ...(values.street ? { line_1: values.street } : {}),
+    ...(values.state ? { state: values.state } : {}),
+    ...(values.city ? { city: values.city } : {}),
+    ...(values.zip ? { zip: values.zip } : {}),
+  },
+  meta: {
+    ...(profile.meta || {}),
+    summary: {
+      ...get(profile, 'meta.summary', {}),
+      ...('professional' === type
+        ? {
+            profession: {
+              ...get(profile, 'meta.summary.profession', {}),
+              ...(values.profession ? { type: values.profession } : {}),
+              ...(values.speciality ? { speciality: values.speciality } : {}),
+            },
+            capacity: {
+              ...get(profile, 'meta.summary.capacity', {}),
+              ...(values.availability ? { availability: values.availability } : {}),
+            },
+          }
+        : {
+            ...(values.practice_name ? { practice_name: values.practice_name } : {}),
+            ...(values.practice_type ? { practice_type: values.practice_type } : {}),
+            ...(values.practice_first_name
+              ? { contact_first_name: values.practice_first_name }
+              : {}),
+            ...(values.practice_last_name
+              ? { contact_last_name: values.practice_last_name }
+              : {}),
+            ...(values.practice_email ? { contact_email: values.practice_email } : {}),
+          }),
+    },
+  },
+})
+
+export const areStepsComplete = (step, values) =>
+  (step.fields || []).reduce((previousIsComplete, currentStep) => {
+    if (currentStep.fields && currentStep.fields.length) {
+      return areStepsComplete(currentStep, values)
+    }
+
+    return currentStep.required && isEmpty(values[currentStep.name])
+      ? false
+      : previousIsComplete
+  }, true)
+
+// Reducer That is Shared between two dispatched actions
+const updateStepValuesFromRegister = (state, { data }) => ({
+  ...state,
+  values: {
+    ...state.values,
+    ...data,
+  },
+})
 
 // Reducer Methods
 export const reducers = {
@@ -98,11 +202,36 @@ export const reducers = {
     savingStepValue: payload.step,
     error: false,
   }),
-  [SAVE_STEP_SUCCESS]: (state, payload) => ({
+  [SAVE_STEP_FAILED]: (state, payload) => ({
     ...state,
     // savingStep: false,
     savingStepValue: false,
     error: payload.error,
+  }),
+  // When Updating the user, we want to make sure to update the steps data as well
+  [userRegisterTypes.SUCCESS]: updateStepValuesFromRegister,
+  [userRegisterUpdateTypes.SUCCESS]: updateStepValuesFromRegister,
+  [userGetProfileTypes.SUCCESS]: (state, { data }) => ({
+    ...state,
+    values: {
+      ...state.values,
+      ...formatDataFromApi(data, state.values, state.type),
+      first_name: get(data, 'user.first_name', state.values.first_name),
+      last_name: get(data, 'user.last_name', state.values.last_name),
+      email: get(data, 'user.email', state.values.email),
+    },
+    steps: {
+      ...state.steps,
+      [state.type]: state.steps[state.type].map(step => ({
+        ...step,
+        ...(step.step === '1' // Allows us to skip step 1 since we have already created the user
+          ? {
+              needsComplete: false,
+              complete: true,
+            }
+          : {}),
+      })),
+    },
   }),
 }
 
@@ -163,7 +292,7 @@ export const actions = {
  * Prop Actions
  * Mapped to dispatch, getState
  * imported to containers
-*/
+ */
 
 export const setValue = (name, value) => dispatch => {
   dispatch(actions.setValue(name, value))
@@ -180,30 +309,50 @@ export const saveStep = ({ step, onSuccess = false, onFail = false }) => (
 ) => {
   dispatch(actions.saveStep(step))
 
-  return updateProfile
-    .send({
-      step,
-      values: findStepValues(getState()),
-    })
-    .then(res => {
-      if (res && res.data && res.data.success) {
-        dispatch(
-          actions.saveStepSuccess({
-            step,
-            data: res.data,
-          }),
-        )
+  const onApiSuccess = res => {
+    dispatch(
+      actions.saveStepSuccess({
+        step,
+        data: formatDataFromApi(
+          res.data,
+          findStepValues(getState()),
+          findType(getState()),
+        ),
+      }),
+    )
 
-        if (onSuccess) onSuccess()
-      } else {
-        dispatch(actions.saveStepApiFail(res, step))
+    if (onSuccess) onSuccess()
+  }
 
-        if (onFail) onFail()
-      }
-    })
-    .catch(e => {
-      if (onFail) onFail(e.message || e)
-    })
+  const onApiError = res => {
+    dispatch(actions.saveStepApiFailed(step, res))
+
+    if (onFail) onFail()
+  }
+
+  const isInitialRegister = !findToken(getState())
+  const apiCall = isInitialRegister ? registerUser : updateRegisterUser
+  const data = isInitialRegister
+    ? formatDataFromOnboardingForRegister(
+        findStepValues(getState()),
+        findType(getState()),
+      )
+    : formatDataFromOnboarding(
+        findStepValues(getState()),
+        findUserProfile(getState()),
+        findType(getState()),
+      )
+
+  const id = isInitialRegister ? null : findUserId(getState())
+
+  dispatch(
+    apiCall({
+      data,
+      id,
+      onSuccess: onApiSuccess,
+      onError: onApiError,
+    }),
+  )
 }
 
 export const goToStep = ({ currentStep, nextStep, history }) => (dispatch, getState) => {
@@ -216,7 +365,11 @@ export const goToStep = ({ currentStep, nextStep, history }) => (dispatch, getSt
 
   if (step && nextStep === step.nextStep) {
     // check if current step is complete
-    if (step.needsComplete && !step.complete) {
+    if (
+      step.needsComplete &&
+      (step.needsCompleteIfToken && findToken(getState())) &&
+      !step.complete
+    ) {
       return Promise.resolve(
         dispatch(
           actions.goToStepFailed({
