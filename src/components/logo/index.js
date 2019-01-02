@@ -46,11 +46,11 @@ LogoInternals.propTypes = {
 }
 
 Logo.defaultProps = {
-  disableLink: false,
+  disabledLink: false,
 }
 
 Logo.propTypes = {
-  disableLink: bool,
+  disabledLink: bool,
 }
 
 export default Logo

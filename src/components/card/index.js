@@ -70,6 +70,7 @@ Card.defaultProps = {
   actionProps: false,
   progress: false,
   type: false,
+  overflowHidden: false,
 }
 
 Card.propTypes = {
@@ -82,6 +83,7 @@ Card.propTypes = {
   actionProps: oneOfType([object, bool]),
   progress: oneOfType([number, bool]),
   type: oneOfType([string, bool]),
+  overflowHidden: bool,
 }
 
 export default Card
