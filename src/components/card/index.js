@@ -1,9 +1,9 @@
 import React from 'react'
 import { node, string, func, object, number, bool, oneOfType } from 'prop-types'
-import ErrorBoundry from '@component/error_boundry'
+import ErrorBoundry from '@sdog/components/error_boundry'
 import classnames from 'classnames'
-import Button from '@sd/components/button'
-import LoadingBar from '@sd/components/loading_bar'
+import Button from '@sdog/components/button'
+import LoadingBar from '@sdog/components/loading_bar'
 
 import theme from './theme.css'
 

@@ -1,7 +1,7 @@
 import React from 'react'
 import classnames from 'classnames'
-import Button from '@component/button'
-import LocationOnIcon from '@component/svg/Location'
+import Button from '@sdog/components/button'
+import LocationOnIcon from '@sdog/components/svg/Location'
 
 import appTheme from '../../../app/theme.css'
 

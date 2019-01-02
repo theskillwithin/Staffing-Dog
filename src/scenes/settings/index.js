@@ -1,8 +1,8 @@
 import React from 'react'
 import classnames from 'classnames'
-import { setTitle } from '@util/document'
-import Tabs from '@component/tab_bar'
-import Card from '@component/card'
+import { setTitle } from '@sdog/utils/document'
+import Tabs from '@sdog/components/tab_bar'
+import Card from '@sdog/components/card'
 
 import appTheme from '../app/theme.css'
 

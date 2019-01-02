@@ -2,7 +2,7 @@ import React from 'react'
 import { object, bool, func, array, string, shape } from 'prop-types'
 import find from 'lodash/find'
 import classnames from 'classnames'
-import Arrow from '@component/svg/Arrow'
+import Arrow from '@sdog/components/svg/Arrow'
 
 import Button from '../../../../components/button'
 

@@ -1,5 +1,5 @@
 import moment from 'moment'
-import mockBuilder from '@api/mockBuilder'
+import mockBuilder from '@sdog/api/mockBuilder'
 import * as userApi from '@sdog/api/user'
 
 const randomDayOfMonth = () => Math.floor(Math.random() * (28 - 1 + 1) + 1)
