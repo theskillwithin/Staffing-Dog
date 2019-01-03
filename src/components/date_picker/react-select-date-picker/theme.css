@@ -1,5 +1,28 @@
 @import '../../../styles/config.css';
 
+.daysHeaderStyles {
+  margin-top: 5px;
+  padding-top: 5px;
+  padding-left: 2%;
+  border-top: 1px solid #eee;
+}
+
+.daysHeaderItemStyles {
+  color: #999;
+  cursor: default;
+  font-size: 75%;
+  font-weight: 500;
+  display: inline-block;
+  width: 12%;
+  margin: 0 1%;
+  text-align: center;
+}
+
+.daysContainerStyles {
+  padding-top: 5px;
+  padding-left: 2%;
+}
+
 .icon {
   margin-left: -1.5em;
   z-index: 10;

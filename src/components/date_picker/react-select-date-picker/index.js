@@ -1,11 +1,9 @@
 import React, { Component } from 'react'
-import { bool, array, func, number, object } from 'prop-types'
+import { bool, array, func, string, number, object, node } from 'prop-types'
 import chrono from 'chrono-node'
-import Select from 'react-select'
+import Select, { components as SelectComponents } from 'react-select'
 import CalSVG from '@sdog/components/svg/Cal'
 
-import Group from './group'
-import Option from './option'
 import s from './theme.css'
 
 const suggestions = [
@@ -43,6 +41,84 @@ const suggest = str =>
     .split(/\b/)
     .map(i => suggestions[i] || i)
     .join('')
+
+const days = ['S', 'M', 'T', 'W', 'T', 'F', 'S']
+
+const Group = props => {
+  const {
+    Heading,
+    getStyles,
+    children,
+    label,
+    innerProps,
+    headingProps,
+    cx,
+    theme,
+  } = props
+  return (
+    <div aria-label={label} style={getStyles('group', props)} {...innerProps}>
+      <Heading theme={theme} getStyles={getStyles} cx={cx} {...headingProps}>
+        {label}
+      </Heading>
+      <div className={s.daysHeaderStyles}>
+        {days.map((day, i) => (
+          <span key={`${i + 1}-${day}`} className={s.daysHeaderItemStyles}>
+            {day}
+          </span>
+        ))}
+      </div>
+      <div className={s.daysContainerStyles}>{children}</div>
+    </div>
+  )
+}
+
+Group.propTypes = {
+  Heading: node.isRequired,
+  getStyles: func.isRequired,
+  label: string.isRequired,
+  innerProps: array,
+  headingProps: object,
+  cx: func,
+  theme: object,
+  children: node.isRequired,
+}
+
+const getOptionStyles = defaultStyles => ({
+  ...defaultStyles,
+  display: 'inline-block',
+  width: '12%',
+  margin: '0 1%',
+  textAlign: 'center',
+  borderRadius: '4px',
+})
+
+const Option = props => {
+  const { data, getStyles, innerRef, innerProps } = props
+  if (data.display === 'calendar') {
+    const defaultStyles = getStyles('option', props)
+    const styles = getOptionStyles(defaultStyles)
+
+    if (data.date.date() === 1) {
+      const indentBy = data.date.day()
+      if (indentBy) {
+        styles.marginLeft = `${indentBy * 14 + 1}%`
+      }
+    }
+    return (
+      <span {...innerProps} style={styles} ref={innerRef}>
+        {data.date.format('D')}
+      </span>
+    )
+  }
+  return <SelectComponents.Option {...props} />
+}
+
+Option.propTypes = {
+  data: object.isRequired,
+  getStyles: func.isRequired,
+  innerProps: object,
+  innerRef: node,
+}
 
 const DropdownIndicator = ({ isFocused }) => (
   <span className={s.icon}>
