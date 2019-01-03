@@ -136,6 +136,9 @@ class Exceptions extends React.Component {
               <Arrow />
               <span className={theme.endDate}>{exception.endDate}</span>
               <span className={theme.endTime}>{exception.endTime}</span>
+              <button className={theme.close} type="button">
+                &times;
+              </button>
             </div>
           ))}
       </div>
