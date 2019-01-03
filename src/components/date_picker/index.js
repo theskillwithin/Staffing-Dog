@@ -40,7 +40,7 @@ const createCalendarOptions = (date = new Date()) => {
 
 const defaultOptions = [...dayOptions, createCalendarOptions()]
 
-class Experimental extends Component {
+class DatePickerWrapper extends Component {
   state = {
     value: defaultOptions[0],
   }
@@ -68,4 +68,4 @@ class Experimental extends Component {
   }
 }
 
-export default Experimental
+export default DatePickerWrapper
