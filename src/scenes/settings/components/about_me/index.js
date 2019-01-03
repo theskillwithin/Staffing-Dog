@@ -60,18 +60,27 @@ class SettingsAboutMe extends React.Component {
     return (
       <div>
         <div className={theme.photo}>
-          <Dropzone
-            className={theme.dropzone}
-            accept="image/jpeg, image/png"
-            onDrop={this.onDrop}
-          >
-            <h5>Profile Photo</h5>
-            {form.files && form.files.length ? (
-              <img src={form.files[0].preview} alt={form.files[0].name} />
-            ) : (
-              <ProfilePhotoSVG />
+          <Dropzone accept="image/jpeg, image/png" onDrop={this.onDrop}>
+            {({ getRootProps, getInputProps, isDragActive }) => (
+              <div
+                {...getRootProps()}
+                className={classnames(theme.dropzone, {
+                  'dropzone--isActive': isDragActive,
+                })}
+              >
+                <h5>Profile Photo</h5>
+                <input {...getInputProps()} />
+                {form.files && form.files.length ? (
+                  <img
+                    src={URL.createObjectURL(form.files[0])}
+                    alt={form.files[0].name}
+                  />
+                ) : (
+                  <ProfilePhotoSVG />
+                )}
+                <span>{isDragActive ? 'Add Photo...' : 'Add Photo'}</span>
+              </div>
             )}
-            <span>Add Photo</span>
           </Dropzone>
           <div>
             <ul>

@@ -11,6 +11,7 @@ import { findSchedule, getSchedule } from '@sdog/store/user'
 import CalendarIcon from '@sdog/components/svg/Calendar'
 import Calendar from '@sdog/components/calendar'
 
+import Exceptions from './exceptions'
 import WeekRow from './weeks'
 import Event from './event'
 import theme from './theme.css'
@@ -42,38 +43,38 @@ class JobSchedule extends React.Component {
       schedule: {
         sun: {
           active: false,
-          from: { label: '06:00', value: '06:00' },
-          to: { label: '17:00', value: '17:00' },
+          from: { label: '6:00 am', value: '6:00 am' },
+          to: { label: '7:00 pm', value: '7:00 pm' },
         },
         mon: {
           active: true,
-          from: { label: '06:00', value: '06:00' },
-          to: { label: '17:00', value: '17:00' },
+          from: { label: '6:00 am', value: '6:00 am' },
+          to: { label: '7:00 pm', value: '7:00 pm' },
         },
         tue: {
           active: true,
-          from: { label: '06:00', value: '06:00' },
-          to: { label: '17:00', value: '17:00' },
+          from: { label: '6:00 am', value: '6:00 am' },
+          to: { label: '7:00 pm', value: '7:00 pm' },
         },
         wed: {
           active: true,
-          from: { label: '06:00', value: '06:00' },
-          to: { label: '17:00', value: '17:00' },
+          from: { label: '6:00 am', value: '6:00 am' },
+          to: { label: '7:00 pm', value: '7:00 pm' },
         },
         thu: {
           active: true,
-          from: { label: '06:00', value: '06:00' },
-          to: { label: '17:00', value: '17:00' },
+          from: { label: '6:00 am', value: '6:00 am' },
+          to: { label: '7:00 pm', value: '7:00 pm' },
         },
         fri: {
           active: true,
-          from: { label: '06:00', value: '06:00' },
-          to: { label: '17:00', value: '17:00' },
+          from: { label: '6:00 am', value: '6:00 am' },
+          to: { label: '7:00 pm', value: '7:00 pm' },
         },
         sat: {
           active: true,
-          from: { label: '06:00', value: '06:00' },
-          to: { label: '17:00', value: '17:00' },
+          from: { label: '6:00 am', value: '6:00 am' },
+          to: { label: '7:00 pm', value: '7:00 pm' },
         },
       },
     },
@@ -174,7 +175,7 @@ class JobSchedule extends React.Component {
                 </div>
               </div>
             )}
-            {this.state.activeTabIndex === 1 && <h2>Exceptions</h2>}
+            {this.state.activeTabIndex === 1 && <Exceptions />}
             <hr className={theme.divider} />
           </>
         )}

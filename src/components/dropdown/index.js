@@ -50,13 +50,15 @@ class Dropdown extends Component {
       option: (base, state) => ({
         ...base,
         cursor: state.isDisabled ? 'not-allowed' : 'pointer',
+        minWidth: 'auto',
       }),
       control: styles => ({
         ...styles,
         cursor: 'pointer',
         height: this.props.height,
         zIndex: this.state.open ? 90 : 'inherit',
-        minWidth: 100,
+        minWidth: 'auto',
+        minHeight: this.props.height ? this.props.height : 38,
         width: this.props.width ? this.props.width : 'auto',
         border: '1px solid rgba(152, 160, 178, 0.54)',
         borderRadius: 3,
@@ -64,10 +66,12 @@ class Dropdown extends Component {
         fontWeight: 500,
       }),
       value: styles => ({ ...styles, background: '#0072FF', color: 'rgb(31, 39, 64)' }),
-
+      selectContainer: styles => ({ ...styles, minWidth: 'auto' }),
       valueContainer: styles => ({
         ...styles,
         paddingLeft: '1em',
+        minWidth: 'auto',
+        width: this.props.width ? this.props.width : 'auto',
       }),
       placeholder: styles => ({
         ...styles,
@@ -83,6 +87,7 @@ class Dropdown extends Component {
         marginLeft: this.props.small ? '-4px' : '0',
         fontWeight: 500,
         color: 'rgb(31, 39, 64)',
+        minWidth: 'auto',
       }),
     }
 

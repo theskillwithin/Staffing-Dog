@@ -1,0 +1,134 @@
+@import '../../../../../styles/config';
+
+.root {
+  h4 {
+    font-size: 14px;
+    font-weight: var(--sd-fontWeightMedium);
+    line-height: 1.21;
+    color: var(--sd-blackTxt);
+    margin: 3em 0 2.5em 0;
+  }
+}
+
+.inputRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 2em 0;
+}
+
+.available {
+  display: flex;
+
+  span {
+    margin-right: 4em;
+    font-weight: var(--sd-fontWeightMedium);
+    color: var(--sd-blackTxt);
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  label {
+    font-weight: var(--sd-fontWeightMedium);
+    color: var(--sd-blackTxt);
+    font-size: 14px;
+  }
+}
+
+.exceptionRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 1em 0;
+
+  > div:first-child {
+    margin-right: 20px;
+  }
+
+  > span {
+    color: var(--sd-grayLighter);
+    font-size: 28px;
+    margin: 0 0.1em;
+  }
+}
+
+.exception {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+  text-align: center;
+  height: 60px;
+  border-top: 1px solid var(--sd-borderColor);
+  margin-left: -1.5em;
+  width: calc(100% + 3em);
+  padding: 0 1.5em 0;
+
+  &:last-child {
+    margin-bottom: -8px;
+  }
+}
+
+.exception:before {
+  content: '';
+  display: block;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 7px;
+  border-radius: 2px;
+  width: 4px;
+  height: 40px;
+}
+
+.red:before {
+  background-color: var(--sd-red);
+}
+
+.blue:before {
+  background-color: var(--sd-blue);
+}
+
+.grey:before {
+  background-color: var(--sd-gray);
+}
+
+.startDate,
+.endDate {
+  font-weight: var(--sd-fontWeightMedium);
+  font-size: 14px;
+  color: var(--sd-blackTxt);
+}
+
+.startTime,
+.endTime {
+  font-weight: var(--sd-fontWeightMedium);
+  font-size: 14px;
+  color: var(--sd-grayLighter);
+}
+
+.close {
+  color: var(--sd-gray);
+  border: none;
+  cursor: pointer;
+  font-size: 35px;
+  margin: -5px 5px 0 auto;
+  text-align: right;
+  width: 20px;
+  outline: none;
+}
+
+.delete {
+  position: absolute;
+  display: flex;
+  justify-content: flex-end;
+  padding-right: 32px;
+  align-items: center;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: rgba(255, 255, 255, 0.91);
+}

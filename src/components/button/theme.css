@@ -36,6 +36,15 @@
   }
 }
 
+.red {
+  background: var(--sd-red);
+  color: white;
+
+  &:hover {
+    background: var(--sd-redDark);
+  }
+}
+
 .secondaryDark {
   color: black;
 }

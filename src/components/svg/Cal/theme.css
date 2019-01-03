@@ -1,0 +1,14 @@
+@import '../../../styles/config.css';
+
+.svg {
+  vertical-align: middle;
+  width: 15px;
+
+  .fill {
+    fill: var(--sd-grayLighter);
+  }
+
+  &.active .fill {
+    fill: var(--sd-primary);
+  }
+}
