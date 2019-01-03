@@ -1,9 +1,11 @@
 import React, { Component } from 'react'
-import { bool } from 'prop-types'
+import { bool, array, func, number, string } from 'prop-types'
 import chrono from 'chrono-node'
-import Select, { components as SelectComponents } from 'react-select'
-import CalSVG from '@component/svg/Cal'
+import Select from 'react-select'
+import CalSVG from '@sdog/components/svg/Cal'
 
+import Group from './group'
+import Option from './option'
 import s from './theme.css'
 
 const suggestions = [
@@ -41,66 +43,6 @@ const suggest = str =>
     .split(/\b/)
     .map(i => suggestions[i] || i)
     .join('')
-
-const days = ['S', 'M', 'T', 'W', 'T', 'F', 'S']
-
-const Group = props => {
-  const {
-    Heading,
-    getStyles,
-    children,
-    label,
-    innerProps,
-    headingProps,
-    cx,
-    theme,
-  } = props
-  return (
-    <div aria-label={label} style={getStyles('group', props)} {...innerProps}>
-      <Heading theme={theme} getStyles={getStyles} cx={cx} {...headingProps}>
-        {label}
-      </Heading>
-      <div className={s.daysHeaderStyles}>
-        {days.map((day, i) => (
-          <span key={`${i + 1}-${day}`} className={s.daysHeaderItemStyles}>
-            {day}
-          </span>
-        ))}
-      </div>
-      <div className={s.daysContainerStyles}>{children}</div>
-    </div>
-  )
-}
-
-const getOptionStyles = defaultStyles => ({
-  ...defaultStyles,
-  display: 'inline-block',
-  width: '12%',
-  margin: '0 1%',
-  textAlign: 'center',
-  borderRadius: '4px',
-})
-
-const Option = props => {
-  const { data, getStyles, innerRef, innerProps } = props
-  if (data.display === 'calendar') {
-    const defaultStyles = getStyles('option', props)
-    const styles = getOptionStyles(defaultStyles)
-
-    if (data.date.date() === 1) {
-      const indentBy = data.date.day()
-      if (indentBy) {
-        styles.marginLeft = `${indentBy * 14 + 1}%`
-      }
-    }
-    return (
-      <span {...innerProps} style={styles} ref={innerRef}>
-        {data.date.format('D')}
-      </span>
-    )
-  }
-  return <SelectComponents.Option {...props} />
-}
 
 const DropdownIndicator = ({ isFocused }) => (
   <span className={s.icon}>
@@ -206,6 +148,17 @@ class DatePicker extends Component {
       />
     )
   }
+}
+
+DatePicker.propTypes = {
+  defaultOptions: array.isRequired,
+  createOptionForDate: func.isRequired,
+  createCalendarOptions: func.isRequired,
+  value: string.isRequired,
+  height: number,
+  width: number,
+  small: bool,
+  onChange: func.isRequired,
 }
 
 export default DatePicker
