@@ -8,6 +8,7 @@ const Button = ({
   primary,
   secondary,
   secondaryDark,
+  red,
   round,
   short,
   className,
@@ -30,6 +31,7 @@ const Button = ({
       secondary && theme.secondary,
       secondaryDark && theme.secondary,
       secondaryDark && theme.secondaryDark,
+      red && theme.red,
       className && className,
       size && theme[size],
       width && theme.width,
@@ -57,6 +59,7 @@ Button.defaultProps = {
   loading: false,
   size: 'mediumSmall',
   width: null,
+  red: false,
 }
 
 Button.propTypes = {
@@ -73,6 +76,7 @@ Button.propTypes = {
   loading: bool,
   size: oneOf(['small', 'mediumSmall', 'medium', 'large']),
   width: string,
+  red: bool,
 }
 
 export default Button

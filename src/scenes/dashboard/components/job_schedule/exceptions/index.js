@@ -56,10 +56,15 @@ class Exceptions extends React.Component {
       endTime: time[0],
       endMin: min[0],
     },
+    delete: null,
   }
 
-  handleChange(input, value) {
+  handleChange = (input, value) => {
     this.setState(state => ({ form: { ...state.form, [input]: value } }))
+  }
+
+  toggleDelete = index => {
+    this.setState({ delete: index })
   }
 
   render() {
@@ -131,12 +136,21 @@ class Exceptions extends React.Component {
                 exception.type && theme[exception.type],
               )}
             >
+              {this.state.delete === exception.id && (
+                <div className={theme.delete}>
+                  <Button red>Confirm Delete</Button>
+                </div>
+              )}
               <span className={theme.startDate}>{exception.startDate}</span>
               <span className={theme.startTime}>{exception.startTime}</span>
               <Arrow />
               <span className={theme.endDate}>{exception.endDate}</span>
               <span className={theme.endTime}>{exception.endTime}</span>
-              <button className={theme.close} type="button">
+              <button
+                className={theme.close}
+                type="button"
+                onClick={() => this.toggleDelete(exception.id)}
+              >
                 &times;
               </button>
             </div>
