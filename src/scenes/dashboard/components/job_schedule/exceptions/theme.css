@@ -27,6 +27,7 @@
     font-size: 14px;
     line-height: 1.5;
   }
+
   label {
     font-weight: var(--sd-fontWeightMedium);
     color: var(--sd-blackTxt);
@@ -94,14 +95,15 @@
   background-color: var(--sd-gray);
 }
 
-
-.startDate, .endDate {
+.startDate,
+.endDate {
   font-weight: var(--sd-fontWeightMedium);
   font-size: 14px;
   color: var(--sd-blackTxt);
 }
 
-.startTime, .endTime {
+.startTime,
+.endTime {
   font-weight: var(--sd-fontWeightMedium);
   font-size: 14px;
   color: var(--sd-grayLighter);
@@ -130,4 +132,3 @@
   left: 0;
   background: rgba(255, 255, 255, 0.91);
 }
-
