@@ -1,5 +1,5 @@
 import React from 'react'
-import { node, func, array } from 'prop-types'
+import { node, func, object } from 'prop-types'
 import { components as SelectComponents } from 'react-select'
 
 const getOptionStyles = defaultStyles => ({
@@ -33,9 +33,9 @@ const Option = props => {
 }
 
 Option.propTypes = {
-  data: array.isRequired,
+  data: object.isRequired,
   getStyles: func.isRequired,
-  innerProps: array,
+  innerProps: object,
   innerRef: node,
 }
 

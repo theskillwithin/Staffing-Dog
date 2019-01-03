@@ -1,5 +1,5 @@
 import React from 'react'
-import { node, func, string, array } from 'prop-types'
+import { node, func, object, array, string } from 'prop-types'
 
 import s from './theme.css'
 
@@ -38,9 +38,9 @@ Group.propTypes = {
   getStyles: func.isRequired,
   label: string.isRequired,
   innerProps: array,
-  headingProps: array,
-  cx: string,
-  theme: string,
+  headingProps: object,
+  cx: func,
+  theme: object,
   children: node.isRequired,
 }
 

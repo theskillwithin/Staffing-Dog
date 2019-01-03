@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { bool, array, func, number, string } from 'prop-types'
+import { bool, array, func, number, object } from 'prop-types'
 import chrono from 'chrono-node'
 import Select from 'react-select'
 import CalSVG from '@sdog/components/svg/Cal'
@@ -154,7 +154,7 @@ DatePicker.propTypes = {
   defaultOptions: array.isRequired,
   createOptionForDate: func.isRequired,
   createCalendarOptions: func.isRequired,
-  value: string.isRequired,
+  value: object.isRequired,
   height: number,
   width: number,
   small: bool,
