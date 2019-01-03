@@ -1,7 +1,7 @@
 import React from 'react'
 import { node, func, object, array, string } from 'prop-types'
 
-import s from './theme.css'
+import styles from './theme.css'
 
 const days = ['S', 'M', 'T', 'W', 'T', 'F', 'S']
 
@@ -21,14 +21,14 @@ const Group = props => {
       <Heading theme={theme} getStyles={getStyles} cx={cx} {...headingProps}>
         {label}
       </Heading>
-      <div className={s.daysHeaderStyles}>
+      <div className={styles.daysHeaderStyles}>
         {days.map((day, i) => (
-          <span key={`${i + 1}-${day}`} className={s.daysHeaderItemStyles}>
+          <span key={`${i + 1}-${day}`} className={styles.daysHeaderItemStyles}>
             {day}
           </span>
         ))}
       </div>
-      <div className={s.daysContainerStyles}>{children}</div>
+      <div className={styles.daysContainerStyles}>{children}</div>
     </div>
   )
 }
