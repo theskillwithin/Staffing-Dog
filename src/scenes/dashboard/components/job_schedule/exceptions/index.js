@@ -2,6 +2,7 @@ import React from 'react'
 import DatePicker from '@sdog/components/date_picker'
 import Dropdown from '@sdog/components/Dropdown'
 import Switch from '@sdog/components/switch'
+import Button from '@sdog/components/button'
 import { timesOfDay, minBy15 } from '@sdog/utils/dates'
 
 import theme from './theme.css'
@@ -72,13 +73,16 @@ class Exceptions extends React.Component {
         </div>
 
         <div className={theme.inputRow}>
-          <span>Available</span>
-          <Switch
-            checked={this.state.form.switch}
-            onChange={value => this.handleChange('switch', value)}
-          >
-            {this.state.form.switch ? 'Yes' : 'No'}
-          </Switch>
+          <div className={theme.available}>
+            <span>Available</span>
+            <Switch
+              checked={this.state.form.switch}
+              onChange={value => this.handleChange('switch', value)}
+            >
+              {this.state.form.switch ? 'Yes' : 'No'}
+            </Switch>
+          </div>
+          <Button primary>Add Exception</Button>
         </div>
       </div>
     )

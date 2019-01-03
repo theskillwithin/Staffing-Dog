@@ -12,10 +12,25 @@
 
 .inputRow {
   display: flex;
+  justify-content: space-between;
+  align-items: center;
   margin: 2em 0;
+}
+
+.available {
+  display: flex;
 
   span {
     margin-right: 4em;
+    font-weight: var(--sd-fontWeightMedium);
+    color: var(--sd-blackTxt);
+    font-size: 14px;
+    line-height: 1.5;
+  }
+  label {
+    font-weight: var(--sd-fontWeightMedium);
+    color: var(--sd-blackTxt);
+    font-size: 14px;
   }
 }
 
