@@ -1,4 +1,4 @@
-import * as jobsApi from '@api/jobs'
+import * as jobsApi from '@sdog/api/jobs'
 
 import { buildStore, reduxRegister } from '../tools'
 

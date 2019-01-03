@@ -1,19 +1,19 @@
 import React from 'react'
 import { func, array, number, string, shape, arrayOf, oneOfType } from 'prop-types'
 import { connect } from 'react-redux'
-import Card from '@component/card'
+import Card from '@sdog/components/card'
 import Textarea from 'react-textarea-autosize'
 import map from 'lodash/map'
 import find from 'lodash/find'
 import classnames from 'classnames'
-import ProfilePhotoSVG from '@component/svg/ProfilePhoto'
-import ReplySVG from '@component/svg/Reply'
-import Arrow from '@component/svg/Arrow'
-import SendIcon from '@component/svg/Send'
-import MessagesIcon from '@component/svg/Chat'
-import Button from '@component/button'
-import Select from '@component/select'
-import { getThreads, findThreads } from '@store/messages'
+import ProfilePhotoSVG from '@sdog/components/svg/ProfilePhoto'
+import ReplySVG from '@sdog/components/svg/Reply'
+import Arrow from '@sdog/components/svg/Arrow'
+import SendIcon from '@sdog/components/svg/Send'
+import MessagesIcon from '@sdog/components/svg/Chat'
+import Button from '@sdog/components/button'
+import Select from '@sdog/components/select'
+import { getThreads, findThreads } from '@sdog/store/messages'
 
 import theme from './theme.css'
 
@@ -102,10 +102,9 @@ class Messages extends React.Component {
                   </div>
                   <div className={theme.right}>
                     <div className={theme.date}>{thread.date}</div>
-                    {thread.threadCount &&
-                      thread.threadCount > 1 && (
-                        <div className={theme.threadCount}>{thread.threadCount}</div>
-                      )}
+                    {thread.threadCount && thread.threadCount > 1 && (
+                      <div className={theme.threadCount}>{thread.threadCount}</div>
+                    )}
                     <button
                       type="button"
                       className={theme.reply}
@@ -171,10 +170,9 @@ class Messages extends React.Component {
                 </div>
                 <div className={theme.right}>
                   <div className={theme.date}>{message.date}</div>
-                  {message.threadCount &&
-                    message.threadCount > 1 && (
-                      <div className={theme.threadCount}>{message.threadCount}</div>
-                    )}
+                  {message.threadCount && message.threadCount > 1 && (
+                    <div className={theme.threadCount}>{message.threadCount}</div>
+                  )}
                 </div>
               </div>
             ))}

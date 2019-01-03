@@ -1,6 +1,6 @@
-import buildStore from '@store/build'
-import reduxRegister from '@store/register'
-import * as searchApi from '@api/search'
+import buildStore from '@sdog/store/build'
+import reduxRegister from '@sdog/store/register'
+import * as searchApi from '@sdog/api/search'
 
 export const BASE = '@SD/SEARCH'
 export const FETCH = `${BASE}_FETCH`

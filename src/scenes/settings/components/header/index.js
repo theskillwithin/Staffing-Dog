@@ -1,6 +1,6 @@
 import React from 'react'
 import { number } from 'prop-types'
-import LoadingBar from '@component/loading_bar'
+import LoadingBar from '@sdog/components/loading_bar'
 
 import theme from './theme.css'
 

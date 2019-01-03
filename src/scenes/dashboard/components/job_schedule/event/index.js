@@ -1,8 +1,8 @@
 import React from 'react'
 import { object, bool } from 'prop-types'
 import classnames from 'classnames'
-import NearMeIcon from '@component/svg/NearMe'
-import Map from '@component/map'
+import NearMeIcon from '@sdog/components/svg/NearMe'
+import Map from '@sdog/components/map'
 
 import theme from './theme.css'
 

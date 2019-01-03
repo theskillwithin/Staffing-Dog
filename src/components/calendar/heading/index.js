@@ -1,6 +1,6 @@
 import React from 'react'
 import { object, func } from 'prop-types'
-import Arrow from '@component/svg/Arrow'
+import Arrow from '@sdog/components/svg/Arrow'
 
 import theme from './theme.css'
 

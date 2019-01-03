@@ -1,7 +1,7 @@
 import find from 'lodash/find'
 import get from 'lodash/get'
 import isEmpty from 'lodash/isEmpty'
-import build from '@store/build'
+import build from '@sdog/store/build'
 import {
   registerUser,
   updateRegisterUser,
@@ -10,11 +10,11 @@ import {
   userRegisterTypes,
   userRegisterUpdateTypes,
   userGetProfileTypes,
-} from '@store/user'
-import reduxRegister from '@store/register'
+  findUserId,
+} from '@sdog/store/user'
+import reduxRegister from '@sdog/store/register'
 
 import { professional, practice } from './fields'
-import { findUserId } from '../../../../store/user'
 
 export const BASE = '@SD/OB/STEPS'
 export const SET_VALUE = `${BASE}_SET_VALUE`
