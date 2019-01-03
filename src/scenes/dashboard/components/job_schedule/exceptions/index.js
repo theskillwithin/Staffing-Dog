@@ -1,7 +1,7 @@
 import React from 'react'
-import DatePicker from '@component/date_picker'
-import Dropdown from '@component/Dropdown'
-import Switch from '@component/switch'
+import DatePicker from '@sdog/components/date_picker'
+import Dropdown from '@sdog/components/Dropdown'
+import Switch from '@sdog/components/switch'
 import { timesOfDay, minBy15 } from '@sdog/utils/dates'
 
 import theme from './theme.css'
