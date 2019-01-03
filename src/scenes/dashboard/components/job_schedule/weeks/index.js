@@ -1,9 +1,9 @@
 import React from 'react'
 import { string, object, func } from 'prop-types'
 import classnames from 'classnames'
-import Dropdown from '@component/dropdown'
-import Button from '@component/button'
-import Arrow from '@component/svg/Arrow'
+import Dropdown from '@sdog/components/dropdown'
+import Button from '@sdog/components/button'
+import Arrow from '@sdog/components/svg/Arrow'
 import { timesOfDay } from '@sdog/utils/dates'
 
 import theme from './theme.css'

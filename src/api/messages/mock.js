@@ -1,4 +1,4 @@
-import mockBuilder from '@api/mockBuilder'
+import mockBuilder from '@sdog/api/mockBuilder'
 
 import messagesApi from '.'
 

@@ -3,6 +3,23 @@ import { bool, func, string, object, number, oneOfType } from 'prop-types'
 import Select from 'react-select'
 
 class Dropdown extends Component {
+  static propTypes = {
+    onChange: func,
+    outlined: bool,
+    value: oneOfType([string, object]),
+    height: number,
+    width: oneOfType([bool, number]),
+    small: bool,
+  }
+
+  static defaultProps = {
+    outlined: true,
+    value: '',
+    height: 48,
+    width: false,
+    small: false,
+  }
+
   state = {
     open: false,
   }
@@ -87,19 +104,6 @@ class Dropdown extends Component {
       />
     )
   }
-}
-
-Dropdown.defaultProps = {
-  outlined: true,
-  value: '',
-  height: 48,
-}
-
-Dropdown.propTypes = {
-  onChange: func,
-  outlined: bool,
-  value: oneOfType([string, object]),
-  height: number,
 }
 
 export default Dropdown

@@ -1,18 +1,10 @@
 {
+  "settings": {
+    "import/resolver": "webpack"
+  },
   "parser": "babel-eslint",
-  "plugins": [
-    "react",
-    "jsx-a11y",
-    "jest",
-    "import",
-    "prettier",
-    "eslint-plugin-cypress"
-  ],
-  "extends": [
-    "airbnb",
-    "prettier",
-    "prettier/react"
-  ],
+  "plugins": ["react", "jsx-a11y", "jest", "import", "prettier", "eslint-plugin-cypress"],
+  "extends": ["airbnb", "prettier", "prettier/react"],
   "env": {
     "es6": true,
     "browser": true,
@@ -30,11 +22,14 @@
         "semi": false
       }
     ],
-    "jsx-a11y/label-has-for": [ 2, {
-      "required": {
-          "every": [ "id" ]
+    "jsx-a11y/label-has-for": [
+      2,
+      {
+        "required": {
+          "every": ["id"]
+        }
       }
-    }],
+    ],
     "arrow-body-style": "off",
     "default-case": "off",
     "func-names": "off",
@@ -66,10 +61,7 @@
     "react/jsx-filename-extension": [
       "error",
       {
-        "extensions": [
-          ".js",
-          ".jsx"
-        ]
+        "extensions": [".js", ".jsx"]
       }
     ],
     "react/no-unused-prop-types": "off",
@@ -81,12 +73,9 @@
         "ignoreStateless": true
       }
     ],
-    
+
     "react/destructuring-assignment": 0,
-    "import/extensions": [
-      "error",
-      "never"
-    ],
+    "import/extensions": ["error", "never"],
     "import/newline-after-import": [
       "error",
       {
@@ -96,14 +85,7 @@
     "import/order": [
       "error",
       {
-        "groups": [
-          "builtin",
-          "external",
-          "internal",
-          "parent",
-          "sibling",
-          "index"
-        ],
+        "groups": ["builtin", "external", "internal", "parent", "sibling", "index"],
         "newlines-between": "always"
       }
     ],
@@ -115,17 +97,9 @@
     "jsx-a11y/anchor-is-valid": [
       "error",
       {
-        "components": [
-          "Link"
-        ],
-        "specialLink": [
-          "to"
-        ],
-        "aspecs": [
-          "noHref",
-          "invalidHref",
-          "preferButton"
-        ]
+        "components": ["Link"],
+        "specialLink": ["to"],
+        "aspecs": ["noHref", "invalidHref", "preferButton"]
       }
     ],
     "jsx-a11y/click-events-have-key-events": "off",

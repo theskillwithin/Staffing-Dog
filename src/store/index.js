@@ -1,9 +1,9 @@
 import { combineReducers, createStore, compose, applyMiddleware } from 'redux'
 import thunkMiddleware from 'redux-thunk'
-import { IS_DEV } from '@util/env'
 
-import reduxRegister from './register'
-import buildStore from './build'
+import { IS_DEV } from '@sdog/utils/env'
+
+import { reduxRegister } from './tools'
 import apiActionMiddleware from './apiActionMiddleware'
 
 const isBrowser = typeof window !== 'undefined'
@@ -31,8 +31,6 @@ const reduxCombine = (reducers, initialState = {}) => {
 
   return combineReducers(reduxReducers)
 }
-
-export { buildStore, reduxRegister }
 
 export default (storeData = {}, reducers = {}) => {
   reduxRegister.setInitialReducers(reducers)

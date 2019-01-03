@@ -3,8 +3,8 @@ import enhanceWithClickOutside from 'react-click-outside'
 import { Link } from 'react-router-dom'
 import { object } from 'prop-types'
 import classnames from 'classnames'
-import CloseIcon from '@component/svg/Close'
-import Hambuger from '@component/svg/Hamburger'
+import CloseIcon from '@sdog/components/svg/Close'
+import Hambuger from '@sdog/components/svg/Hamburger'
 
 import theme from './theme.css'
 

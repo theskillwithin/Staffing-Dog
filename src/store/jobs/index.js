@@ -1,6 +1,6 @@
-import buildStore from '@store/build'
-import reduxRegister from '@store/register'
-import * as jobsApi from '@api/jobs'
+import * as jobsApi from '@sdog/api/jobs'
+
+import { buildStore, reduxRegister } from '../tools'
 
 export const BASE = '@SD/JOBS'
 export const FETCH = `${BASE}_FETCH`

@@ -1,6 +1,6 @@
 import React from 'react'
 import classnames from 'classnames'
-import { setTitle, setHtmlClass, removeHtmlClass } from '@util/document'
+import { setTitle, setHtmlClass, removeHtmlClass } from '@sdog/utils/document'
 
 import theme from '../app/theme.css'
 

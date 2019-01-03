@@ -23,12 +23,6 @@ const paths = {
 
 const alias = {
   '@sdog': paths.src,
-  '@sd': paths.src,
-  '@scene': path.join(paths.src, 'scenes'),
-  '@store': path.join(paths.src, 'store'),
-  '@api': path.join(paths.src, 'api'),
-  '@component': path.join(paths.src, 'components'),
-  '@util': path.join(paths.src, 'utils'),
 }
 
 /**
@@ -140,6 +134,7 @@ config.optimization = {
     chunks: 'all',
     name: 'vendor',
   },
+  minimize: IS_PROD || false,
   minimizer: IS_PROD
     ? [
         new UglifyJsPlugin({

@@ -1,8 +1,8 @@
 import React from 'react'
 import { array, bool, oneOfType } from 'prop-types'
-import Card from '@component/card'
-import Checklist from '@component/checklist'
-import ListIcon from '@component/svg/List'
+import Card from '@sdog/components/card'
+import Checklist from '@sdog/components/checklist'
+import ListIcon from '@sdog/components/svg/List'
 import filter from 'lodash/filter'
 
 const list = [
