@@ -50,3 +50,43 @@
     margin: 0 0.1em;
   }
 }
+
+.exception {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 60px;
+  border-top: 1px solid var(--sd-borderColor);
+  margin-left: -1.5em;
+  width: calc(100% + 3em);
+  padding: 0 1.5em 0;
+
+  &:last-child {
+    margin-bottom: -8px;
+  }
+}
+
+.exception:before {
+  content: '';
+  display: block;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 7px;
+  border-radius: 2px;
+  width: 4px;
+  height: 40px;
+}
+
+.red:before {
+  background-color: var(--sd-red);
+}
+
+.blue:before {
+  background-color: var(--sd-blue);
+}
+
+.grey:before {
+  background-color: var(--sd-gray);
+}

@@ -1,8 +1,10 @@
 import React from 'react'
+import classnames from 'classnames'
 import DatePicker from '@sdog/components/date_picker'
 import Dropdown from '@sdog/components/Dropdown'
 import Switch from '@sdog/components/switch'
 import Button from '@sdog/components/button'
+import Arrow from '@sdog/components/svg/Arrow'
 import { timesOfDay, minBy15 } from '@sdog/utils/dates'
 
 import theme from './theme.css'
@@ -11,6 +13,41 @@ const time = timesOfDay(false, true).map(hour => ({ label: hour, value: hour }))
 const min = minBy15.map(hour => ({ label: hour, value: hour }))
 
 class Exceptions extends React.Component {
+  list = [
+    {
+      id: 1,
+      startDate: '7/4/2019',
+      startTime: '5:00 am',
+      endDate: '7/4/2019',
+      endTime: '7:15 pm',
+      type: 'blue',
+    },
+    {
+      id: 2,
+      startDate: '7/4/2019',
+      startTime: '5:00 am',
+      endDate: '7/4/2019',
+      endTime: '7:15 pm',
+      type: 'red',
+    },
+    {
+      id: 3,
+      startDate: '7/4/2019',
+      startTime: '5:00 am',
+      endDate: '7/4/2019',
+      endTime: '7:15 pm',
+      type: 'red',
+    },
+    {
+      id: 4,
+      startDate: '7/4/2019',
+      startTime: '5:00 am',
+      endDate: '7/4/2019',
+      endTime: '7:15 pm',
+      type: 'red',
+    },
+  ]
+
   state = {
     form: {
       switch: false,
@@ -84,6 +121,23 @@ class Exceptions extends React.Component {
           </div>
           <Button primary>Add Exception</Button>
         </div>
+        {this.list &&
+          this.list.length &&
+          this.list.map(exception => (
+            <div
+              index={exception.id}
+              className={classnames(
+                theme.exception,
+                exception.type && theme[exception.type],
+              )}
+            >
+              <span className={theme.startDate}>{exception.startDate}</span>
+              <span className={theme.startTime}>{exception.startTime}</span>
+              <Arrow />
+              <span className={theme.endDate}>{exception.endDate}</span>
+              <span className={theme.endTime}>{exception.endTime}</span>
+            </div>
+          ))}
       </div>
     )
   }
