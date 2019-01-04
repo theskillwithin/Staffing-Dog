@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import classnames from 'classnames'
 
 import SVGCertification from '../../../../components/svg/files/certification.svg'
@@ -26,14 +27,16 @@ const CompleteNav = () => (
         </div>
 
         <div>
-          <Button primary round size="medium">
-            <span className={theme.iconRight}>
-              Profile Setup{' '}
-              <span>
-                <Arrow small color="white" />
+          <Link to="/">
+            <Button primary round size="medium">
+              <span className={theme.iconRight}>
+                Profile Setup{' '}
+                <span>
+                  <Arrow small color="white" />
+                </span>
               </span>
-            </span>
-          </Button>
+            </Button>
+          </Link>
         </div>
       </div>
     </div>
