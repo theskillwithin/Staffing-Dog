@@ -130,7 +130,7 @@ class Exceptions extends React.Component {
           this.list.length &&
           this.list.map(exception => (
             <div
-              index={exception.id}
+              key={exception.id}
               className={classnames(
                 theme.exception,
                 exception.type && theme[exception.type],
