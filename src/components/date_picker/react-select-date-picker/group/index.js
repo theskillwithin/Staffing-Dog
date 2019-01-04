@@ -15,10 +15,17 @@ const Group = props => {
     headingProps,
     cx,
     theme,
+    emotion,
   } = props
   return (
     <div aria-label={label} style={getStyles('group', props)} {...innerProps}>
-      <Heading theme={theme} getStyles={getStyles} cx={cx} {...headingProps}>
+      <Heading
+        emotion={emotion}
+        theme={theme}
+        getStyles={getStyles}
+        cx={cx}
+        {...headingProps}
+      >
         {label}
       </Heading>
       <div className={styles.daysHeaderStyles}>
@@ -42,6 +49,7 @@ Group.propTypes = {
   cx: func,
   theme: object,
   children: node.isRequired,
+  emotion: object,
 }
 
 export default Group
