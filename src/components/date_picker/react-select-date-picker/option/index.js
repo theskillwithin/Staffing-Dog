@@ -9,6 +9,7 @@ const getOptionStyles = defaultStyles => ({
   margin: '0 1%',
   textAlign: 'center',
   borderRadius: '4px',
+  padding: '5px',
 })
 
 const Option = props => {

@@ -51,10 +51,10 @@ class DatePickerWrapper extends Component {
 
   render() {
     const { value } = this.state
-    const displayValue = value && value.value ? value.value.toString() : 'null'
+    // const displayValue = value && value.value ? value.value.toString() : 'null'
     return (
       <div>
-        <div>Value: {displayValue}</div>
+        {/* <div>Value: {displayValue}</div> */}
         <DatePicker
           value={value}
           onChange={this.handleChange}
