@@ -27,7 +27,6 @@ const suggestions = [
   'march',
   'february',
   'january',
-  'yesterday',
   'tomorrow',
   'today',
 ].reduce((acc, str) => {

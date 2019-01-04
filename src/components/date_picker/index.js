@@ -12,15 +12,15 @@ const createOptionForDate = d => {
     label: date.calendar(null, {
       sameDay: '[Today] (Do MMM YYYY)',
       nextDay: '[Tomorrow] (Do MMM YYYY)',
-      nextWeek: '[Next] dddd (Do MMM YYYY)',
-      lastDay: '[Yesterday] (Do MMM YYYY)',
-      lastWeek: '[Last] dddd (Do MMM YYYY)',
+      nextWeek: '[Next] (Do MMM YYYY)',
+      lastDay: 'Do MMM YYYY',
+      lastWeek: 'Do MMM YYYY',
       sameElse: 'Do MMMM YYYY',
     }),
   }
 }
 
-const dayOptions = ['today', 'tomorrow', 'yesterday'].map(i =>
+const dayOptions = ['today', 'tomorrow'].map(i =>
   createOptionForDate(chrono.parseDate(i)),
 )
 
@@ -51,10 +51,10 @@ class DatePickerWrapper extends Component {
 
   render() {
     const { value } = this.state
-    // const displayValue = value && value.value ? value.value.toString() : 'null'
+    const displayValue = value && value.value ? value.value.toString() : 'null'
     return (
       <div>
-        {/* <div>Value: {displayValue}</div> */}
+        <div>Value: {displayValue}</div>
         <DatePicker
           value={value}
           onChange={this.handleChange}
