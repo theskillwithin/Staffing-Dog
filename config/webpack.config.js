@@ -163,6 +163,7 @@ config.plugins = [
   }),
   new webpack.DefinePlugin({
     'process.env.MOCK_DATA': JSON.stringify(process.env.MOCK_DATA || false),
+    'process.env.BUILD_STAGE': JSON.stringify(process.env.BUILD_STAGE || false),
   }),
 ]
 
