@@ -9,9 +9,9 @@ pipelines:
             - node
           script:
             - yarn
-            - yarn build:mock
+            - yarn build
           artifacts:
-            - dist/**  
+            - dist/**
       - step:
           name: Deploy to Test Server
           deployment: test
@@ -19,4 +19,3 @@ pipelines:
             - export APP_BUILD=$(date +%s)
             - scp -r dist/ deploy@app.dev.staffing.dog:/home/deploy/$(printenv APP_BUILD)
             - ssh deploy@app.dev.staffing.dog ln -sfn /home/deploy/$(printenv APP_BUILD) /var/www/app
-        
