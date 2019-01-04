@@ -34,7 +34,7 @@ const Group = props => {
 }
 
 Group.propTypes = {
-  Heading: node.isRequired,
+  Heading: func.isRequired,
   getStyles: func.isRequired,
   label: string.isRequired,
   innerProps: array,
