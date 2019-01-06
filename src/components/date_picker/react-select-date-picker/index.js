@@ -96,13 +96,13 @@ class DatePicker extends Component {
   gotoPrevMonth = () => {
     const currentMonth = this.state.options[Object.keys(this.state.options).length - 1]
       .label
-    const monthPlusOne = moment(currentMonth)
+    const monthMinusOne = moment(currentMonth)
       .add(-1, 'months')
       .format('MMMM YYYY')
     this.setState({
       options: [
-        this.props.createOptionForDate(monthPlusOne),
-        this.props.createCalendarOptions(monthPlusOne),
+        this.props.createOptionForDate(monthMinusOne),
+        this.props.createCalendarOptions(monthMinusOne),
       ],
     })
   }
