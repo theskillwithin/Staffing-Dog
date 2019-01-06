@@ -28,13 +28,15 @@ const Group = props => {
         cx={cx}
         {...headingProps}
       >
-        <button type="button" onClick={() => selectProps.gotoPrevMonth()}>
-          <Arrow direction="left" />
-        </button>
-        {label}
-        <button type="button" onClick={() => selectProps.gotoNextMonth()}>
-          <Arrow />
-        </button>
+        <div className={styles.month}>
+          <button type="button" onClick={() => selectProps.gotoPrevMonth()}>
+            <Arrow direction="left" />
+          </button>
+          {label}
+          <button type="button" onClick={() => selectProps.gotoNextMonth()}>
+            <Arrow />
+          </button>
+        </div>
       </Heading>
       <div className={styles.daysHeaderStyles}>
         {days.map((day, i) => (
