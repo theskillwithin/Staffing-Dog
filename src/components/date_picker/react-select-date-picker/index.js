@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { bool, array, func, number, object } from 'prop-types'
 import chrono from 'chrono-node'
+import moment from 'moment'
 import Select from 'react-select'
 
 import Group from './group'
@@ -58,7 +59,7 @@ class DatePicker extends Component {
 
   handleInputChange = value => {
     if (!value) {
-      this.setState({ options: this.props.defaultOptions })
+      // this.setState({ options: this.props.defaultOptions })
       return
     }
     const date = chrono.parseDate(suggest(value.toLowerCase()))
@@ -74,6 +75,34 @@ class DatePicker extends Component {
         options: [],
       })
     }
+  }
+
+  gotoNextMonth = () => {
+    const currentMonth = this.state.options[Object.keys(this.state.options).length - 1]
+      .label
+    const monthPlusOne = moment(currentMonth)
+      .add(1, 'months')
+      .format('MMMM YYYY')
+    this.setState({
+      options: [
+        this.props.createOptionForDate(monthPlusOne),
+        this.props.createCalendarOptions(monthPlusOne),
+      ],
+    })
+  }
+
+  gotoPrevMonth = () => {
+    const currentMonth = this.state.options[Object.keys(this.state.options).length - 1]
+      .label
+    const monthPlusOne = moment(currentMonth)
+      .add(-1, 'months')
+      .format('MMMM YYYY')
+    this.setState({
+      options: [
+        this.props.createOptionForDate(monthPlusOne),
+        this.props.createCalendarOptions(monthPlusOne),
+      ],
+    })
   }
 
   render() {
@@ -133,6 +162,8 @@ class DatePicker extends Component {
         styles={customStyles}
         onMenuOpen={this.open}
         onMenuClose={this.close}
+        gotoNextMonth={this.gotoNextMonth}
+        gotoPrevMonth={this.gotoPrevMonth}
       />
     )
   }
@@ -147,6 +178,7 @@ DatePicker.propTypes = {
   width: number,
   small: bool,
   onChange: func.isRequired,
+  handleChange: func,
 }
 
 export default DatePicker
