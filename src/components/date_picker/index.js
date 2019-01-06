@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { string } from 'prop-types'
 import moment from 'moment'
 import chrono from 'chrono-node'
 
@@ -12,15 +13,15 @@ const createOptionForDate = d => {
     label: date.calendar(null, {
       sameDay: '[Today] (Do MMM YYYY)',
       nextDay: '[Tomorrow] (Do MMM YYYY)',
-      nextWeek: '[Next] dddd (Do MMM YYYY)',
-      lastDay: '[Yesterday] (Do MMM YYYY)',
-      lastWeek: '[Last] dddd (Do MMM YYYY)',
+      nextWeek: '[Next] (Do MMM YYYY)',
+      lastDay: 'Do MMM YYYY',
+      lastWeek: 'Do MMM YYYY',
       sameElse: 'Do MMMM YYYY',
     }),
   }
 }
 
-const dayOptions = ['today', 'tomorrow', 'yesterday'].map(i =>
+const dayOptions = ['today', 'tomorrow'].map(i =>
   createOptionForDate(chrono.parseDate(i)),
 )
 
@@ -62,10 +63,16 @@ class DatePickerWrapper extends Component {
           createOptionForDate={createOptionForDate}
           createCalendarOptions={createCalendarOptions}
           width={222}
+          height={48}
+          label={this.props.label}
         />
       </div>
     )
   }
+}
+
+DatePickerWrapper.propTypes = {
+  label: string.isRequired,
 }
 
 export default DatePickerWrapper

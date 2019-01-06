@@ -1,5 +1,6 @@
 import React from 'react'
 import { node, func, object, array, string } from 'prop-types'
+import Arrow from '@sdog/components/svg/Arrow'
 
 import styles from './theme.css'
 
@@ -16,6 +17,7 @@ const Group = props => {
     cx,
     theme,
     emotion,
+    selectProps,
   } = props
   return (
     <div aria-label={label} style={getStyles('group', props)} {...innerProps}>
@@ -26,7 +28,15 @@ const Group = props => {
         cx={cx}
         {...headingProps}
       >
-        {label}
+        <div className={styles.month}>
+          <button type="button" onClick={() => selectProps.gotoPrevMonth()}>
+            <Arrow direction="left" />
+          </button>
+          {label}
+          <button type="button" onClick={() => selectProps.gotoNextMonth()}>
+            <Arrow />
+          </button>
+        </div>
       </Heading>
       <div className={styles.daysHeaderStyles}>
         {days.map((day, i) => (
@@ -50,6 +60,7 @@ Group.propTypes = {
   theme: object,
   children: node.isRequired,
   emotion: object,
+  selectProps: object,
 }
 
 export default Group
