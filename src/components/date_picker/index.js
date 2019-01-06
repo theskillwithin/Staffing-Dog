@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { string } from 'prop-types'
 import moment from 'moment'
 import chrono from 'chrono-node'
 
@@ -62,10 +63,16 @@ class DatePickerWrapper extends Component {
           createOptionForDate={createOptionForDate}
           createCalendarOptions={createCalendarOptions}
           width={222}
+          height={48}
+          label={this.props.label}
         />
       </div>
     )
   }
+}
+
+DatePickerWrapper.propTypes = {
+  label: string.isRequired,
 }
 
 export default DatePickerWrapper

@@ -1,0 +1,19 @@
+@import '../../../styles/config.css';
+
+.container {
+  position: relative;
+}
+
+.label {
+  position: absolute;
+  top: 7px;
+  left: 16px;
+  color: var(--sd-gray);
+  font-weight: var(--sd-fontWeightMedium);
+  font-size: 11px;
+  z-index: 10;
+}
+
+.labelOpen {
+  z-index: 99;
+}

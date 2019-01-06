@@ -1,12 +1,14 @@
 import React, { Component } from 'react'
-import { bool, array, func, number, object } from 'prop-types'
+import { bool, array, func, number, object, string } from 'prop-types'
 import chrono from 'chrono-node'
 import moment from 'moment'
 import Select from 'react-select'
+import classnames from 'classnames'
 
 import Group from './group'
 import Option from './option'
 import DropdownIndicator from './dropdownIndicator'
+import theme from './theme.css'
 
 const suggestions = [
   'sunday',
@@ -142,29 +144,35 @@ class DatePicker extends Component {
       singleValue: styles => ({
         ...styles,
         marginLeft: this.props.small ? '-4px' : '0',
-        fontWeight: 500,
+        fontWeight: 400,
         maxWidth: 'calc(100% - 2.7em)',
         color: 'rgb(31, 39, 64)',
+        paddingTop: 14,
       }),
     }
     return (
-      <Select
-        {...this.props}
-        components={{ Group, Option, DropdownIndicator }}
-        filterOption={null}
-        isMulti={false}
-        isOptionSelected={(o, v) => v.some(i => i.date.isSame(o.date, 'day'))}
-        maxMenuHeight={380}
-        onChange={this.props.onChange}
-        onInputChange={this.handleInputChange}
-        options={options}
-        value={value}
-        styles={customStyles}
-        onMenuOpen={this.open}
-        onMenuClose={this.close}
-        gotoNextMonth={this.gotoNextMonth}
-        gotoPrevMonth={this.gotoPrevMonth}
-      />
+      <div className={theme.container}>
+        <span className={classnames(theme.label, this.state.open && theme.labelOpen)}>
+          {this.props.label}
+        </span>
+        <Select
+          {...this.props}
+          components={{ Group, Option, DropdownIndicator }}
+          filterOption={null}
+          isMulti={false}
+          isOptionSelected={(o, v) => v.some(i => i.date.isSame(o.date, 'day'))}
+          maxMenuHeight={380}
+          onChange={this.props.onChange}
+          onInputChange={this.handleInputChange}
+          options={options}
+          value={value}
+          styles={customStyles}
+          onMenuOpen={this.open}
+          onMenuClose={this.close}
+          gotoNextMonth={this.gotoNextMonth}
+          gotoPrevMonth={this.gotoPrevMonth}
+        />
+      </div>
     )
   }
 }
@@ -179,6 +187,7 @@ DatePicker.propTypes = {
   small: bool,
   onChange: func.isRequired,
   handleChange: func,
+  label: string.isRequired,
 }
 
 export default DatePicker
