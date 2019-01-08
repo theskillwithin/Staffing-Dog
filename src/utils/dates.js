@@ -10,6 +10,6 @@ export const timesOfDay = (is24h = false, hourOnly = false) =>
     )
     .reduce((xs, ys) => xs.concat(ys), [])
 
-export const minBy15 = ['00', '15', '30', '45', '60']
+export const minBy15 = ['00', '15', '30', '45']
 
 export default timesOfDay
