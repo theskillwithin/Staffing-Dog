@@ -1,8 +1,10 @@
 import React from 'react'
 import { shape, string, array, func, oneOfType, bool } from 'prop-types'
+import get from 'lodash/get'
 import { connect } from 'react-redux'
 import { withRouter, Link } from 'react-router-dom'
 import classnames from 'classnames'
+import { getUserJobs, findJobs, findJobsLoading, findJobsError } from '@sdog/store/jobs'
 import { setTitle } from '@sdog/utils/document'
 import Card from '@sdog/components/card'
 import Filter from '@sdog/components/filter'
@@ -11,11 +13,10 @@ import Star from '@sdog/components/svg/FavStar'
 import LocationOnIcon from '@sdog/components/svg/Location'
 
 import appTheme from '../../../app/theme.css'
-import { getResults, findResults, findLoading, findError } from '../../store'
 
 import theme from './theme.css'
 
-class Search extends React.Component {
+class SearchResults extends React.Component {
   state = {
     distance: '',
     types: '',
@@ -26,8 +27,12 @@ class Search extends React.Component {
     location: shape({
       search: string.isRequired,
     }).isRequired,
-    results: array.isRequired,
-    getResults: func.isRequired,
+    results: shape({
+      applied: array,
+      recommended: array,
+      scheduled: array,
+    }).isRequired,
+    getUserJobs: func.isRequired,
     loading: bool.isRequired,
     error: oneOfType([bool, string]).isRequired,
     meta: array.isRequired,
@@ -36,7 +41,7 @@ class Search extends React.Component {
   componentDidMount() {
     setTitle('Search')
 
-    this.props.getResults()
+    this.props.getUserJobs()
   }
 
   handleChange = (field, value) => {
@@ -124,26 +129,22 @@ class Search extends React.Component {
                   Salt Lake City, UT
                 </p>
                 <p>
-                  <strong>
-                    {(this.props.meta &&
-                      this.props.meta.count &&
-                      this.props.meta.count) ||
-                      '0'}
-                  </strong>
+                  <strong>{get(this.props.results, 'recommended.length', 0)}</strong>
                   &nbsp; job posts in your area.
                 </p>
               </div>
 
               <div className={theme.searchResultsList}>
-                {this.props.results && this.props.results.length ? (
+                {this.props.results.recommended &&
+                this.props.results.recommended.length ? (
                   <>
-                    {this.props.results.map(job => (
+                    {this.props.results.recommended.map(job => (
                       <Card key={job.location + job.id} type="large">
                         <Link
                           to={`/search/job/${job.slug}`}
                           className={classnames(theme.title, job.new && theme.new)}
                         >
-                          {job.title}
+                          {job.criteria.title}
                         </Link>
                         <div className={classnames(theme.star, job.star && theme.active)}>
                           <button onClick={() => this.toggleFav(job.id)} type="button">
@@ -151,24 +152,24 @@ class Search extends React.Component {
                           </button>
                         </div>
                         <div className={theme.location}>
-                          <span>{job.location}</span>
-                          <span>{job.city}</span>
-                          <span>{job.distance} miles away</span>
+                          <span>{job.criteria.provider_details.geocode.lat}</span>
+                          <span>{job.criteria.provider_details.geocode.lng}</span>
+                          <span>{job.distance || 'unkown'} miles away</span>
                         </div>
                         <div className={theme.details}>
                           <dl>
                             <dt>Position</dt>
-                            <dd>{job.position}</dd>
+                            <dd>{job.criteria.position}</dd>
                             <dt>Experience</dt>
-                            <dd>{job.experience}</dd>
+                            <dd>{job.criteria.experience_preferred}</dd>
                             <dt>Job Type</dt>
-                            <dd>{job.jobType}</dd>
+                            <dd>{job.criteria.employment_type}</dd>
                           </dl>
                         </div>
-                        <div className={theme.short}>{job.short}</div>
+                        <div className={theme.short}>{job.criteria.description}</div>
                         <div className={theme.actions}>
-                          <div>{job.pay}</div>
-                          <Link to={`/search/job/${job.slug}`} className={theme.readMore}>
+                          <div>{job.criteria.hourly_rate}</div>
+                          <Link to={`/search/job/${job.id}`} className={theme.readMore}>
                             Read More
                           </Link>
                           <Button round secondary={job.applied} disabled={job.applied}>
@@ -193,17 +194,17 @@ class Search extends React.Component {
 }
 
 export const mapStateToProps = state => ({
-  results: findResults(state),
-  loading: findLoading(state),
-  error: findError(state),
+  results: findJobs(state),
+  loading: findJobsLoading(state),
+  error: findJobsError(state),
   meta: [],
 })
 
-export const mapActionsToProps = { getResults }
+export const mapActionsToProps = { getUserJobs }
 
 export default withRouter(
   connect(
     mapStateToProps,
     mapActionsToProps,
-  )(Search),
+  )(SearchResults),
 )
