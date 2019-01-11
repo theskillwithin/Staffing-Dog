@@ -23,13 +23,16 @@ let reducers = {}
 export const GET_USER_JOBS = 'GET_USER_JOBS'
 export const getUserJobsTypes = createActionTypes(GET_USER_JOBS)
 
-export const getUserJobs = (userId = false) => (dispatch, getState) => {
+export const getUserJobs = (params = {}) => (dispatch, getState) => {
   dispatch({
     type: GET_USER_JOBS,
     api: {
       url: `${API_ROOT}/jobs`,
       method: 'GET',
-      params: { user_id: userId || findUserId(getState()) || getUserId() },
+      params: {
+        user_id: findUserId(getState()) || getUserId(),
+        ...params,
+      },
     },
   })
 }
@@ -52,9 +55,16 @@ reducers = {
     error: false,
     results: {
       ...state.results,
-      applied: data.applied || [],
-      recommended: data.recommended || [],
-      scheduled: data.scheduled || [],
+      ...['applied', 'scheduled', 'recommended', 'preferred', 'posts'].reduce(
+        (listOfPosts, postType) => ({
+          ...listOfPosts,
+          [postType]:
+            typeof data[postType] === 'undefined'
+              ? [...state.results[postType]] || []
+              : data[postType],
+        }),
+        {},
+      ),
     },
   }),
 }
