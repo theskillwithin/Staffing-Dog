@@ -1,13 +1,11 @@
 import React from 'react'
-import { func, array } from 'prop-types'
+import { func, string, array, shape, oneOfType, bool } from 'prop-types'
 import { connect } from 'react-redux'
-import moment from 'moment'
 import Tabs from '@sdog/components/tab_bar'
 import Card from '@sdog/components/card'
 import Switch from '@sdog/components/switch'
 import Dropdown from '@sdog/components/dropdown'
-import { findScheduledEvents, getScheduledEvents } from '@sdog/store/jobs'
-import { findSchedule, getSchedule } from '@sdog/store/user'
+import { getUserJobs, findJobs, findJobsLoading, findJobsError } from '@sdog/store/jobs'
 import CalendarIcon from '@sdog/components/svg/Calendar'
 import Calendar from '@sdog/components/calendar'
 
@@ -17,6 +15,15 @@ import Event from './event'
 import theme from './theme.css'
 
 class JobSchedule extends React.Component {
+  static propTypes = {
+    getUserJobs: func.isRequired,
+    jobs: shape({
+      scheduled: array,
+    }).isRequired,
+    jobsLoading: bool.isRequired,
+    jobsError: oneOfType([bool, string]).isRequired,
+  }
+
   backoutDates = [
     {
       startDate: '2018-11-29',
@@ -80,15 +87,12 @@ class JobSchedule extends React.Component {
     },
   }
 
-  componentDidMount = () => this.getCalendarEvents(new Date())
+  componentDidMount = () => {
+    this.props.getUserJobs()
+  }
 
   updateSchedule = () => {
     this.setState(({ showSchedule }) => ({ showSchedule: !showSchedule }))
-  }
-
-  getCalendarEvents = date => {
-    this.props.getScheduledEvents(moment(date).format())
-    this.props.getSchedule(moment(date).format())
   }
 
   handleToggle = value => {
@@ -105,7 +109,12 @@ class JobSchedule extends React.Component {
   }
 
   handleChange(input, value) {
-    this.setState(state => ({ form: { ...state.form, [input]: value } }))
+    this.setState(state => ({
+      form: {
+        ...state.form,
+        [input]: value,
+      },
+    }))
   }
 
   render() {
@@ -181,13 +190,13 @@ class JobSchedule extends React.Component {
         )}
 
         <Calendar
-          activeDates={this.props.events}
+          activeDates={[]}
           blackoutDates={this.backoutDates}
           onChangeMonth={this.getCalendarEvents}
         />
 
         <div className={theme.events}>
-          {this.props.events.map((event, eventIndex) => (
+          {this.props.jobs.scheduled.map((event, eventIndex) => (
             <Event key={event.id} event={event} open={eventIndex === 0} />
           ))}
         </div>
@@ -196,16 +205,15 @@ class JobSchedule extends React.Component {
   }
 }
 
-JobSchedule.propTypes = {
-  getScheduledEvents: func.isRequired,
-  getSchedule: func.isRequired,
-  events: array.isRequired,
-}
+export const mapStateToProps = state => ({
+  jobs: findJobs(state),
+  jobsLoading: findJobsLoading(state),
+  jobsError: findJobsError(state),
+})
+
+export const mapActionsToProps = { getUserJobs }
 
 export default connect(
-  state => ({
-    events: findScheduledEvents(state),
-    schedule: findSchedule(state),
-  }),
-  { getScheduledEvents, getSchedule },
+  mapStateToProps,
+  mapActionsToProps,
 )(JobSchedule)

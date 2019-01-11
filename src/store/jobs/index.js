@@ -6,7 +6,13 @@ import { createActionTypes, reduxRegister, buildStore } from '../tools'
 export const INITIAL_STATE = {
   loading: false,
   error: false,
-  results: {},
+  results: {
+    scheduled: [],
+    applied: [],
+    recommended: [],
+    posts: [],
+    preferred: [],
+  },
 }
 
 let reducers = {}
@@ -44,7 +50,12 @@ reducers = {
     ...state,
     loading: false,
     error: false,
-    results: data,
+    results: {
+      ...state.results,
+      applied: data.applied || [],
+      recommended: data.recommended || [],
+      scheduled: data.scheduled || [],
+    },
   }),
 }
 

@@ -31,6 +31,8 @@ class SearchResults extends React.Component {
       applied: array,
       recommended: array,
       scheduled: array,
+      posts: array,
+      preferred: array,
     }).isRequired,
     getUserJobs: func.isRequired,
     loading: bool.isRequired,
