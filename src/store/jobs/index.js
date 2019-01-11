@@ -1,65 +1,77 @@
-import * as jobsApi from '@sdog/api/jobs'
-
-import { buildStore, reduxRegister } from '../tools'
-
-export const BASE = '@SD/JOBS'
-export const FETCH = `${BASE}_FETCH`
-export const FETCH_EVENTS = `${FETCH}_EVENTS`
-export const FETCH_EVENTS_SUCCESS = `${FETCH_EVENTS}_SUCCESS`
-export const FETCH_EVENTS_ERROR = `${FETCH_EVENTS}_ERROR`
-
-export const actions = {
-  fetchScheduledEvents: () => ({ type: FETCH_EVENTS }),
-  fetchScheduledEventsSuccess: events => ({
-    type: FETCH_EVENTS_SUCCESS,
-    payload: { events },
-  }),
-  fetchScheduledEventsError: error => ({
-    type: FETCH_EVENTS_ERROR,
-    payload: { error },
-  }),
-}
-
-export const getScheduledEvents = () => dispatch => {
-  dispatch(actions.fetchScheduledEvents())
-
-  return jobsApi.getEvents
-    .send()
-    .then(({ data }) => dispatch(actions.fetchScheduledEventsSuccess(data.events)))
-    .catch(error =>
-      dispatch(actions.fetchScheduledEventsError(error.message || error || 'error')),
-    )
-}
+import { API_ROOT } from '../../api'
+import { findUserId } from '../user'
+import { getUserId } from '../storage'
+import { createActionTypes, reduxRegister, buildStore } from '../tools'
 
 export const INITIAL_STATE = {
-  events: [],
-  scheduledEvents: [],
-  loading: true,
+  loading: false,
   error: false,
+  results: {
+    scheduled: [],
+    applied: [],
+    recommended: [],
+    posts: [],
+    preferred: [],
+  },
 }
 
-export const reducers = {
-  [FETCH_EVENTS]: state => ({ ...state, loading: true, error: false }),
-  [FETCH_EVENTS_SUCCESS]: (state, payload) => ({
+let reducers = {}
+
+/**
+ * Get Jobs
+ */
+export const GET_USER_JOBS = 'GET_USER_JOBS'
+export const getUserJobsTypes = createActionTypes(GET_USER_JOBS)
+
+export const getUserJobs = (userId = false) => (dispatch, getState) => {
+  dispatch({
+    type: GET_USER_JOBS,
+    api: {
+      url: `${API_ROOT}/jobs`,
+      method: 'GET',
+      params: { user_id: userId || findUserId(getState()) || getUserId() },
+    },
+  })
+}
+
+reducers = {
+  ...reducers,
+  [getUserJobsTypes.LOADING]: state => ({
     ...state,
-    scheduledEvents: payload.events,
-    loading: false,
+    loading: true,
     error: false,
   }),
-  [FETCH_EVENTS_ERROR]: (state, payload) => ({
+  [getUserJobsTypes.ERROR]: (state, { error = 'error' }) => ({
     ...state,
     loading: false,
-    errror: payload.error,
+    error,
+  }),
+  [getUserJobsTypes.SUCCESS]: (state, { data }) => ({
+    ...state,
+    loading: false,
+    error: false,
+    results: {
+      ...state.results,
+      applied: data.applied || [],
+      recommended: data.recommended || [],
+      scheduled: data.scheduled || [],
+    },
   }),
 }
 
-const reducer = buildStore(reducers, INITIAL_STATE)
+/**
+ * Create Store
+ */
+export const reducer = buildStore(reducers, INITIAL_STATE)
 
 reduxRegister.register('jobs', reducer)
 
-export default reducer
-
+/**
+ * Find State
+ */
 export const findState = state => state.jobs
-export const findScheduledEvents = state => findState(state).scheduledEvents
-export const findLoading = state => findState(state).loading
-export const findError = state => findState(state).error
+export const findJobsLoading = state => findState(state).loading
+export const findJobsError = state => findState(state).error
+export const findJobs = state => findState(state).results
+
+export default reducer
