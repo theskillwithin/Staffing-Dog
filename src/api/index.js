@@ -1,5 +1,6 @@
 import axios from 'axios'
 import pathToRegex from 'path-to-regexp'
+import qs from 'qs'
 
 import { API_ROOT, IS_DEV } from './config'
 
@@ -15,6 +16,8 @@ axios.interceptors.response.use(res => {
 
   return res
 }, Promise.reject)
+
+axios.defaults.paramsSerializer = params => qs.stringify(params)
 
 export const createApi = (options = {}, apiCall = sdNoop) => ({
   ...options,

@@ -1,5 +1,8 @@
 import React from 'react'
 import { shape, string, array, func, oneOfType, bool } from 'prop-types'
+import qs from 'qs'
+import snakeCase from 'lodash/snakeCase'
+import camelCase from 'lodash/camelCase'
 import get from 'lodash/get'
 import { connect } from 'react-redux'
 import { withRouter, Link } from 'react-router-dom'
@@ -9,7 +12,7 @@ import { setTitle } from '@sdog/utils/document'
 import Card from '@sdog/components/card'
 import Filter from '@sdog/components/filter'
 import Button from '@sdog/components/button'
-import Star from '@sdog/components/svg/FavStar'
+// import Star from '@sdog/components/svg/FavStar'
 import LocationOnIcon from '@sdog/components/svg/Location'
 
 import appTheme from '../../../app/theme.css'
@@ -18,14 +21,20 @@ import theme from './theme.css'
 
 class SearchResults extends React.Component {
   state = {
-    distance: '',
-    types: '',
-    position: '',
+    search: {
+      radius: '',
+      jobType: '',
+      jobSpecialty: '',
+    },
   }
 
   static propTypes = {
     location: shape({
+      pathname: string,
       search: string.isRequired,
+    }).isRequired,
+    history: shape({
+      push: func.isRequired,
     }).isRequired,
     results: shape({
       applied: array,
@@ -43,32 +52,72 @@ class SearchResults extends React.Component {
   componentDidMount() {
     setTitle('Search')
 
-    this.props.getUserJobs()
+    this.props.getUserJobs(this.getJobSearchParams())
+    this.setState({ search: this.getSearchParams() })
   }
 
-  handleChange = (field, value) => {
-    this.setState({ [field]: value })
+  handleSearchChange = (field, value) => {
+    this.setState(
+      ({ search }) => ({ search: { ...search, [field]: value } }),
+      () => {
+        const searchParams = {
+          search: Object.keys(this.state.search).reduce(
+            (terms, termKey) => ({
+              ...terms,
+              [snakeCase(termKey)]: this.state.search[termKey].value,
+            }),
+            {},
+          ),
+        }
+
+        this.props.history.push(
+          `${this.props.location.pathname}?${qs.stringify(searchParams)}`,
+        )
+        this.props.getUserJobs(searchParams)
+      },
+    )
   }
 
-  getQueryParams = (queryString = '', defaultValues = {}) => {
-    const splitStart = queryString.split('?')
+  getJobSearchParams = () => {
+    const searchQueryParams = this.getSearchParams()
+    const searchParams =
+      Object.keys(searchQueryParams).reduce(
+        (terms, termKey) => ({
+          ...terms,
+          ...(searchQueryParams[termKey] !== ''
+            ? { [termKey]: searchQueryParams[termKey] }
+            : {}),
+        }),
+        {},
+      ) || false
 
-    if (!splitStart[1]) {
-      return {}
+    if (searchParams.radius) {
+      return { search: searchParams }
     }
 
-    return splitStart[1].split('&').reduce((prevQuery, currentQuery) => {
-      const [key, val = defaultValues[key] || true] = currentQuery.split('=')
-      return {
-        ...prevQuery,
-        [key]: val,
-      }
-    }, {})
+    return {}
   }
 
-  toggleFav = id => {
-    // this.props.fav(id)
-    console.log('fav', id)
+  getSearchParams = () => {
+    const { search } = this.state
+    const params = qs.parse(this.props.location.search)
+
+    return {
+      ...Object.keys(search).reduce(
+        (keys, key) => ({
+          ...keys,
+          [key]: search[key].value || '',
+        }),
+        {},
+      ),
+      ...Object.keys(params.search || {}).reduce(
+        (terms, termKey) => ({
+          ...terms,
+          [camelCase(termKey)]: params[termKey],
+        }),
+        {},
+      ),
+    }
   }
 
   render() {
@@ -101,20 +150,20 @@ class SearchResults extends React.Component {
       <div className={classnames(appTheme.pageContent, theme.pageContent)}>
         <header className={theme.searchFilters}>
           <Filter
-            onChange={value => this.handleChange('position', value)}
-            value={this.state.position}
+            onChange={value => this.handleSearchChange('jobType', value)}
+            value={this.state.search.jobType}
             options={jobPositions}
             placeholder="All Position Types"
           />
           <Filter
-            onChange={value => this.handleChange('types', value)}
-            value={this.state.types}
+            onChange={value => this.handleSearchChange('jobSpeciality', value)}
+            value={this.state.jobSpeciality}
             options={jobTypes}
             placeholder="All Job Types"
           />
           <Filter
-            onChange={value => this.handleChange('distance', value)}
-            value={this.state.distance}
+            onChange={value => this.handleSearchChange('radius', value)}
+            value={this.state.radius}
             options={options}
             placeholder="Distance"
           />
@@ -148,11 +197,11 @@ class SearchResults extends React.Component {
                         >
                           {job.criteria.title}
                         </Link>
-                        <div className={classnames(theme.star, job.star && theme.active)}>
+                        {/* <div className={classnames(theme.star, job.star && theme.active)}>
                           <button onClick={() => this.toggleFav(job.id)} type="button">
                             <Star active={job.star} />
                           </button>
-                        </div>
+                        </div> */}
                         <div className={theme.location}>
                           <span>{job.criteria.provider_details.geocode.lat}</span>
                           <span>{job.criteria.provider_details.geocode.lng}</span>
@@ -199,7 +248,6 @@ export const mapStateToProps = state => ({
   results: findJobs(state),
   loading: findJobsLoading(state),
   error: findJobsError(state),
-  meta: [],
 })
 
 export const mapActionsToProps = { getUserJobs }

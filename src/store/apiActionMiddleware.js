@@ -49,7 +49,13 @@ export default ({ dispatch, getState }) => next => async action => {
       })
     }
 
-    dispatch({ type: actionTypes.SUCCESS, payload: response })
+    dispatch({
+      type: actionTypes.SUCCESS,
+      payload: {
+        ...response,
+        __payload: payload,
+      },
+    })
 
     // dispatch any action types set in the api dispatch values:
     // { api: { dispatches: { success: [], error: [] } } }
