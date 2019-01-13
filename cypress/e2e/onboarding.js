@@ -94,4 +94,19 @@ describe('onboarding navigation', () => {
         .should('include', 'onboarding/professional/step/complete')
     })
   })
+
+
+  it('can navigate to step 1,2,3,complete and prev', () => {
+    cy.get('@onboarding').then(onboarding => {
+      // const user = onboarding
+
+      cy.visit('/#/onboarding')
+        .get('[class*=contactMobile]')
+        .click()
+        .getByText(/Legal/)
+        .click()
+        .url()
+        .should('include', 'legal')
+    })
+  })
 })
