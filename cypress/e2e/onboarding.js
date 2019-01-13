@@ -1,5 +1,5 @@
 describe('onboarding navigation', () => {
-  it('can navigate to step 1,2,3,complete', () => {
+  it('can navigate to step 1,2,3,complete and prev', () => {
     cy.visit('/#/onboarding')
       .getByText(/Let's Get Started/)
       .click()
@@ -29,6 +29,14 @@ describe('onboarding navigation', () => {
       .click()
       .url()
       .should('include', 'onboarding/professional/step/2')
+      .getByText(/Previous/)
+      .click()
+      .url()
+      .should('include', 'onboarding/professional/step/1')
+      .getByText(/Next Step/)
+      .click()
+      .url()
+      .should('include', 'onboarding/professional/step/2')
       .getByText('Street Address')
       .siblings('input')
       .type('123 fake street')
@@ -49,14 +57,24 @@ describe('onboarding navigation', () => {
       .click()
       .url()
       .should('include', 'onboarding/professional/step/3')
-      .get('[id=react-select-2-input]')
+      .getByText(/Previous/)
+      .click()
+      .url()
+      .should('include', 'onboarding/professional/step/2')
+      .getByText(/Next Step/)
+      .click()
+      .url()
+      .should('include', 'onboarding/professional/step/3')
+      .get('[id*=react-select]')
+      .eq(0)
       .type('Dentist', {
         force: true,
       })
       .type('{enter}', {
         force: true,
       })
-      .get('[id=react-select-4-input]')
+      .get('[id*=react-select]')
+      .eq(2)
       .type('All', {
         force: true,
       })
