@@ -1,5 +1,5 @@
 describe('onboarding navigation', () => {
-  beforeEach(function () {
+  beforeEach(function() {
     // alias the users fixtures
     cy.fixture('onboarding.json').as('onboarding')
   })
@@ -95,15 +95,116 @@ describe('onboarding navigation', () => {
     })
   })
 
+  it('contact us legal button works mobile', () => {
+    cy.visit('/#/onboarding')
+      .get('[class*=contactMobile]')
+      .click()
+      .getAllByText('Legal')
+      .eq(0)
+      .click()
+      .url()
+      .should('include', 'legal')
+  })
 
-  it('can navigate to step 1,2,3,complete and prev', () => {
-    cy.get('@onboarding').then(onboarding => {
-      // const user = onboarding
+  context('Desktop/Macbook Pro 15', function() {
+    it('can navigate to step 1,2,3,complete and prev desktop', () => {
+      cy.get('@onboarding').then(onboarding => {
+        const user = onboarding
 
-      cy.visit('/#/onboarding')
-        .get('[class*=contactMobile]')
-        .click()
-        .getByText(/Legal/)
+        cy.viewport('macbook-15')
+          .visit('/#/onboarding')
+          .getByText(/Let's Get Started/)
+          .click()
+          .url()
+          .should('include', 'onboarding/professional/step/1')
+          .getByText(/First Name/)
+          .siblings('input')
+          .type(user.firstName)
+          .should('have.value', user.firstName)
+          .getByText(/Last Name/)
+          .siblings('input')
+          .type(user.lastName)
+          .should('have.value', user.lastName)
+          .getByText(/Email Address/)
+          .siblings('input')
+          .type(user.email)
+          .should('have.value', user.email)
+          .getByText(/Password/)
+          .siblings('input')
+          .type(user.password)
+          .should('have.value', user.password)
+          .getByText(/Verify Password/)
+          .siblings('input')
+          .type(user.password)
+          .should('have.value', user.password)
+          .getByText(/Next Step/)
+          .click()
+          .url()
+          .should('include', 'onboarding/professional/step/2')
+          .getByText(/Previous/)
+          .click()
+          .url()
+          .should('include', 'onboarding/professional/step/1')
+          .getByText(/Next Step/)
+          .click()
+          .url()
+          .should('include', 'onboarding/professional/step/2')
+          .getByText('Street Address')
+          .siblings('input')
+          .type(user.street)
+          .should('have.value', user.street)
+          .getByText('State')
+          .siblings('input')
+          .type(user.state)
+          .should('have.value', user.state)
+          .getByText('City')
+          .siblings('input')
+          .type(user.city)
+          .should('have.value', user.city)
+          .getByText('Postal Code')
+          .siblings('input')
+          .type(user.postal)
+          .should('have.value', user.postal)
+          .getByText(/Next Step/)
+          .click()
+          .url()
+          .should('include', 'onboarding/professional/step/3')
+          .getByText(/Previous/)
+          .click()
+          .url()
+          .should('include', 'onboarding/professional/step/2')
+          .getByText(/Next Step/)
+          .click()
+          .url()
+          .should('include', 'onboarding/professional/step/3')
+          .get('[id*=react-select]')
+          .eq(0)
+          .type(user.proffession, {
+            force: true,
+          })
+          .type('{enter}', {
+            force: true,
+          })
+          .get('[id*=react-select]')
+          .eq(2)
+          .type(user.availability, {
+            force: true,
+          })
+          .type('{enter}', {
+            force: true,
+          })
+          .getByText(/Next Step/)
+          .click()
+          .url()
+          .should('include', 'onboarding/professional/step/complete')
+      })
+    })
+
+    it('legal button works desktop', () => {
+      cy.viewport('macbook-15')
+        .visit('/#/onboarding')
+        .getAllByText('Legal')
+        .eq(1)
         .click()
         .url()
         .should('include', 'legal')
