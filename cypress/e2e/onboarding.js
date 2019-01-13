@@ -1,11 +1,11 @@
 describe('onboarding navigation', () => {
   beforeEach(function() {
     // alias the users fixtures
-    cy.fixture('onboarding.json').as('onboarding')
+    cy.fixture('users.json').as('users')
   })
   it('can navigate to step 1,2,3,complete and prev', () => {
-    cy.get('@onboarding').then(onboarding => {
-      const user = onboarding
+    cy.get('@users').then(users => {
+      const user = users
 
       cy.visit('/#/onboarding')
         .getByText(/Let's Get Started/)
@@ -108,8 +108,8 @@ describe('onboarding navigation', () => {
 
   context('Desktop/Macbook Pro 15', function() {
     it('can navigate to step 1,2,3,complete and prev desktop', () => {
-      cy.get('@onboarding').then(onboarding => {
-        const user = onboarding
+      cy.get('@users').then(users => {
+        const user = users
 
         cy.viewport('macbook-15')
           .visit('/#/onboarding')
