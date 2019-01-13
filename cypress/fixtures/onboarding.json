@@ -2,5 +2,12 @@
   "firstName": "Elliot",
   "lastName": "Alderson",
   "email": "test@staffing.dog",
-  "password": "123abc"
+  "password": "abc12345K",
+  "street": "123 fake street",
+  "state": "Utah",
+  "city": "SLC",
+  "postal": "84102",
+  "proffession": "Dentist",
+  "specialty": null,
+  "availability": "all"
 }
