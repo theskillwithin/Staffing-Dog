@@ -1,0 +1,42 @@
+describe('settings', () => {
+  beforeEach(function() {
+    // alias the users fixtures
+    cy.fixture('users.json').as('users')
+  })
+  it('settings about me', () => {
+    cy.get('@users').then(users => {
+      const user = users
+
+      cy.viewport('macbook-15')
+        .visit('/#/settings')
+        .getByText(/About Me/)
+        .click()
+        .url()
+        .should('include', 'settings')
+        .getByText(/First Name/)
+        .siblings('input')
+        .type(user.firstName)
+        .should('have.value', user.firstName)
+        .getByText(/Last Name/)
+        .siblings('input')
+        .type(user.lastName)
+        .should('have.value', user.lastName)
+        .getByText('Email')
+        .siblings('input')
+        .type(user.email)
+        .should('have.value', user.email)
+        .getByText('Phone Number')
+        .siblings('input')
+        .type(user.phone)
+        .should('have.value', user.phone)
+        .getByText('Street Address')
+        .siblings('input')
+        .type(user.street)
+        .should('have.value', user.street)
+        .getByText('City')
+        .siblings('input')
+        .type(user.city)
+        .should('have.value', user.city)
+    })
+  })
+})
