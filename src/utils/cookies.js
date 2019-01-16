@@ -46,7 +46,7 @@ export const setItem = (sKey, sValue, vEnd, sPath, sDomain, bSecure) => {
 }
 
 export const removeItem = (sKey, sPath, sDomain) => {
-  if (!this.hasItem(sKey)) {
+  if (!hasItem(sKey)) {
     return false
   }
 
