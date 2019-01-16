@@ -1,10 +1,12 @@
+import get from 'lodash/get'
+
 import { API_ROOT } from '../../api'
 import { findUserId } from '../user'
 import { getUserId } from '../storage'
 import { createActionTypes, reduxRegister, buildStore } from '../tools'
 
 export const INITIAL_STATE = {
-  loading: false,
+  loading: true,
   error: false,
   results: {
     scheduled: [],
@@ -12,6 +14,11 @@ export const INITIAL_STATE = {
     recommended: [],
     posts: [],
     preferred: [],
+  },
+  singleJob: {
+    loading: true,
+    error: false,
+    results: false,
   },
 }
 
@@ -70,6 +77,49 @@ reducers = {
 }
 
 /**
+ * Get Single Job
+ */
+export const GET_SINGLE_JOB = 'GET_SINGLE_JOB'
+export const getSingleJobTypes = createActionTypes(GET_SINGLE_JOB)
+
+export const getSingleJob = id => ({
+  type: GET_SINGLE_JOB,
+  api: {
+    url: `${API_ROOT}/jobs`,
+    method: 'GET',
+    params: { id },
+  },
+})
+
+reducers = {
+  ...reducers,
+  [getSingleJobTypes.LOADING]: state => ({
+    ...state,
+    singleJob: {
+      ...state.singleJob,
+      loading: true,
+      error: false,
+    },
+  }),
+  [getSingleJobTypes.SUCCESS]: (state, { data }) => ({
+    ...state,
+    singleJob: {
+      ...state.singleJob,
+      loading: false,
+      error: false,
+      results: data,
+    },
+  }),
+  [getSingleJobTypes.ERROR]: (state, payload) => ({
+    ...state,
+    singleJob: {
+      loading: false,
+      error: get(payload, 'data.message', payload.error),
+    },
+  }),
+}
+
+/**
  * Create Store
  */
 export const reducer = buildStore(reducers, INITIAL_STATE)
@@ -83,5 +133,10 @@ export const findState = state => state.jobs
 export const findJobsLoading = state => findState(state).loading
 export const findJobsError = state => findState(state).error
 export const findJobs = state => findState(state).results
+
+export const findSingleJobState = state => findState(state).singleJob
+export const findSingleJob = state => findSingleJobState(state).results
+export const findSingleJobLoading = state => findSingleJobState(state).loading
+export const findSingleJobError = state => findSingleJobState(state).error
 
 export default reducer

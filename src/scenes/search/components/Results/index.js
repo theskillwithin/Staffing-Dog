@@ -14,6 +14,7 @@ import Filter from '@sdog/components/filter'
 import Button from '@sdog/components/button'
 // import Star from '@sdog/components/svg/FavStar'
 import LocationOnIcon from '@sdog/components/svg/Location'
+import { defineJob } from '@sdog/definitions/jobs'
 
 import appTheme from '../../../app/theme.css'
 
@@ -189,7 +190,7 @@ class SearchResults extends React.Component {
                 this.props.results.recommended.length ? (
                   <>
                     {this.props.results.recommended.map(job => (
-                      <Card key={job.location + job.id} type="large">
+                      <Card key={job.id} type="large">
                         <Link
                           to={`/search/job/${job.slug}`}
                           className={classnames(theme.title, job.new && theme.new)}
@@ -202,18 +203,18 @@ class SearchResults extends React.Component {
                           </button>
                         </div> */}
                         <div className={theme.location}>
-                          <span>{job.criteria.provider_details.geocode.lat}</span>
-                          <span>{job.criteria.provider_details.geocode.lng}</span>
+                          <span>{job.criteria.provider_details.city}, </span>
+                          <span>{job.criteria.provider_details.state}</span>
                           <span>{job.distance || 'unkown'} miles away</span>
                         </div>
                         <div className={theme.details}>
                           <dl>
                             <dt>Position</dt>
-                            <dd>{job.criteria.position}</dd>
+                            <dd>{defineJob('position', job.criteria.position)}</dd>
                             <dt>Experience</dt>
                             <dd>{job.criteria.experience_preferred}</dd>
                             <dt>Job Type</dt>
-                            <dd>{job.criteria.employment_type}</dd>
+                            <dd>{defineJob('type', job.criteria.employment_type)}</dd>
                           </dl>
                         </div>
                         <div className={theme.short}>{job.criteria.description}</div>
