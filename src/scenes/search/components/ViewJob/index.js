@@ -1,86 +1,121 @@
 import React from 'react'
+import { bool, string, object, oneOfType, shape, func } from 'prop-types'
+import { withRouter } from 'react-router-dom'
+import { connect } from 'react-redux'
 import classnames from 'classnames'
 import Button from '@sdog/components/button'
 import LocationOnIcon from '@sdog/components/svg/Location'
+import {
+  getSingleJob,
+  findSingleJob,
+  findSingleJobLoading,
+  findSingleJobError,
+} from '@sdog/store/jobs'
+import { defineJob } from '@sdog/definitions/jobs'
 
 import appTheme from '../../../app/theme.css'
 
 import theme from './theme.css'
 
-const ViewJob = () => (
-  <div className={classnames(appTheme.pageContent, theme.pageContent)}>
-    <section className={theme.title}>
-      <img src="http://fillmurray.com/133/92" alt="Job Logo" />
-      <div>
-        <h2>Temporary Hygienist Needed for Maternity Leave</h2>
-        <h4>APEX Dental</h4>
-      </div>
-    </section>
-    <section>
-      <p>
-        We are in need of a RDH for the months of December, January and February for
-        maternity leave. Possibly turning into a part-time permanet position. Dentrix
-        knowlege is preferred. Professional position responsible to provide dental
-        prophylaxis, application of fluoride solutions, varnishes, and sealants. Assists
-        the dentist as required (i.e. x-rays, impressions, etc)
-      </p>
-      <div className={theme.location}>
-        <LocationOnIcon />
-        <strong>Salt Lake City, UT</strong>
-      </div>
-      <div className={theme.details}>
-        <dl>
-          <dt>Job Type</dt>
-          <dd>Temporary</dd>
-          <dt>Position</dt>
-          <dd>Dental Hygienist</dd>
-          <dt>Rate</dt>
-          <dd>$15 hr</dd>
-          <dt>Experience</dt>
-          <dd>4-7 Years</dd>
-        </dl>
-      </div>
-      <div className={theme.apply}>
-        <Button primary round>
-          Apply Now
-        </Button>
-      </div>
-    </section>
-    <section className={theme.details}>
-      <p className={theme.notice}>
-        The following information is intended to be representative of the essential
-        functions performed by incumbents in this position and is not all-inclusive. The
-        omission of a specific task or function will not preclude it from the position if
-        the work is similar, related or a logical extension of position responsibilities.
-      </p>
-      <h2>Responsibilities</h2>
-      <ul>
-        <li>Feeling comfortable diagnosing and treating Periodontal Disease</li>
-        <li>Taking dental x-rays with use of Nomad with necessary</li>
-        <li>Educating and answering questions concerning patient’s oral hygiene</li>
-        <li>Developing care plans for maintaining good dental hygiene</li>
-        <li>Fluoride administration and sealant applications</li>
-        <li>Administering local anesthetic</li>
-        <li>
-          Treatment planning and scheduling appointments using dental system Dentrix
-        </li>
-        <li>
-          Preparing patients for dental procedures by making them comfortable and
-          providing any instructions
-        </li>
-        <li>Sterilizing dental instruments and equipment</li>
-      </ul>
-      <h2>Skills and Education</h2>
-      <ul>
-        <li>Exceptional communication Skills</li>
-        <li>Hygiene Degree</li>
-        <li>Dental Hygienist License ( State )</li>
-        <li>Anesthetic License ( National )</li>
-        <li>Dentrix / Dexis ( Optional )</li>
-        <li>Dental Hygienist 1 year ( Required ) 2 years ( Preferred )</li>
-      </ul>
-    </section>
-  </div>
-)
+class ViewJob extends React.Component {
+  static propTypes = {
+    loading: bool.isRequired,
+    error: oneOfType([bool, string]).isRequired,
+    job: oneOfType([bool, object]).isRequired,
+    match: shape({
+      params: shape({
+        id: string.isRequired,
+      }),
+    }),
+    getSingleJob: func.isRequired,
+  }
 
-export default ViewJob
+  componentDidMount() {
+    this.props.getSingleJob(this.props.match.params.id)
+  }
+
+  render() {
+    const { job, loading, error } = this.props
+
+    if (loading) {
+      return null
+    }
+
+    return (
+      <div className={classnames(appTheme.pageContent, theme.pageContent)}>
+        {error ? (
+          <p>{error || 'Could not find job'}</p>
+        ) : (
+          <>
+            <section className={theme.title}>
+              <img src="http://fillmurray.com/133/92" alt="Job Logo" />
+              <div>
+                <h2>{job.criteria.title}</h2>
+                <h4>{job.criteria.provider_details.practice_name}</h4>
+              </div>
+            </section>
+            <section>
+              <p>{job.criteria.description}</p>
+              <div className={theme.location}>
+                <LocationOnIcon />
+                <strong>
+                  {job.criteria.provider_details.city},{' '}
+                  {job.criteria.provider_details.state}
+                </strong>
+              </div>
+              <div className={theme.details}>
+                <dl>
+                  <dt>Job Type</dt>
+                  <dd>{defineJob('type', job.criteria.employment_type)}</dd>
+                  <dt>Position</dt>
+                  <dd>{defineJob('position', job.criteria.position)}</dd>
+                  <dt>Rate</dt>
+                  <dd>${job.criteria.hourly_rate} hr</dd>
+                  <dt>Experience</dt>
+                  <dd>
+                    {job.criteria.experience_min}-{job.criteria.experience_preferred}{' '}
+                    Years
+                  </dd>
+                </dl>
+              </div>
+              <div className={theme.apply}>
+                <Button primary round>
+                  Apply Now
+                </Button>
+              </div>
+            </section>
+            <section className={theme.details}>
+              <p className={theme.notice}>
+                The following information is intended to be representative of the
+                essential functions performed by incumbents in this position and is not
+                all-inclusive. The omission of a specific task or function will not
+                preclude it from the position if the work is similar, related or a logical
+                extension of position responsibilities.
+              </p>
+
+              <div
+                className={theme.rawDescription}
+                dangerouslySetInnerHTML={{ __html: job.meta.raw }}
+              />
+            </section>
+          </>
+        )}
+      </div>
+    )
+  }
+}
+
+export const mapStateToProps = state => ({
+  job: findSingleJob(state),
+  loading: findSingleJobLoading(state),
+  error: findSingleJobError(state),
+})
+
+export const mapActionsToProps = { getSingleJob }
+
+export default withRouter(
+  connect(
+    mapStateToProps,
+    mapActionsToProps,
+  )(ViewJob),
+)
