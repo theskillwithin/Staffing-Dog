@@ -1,23 +1,50 @@
 import axios from 'axios'
 import pathToRegex from 'path-to-regexp'
 import qs from 'qs'
+import { removeAllAuth } from '@sdog/store/storage'
 
 import { API_ROOT, IS_DEV } from './config'
+
+const axiosInstance = axios.create()
 
 const sdNoop = () => {
   const error = 'No Api Method Found:'
   return Promise.reject(error)
 }
 
-axios.interceptors.response.use(res => {
-  if (res.status >= 400 && res.status <= 499) {
-    return Promise.reject(res)
-  }
+// const handleErrorResponse = res => {
+//   if (400 === res.status && 'No User/Profile found.' === res.data.error) {
+//     // clear cookies
+//     removeAllAuth()
+//     // redirect to login page
+//     window.location = '/login'
+//   }
 
-  return res
-}, Promise.reject)
+//   if (res.status >= 400 && res.status <= 499) {
+//     return Promise.reject(res)
+//   }
 
-axios.defaults.paramsSerializer = params => qs.stringify(params)
+//   return res
+// }
+
+axiosInstance.interceptors.response.use(
+  res => res,
+  error => {
+    if (
+      400 === error.response.status &&
+      'No User/Profile found.' === error.response.data.error
+    ) {
+      // clear cookies
+      removeAllAuth()
+      // redirect to login page
+      window.location = '/#/login'
+    }
+
+    return Promise.reject(error)
+  },
+)
+
+axiosInstance.defaults.paramsSerializer = params => qs.stringify(params)
 
 export const createApi = (options = {}, apiCall = sdNoop) => ({
   ...options,
@@ -33,4 +60,4 @@ export const createPath = (url, args, rootPath = API_ROOT) => {
 
 export { API_ROOT, IS_DEV }
 
-export default axios
+export default axiosInstance

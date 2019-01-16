@@ -46,7 +46,6 @@ class SearchResults extends React.Component {
     getUserJobs: func.isRequired,
     loading: bool.isRequired,
     error: oneOfType([bool, string]).isRequired,
-    meta: array.isRequired,
   }
 
   componentDidMount() {
