@@ -12,21 +12,6 @@ const sdNoop = () => {
   return Promise.reject(error)
 }
 
-// const handleErrorResponse = res => {
-//   if (400 === res.status && 'No User/Profile found.' === res.data.error) {
-//     // clear cookies
-//     removeAllAuth()
-//     // redirect to login page
-//     window.location = '/login'
-//   }
-
-//   if (res.status >= 400 && res.status <= 499) {
-//     return Promise.reject(res)
-//   }
-
-//   return res
-// }
-
 axiosInstance.interceptors.response.use(
   res => res,
   error => {
