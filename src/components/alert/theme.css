@@ -4,7 +4,7 @@
   position: relative;
   padding: 0.75em 1.5em;
   margin: 1em auto;
-  min-height: 1em;
+  font-weight: var(--sd-fontWeightNormal);
   border-radius: 4px;
 }
 
@@ -48,7 +48,7 @@
   width: 1.5em;
   height: 1.5em;
   text-align: center;
-  font-weight: 800;
+  font-weight: var(--sd-fontWeightMedium);
   cursor: pointer;
   border: none;
   background: none;
