@@ -51,7 +51,7 @@ html {
     margin-top: 22px;
   }
 
-  button {
+  > button {
     margin-top: 22px;
   }
 }
