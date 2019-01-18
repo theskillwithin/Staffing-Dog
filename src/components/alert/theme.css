@@ -6,6 +6,10 @@
   margin: 1em auto;
   font-weight: var(--sd-fontWeightNormal);
   border-radius: 4px;
+
+  &::first-letter {
+    text-transform: capitalize;
+  }
 }
 
 .success {
