@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 import { bool, node, oneOfType } from 'prop-types'
 import classnames from 'classnames'
 
