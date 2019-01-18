@@ -45,6 +45,7 @@
 .success.stage1 {
   transform: scale(1.03);
 }
+
 .closeButton {
   position: absolute;
   top: 0;
