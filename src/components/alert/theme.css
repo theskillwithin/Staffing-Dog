@@ -1,0 +1,61 @@
+@import '../../styles/config.css';
+
+.root {
+  position: relative;
+  padding: 0.75em 1.5em;
+  margin: 1em auto;
+  font-weight: var(--sd-fontWeightNormal);
+  border-radius: 4px;
+
+  &::first-letter {
+    text-transform: capitalize;
+  }
+}
+
+.success {
+  border: 1px solid var(--sd-green);
+  color: white;
+  background: var(--sd-green);
+  transition: background-color 0.3s, color 0.3s, transform 0.3s;
+}
+
+.error {
+  border: 1px solid var(--sd-red);
+  background-color: var(--sd-red);
+  color: white;
+  transition: background-color 0.3s, color 0.3s, transform 0.3s;
+}
+
+.error.stage0,
+.error.stage1 {
+  background-color: var(--sd-redDark);
+  color: white;
+}
+
+.error.stage1 {
+  transform: scale(1.06);
+}
+
+.success.stage0,
+.success.stage1 {
+  background-color: var(--sd-greenDark);
+  color: white;
+}
+
+.success.stage1 {
+  transform: scale(1.03);
+}
+
+.closeButton {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 1.5em;
+  height: 1.5em;
+  text-align: center;
+  font-weight: var(--sd-fontWeightMedium);
+  cursor: pointer;
+  border: none;
+  background: none;
+  outline: none;
+}
