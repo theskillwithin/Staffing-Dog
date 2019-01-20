@@ -1,5 +1,5 @@
 import React from 'react'
-import { func, array, number, string, shape, arrayOf, oneOfType } from 'prop-types'
+import { func, bool, array, number, string, shape, arrayOf, oneOfType } from 'prop-types'
 import { connect } from 'react-redux'
 import Card from '@sdog/components/card'
 import Textarea from 'react-textarea-autosize'
@@ -13,11 +13,28 @@ import SendIcon from '@sdog/components/svg/Send'
 import MessagesIcon from '@sdog/components/svg/Chat'
 import Button from '@sdog/components/button'
 import Select from '@sdog/components/select'
-import { getThreads, findThreads } from '@sdog/store/messages'
+import {
+  getUserThreads,
+  findThreads,
+  findThreadsLoading,
+  findThreadsError,
+} from '@sdog/store/messages'
 
 import theme from './theme.css'
 
 class Messages extends React.Component {
+  static propTypes = {
+    getUserThreads: func.isRequired,
+    threads: arrayOf(
+      shape({
+        id: oneOfType([string, number]),
+        messages: array,
+      }),
+    ).isRequired,
+    threadsLoading: bool,
+    threadsError: oneOfType([string, bool]),
+  }
+
   usersList = [
     { label: 'cointilt', value: 'cointilt' },
     { label: 'goot', value: 'goot' },
@@ -32,7 +49,7 @@ class Messages extends React.Component {
   }
 
   componentDidMount() {
-    this.props.getThreads()
+    this.props.getUserThreads()
   }
 
   handleClick = threadId => this.setState({ active: threadId, quickReply: null })
@@ -194,19 +211,11 @@ class Messages extends React.Component {
   }
 }
 
-Messages.propTypes = {
-  getThreads: func.isRequired,
-  threads: arrayOf(
-    shape({
-      id: oneOfType([string, number]),
-      messages: array,
-    }),
-  ).isRequired,
-}
-
 export default connect(
   state => ({
     threads: findThreads(state),
+    threadsLoading: findThreadsLoading(state),
+    threadsError: findThreadsError(state),
   }),
-  { getThreads },
+  { getUserThreads },
 )(Messages)

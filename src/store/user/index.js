@@ -249,7 +249,7 @@ export const getUserProfile = ({
       api: {
         url: `${API_ROOT}/profiles`,
         method: 'GET',
-        params: { id: id || findUserId(getState()) || getUserId() },
+        params: { id: userId },
         callbacks: {
           success: onSuccess,
           error: onError,

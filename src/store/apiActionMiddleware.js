@@ -60,25 +60,25 @@ export default ({ dispatch, getState }) => next => async action => {
     // dispatch any action types set in the api dispatch values:
     // { api: { dispatches: { success: [], error: [] } } }
     if (dispatches.success) {
-      dispatches.success.map(dispatchData => dispatch(dispatchData(response)))
+      dispatches.success.map(dispatchData => dispatch(dispatchData(response, payload)))
     }
 
     // run any callbacks sent in the action arguments { onSuccess, onErorr }
     if (callbacks && callbacks.success) {
       callbacks.success(response)
     }
-  } catch (err) {
-    dispatch({ type: actionTypes.ERROR, payload: err })
+  } catch (error) {
+    dispatch({ type: actionTypes.ERROR, payload: { error, ...payload } })
 
     // dispatch any action types set in the api dispatch values:
     // { api: { dispatches: { success: [], error: [] } } }
     if (dispatches.error) {
-      dispatches.error.map(dispatchData => dispatch(dispatchData(err)))
+      dispatches.error.map(dispatchData => dispatch(dispatchData(error, payload)))
     }
 
     // run any callbacks sent in the action arguments { onSuccess, onErorr }
     if (callbacks && callbacks.error) {
-      callbacks.error(err)
+      callbacks.error(error)
     }
   }
 
