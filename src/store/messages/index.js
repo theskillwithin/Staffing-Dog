@@ -104,6 +104,53 @@ reducers = {
 }
 
 /**
+ * Send Message
+ */
+export const SEND_USER_MESSAGE = 'SEND_USER_MESSAGE'
+export const sendUserMessageTypes = createActionTypes(SEND_USER_MESSAGE)
+
+export const sendUserMessage = ({ message, userId = false, friendId, threadId }) => (
+  dispatch,
+  getState,
+) =>
+  dispatch({
+    type: SEND_USER_MESSAGE,
+    api: {
+      url: `${API_ROOT}/messages/threads`,
+      method: 'POST',
+      data: {
+        user_id: userId || findUserId(getState()) || getUserId(),
+        participant_id: friendId,
+        data: { message },
+      },
+      payload: { userId, friendId, threadId, message },
+    },
+  })
+
+reducers = {
+  ...reducers,
+  [sendUserMessageTypes.LOADING]: (state, { threadId }) => ({
+    ...state,
+    threads: state.threads.map(thread => ({
+      ...thread,
+      sending: thread.id === threadId ? true : thread.sending || false,
+    })),
+  }),
+  [sendUserMessageTypes.SUCCESS]: (
+    state,
+    { __payload: { message, userId, threadId } },
+  ) => ({
+    ...state,
+    threads: state.threads.map(thread => ({
+      sending: false,
+      recent:
+        thread.id === threadId
+          ? [...thread.recent, { message, sent_by: userId }]
+          : [...thread.recent],
+    })),
+  }),
+}
+/**
  * Create Store
  */
 export const reducer = buildStore(reducers, INITIAL_STATE)

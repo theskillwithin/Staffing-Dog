@@ -74,7 +74,7 @@ class Messages extends React.Component {
     const { active } = this.state
     const { threads } = this.props
     const activeThread = active ? find(threads, thread => thread.id === active) : {}
-    const messages = (activeThread && activeThread.messages) || []
+    const messages = (activeThread && activeThread.recent) || []
 
     return (
       <Card
