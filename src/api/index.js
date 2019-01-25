@@ -5,7 +5,9 @@ import { removeAllAuth } from '@sdog/store/storage'
 
 import { API_ROOT, IS_DEV } from './config'
 
-const axiosInstance = axios.create()
+const axiosInstance = axios.create({
+  withCredentials: true,
+})
 
 const sdNoop = () => {
   const error = 'No Api Method Found:'
