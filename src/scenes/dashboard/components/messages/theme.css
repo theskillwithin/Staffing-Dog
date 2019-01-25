@@ -2,11 +2,23 @@
 
 .threadsContainer {
   width: calc(100% + 3em);
+  min-height: 300px;
   margin: -1em -1.5em -1em -1.5em;
   transition: transform 300ms ease-out;
 
   &.active {
     transform: translateX(-100%);
+  }
+}
+
+.empty {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 300px;
+
+  h4 {
+    color: var(--sd-grayLight);
   }
 }
 
