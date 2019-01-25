@@ -325,7 +325,7 @@ export const saveStep = ({ step, onSuccess = false, onFail = false }) => (
   }
 
   const onApiError = res => {
-    dispatch(actions.saveStepApiFailed(step, res))
+    dispatch(actions.saveStepAPIFailed(step, res))
 
     if (onFail) onFail()
   }
