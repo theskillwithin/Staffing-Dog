@@ -22,9 +22,9 @@ const LoginScene = loadable(() =>
   import(/* webpackChunkName: "login" */ '@sdog/scenes/login'),
 )
 
-if (process.env.MOCK_DATA) {
-  require('@sdog/api/mock') // eslint-disable-line
-}
+// if (process.env.MOCK_DATA) {
+//   require('@sdog/api/mock') // eslint-disable-line
+// }
 
 const fingerprint = getFingerprint() || createFingerprint()
 setFingerprint(fingerprint)
