@@ -1,8 +1,7 @@
 import find from 'lodash/find'
-import { findUserId } from '@sdog/store/user'
+import { API_ROOT } from '@sdog/api'
 
-import { API_ROOT } from '../../api'
-
+import { findUserId } from '../user'
 import { getUserId } from '../storage'
 import { createActionTypes, reduxRegister, buildStore } from '../tools'
 
@@ -123,8 +122,8 @@ export const sendUserMessage = ({ message, userId = false, friendId, threadId })
         participant_id: friendId,
         data: { message },
       },
-      payload: { userId, friendId, threadId, message },
     },
+    payload: { userId, friendId, threadId, message },
   })
 
 reducers = {

@@ -1,11 +1,11 @@
 import React from 'react'
 import { func, bool, array, number, string, shape, arrayOf, oneOfType } from 'prop-types'
 import { connect } from 'react-redux'
-import Card from '@sdog/components/card'
 import Textarea from 'react-textarea-autosize'
 import map from 'lodash/map'
 import find from 'lodash/find'
 import classnames from 'classnames'
+import Card from '@sdog/components/card'
 import ProfilePhotoSVG from '@sdog/components/svg/ProfilePhoto'
 import ReplySVG from '@sdog/components/svg/Reply'
 import Arrow from '@sdog/components/svg/Arrow'
@@ -15,16 +15,19 @@ import Button from '@sdog/components/button'
 import Select from '@sdog/components/select'
 import {
   getUserThreads,
+  sendUserMessage,
   findThreads,
   findThreadsLoading,
   findThreadsError,
 } from '@sdog/store/messages'
+import { findUserId } from '@sdog/store/user'
 
 import theme from './theme.css'
 
 class Messages extends React.Component {
   static propTypes = {
     getUserThreads: func.isRequired,
+    sendUserMessage: func.isRequired,
     threads: arrayOf(
       shape({
         id: oneOfType([string, number]),
@@ -33,6 +36,7 @@ class Messages extends React.Component {
     ).isRequired,
     threadsLoading: bool,
     threadsError: oneOfType([string, bool]),
+    userId: string.isRequired,
   }
 
   usersList = [
@@ -52,7 +56,7 @@ class Messages extends React.Component {
     this.props.getUserThreads()
   }
 
-  handleClick = threadId => this.setState({ active: threadId, quickReply: null })
+  viewThread = threadId => this.setState({ active: threadId, quickReply: null })
 
   back = () => this.setState({ active: false, message: '' })
 
@@ -65,6 +69,25 @@ class Messages extends React.Component {
   }
 
   newMessage = () => this.setState({ active: 'new', quickReply: null })
+
+  submitMessage = () => {
+    const { active: threadId, message } = this.state
+    const thread = find(this.props.threads, ({ id }) => id === threadId)
+    const initiatorId = thread.initiator.id
+    const participantId = thread.participant.id
+    const friendId = initiatorId === this.props.userId ? participantId : initiatorId
+
+    if (!thread) {
+      // TODO: throw error
+      return
+    }
+
+    this.props.sendUserMessage({
+      message,
+      threadId,
+      friendId,
+    })
+  }
 
   handleChange = message => this.setState({ message })
 
@@ -99,7 +122,7 @@ class Messages extends React.Component {
                   <div
                     role="button"
                     tabIndex={0}
-                    onClick={() => this.handleClick(thread.id)}
+                    onClick={() => this.viewThread(thread.id)}
                     className={classnames(theme.thread, !thread.read && theme.unread)}
                   >
                     <div className={theme.avatar}>
@@ -140,7 +163,7 @@ class Messages extends React.Component {
                           value={this.state.message}
                           onChange={e => this.handleChange(e.target.value)}
                         />
-                        <Button primary round>
+                        <Button primary round onClick={this.submitMessage}>
                           Send
                           <SendIcon />
                         </Button>
@@ -205,7 +228,7 @@ class Messages extends React.Component {
                 value={this.state.message}
                 onChange={e => this.handleChange(e.target.value)}
               />
-              <Button primary round>
+              <Button primary round onClick={this.submitMessage}>
                 Send
                 <SendIcon />
               </Button>
@@ -217,11 +240,16 @@ class Messages extends React.Component {
   }
 }
 
+export const mapStateToProps = state => ({
+  threads: findThreads(state),
+  threadsLoading: findThreadsLoading(state),
+  threadsError: findThreadsError(state),
+  userId: findUserId(state),
+})
+
+export const mapActionsToProps = { getUserThreads, sendUserMessage }
+
 export default connect(
-  state => ({
-    threads: findThreads(state),
-    threadsLoading: findThreadsLoading(state),
-    threadsError: findThreadsError(state),
-  }),
-  { getUserThreads },
+  mapStateToProps,
+  mapActionsToProps,
 )(Messages)
