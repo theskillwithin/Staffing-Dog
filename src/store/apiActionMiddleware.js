@@ -4,8 +4,7 @@ import { createActionTypes } from './createAction'
 import { setToken, getToken } from './storage'
 import { USER_SET_TOKEN, findToken, findFingerprint } from './user'
 
-const AUTH_TOKEN_NAME = 'X-AUTH-TOKEN'
-const AUTH_TOKEN_NAME_LOWER = AUTH_TOKEN_NAME.toLowerCase()
+const AUTH_TOKEN_NAME = 'x-auth-token'
 
 export default ({ dispatch, getState }) => next => async action => {
   const { type, api = false, payload = {} } = action
@@ -27,7 +26,7 @@ export default ({ dispatch, getState }) => next => async action => {
   const apiConfig = { headers: {}, method: 'GET', ...apiSettings }
 
   if (token) {
-    apiConfig.headers = { ...apiConfig.headers, [AUTH_TOKEN_NAME]: token }
+    apiConfig.headers = { ...apiConfig.headers, Authorization: `Bearer ${token}` }
   }
 
   if (fingerprint) {
@@ -39,13 +38,13 @@ export default ({ dispatch, getState }) => next => async action => {
 
     // if we get a token in the headers and it is different than the current one, set it
     if (
-      response.headers[AUTH_TOKEN_NAME_LOWER] &&
-      response.headers[AUTH_TOKEN_NAME_LOWER] !== getToken(state)
+      response.headers[AUTH_TOKEN_NAME] &&
+      response.headers[AUTH_TOKEN_NAME] !== getToken(state)
     ) {
-      setToken(response.headers[AUTH_TOKEN_NAME_LOWER])
+      setToken(response.headers[AUTH_TOKEN_NAME])
       dispatch({
         type: USER_SET_TOKEN,
-        payload: { token: response.headers[AUTH_TOKEN_NAME_LOWER] },
+        payload: { token: response.headers[AUTH_TOKEN_NAME] },
       })
     }
 
@@ -68,7 +67,7 @@ export default ({ dispatch, getState }) => next => async action => {
       callbacks.success(response)
     }
   } catch (error) {
-    dispatch({ type: actionTypes.ERROR, payload: { error, ...payload } })
+    dispatch({ type: actionTypes.ERROR, payload: { ...payload, error } })
 
     // dispatch any action types set in the api dispatch values:
     // { api: { dispatches: { success: [], error: [] } } }
