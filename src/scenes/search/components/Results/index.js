@@ -156,8 +156,8 @@ class SearchResults extends React.Component {
             placeholder="All Position Types"
           />
           <Filter
-            onChange={value => this.handleSearchChange('jobSpeciality', value)}
-            value={this.state.jobSpeciality}
+            onChange={value => this.handleSearchChange('jobSpecialty', value)}
+            value={this.state.jobSpecialty}
             options={jobTypes}
             placeholder="All Job Types"
           />
