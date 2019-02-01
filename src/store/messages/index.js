@@ -108,23 +108,29 @@ reducers = {
 export const SEND_USER_MESSAGE = 'SEND_USER_MESSAGE'
 export const sendUserMessageTypes = createActionTypes(SEND_USER_MESSAGE)
 
-export const sendUserMessage = ({ message, userId = false, friendId, threadId }) => (
-  dispatch,
-  getState,
-) =>
+export const sendUserMessage = ({
+  message,
+  userId = false,
+  friendId = false,
+  threadId = false,
+}) => (dispatch, getState) => {
+  const isNewThread = !!threadId
+
   dispatch({
     type: SEND_USER_MESSAGE,
     api: {
-      url: `${API_ROOT}/messages/threads`,
+      url: `${API_ROOT}/messages${isNewThread ? '/threads' : ''}`,
       method: 'POST',
       data: {
         user_id: userId || findUserId(getState()) || getUserId(),
-        participant_id: friendId,
+        ...(friendId ? { participant_id: friendId } : {}),
+        ...(threadId ? { thread_id: threadId } : {}),
         data: { message },
       },
     },
     payload: { userId, friendId, threadId, message },
   })
+}
 
 reducers = {
   ...reducers,

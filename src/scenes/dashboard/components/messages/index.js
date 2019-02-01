@@ -3,6 +3,7 @@ import { func, bool, array, number, string, shape, arrayOf, oneOfType } from 'pr
 import { connect } from 'react-redux'
 import Textarea from 'react-textarea-autosize'
 import map from 'lodash/map'
+import get from 'lodash/get'
 import find from 'lodash/find'
 import classnames from 'classnames'
 import Card from '@sdog/components/card'
@@ -39,17 +40,14 @@ class Messages extends React.Component {
     userId: string.isRequired,
   }
 
-  usersList = [
-    { label: 'cointilt', value: 'cointilt' },
-    { label: 'goot', value: 'goot' },
-    { label: 'theskillwithin', value: 'theskillwithin' },
-  ]
+  usersList = [{ label: 'Arsen Wenger', value: '433b48b0-8289-43ce-9f2c-8418a7496fb2' }]
 
   state = {
     active: false,
     message: '',
     quickReply: null,
     users: '',
+    selectedUser: '',
   }
 
   componentDidMount() {
@@ -58,7 +56,7 @@ class Messages extends React.Component {
 
   viewThread = threadId => this.setState({ active: threadId, quickReply: null })
 
-  back = () => this.setState({ active: false, message: '' })
+  goBack = () => this.setState({ active: false, message: '' })
 
   quickReply = (e, quickReply) => {
     e.stopPropagation()
@@ -68,30 +66,24 @@ class Messages extends React.Component {
     return this.setState({ quickReply, message: '' })
   }
 
-  newMessage = () => this.setState({ active: 'new', quickReply: null })
+  showNewMessage = () => this.setState({ active: 'new', quickReply: null })
 
   submitMessage = () => {
-    const { active: threadId, message } = this.state
-    const thread = find(this.props.threads, ({ id }) => id === threadId)
-    const initiatorId = thread.initiator.id
-    const participantId = thread.participant.id
-    const friendId = initiatorId === this.props.userId ? participantId : initiatorId
-
-    if (!thread) {
-      // TODO: throw error
-      return
-    }
+    const {
+      active: threadId,
+      message,
+      selectedUser: { value: friendId = false },
+    } = this.state
 
     this.props.sendUserMessage({
       message,
-      threadId,
-      friendId,
+      ...(threadId === 'new' ? { friendId } : { threadId }),
     })
   }
 
   handleChange = message => this.setState({ message })
 
-  handleUsersChange = users => this.setState({ users })
+  handleUsersChange = selectedUser => this.setState({ selectedUser })
 
   render() {
     const { active } = this.state
@@ -104,7 +96,7 @@ class Messages extends React.Component {
         title="Messages"
         icon={MessagesIcon}
         action="New Message"
-        actionCb={this.newMessage}
+        actionCb={this.showNewMessage}
         actionProps={{ round: true, secondary: true, short: true }}
         type="overflowHidden"
       >
@@ -138,7 +130,7 @@ class Messages extends React.Component {
                         {thread.location && <span>{thread.location}</span>}
                       </div>
                       <div className={theme.short}>
-                        <p>{thread.short && thread.short}</p>
+                        <p>{get(thread.recent, '[0].message', '')}</p>
                       </div>
                     </div>
                     <div className={theme.right}>
@@ -179,13 +171,13 @@ class Messages extends React.Component {
             )}
           </div>
           <div className={theme.messages}>
-            <button type="button" className={theme.back} onClick={this.back}>
+            <button type="button" className={theme.back} onClick={this.goBack}>
               <Arrow direction="left" />
             </button>
             {this.state.active === 'new' && (
               <div className={theme.users}>
                 <Select
-                  value={this.state.users}
+                  value={this.state.selectedUser}
                   placeholder="Select User..."
                   onChange={this.handleUsersChange}
                   options={this.usersList}
