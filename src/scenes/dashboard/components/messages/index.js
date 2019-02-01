@@ -1,11 +1,12 @@
 import React from 'react'
-import { func, array, number, string, shape, arrayOf, oneOfType } from 'prop-types'
+import { func, bool, array, number, string, shape, arrayOf, oneOfType } from 'prop-types'
 import { connect } from 'react-redux'
-import Card from '@sdog/components/card'
 import Textarea from 'react-textarea-autosize'
 import map from 'lodash/map'
+import get from 'lodash/get'
 import find from 'lodash/find'
 import classnames from 'classnames'
+import Card from '@sdog/components/card'
 import ProfilePhotoSVG from '@sdog/components/svg/ProfilePhoto'
 import ReplySVG from '@sdog/components/svg/Reply'
 import Arrow from '@sdog/components/svg/Arrow'
@@ -13,31 +14,49 @@ import SendIcon from '@sdog/components/svg/Send'
 import MessagesIcon from '@sdog/components/svg/Chat'
 import Button from '@sdog/components/button'
 import Select from '@sdog/components/select'
-import { getThreads, findThreads } from '@sdog/store/messages'
+import {
+  getUserThreads,
+  sendUserMessage,
+  findThreads,
+  findThreadsLoading,
+  findThreadsError,
+} from '@sdog/store/messages'
+import { findUserId } from '@sdog/store/user'
 
 import theme from './theme.css'
 
 class Messages extends React.Component {
-  usersList = [
-    { label: 'cointilt', value: 'cointilt' },
-    { label: 'goot', value: 'goot' },
-    { label: 'theskillwithin', value: 'theskillwithin' },
-  ]
+  static propTypes = {
+    getUserThreads: func.isRequired,
+    sendUserMessage: func.isRequired,
+    threads: arrayOf(
+      shape({
+        id: oneOfType([string, number]),
+        messages: array,
+      }),
+    ).isRequired,
+    threadsLoading: bool,
+    threadsError: oneOfType([string, bool]),
+    userId: string.isRequired,
+  }
+
+  usersList = [{ label: 'Arsen Wenger', value: '433b48b0-8289-43ce-9f2c-8418a7496fb2' }]
 
   state = {
     active: false,
     message: '',
     quickReply: null,
     users: '',
+    selectedUser: '',
   }
 
   componentDidMount() {
-    this.props.getThreads()
+    this.props.getUserThreads()
   }
 
-  handleClick = threadId => this.setState({ active: threadId, quickReply: null })
+  viewThread = threadId => this.setState({ active: threadId, quickReply: null })
 
-  back = () => this.setState({ active: false, message: '' })
+  goBack = () => this.setState({ active: false, message: '' })
 
   quickReply = (e, quickReply) => {
     e.stopPropagation()
@@ -47,24 +66,37 @@ class Messages extends React.Component {
     return this.setState({ quickReply, message: '' })
   }
 
-  newMessage = () => this.setState({ active: 'new', quickReply: null })
+  showNewMessage = () => this.setState({ active: 'new', quickReply: null })
+
+  submitMessage = () => {
+    const {
+      active: threadId,
+      message,
+      selectedUser: { value: friendId = false },
+    } = this.state
+
+    this.props.sendUserMessage({
+      message,
+      ...(threadId === 'new' ? { friendId } : { threadId }),
+    })
+  }
 
   handleChange = message => this.setState({ message })
 
-  handleUsersChange = users => this.setState({ users })
+  handleUsersChange = selectedUser => this.setState({ selectedUser })
 
   render() {
     const { active } = this.state
     const { threads } = this.props
     const activeThread = active ? find(threads, thread => thread.id === active) : {}
-    const messages = (activeThread && activeThread.messages) || []
+    const messages = (activeThread && activeThread.recent) || []
 
     return (
       <Card
         title="Messages"
         icon={MessagesIcon}
         action="New Message"
-        actionCb={this.newMessage}
+        actionCb={this.showNewMessage}
         actionProps={{ round: true, secondary: true, short: true }}
         type="overflowHidden"
       >
@@ -82,7 +114,7 @@ class Messages extends React.Component {
                   <div
                     role="button"
                     tabIndex={0}
-                    onClick={() => this.handleClick(thread.id)}
+                    onClick={() => this.viewThread(thread.id)}
                     className={classnames(theme.thread, !thread.read && theme.unread)}
                   >
                     <div className={theme.avatar}>
@@ -98,7 +130,7 @@ class Messages extends React.Component {
                         {thread.location && <span>{thread.location}</span>}
                       </div>
                       <div className={theme.short}>
-                        <p>{thread.short && thread.short}</p>
+                        <p>{get(thread.recent, '[0].message', '')}</p>
                       </div>
                     </div>
                     <div className={theme.right}>
@@ -123,7 +155,7 @@ class Messages extends React.Component {
                           value={this.state.message}
                           onChange={e => this.handleChange(e.target.value)}
                         />
-                        <Button primary round>
+                        <Button primary round onClick={this.submitMessage}>
                           Send
                           <SendIcon />
                         </Button>
@@ -139,13 +171,13 @@ class Messages extends React.Component {
             )}
           </div>
           <div className={theme.messages}>
-            <button type="button" className={theme.back} onClick={this.back}>
+            <button type="button" className={theme.back} onClick={this.goBack}>
               <Arrow direction="left" />
             </button>
             {this.state.active === 'new' && (
               <div className={theme.users}>
                 <Select
-                  value={this.state.users}
+                  value={this.state.selectedUser}
                   placeholder="Select User..."
                   onChange={this.handleUsersChange}
                   options={this.usersList}
@@ -188,7 +220,7 @@ class Messages extends React.Component {
                 value={this.state.message}
                 onChange={e => this.handleChange(e.target.value)}
               />
-              <Button primary round>
+              <Button primary round onClick={this.submitMessage}>
                 Send
                 <SendIcon />
               </Button>
@@ -200,19 +232,16 @@ class Messages extends React.Component {
   }
 }
 
-Messages.propTypes = {
-  getThreads: func.isRequired,
-  threads: arrayOf(
-    shape({
-      id: oneOfType([string, number]),
-      messages: array,
-    }),
-  ).isRequired,
-}
+export const mapStateToProps = state => ({
+  threads: findThreads(state),
+  threadsLoading: findThreadsLoading(state),
+  threadsError: findThreadsError(state),
+  userId: findUserId(state),
+})
+
+export const mapActionsToProps = { getUserThreads, sendUserMessage }
 
 export default connect(
-  state => ({
-    threads: findThreads(state),
-  }),
-  { getThreads },
+  mapStateToProps,
+  mapActionsToProps,
 )(Messages)
