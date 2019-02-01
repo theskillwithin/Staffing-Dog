@@ -67,9 +67,7 @@ class Steps extends React.Component {
           const value = field.optionsByValue.name && getValue(field.optionsByValue.name)
 
           props.options = Steps.formatDropdownOptions(
-            value
-              ? field.optionsByValue.options[getValue(field.optionsByValue.name)]
-              : [],
+            value ? field.optionsByValue.options[value.value] : [],
           )
 
           if (!value) {
