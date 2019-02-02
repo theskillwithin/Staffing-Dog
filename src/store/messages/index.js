@@ -9,6 +9,7 @@ export const INITIAL_STATE = {
   loading: true,
   error: false,
   threads: [],
+  friends: [],
 }
 
 let reducers = {}
@@ -155,6 +156,47 @@ reducers = {
     })),
   }),
 }
+
+/**
+ * Get Friend List
+ */
+
+export const GET_MESSAGE_FRIEND_LIST = 'GET_MESSAGE_FRIEND_LIST'
+export const getMessageFriendListTypes = createActionTypes(GET_MESSAGE_FRIEND_LIST)
+
+export const getMessageFriendList = id => (dispatch, getState) => {
+  const userId = id || findUserId(getState()) || getUserId()
+
+  dispatch({
+    type: GET_MESSAGE_FRIEND_LIST,
+    api: {
+      url: `${API_ROOT}/messages/recipients`,
+      method: 'GET',
+      params: { user_id: userId },
+    },
+  })
+}
+
+reducers = {
+  ...reducers,
+  [getMessageFriendListTypes.LOADING]: state => ({
+    ...state,
+    friendListLoading: true,
+    friendListError: false,
+  }),
+  [getMessageFriendListTypes.SUCCESS]: (state, { data }) => ({
+    ...state,
+    friendListLoading: false,
+    friendListError: false,
+    friends: data,
+  }),
+  [getMessageFriendListTypes.ERROR]: (state, { error }) => ({
+    ...state,
+    friendListLoading: false,
+    friendListError: error,
+  }),
+}
+
 /**
  * Create Store
  */
@@ -169,3 +211,6 @@ export const findState = state => state.messages
 export const findThreadsLoading = state => findState(state).loading
 export const findThreadsError = state => findState(state).error
 export const findThreads = state => findState(state).threads
+export const findFriendList = state => findState(state).friends
+export const findFriendListLoading = state => findState(state).friendListLoading
+export const findFriendListError = state => findState(state).findFriendListError

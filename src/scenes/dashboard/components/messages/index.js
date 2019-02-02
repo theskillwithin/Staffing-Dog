@@ -16,10 +16,14 @@ import Button from '@sdog/components/button'
 import Select from '@sdog/components/select'
 import {
   getUserThreads,
+  getMessageFriendList,
   sendUserMessage,
   findThreads,
   findThreadsLoading,
   findThreadsError,
+  findFriendList,
+  findFriendListLoading,
+  findFriendListError,
 } from '@sdog/store/messages'
 import { findUserId } from '@sdog/store/user'
 
@@ -28,6 +32,7 @@ import theme from './theme.css'
 class Messages extends React.Component {
   static propTypes = {
     getUserThreads: func.isRequired,
+    getMessageFriendList: func.isRequired,
     sendUserMessage: func.isRequired,
     threads: arrayOf(
       shape({
@@ -38,9 +43,12 @@ class Messages extends React.Component {
     threadsLoading: bool,
     threadsError: oneOfType([string, bool]),
     userId: string.isRequired,
+    friendList: array,
   }
 
-  usersList = [{ label: 'Arsen Wenger', value: '433b48b0-8289-43ce-9f2c-8418a7496fb2' }]
+  static deafultProps = {
+    friendList: [],
+  }
 
   state = {
     active: false,
@@ -52,6 +60,7 @@ class Messages extends React.Component {
 
   componentDidMount() {
     this.props.getUserThreads()
+    this.props.getMessageFriendList()
   }
 
   viewThread = threadId => this.setState({ active: threadId, quickReply: null })
@@ -124,6 +133,7 @@ class Messages extends React.Component {
                         <ProfilePhotoSVG />
                       )}
                     </div>
+
                     <div className={theme.middle}>
                       <div className={theme.title}>
                         <h6>{thread.from}</h6>
@@ -133,6 +143,7 @@ class Messages extends React.Component {
                         <p>{get(thread.recent, '[0].message', '')}</p>
                       </div>
                     </div>
+
                     <div className={theme.right}>
                       <div className={theme.date}>{thread.date}</div>
                       {thread.threadCount && thread.threadCount > 1 && (
@@ -147,6 +158,7 @@ class Messages extends React.Component {
                       </button>
                     </div>
                   </div>
+
                   {this.state.quickReply === thread.id && (
                     <div className={theme.quickReply}>
                       <div className={theme.respond}>
@@ -170,21 +182,27 @@ class Messages extends React.Component {
               </div>
             )}
           </div>
+
           <div className={theme.messages}>
             <button type="button" className={theme.back} onClick={this.goBack}>
               <Arrow direction="left" />
             </button>
-            {this.state.active === 'new' && (
+
+            {this.state.active === 'new' && this.props.friendList.length >= 1 && (
               <div className={theme.users}>
                 <Select
                   value={this.state.selectedUser}
                   placeholder="Select User..."
                   onChange={this.handleUsersChange}
-                  options={this.usersList}
+                  options={this.props.friendList.map(user => ({
+                    label: `${user.first_name} ${user.last_name}`,
+                    value: user.user_id,
+                  }))}
                   searchable
                 />
               </div>
             )}
+
             {map(messages, message => (
               <div
                 key={message.id}
@@ -197,34 +215,48 @@ class Messages extends React.Component {
                     <ProfilePhotoSVG />
                   )}
                 </div>
+
                 <div className={theme.middle}>
                   <div className={theme.title}>
                     <h6>{message.from}</h6>
                     {message.location && <span>{message.location}</span>}
                   </div>
+
                   <div className={theme.short}>
                     <p>{message.message && message.message}</p>
                   </div>
                 </div>
+
                 <div className={theme.right}>
                   <div className={theme.date}>{message.date}</div>
+
                   {message.threadCount && message.threadCount > 1 && (
                     <div className={theme.threadCount}>{message.threadCount}</div>
                   )}
                 </div>
               </div>
             ))}
-            <div className={theme.respond}>
-              <Textarea
-                placeholder="Type message here"
-                value={this.state.message}
-                onChange={e => this.handleChange(e.target.value)}
-              />
-              <Button primary round onClick={this.submitMessage}>
-                Send
-                <SendIcon />
-              </Button>
-            </div>
+
+            {this.props.friendList.length ? (
+              <div className={theme.respond}>
+                <Textarea
+                  placeholder="Type message here"
+                  value={this.state.message}
+                  onChange={e => this.handleChange(e.target.value)}
+                />
+                <Button primary round onClick={this.submitMessage}>
+                  Send
+                  <SendIcon />
+                </Button>
+              </div>
+            ) : (
+              <div className={theme.empty}>
+                <h4 style={{ maxWidth: '80%' }}>
+                  Once you have accepted a job you be able to message with the office of
+                  the job.
+                </h4>
+              </div>
+            )}
           </div>
         </div>
       </Card>
@@ -237,9 +269,12 @@ export const mapStateToProps = state => ({
   threadsLoading: findThreadsLoading(state),
   threadsError: findThreadsError(state),
   userId: findUserId(state),
+  friendList: findFriendList(state),
+  friendListLoading: findFriendListLoading(state),
+  friendListError: findFriendListError(state),
 })
 
-export const mapActionsToProps = { getUserThreads, sendUserMessage }
+export const mapActionsToProps = { getUserThreads, getMessageFriendList, sendUserMessage }
 
 export default connect(
   mapStateToProps,
