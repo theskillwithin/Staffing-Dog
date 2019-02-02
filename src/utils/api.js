@@ -1,18 +1,22 @@
 import axios from 'axios'
-import pathToRegex from 'path-to-regexp'
 import qs from 'qs'
 import { removeAllAuth } from '@sdog/store/storage'
 
-import { API_ROOT, IS_DEV } from './config'
+import { SIM, IS_DEV, IS_STAGE } from './env'
+
+export { SIM, IS_DEV }
+export const API_VERSION = 'v1'
+export const SIM_TTL = 100
+export const LOCAL_API_ROOT = `http://api.sdog.test/${API_VERSION}`
+export const STAGE_API_ROOT = `https://api.dev.staffing.dog/${API_VERSION}`
+export const PROD_API_ROOT = IS_STAGE
+  ? STAGE_API_ROOT
+  : `https://api.staffing.dog/${API_VERSION}`
+export const API_ROOT = IS_DEV ? LOCAL_API_ROOT : PROD_API_ROOT
 
 const axiosInstance = axios.create({
   withCredentials: true,
 })
-
-const sdNoop = () => {
-  const error = 'No Api Method Found:'
-  return Promise.reject(error)
-}
 
 axiosInstance.interceptors.response.use(
   res => res,
@@ -32,19 +36,5 @@ axiosInstance.interceptors.response.use(
 )
 
 axiosInstance.defaults.paramsSerializer = params => qs.stringify(params)
-
-export const createApi = (options = {}, apiCall = sdNoop) => ({
-  ...options,
-  send: (...args) => apiCall(options.url, ...args),
-})
-
-export const createPath = (url, args, rootPath = API_ROOT) => {
-  const path = url.replace(rootPath, '')
-  const builtPath = pathToRegex.compile(path)(args)
-
-  return `${rootPath}${builtPath}`
-}
-
-export { API_ROOT, IS_DEV }
 
 export default axiosInstance

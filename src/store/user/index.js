@@ -1,4 +1,5 @@
-import { API_ROOT } from '../../api'
+import { API_ROOT } from '@sdog/utils/api'
+
 import { createActionTypes, reduxRegister, buildStore } from '../tools'
 import {
   getUserId,

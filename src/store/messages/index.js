@@ -1,5 +1,5 @@
 import find from 'lodash/find'
-import { API_ROOT } from '@sdog/api'
+import { API_ROOT } from '@sdog/utils/api'
 
 import { findUserId } from '../user'
 import { getUserId } from '../storage'
