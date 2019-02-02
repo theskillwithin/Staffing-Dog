@@ -1,4 +1,4 @@
-import axios from '../api/index'
+import axios from '@sdog/utils/api'
 
 import { createActionTypes } from './createAction'
 import { setToken, getToken } from './storage'

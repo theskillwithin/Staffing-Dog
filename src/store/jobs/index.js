@@ -1,6 +1,6 @@
 import get from 'lodash/get'
+import { API_ROOT } from '@sdog/utils/api'
 
-import { API_ROOT } from '../../api'
 import { findUserId } from '../user'
 import { getUserId } from '../storage'
 import { createActionTypes, reduxRegister, buildStore } from '../tools'
