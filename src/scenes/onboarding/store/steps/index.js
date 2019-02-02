@@ -49,7 +49,7 @@ export const formatDataFromApi = (apiData, values, type = INITIAL_STATE.type) =>
   ...('professional' === type
     ? {
         profession: get(apiData, 'meta.summary.profession.type', values.profession),
-        speciality: get(apiData, 'meta.summary.profession.speciality', values.speciality),
+        specialty: get(apiData, 'meta.summary.profession.specialty', values.specialty),
         availability: get(apiData, 'meta.summary.capacity', values.availability),
       }
     : {
@@ -103,7 +103,7 @@ export const formatDataFromOnboarding = (values, profile, type = INITIAL_STATE.t
             profession: {
               ...get(profile, 'meta.summary.profession', {}),
               ...(values.profession ? { type: values.profession } : {}),
-              ...(values.speciality ? { speciality: values.speciality } : {}),
+              ...(values.specialty ? { specialty: values.specialty } : {}),
             },
             capacity: {
               ...get(profile, 'meta.summary.capacity', {}),

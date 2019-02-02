@@ -153,8 +153,8 @@ export const professional = [
         ],
       },
       {
-        name: 'speciality',
-        label: 'Speciality',
+        name: 'specialty',
+        label: 'Specialty',
         type: 'dropdown',
         optionsByValue: {
           name: 'profession',
