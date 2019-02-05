@@ -5,7 +5,7 @@ import Textarea from 'react-textarea-autosize'
 import map from 'lodash/map'
 import get from 'lodash/get'
 import find from 'lodash/find'
-import classnames from 'classnames'
+import clsx from 'clsx'
 import Card from '@sdog/components/card'
 import ProfilePhotoSVG from '@sdog/components/svg/ProfilePhoto'
 import ReplySVG from '@sdog/components/svg/Reply'
@@ -109,13 +109,13 @@ class Messages extends React.Component {
         actionProps={{ round: true, secondary: true, short: true }}
         type="overflowHidden"
       >
-        <div className={classnames(theme.threadsContainer, active && theme.active)}>
+        <div className={clsx(theme.threadsContainer, active && theme.active)}>
           <div className={theme.threads}>
             {threads && threads.length ? (
               map(threads, thread => (
                 <div
                   key={thread.id}
-                  className={classnames(
+                  className={clsx(
                     theme.threadContainer,
                     this.state.quickReply === thread.id && theme.quickReplyActive,
                   )}
@@ -124,7 +124,7 @@ class Messages extends React.Component {
                     role="button"
                     tabIndex={0}
                     onClick={() => this.viewThread(thread.id)}
-                    className={classnames(theme.thread, !thread.read && theme.unread)}
+                    className={clsx(theme.thread, !thread.read && theme.unread)}
                   >
                     <div className={theme.avatar}>
                       {thread.avatar ? (
@@ -206,7 +206,7 @@ class Messages extends React.Component {
             {map(messages, message => (
               <div
                 key={message.id}
-                className={classnames(theme.message, !message.read && theme.unread)}
+                className={clsx(theme.message, !message.read && theme.unread)}
               >
                 <div className={theme.avatar}>
                   {message.avatar ? (

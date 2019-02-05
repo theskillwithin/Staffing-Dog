@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import classnames from 'classnames'
+import clsx from 'clsx'
 
 import SVGCertification from '../../../../components/svg/files/certification.svg'
 import SVGPlantTall from '../../../../components/svg/files/plant_tall.svg'
@@ -14,14 +14,14 @@ const CompleteNav = () => (
     <div className={theme.stepNavCompleteInner}>
       <div className={theme.stepNavCompleteLeft}>
         <div
-          className={classnames(theme.plant)}
+          className={clsx(theme.plant)}
           dangerouslySetInnerHTML={{ __html: SVGPlantTall }}
         />
       </div>
       <div className={theme.stepNavCompleteRight}>
         <div>
           <div
-            className={classnames(theme.certification)}
+            className={clsx(theme.certification)}
             dangerouslySetInnerHTML={{ __html: SVGCertification }}
           />
         </div>

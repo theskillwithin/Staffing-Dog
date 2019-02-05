@@ -1,6 +1,6 @@
 import React from 'react'
 import { bool } from 'prop-types'
-import classnames from 'classnames'
+import clsx from 'clsx'
 
 import theme from './theme.css'
 
@@ -8,7 +8,7 @@ const Cal = ({ active }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 15 15"
-    className={classnames(theme.svg, active && theme.active)}
+    className={clsx(theme.svg, active && theme.active)}
   >
     <g id="calendar-svg" data-name="calendar-svg" transform="translate(-1026 -414)">
       <rect

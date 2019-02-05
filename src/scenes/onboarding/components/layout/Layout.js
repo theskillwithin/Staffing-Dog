@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { string, bool, object, func, oneOfType, shape } from 'prop-types'
 import { Route, Switch } from 'react-router-dom'
-import classnames from 'classnames'
+import clsx from 'clsx'
 
 import Logo from '../../../../components/logo'
 import LoadingBar from '../../../../components/loading_bar'
@@ -78,7 +78,7 @@ class Onboarding extends Component {
     return (
       <div className={theme.app}>
         <div className={theme.appInner}>
-          <div className={classnames(theme.appTop, loading && theme.appTopLoading)}>
+          <div className={clsx(theme.appTop, loading && theme.appTopLoading)}>
             <div className={theme.appTopInner}>
               <LoadingBar />
             </div>
@@ -99,18 +99,18 @@ class Onboarding extends Component {
               <Logo />
             </div>
 
-            <div className={classnames(theme.stepSidebar, theme.stepSidebarMobile)}>
+            <div className={clsx(theme.stepSidebar, theme.stepSidebarMobile)}>
               <Route path={`${match.path}/step/:step(\\d)`} component={Nav} />
             </div>
           </div>
 
           <div
-            className={classnames(
+            className={clsx(
               theme.appContent,
               /complete/.test(location.pathname) && theme.appContentComplete,
             )}
           >
-            <div className={classnames(theme.box, showSidebar && theme.showSidebar)}>
+            <div className={clsx(theme.box, showSidebar && theme.showSidebar)}>
               <div className={theme.stepContent}>
                 <div className={theme.stepLinksHolder}>
                   <Route path={`${match.path}/step/:step(\\d)`} component={Nav} />
@@ -122,7 +122,7 @@ class Onboarding extends Component {
                 </div>
               </div>
 
-              <div className={classnames(theme.stepSidebar, showSidebar && theme.show)}>
+              <div className={clsx(theme.stepSidebar, showSidebar && theme.show)}>
                 <Route path={`${match.path}/step/:step(\\d)`} component={StepsSidebar} />
               </div>
 

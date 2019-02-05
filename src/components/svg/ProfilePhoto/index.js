@@ -1,6 +1,6 @@
 import React from 'react'
 import { string, number } from 'prop-types'
-import classnames from 'classnames'
+import clsx from 'clsx'
 
 import SVGProfilePhoto from '../files/profile-photo.svg'
 
@@ -8,7 +8,7 @@ import theme from './theme.css'
 
 const ProfilePhotoSVG = props => (
   <span
-    className={classnames(props.className, theme.svg)}
+    className={clsx(props.className, theme.svg)}
     dangerouslySetInnerHTML={{ __html: SVGProfilePhoto }}
     style={{ width: props.size, height: props.size }}
   />

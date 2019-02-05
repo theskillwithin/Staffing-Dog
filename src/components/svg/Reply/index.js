@@ -1,6 +1,6 @@
 import React from 'react'
 import { string } from 'prop-types'
-import classnames from 'classnames'
+import clsx from 'clsx'
 
 import SVGReply from '../files/reply.svg'
 
@@ -8,7 +8,7 @@ import theme from './theme.css'
 
 const ReplySVG = props => (
   <span
-    className={classnames(props.className, theme.svg)}
+    className={clsx(props.className, theme.svg)}
     dangerouslySetInnerHTML={{ __html: SVGReply }}
   />
 )

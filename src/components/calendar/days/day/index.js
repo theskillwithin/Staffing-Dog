@@ -2,7 +2,7 @@ import React from 'react'
 import { object, func, array } from 'prop-types'
 import filter from 'lodash/filter'
 import moment from 'moment'
-import classnames from 'classnames'
+import clsx from 'clsx'
 
 import theme from './theme.css'
 
@@ -33,7 +33,7 @@ const Day = ({ currentDate, date, startDate, endDate, activeDates, onClick }) =>
     <span
       onClick={() => onClick(date)}
       currentdate={date}
-      className={classnames(
+      className={clsx(
         active && theme.active,
         start && theme.start,
         between && theme.between,

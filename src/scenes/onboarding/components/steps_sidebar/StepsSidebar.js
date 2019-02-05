@@ -1,6 +1,6 @@
 import React from 'react'
 import { string, array, shape } from 'prop-types'
-import classnames from 'classnames'
+import clsx from 'clsx'
 import map from 'lodash/map'
 import find from 'lodash/find'
 
@@ -16,18 +16,18 @@ const renderItem = (key, value) => {
     case 'subTitleLarge':
       return (
         <h2
-          className={classnames(theme.itemElement, theme[key])}
+          className={clsx(theme.itemElement, theme[key])}
           dangerouslySetInnerHTML={{ __html: value }}
         />
       )
     case 'svg':
-      return <Svg name={value} className={classnames(theme.svg, theme[`svg_${value}`])} />
+      return <Svg name={value} className={clsx(theme.svg, theme[`svg_${value}`])} />
     case 'hr':
-      return <div className={classnames(theme.itemElement, theme.hr)} />
+      return <div className={clsx(theme.itemElement, theme.hr)} />
     case 'description':
       return (
         <p
-          className={classnames(theme.itemElement, theme.description)}
+          className={clsx(theme.itemElement, theme.description)}
           dangerouslySetInnerHTML={{ __html: value }}
         />
       )
@@ -44,7 +44,7 @@ const StepsSidebar = ({ match, steps }) => {
       <Nav className={theme.sidebarNav} />
 
       <div
-        className={classnames(
+        className={clsx(
           theme.sidebarContent,
           parseInt(match.params.step, 10) === 1 && theme.stepOne,
           parseInt(match.params.step, 10) === 2 && theme.stepTwo,

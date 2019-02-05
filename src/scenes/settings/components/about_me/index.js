@@ -1,5 +1,5 @@
 import React from 'react'
-import classnames from 'classnames'
+import clsx from 'clsx'
 import Dropzone from 'react-dropzone'
 import ProfilePhotoSVG from '@sdog/components/svg/ProfilePhoto'
 import Input from '@sdog/components/input'
@@ -64,7 +64,7 @@ class SettingsAboutMe extends React.Component {
             {({ getRootProps, getInputProps, isDragActive }) => (
               <div
                 {...getRootProps()}
-                className={classnames(theme.dropzone, {
+                className={clsx(theme.dropzone, {
                   'dropzone--isActive': isDragActive,
                 })}
               >
@@ -193,7 +193,7 @@ class SettingsAboutMe extends React.Component {
               options={this.specialties}
             />
           </div>
-          <div className={classnames(theme.inputRow, theme.withButton)}>
+          <div className={clsx(theme.inputRow, theme.withButton)}>
             <Input
               label="Insurance Expiration"
               value={form.insuranceExpiration}

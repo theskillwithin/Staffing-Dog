@@ -1,6 +1,6 @@
 import React from 'react'
 import { string } from 'prop-types'
-import classnames from 'classnames'
+import clsx from 'clsx'
 
 import SVGEmailUs from '../files/emailus.svg'
 
@@ -8,7 +8,7 @@ import theme from './theme.css'
 
 const EmailUsSVG = props => (
   <span
-    className={classnames(props.className, theme.svg)}
+    className={clsx(props.className, theme.svg)}
     dangerouslySetInnerHTML={{ __html: SVGEmailUs }}
   />
 )

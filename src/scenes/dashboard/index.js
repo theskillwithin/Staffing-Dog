@@ -1,5 +1,5 @@
 import React from 'react'
-import classnames from 'classnames'
+import clsx from 'clsx'
 import { setTitle, setHtmlClass, removeHtmlClass } from '@sdog/utils/document'
 
 import theme from '../app/theme.css'
@@ -20,7 +20,7 @@ class Dashboard extends React.Component {
 
   render() {
     return (
-      <div className={classnames(theme.pageContent, theme.columns)}>
+      <div className={clsx(theme.pageContent, theme.columns)}>
         <div className={theme.columnA}>
           <ToDoList />
           <Messages />

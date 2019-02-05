@@ -1,6 +1,6 @@
 import React from 'react'
 import { object, bool } from 'prop-types'
-import classnames from 'classnames'
+import clsx from 'clsx'
 import NearMeIcon from '@sdog/components/svg/NearMe'
 import Map from '@sdog/components/map'
 
@@ -44,7 +44,7 @@ class JobScheduleEvent extends React.Component {
           <NearMeIcon />
         </button>
 
-        <div className={classnames(theme.map, state.open && theme.open)}>
+        <div className={clsx(theme.map, state.open && theme.open)}>
           <Map
             isMarkerShown
             position={{ lat: 40.764411, lng: -111.891559 }}

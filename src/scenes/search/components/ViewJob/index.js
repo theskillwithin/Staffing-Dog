@@ -2,7 +2,7 @@ import React from 'react'
 import { bool, string, object, oneOfType, shape, func } from 'prop-types'
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
-import classnames from 'classnames'
+import clsx from 'clsx'
 import Button from '@sdog/components/button'
 import LocationOnIcon from '@sdog/components/svg/Location'
 import {
@@ -42,7 +42,7 @@ class ViewJob extends React.Component {
     }
 
     return (
-      <div className={classnames(appTheme.pageContent, theme.pageContent)}>
+      <div className={clsx(appTheme.pageContent, theme.pageContent)}>
         {error ? (
           <p>{error || 'Could not find job'}</p>
         ) : (

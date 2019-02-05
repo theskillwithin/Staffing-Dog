@@ -1,6 +1,6 @@
 import React from 'react'
 import { string } from 'prop-types'
-import classnames from 'classnames'
+import clsx from 'clsx'
 
 import SVGhamburger from '../files/hamburger.svg'
 
@@ -8,7 +8,7 @@ import theme from './theme.css'
 
 const Hamburger = ({ className }) => (
   <span
-    className={classnames(className, theme.svg)}
+    className={clsx(className, theme.svg)}
     dangerouslySetInnerHTML={{ __html: SVGhamburger }}
   />
 )

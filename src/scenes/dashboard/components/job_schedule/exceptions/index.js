@@ -1,5 +1,5 @@
 import React from 'react'
-import classnames from 'classnames'
+import clsx from 'clsx'
 import DatePicker from '@sdog/components/date_picker'
 import Dropdown from '@sdog/components/dropdown'
 import Switch from '@sdog/components/switch'
@@ -131,7 +131,7 @@ class Exceptions extends React.Component {
           this.list.map(exception => (
             <div
               key={exception.id}
-              className={classnames(
+              className={clsx(
                 theme.exception,
                 exception.type && theme[exception.type],
               )}

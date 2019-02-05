@@ -1,12 +1,12 @@
 import React from 'react'
 import { string, number, bool } from 'prop-types'
-import classnames from 'classnames'
+import clsx from 'clsx'
 
 import theme from './theme.css'
 
 const LoadingBar = ({ className, progress, round }) => (
   <div
-    className={classnames(
+    className={clsx(
       theme.bar,
       className,
       round && theme.round,

@@ -1,7 +1,7 @@
 import React from 'react'
 import { node, string, func, object, number, bool, oneOfType } from 'prop-types'
 import ErrorBoundry from '@sdog/components/error_boundry'
-import classnames from 'classnames'
+import clsx from 'clsx'
 import Button from '@sdog/components/button'
 import LoadingBar from '@sdog/components/loading_bar'
 
@@ -23,7 +23,7 @@ const Card = ({
   return (
     <ErrorBoundry>
       <div
-        className={classnames(
+        className={clsx(
           theme.card,
           type && theme[type],
           overflowHidden && theme.overflowHidden,

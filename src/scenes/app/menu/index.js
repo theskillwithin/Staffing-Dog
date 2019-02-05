@@ -2,7 +2,7 @@ import React from 'react'
 import enhanceWithClickOutside from 'react-click-outside'
 import { Link } from 'react-router-dom'
 import { object } from 'prop-types'
-import classnames from 'classnames'
+import clsx from 'clsx'
 import CloseIcon from '@sdog/components/svg/Close'
 import Hambuger from '@sdog/components/svg/Hamburger'
 
@@ -46,11 +46,11 @@ class MainMenu extends React.Component {
           {this.state.mobileActive ? <CloseIcon /> : <Hambuger />}
         </button>
         <ul
-          className={classnames(theme.nav, this.state.mobileActive && theme.mobileActive)}
+          className={clsx(theme.nav, this.state.mobileActive && theme.mobileActive)}
         >
           <li className={theme.navItem}>
             <Link
-              className={classnames(
+              className={clsx(
                 theme.navItemLink,
                 this.isActive(/^\/$/) && theme.active,
               )}
@@ -62,7 +62,7 @@ class MainMenu extends React.Component {
           </li>
           <li className={theme.navItem}>
             <Link
-              className={classnames(
+              className={clsx(
                 theme.navItemLink,
                 this.isActive(/search/) && theme.active,
               )}
@@ -74,7 +74,7 @@ class MainMenu extends React.Component {
           </li>
           <li className={theme.navItem}>
             <Link
-              className={classnames(
+              className={clsx(
                 theme.navItemLink,
                 this.isActive(/settings/) && theme.active,
               )}
@@ -84,9 +84,9 @@ class MainMenu extends React.Component {
               My&nbsp;Profile
             </Link>
           </li>
-          <li className={classnames(theme.navItem, theme.mobileOnly)}>
+          <li className={clsx(theme.navItem, theme.mobileOnly)}>
             <Link
-              className={classnames(
+              className={clsx(
                 theme.navItemLink,
                 this.isActive(/contact/) && theme.active,
               )}

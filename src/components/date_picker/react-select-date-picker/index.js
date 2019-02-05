@@ -3,7 +3,7 @@ import { bool, array, func, number, object, string } from 'prop-types'
 import chrono from 'chrono-node'
 import moment from 'moment'
 import Select from 'react-select'
-import classnames from 'classnames'
+import clsx from 'clsx'
 
 import Group from './group'
 import Option from './option'
@@ -152,7 +152,7 @@ class DatePicker extends Component {
     }
     return (
       <div className={theme.container}>
-        <span className={classnames(theme.label, this.state.open && theme.labelOpen)}>
+        <span className={clsx(theme.label, this.state.open && theme.labelOpen)}>
           {this.props.label}
         </span>
         <Select

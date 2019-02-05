@@ -1,11 +1,11 @@
 import React from 'react'
 import { bool } from 'prop-types'
-import classnames from 'classnames'
+import clsx from 'clsx'
 
 import theme from './theme.css'
 
 const EmailVerified = ({ verified }) => (
-  <span className={classnames(theme.verify, verified && theme.verified)}>
+  <span className={clsx(theme.verify, verified && theme.verified)}>
     Email Verified
   </span>
 )

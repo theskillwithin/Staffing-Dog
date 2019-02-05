@@ -1,5 +1,5 @@
 import React from 'react'
-import classnames from 'classnames'
+import clsx from 'clsx'
 import { setTitle } from '@sdog/utils/document'
 import Tabs from '@sdog/components/tab_bar'
 import Card from '@sdog/components/card'
@@ -21,7 +21,7 @@ class Settings extends React.Component {
 
   render() {
     return (
-      <div className={classnames(appTheme.pageContent)}>
+      <div className={clsx(appTheme.pageContent)}>
         <Card type="large">
           <Header />
           <Tabs

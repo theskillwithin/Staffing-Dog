@@ -1,6 +1,6 @@
 import React from 'react'
 import { string, bool, oneOf } from 'prop-types'
-import classnames from 'classnames'
+import clsx from 'clsx'
 
 import SVGArrow from '../files/arrow.svg'
 import SVGArrowSmall from '../files/arrowSmall.svg'
@@ -9,7 +9,7 @@ import theme from './theme.css'
 
 const Arrow = ({ className, color, direction, small }) => (
   <span
-    className={classnames(
+    className={clsx(
       className,
       theme.svg,
       color && theme[color],
