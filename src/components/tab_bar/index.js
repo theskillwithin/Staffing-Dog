@@ -1,6 +1,6 @@
 import React from 'react'
 import { node, number, func, bool } from 'prop-types'
-import classnames from 'classnames'
+import clsx from 'clsx'
 
 import theme from './theme.css'
 
@@ -70,7 +70,7 @@ class Tabs extends React.Component {
     } = this.props
     return (
       <div
-        className={classnames(
+        className={clsx(
           theme.root,
           underline && theme.hasUnderline,
           left && theme.left,
@@ -94,7 +94,7 @@ class Tabs extends React.Component {
           ))}
         </div>
         <div
-          className={classnames(theme.underline, jobSchedule && theme.tabsUnderline)}
+          className={clsx(theme.underline, jobSchedule && theme.tabsUnderline)}
           ref={this.underlineRef}
         />
       </div>

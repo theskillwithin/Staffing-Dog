@@ -1,6 +1,6 @@
 import React from 'react'
 import { bool, node, oneOfType } from 'prop-types'
-import classnames from 'classnames'
+import clsx from 'clsx'
 
 import theme from './theme.css'
 
@@ -41,7 +41,7 @@ class Alert extends React.Component {
 
     return (
       <div
-        className={classnames(
+        className={clsx(
           theme.root,
           error && theme.error,
           success && theme.success,

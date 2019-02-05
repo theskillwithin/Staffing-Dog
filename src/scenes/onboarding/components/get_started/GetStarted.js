@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { func, string } from 'prop-types'
-import classnames from 'classnames'
+import clsx from 'clsx'
 
 import SVGCertification from '../../../../components/svg/files/certification.svg'
 import SVGPlantTall from '../../../../components/svg/files/plant_tall.svg'
@@ -29,68 +29,68 @@ class GetStarted extends Component {
         <StarTitle title="Power to the Professional" />
 
         <div className={theme.svgScene}>
-          <span className={classnames(theme.group, theme.groupPlant)}>
+          <span className={clsx(theme.group, theme.groupPlant)}>
             <div
-              className={classnames(theme.certification)}
+              className={clsx(theme.certification)}
               dangerouslySetInnerHTML={{ __html: SVGCertification }}
             />
             <div
-              className={classnames(theme.certification)}
+              className={clsx(theme.certification)}
               dangerouslySetInnerHTML={{ __html: SVGPlantTall }}
             />
           </span>
 
           {this.renderSVG(
             <Person
-              className={classnames(theme.group, theme.person, theme.man)}
+              className={clsx(theme.group, theme.person, theme.man)}
               name="man"
             />,
           )}
 
           {this.renderSVG(
             <Person
-              className={classnames(theme.group, theme.person, theme.woman)}
+              className={clsx(theme.group, theme.person, theme.woman)}
               name="woman"
             />,
           )}
 
           {this.renderSVG(
             <Person
-              className={classnames(theme.group, theme.person, theme.woman2)}
+              className={clsx(theme.group, theme.person, theme.woman2)}
               name="woman2"
             />,
           )}
 
           {this.renderSVG(
             <Person
-              className={classnames(theme.group, theme.person, theme.woman3)}
+              className={clsx(theme.group, theme.person, theme.woman3)}
               name="woman3"
             />,
           )}
 
           {this.renderSVG(
             <Person
-              className={classnames(theme.group, theme.person, theme.man2)}
+              className={clsx(theme.group, theme.person, theme.man2)}
               name="man2"
             />,
           )}
 
           {this.renderSVG(
             <Person
-              className={classnames(theme.group, theme.person, theme.man)}
+              className={clsx(theme.group, theme.person, theme.man)}
               name="man"
             />,
             'practice',
           )}
 
           {this.renderSVG(
-            <Svg name="dentist_chair" className={classnames(theme.group, theme.chair)} />,
+            <Svg name="dentist_chair" className={clsx(theme.group, theme.chair)} />,
             'practice',
           )}
 
           {this.renderSVG(
             <Person
-              className={classnames(theme.group, theme.person, theme.woman)}
+              className={clsx(theme.group, theme.person, theme.woman)}
               name="woman"
             />,
             'practice',

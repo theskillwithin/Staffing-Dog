@@ -1,12 +1,12 @@
 import React from 'react'
 import { bool, number } from 'prop-types'
-import classnames from 'classnames'
+import clsx from 'clsx'
 
 import theme from './theme.css'
 
 const Spinner = ({ center, size, zIndex }) => (
   <svg
-    className={classnames(theme.spinner, center && theme.center)}
+    className={clsx(theme.spinner, center && theme.center)}
     width={size}
     height={size}
     viewBox="0 0 50 50"

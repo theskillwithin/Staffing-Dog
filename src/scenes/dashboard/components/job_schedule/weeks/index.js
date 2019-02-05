@@ -1,6 +1,6 @@
 import React from 'react'
 import { string, object, func } from 'prop-types'
-import classnames from 'classnames'
+import clsx from 'clsx'
 import Dropdown from '@sdog/components/dropdown'
 import Button from '@sdog/components/button'
 import Arrow from '@sdog/components/svg/Arrow'
@@ -11,7 +11,7 @@ import theme from './theme.css'
 const time = timesOfDay().map(hour => ({ label: hour, value: hour }))
 
 const WeekRow = ({ day, schedule, onChange }) => (
-  <div className={classnames(theme.day, schedule.active && theme.active)}>
+  <div className={clsx(theme.day, schedule.active && theme.active)}>
     <div className={theme.dayButton}>
       <Button
         onClick={() => onChange('active', !schedule.active, day)}

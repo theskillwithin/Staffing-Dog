@@ -6,7 +6,7 @@ import camelCase from 'lodash/camelCase'
 import get from 'lodash/get'
 import { connect } from 'react-redux'
 import { withRouter, Link } from 'react-router-dom'
-import classnames from 'classnames'
+import clsx from 'clsx'
 import { getUserJobs, findJobs, findJobsLoading, findJobsError } from '@sdog/store/jobs'
 import { setTitle } from '@sdog/utils/document'
 import Card from '@sdog/components/card'
@@ -147,7 +147,7 @@ class SearchResults extends React.Component {
     ]
 
     return (
-      <div className={classnames(appTheme.pageContent, theme.pageContent)}>
+      <div className={clsx(appTheme.pageContent, theme.pageContent)}>
         <header className={theme.searchFilters}>
           <Filter
             onChange={value => this.handleSearchChange('jobType', value)}
@@ -193,11 +193,11 @@ class SearchResults extends React.Component {
                       <Card key={job.id} type="large">
                         <Link
                           to={`/search/job/${job.slug}`}
-                          className={classnames(theme.title, job.new && theme.new)}
+                          className={clsx(theme.title, job.new && theme.new)}
                         >
                           {job.criteria.title}
                         </Link>
-                        {/* <div className={classnames(theme.star, job.star && theme.active)}>
+                        {/* <div className={clsx(theme.star, job.star && theme.active)}>
                           <button onClick={() => this.toggleFav(job.id)} type="button">
                             <Star active={job.star} />
                           </button>

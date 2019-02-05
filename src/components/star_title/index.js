@@ -1,6 +1,6 @@
 import React from 'react'
 import { string } from 'prop-types'
-import classnames from 'classnames'
+import clsx from 'clsx'
 import map from 'lodash/map'
 
 import Circle from '../svg/Circle'
@@ -24,7 +24,7 @@ const circles = [
 ]
 
 const StarTitle = ({ title }) => (
-  <h2 className={classnames(theme.starTitle, theme.title)}>
+  <h2 className={clsx(theme.starTitle, theme.title)}>
     <span className={theme.text}>{title}</span>
     <span className={theme.stars}>
       {map(stars, (star, i) => (

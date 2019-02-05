@@ -1,6 +1,6 @@
 import React from 'react'
 import { object, func, array, string, shape } from 'prop-types'
-import classnames from 'classnames'
+import clsx from 'clsx'
 import find from 'lodash/find'
 import map from 'lodash/map'
 
@@ -33,7 +33,7 @@ class Steps extends React.Component {
     return map(fields, (field, i) => (
       <div
         key={`form:field:${key}:${i + 1}`}
-        className={classnames(
+        className={clsx(
           theme.formRow,
           field.fields && theme.hasMany,
           !field.fields && 'dropdown' === field.type && theme.hasDropdown,
@@ -97,7 +97,7 @@ class Steps extends React.Component {
     return (
       <div className={theme.steps}>
         <div
-          className={classnames(
+          className={clsx(
             theme.stepsContent,
             /complete/.test(currentStep.step) && theme.stepsContentComplete,
           )}

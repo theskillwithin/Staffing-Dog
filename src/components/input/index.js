@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { func, string, bool, number, oneOfType } from 'prop-types'
-import classnames from 'classnames'
+import clsx from 'clsx'
 
 import Check from '../svg/Check'
 import Invalid from '../svg/Invalid'
@@ -37,7 +37,7 @@ class Input extends Component {
 
     return (
       <div
-        className={classnames(
+        className={clsx(
           s.root,
           theme,
           invalid && s.invalid,
@@ -50,7 +50,7 @@ class Input extends Component {
         {textarea ? (
           <textarea
             id={this.id}
-            className={classnames(
+            className={clsx(
               s.input,
               outlined && s.outlined,
               value && value.length > 0 && s.filled,
@@ -62,7 +62,7 @@ class Input extends Component {
         ) : (
           <input
             id={this.id}
-            className={classnames(
+            className={clsx(
               s.input,
               outlined && s.outlined,
               value && value.length > 0 && s.filled,

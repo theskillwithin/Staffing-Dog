@@ -1,6 +1,6 @@
 import React from 'react'
 import { object, func, array, bool } from 'prop-types'
-import classnames from 'classnames'
+import clsx from 'clsx'
 import moment from 'moment'
 
 import Day from './day'
@@ -79,7 +79,7 @@ const Days = ({ date, startDate, endDate, activeDates, editable, onClick }) => {
   }
 
   return (
-    <nav className={classnames(theme.days, editable && theme.editable)}>
+    <nav className={clsx(theme.days, editable && theme.editable)}>
       {labels.concat()}
       {days.concat()}
     </nav>

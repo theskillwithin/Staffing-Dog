@@ -1,6 +1,6 @@
 import React from 'react'
 import { bool, func, node, string, oneOfType } from 'prop-types'
-import classnames from 'classnames'
+import clsx from 'clsx'
 
 import theme from './theme.css'
 
@@ -9,7 +9,7 @@ const id = `inputs-id-${Math.random()
   .slice(2)}`
 
 const Switch = ({ checked, onChange, children, label, disabled, ...props }) => (
-  <div className={classnames(theme.root, disabled && theme.disabled)}>
+  <div className={clsx(theme.root, disabled && theme.disabled)}>
     {label ||
       (children && (
         <label className={theme.label} htmlFor={id}>

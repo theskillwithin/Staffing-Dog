@@ -1,11 +1,11 @@
 import React from 'react'
 import { string, bool } from 'prop-types'
-import classnames from 'classnames'
+import clsx from 'clsx'
 
 import theme from './theme.css'
 
 const LogoInternals = props => (
-  <div className={classnames(props.className, theme.logo)}>
+  <div className={clsx(props.className, theme.logo)}>
     <svg
       width={props.width}
       xmlns="http://www.w3.org/2000/svg"

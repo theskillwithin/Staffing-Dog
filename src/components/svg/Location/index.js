@@ -1,6 +1,6 @@
 import React from 'react'
 import { string } from 'prop-types'
-import classnames from 'classnames'
+import clsx from 'clsx'
 
 import SVGLocationOn from '../files/location_on.svg'
 
@@ -8,7 +8,7 @@ import theme from './theme.css'
 
 const LocationOn = ({ className }) => (
   <span
-    className={classnames(className, theme.svg)}
+    className={clsx(className, theme.svg)}
     dangerouslySetInnerHTML={{ __html: SVGLocationOn }}
   />
 )

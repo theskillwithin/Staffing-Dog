@@ -1,6 +1,6 @@
 import React from 'react'
 import { bool, string, oneOfType, func, node, oneOf } from 'prop-types'
-import classnames from 'classnames'
+import clsx from 'clsx'
 
 import theme from './theme.css'
 
@@ -23,7 +23,7 @@ const Button = ({
 }) => (
   // eslint-disable-next-line react/button-has-type
   <button
-    className={classnames(
+    className={clsx(
       theme.button,
       round && theme.round,
       short && theme.short,

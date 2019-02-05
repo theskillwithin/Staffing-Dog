@@ -1,6 +1,6 @@
 import React from 'react'
 import { array } from 'prop-types'
-import classnames from 'classnames'
+import clsx from 'clsx'
 
 import Check from '../svg/Check'
 
@@ -11,7 +11,7 @@ const Checklist = ({ list }) => (
     {list.map((li, i) => (
       <li
         key={`li-${li.name}${i + 1}`}
-        className={classnames(theme.li, li.checked && theme.checked)}
+        className={clsx(theme.li, li.checked && theme.checked)}
       >
         {li.name}
         <Check color="white" className={theme.check} width={16} />

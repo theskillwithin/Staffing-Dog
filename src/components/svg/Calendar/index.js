@@ -1,13 +1,13 @@
 import React from 'react'
 import { string } from 'prop-types'
-import classnames from 'classnames'
+import clsx from 'clsx'
 import moment from 'moment'
 
 import theme from './theme.css'
 
 const Calendar = ({ className, date }) => (
   <svg
-    className={classnames(className, theme.svg)}
+    className={clsx(className, theme.svg)}
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 18 20"
   >
@@ -15,7 +15,7 @@ const Calendar = ({ className, date }) => (
       <text
         id="_21"
         data-name="21"
-        className={classnames(theme.fill, theme.text)}
+        className={clsx(theme.fill, theme.text)}
         transform="translate(829 152)"
         x="50%"
         y="-3px"

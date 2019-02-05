@@ -1,7 +1,7 @@
 import React from 'react'
 import { object, bool, func, array, string, shape } from 'prop-types'
 import find from 'lodash/find'
-import classnames from 'classnames'
+import clsx from 'clsx'
 import Arrow from '@sdog/components/svg/Arrow'
 
 import Button from '../../../../components/button'
@@ -16,7 +16,7 @@ const ActionNav = ({ match, history, steps, goToStep, savingStep, loadingNextSte
   return (
     <div className={theme.actionNav}>
       {previousStep && previousStep.step && (
-        <div className={classnames(theme.step, theme.previousStep)}>
+        <div className={clsx(theme.step, theme.previousStep)}>
           <Button
             onClick={() =>
               goToStep({
@@ -40,7 +40,7 @@ const ActionNav = ({ match, history, steps, goToStep, savingStep, loadingNextSte
         </div>
       )}
       {currentStep.nextStep && (
-        <div className={classnames(theme.step, theme.nextStep)}>
+        <div className={clsx(theme.step, theme.nextStep)}>
           <Button
             onClick={() =>
               goToStep({

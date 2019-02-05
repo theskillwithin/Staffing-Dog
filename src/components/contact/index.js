@@ -1,6 +1,6 @@
 import React from 'react'
 import enhanceWithClickOutside from 'react-click-outside'
-import classnames from 'classnames'
+import clsx from 'clsx'
 import ContactSVG from '@sdog/components/svg/Contact'
 import HeadsetSVG from '@sdog/components/svg/Headset'
 import EmailUsSVG from '@sdog/components/svg/EmailUs'
@@ -51,7 +51,7 @@ class Contact extends React.Component {
           </button>
         </div>
         <div
-          className={classnames(
+          className={clsx(
             theme.contactActive,
             this.state.mobileActive && theme.mobileActive,
           )}

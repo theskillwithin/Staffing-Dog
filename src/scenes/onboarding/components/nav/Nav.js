@@ -1,7 +1,7 @@
 import React from 'react'
 import { string, array, object, func } from 'prop-types'
 import { Link } from 'react-router-dom'
-import classnames from 'classnames'
+import clsx from 'clsx'
 import map from 'lodash/map'
 import indexOf from 'lodash/indexOf'
 
@@ -10,7 +10,7 @@ import theme from './theme.css'
 const pInt = n => parseInt(n, 10)
 
 const stepLinkClasses = (currentStep, step, visited) => {
-  return classnames(
+  return clsx(
     pInt(currentStep) === pInt(step) && theme.stepButtonActive,
     theme.stepButton,
     visited >= pInt(step) && theme.visited,
@@ -33,7 +33,7 @@ class Nav extends React.Component {
     const { steps, goToStep, exclude, match, history, className } = this.props
 
     return (
-      <ul className={classnames(theme.stepLinks, className)}>
+      <ul className={clsx(theme.stepLinks, className)}>
         {map(steps, step =>
           indexOf(exclude, step.step) === -1 ? (
             <li key={`stepNav:item:${step.step}`} className={theme.stepLinksItem}>
