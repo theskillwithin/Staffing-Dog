@@ -131,13 +131,11 @@ class Exceptions extends React.Component {
           this.list.map(exception => (
             <div
               key={exception.id}
-              className={clsx(
-                theme.exception,
-                exception.type && theme[exception.type],
-              )}
+              className={clsx(theme.exception, exception.type && theme[exception.type])}
             >
               {this.state.delete === exception.id && (
                 <div className={theme.delete}>
+                  <Button>Cancel Delete</Button>
                   <Button red>Confirm Delete</Button>
                 </div>
               )}
