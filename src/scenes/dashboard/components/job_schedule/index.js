@@ -6,6 +6,7 @@ import Card from '@sdog/components/card'
 import Switch from '@sdog/components/switch'
 import Dropdown from '@sdog/components/dropdown'
 import { getUserJobs, findJobs, findJobsLoading, findJobsError } from '@sdog/store/jobs'
+import { finduserMeta } from '@sdog/store/user'
 import CalendarIcon from '@sdog/components/svg/Calendar'
 import Calendar from '@sdog/components/calendar'
 
@@ -22,6 +23,11 @@ class JobSchedule extends React.Component {
     }).isRequired,
     jobsLoading: bool.isRequired,
     jobsError: oneOfType([bool, string]).isRequired,
+    userMeta: shape({
+      capacity: shape({
+        same_day_jobs: bool.isRequired,
+      }).isRequired,
+    }).isRequired,
   }
 
   backoutDates = [
@@ -40,6 +46,11 @@ class JobSchedule extends React.Component {
   ]
 
   daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
+
+  availability = [
+    { label: 'Full Time', value: 'full_time' },
+    { label: 'Part Time', value: 'part_time' },
+  ]
 
   state = {
     activeTabIndex: 0,
@@ -121,11 +132,13 @@ class JobSchedule extends React.Component {
     const {
       days,
       daysOfWeek,
+      availability,
       state,
       updateSchedule,
       handleToggle,
       handleChange,
       handleScheduleChange,
+      props: { userMeta },
     } = this
 
     return (
@@ -155,11 +168,30 @@ class JobSchedule extends React.Component {
             {this.state.activeTabIndex === 0 && (
               <div className={theme.schedule}>
                 <div className={theme.inputRow}>
+                  <span>Availability</span>
+                  <div className={theme.dropdown}>
+                    <Dropdown
+                      value={availability.find(
+                        ({ value }) => value === userMeta.capacity.availability,
+                      )}
+                      onChange={value => handleChange('availability', value)}
+                      options={availability}
+                      height={33}
+                      width={120}
+                    />
+                  </div>
+                </div>
+
+                <div className={theme.inputRow}>
                   <span>Same day job requests</span>
-                  <Switch checked={state.form.switch} onChange={handleToggle}>
-                    {state.form.switch ? 'Yes' : 'No'}
+                  <Switch
+                    checked={userMeta.capacity.same_day_jobs}
+                    onChange={handleToggle}
+                  >
+                    {userMeta.capacity.same_day_jobs ? 'Yes' : 'No'}
                   </Switch>
                 </div>
+
                 <div className={theme.inputRow}>
                   <span>Days out I can be scheduled</span>
                   <div className={theme.dropdown}>
@@ -172,6 +204,7 @@ class JobSchedule extends React.Component {
                     />
                   </div>
                 </div>
+
                 <div className={theme.scheduler}>
                   {daysOfWeek.map(day => (
                     <WeekRow
@@ -209,6 +242,7 @@ export const mapStateToProps = state => ({
   jobs: findJobs(state),
   jobsLoading: findJobsLoading(state),
   jobsError: findJobsError(state),
+  userMeta: finduserMeta(state),
 })
 
 export const mapActionsToProps = { getUserJobs }
