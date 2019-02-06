@@ -6,7 +6,7 @@ import Card from '@sdog/components/card'
 import Switch from '@sdog/components/switch'
 import Dropdown from '@sdog/components/dropdown'
 import { getUserJobs, findJobs, findJobsLoading, findJobsError } from '@sdog/store/jobs'
-import { finduserMeta } from '@sdog/store/user'
+import { findUserMeta, autoSaveUserProfile } from '@sdog/store/user'
 import CalendarIcon from '@sdog/components/svg/Calendar'
 import Calendar from '@sdog/components/calendar'
 
@@ -18,6 +18,7 @@ import theme from './theme.css'
 class JobSchedule extends React.Component {
   static propTypes = {
     getUserJobs: func.isRequired,
+    autoSaveUserProfile: func.isRequired,
     jobs: shape({
       scheduled: array,
     }).isRequired,
@@ -135,7 +136,6 @@ class JobSchedule extends React.Component {
       availability,
       state,
       updateSchedule,
-      handleToggle,
       handleChange,
       handleScheduleChange,
       props: { userMeta },
@@ -174,7 +174,12 @@ class JobSchedule extends React.Component {
                       value={availability.find(
                         ({ value }) => value === userMeta.capacity.availability,
                       )}
-                      onChange={value => handleChange('availability', value)}
+                      onChange={value =>
+                        this.props.autoSaveUserProfile(
+                          'meta.capacity.availability',
+                          value,
+                        )
+                      }
                       options={availability}
                       height={33}
                       width={120}
@@ -186,7 +191,9 @@ class JobSchedule extends React.Component {
                   <span>Same day job requests</span>
                   <Switch
                     checked={userMeta.capacity.same_day_jobs}
-                    onChange={handleToggle}
+                    onChange={value =>
+                      this.props.autoSaveUserProfile('meta.capacity.same_day_jobs', value)
+                    }
                   >
                     {userMeta.capacity.same_day_jobs ? 'Yes' : 'No'}
                   </Switch>
@@ -242,10 +249,10 @@ export const mapStateToProps = state => ({
   jobs: findJobs(state),
   jobsLoading: findJobsLoading(state),
   jobsError: findJobsError(state),
-  userMeta: finduserMeta(state),
+  userMeta: findUserMeta(state),
 })
 
-export const mapActionsToProps = { getUserJobs }
+export const mapActionsToProps = { getUserJobs, autoSaveUserProfile }
 
 export default connect(
   mapStateToProps,
