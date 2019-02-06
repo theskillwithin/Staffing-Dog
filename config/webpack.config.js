@@ -176,6 +176,7 @@ config.devServer = {
     modules: false,
     reasons: false,
     useExports: false,
+    warningsFilter: warn => warn.indexOf('Conflicting order between:') > -1,
   },
 }
 
