@@ -41,10 +41,7 @@ class GetStarted extends Component {
           </span>
 
           {this.renderSVG(
-            <Person
-              className={clsx(theme.group, theme.person, theme.man)}
-              name="man"
-            />,
+            <Person className={clsx(theme.group, theme.person, theme.man)} name="man" />,
           )}
 
           {this.renderSVG(
@@ -76,10 +73,7 @@ class GetStarted extends Component {
           )}
 
           {this.renderSVG(
-            <Person
-              className={clsx(theme.group, theme.person, theme.man)}
-              name="man"
-            />,
+            <Person className={clsx(theme.group, theme.person, theme.man)} name="man" />,
             'practice',
           )}
 

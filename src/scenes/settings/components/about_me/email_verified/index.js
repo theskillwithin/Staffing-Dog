@@ -5,9 +5,7 @@ import clsx from 'clsx'
 import theme from './theme.css'
 
 const EmailVerified = ({ verified }) => (
-  <span className={clsx(theme.verify, verified && theme.verified)}>
-    Email Verified
-  </span>
+  <span className={clsx(theme.verify, verified && theme.verified)}>Email Verified</span>
 )
 
 EmailVerified.propTypes = {

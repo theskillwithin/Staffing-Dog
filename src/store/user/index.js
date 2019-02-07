@@ -1,3 +1,6 @@
+import set from 'lodash/set'
+import get from 'lodash/get'
+import omit from 'lodash/omit'
 import { API_ROOT } from '@sdog/utils/api'
 
 import { createActionTypes, reduxRegister, buildStore } from '../tools'
@@ -327,6 +330,83 @@ reducers = {
 }
 
 /**
+ * Auto Save User Profile Data
+ *
+ * This currently allows you to auto save (onchange) save user profile
+ * It currently only supports items that live in the profile object,
+ * excluding the profile.user from orginal api call
+ *
+ * Supported Paths: meta, addresses, preferences
+ * Example 'meta.capacity.availablity'
+ */
+export const AUTO_SAVE_USER_PROFILE = 'AUTO_SAVE_USER_PROFILE'
+export const autoSaveUserProfileTypes = createActionTypes(AUTO_SAVE_USER_PROFILE)
+
+export const autoSaveUserProfile = (name, value) => (dispatch, getState) => {
+  const state = getState()
+
+  dispatch({
+    type: AUTO_SAVE_USER_PROFILE,
+    api: {
+      url: `${API_ROOT}/profiles`,
+      method: 'PUT',
+      data: {
+        id: findUserId(getState()) || getUserId(),
+        data: omit(
+          set(
+            {
+              addresses: findUserProfile(state).addresses,
+              meta: findUserMeta(state),
+              preferences: findUserPreferences(state),
+            },
+            name,
+            value,
+          ),
+          ['addresses.geocode'],
+        ),
+      },
+    },
+    payload: { name, value },
+  })
+}
+
+reducers = {
+  ...reducers,
+  [autoSaveUserProfileTypes.LOADING]: (state, { name, value }) => ({
+    ...state,
+    profile: set({ ...state.profile }, name, value),
+    previousProfileUpdate: {
+      name,
+      value: get(state.profile, name),
+    },
+    lastUpdated: new Date().getTime(),
+  }),
+  [autoSaveUserProfileTypes.SUCCESS]: (state, { data: { user, ...data } }) => ({
+    ...state,
+    profile: {
+      ...state.profile,
+      ...data,
+      ...user,
+    },
+    lastUpdated: new Date().getTime(),
+  }),
+  [autoSaveUserProfileTypes.ERROR]: (state, payload) => ({
+    ...state,
+    profile: {
+      ...(state.profile.previousProfileUpdate
+        ? set(
+            { ...state.profile },
+            state.profile.previousProfileUpdate.name,
+            state.profile.previousProfileUpdate.value,
+          )
+        : state.profile),
+      ...spreadLoadingError(false, payload.error || 'error'),
+    },
+    lastUpdated: new Date().getTime(),
+  }),
+}
+
+/**
  * Create Store
  */
 export const reducer = buildStore(reducers, INITIAL_STATE)
@@ -341,6 +421,8 @@ export const findState = state => state.user
 export const findUserAuth = state => findState(state).auth
 export const findSchedule = state => findState(state).schedule
 export const findUserProfile = state => findState(state).profile
+export const findUserMeta = state => findUserProfile(state).meta
+export const findUserPreferences = state => findUserProfile(state).preferences
 
 export const findScheduleEvents = state => findSchedule(state).events
 export const findScheduleLoading = state => findSchedule(state).loading

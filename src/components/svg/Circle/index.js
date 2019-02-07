@@ -9,11 +9,7 @@ import theme from './theme.css'
 
 const Circle = props => (
   <span
-    className={clsx(
-      props.className,
-      theme.svg,
-      theme[`color${capitalize(props.color)}`],
-    )}
+    className={clsx(props.className, theme.svg, theme[`color${capitalize(props.color)}`])}
     dangerouslySetInnerHTML={{ __html: SVGCircle }}
   />
 )

@@ -1,6 +1,5 @@
 import { combineReducers, createStore, compose, applyMiddleware } from 'redux'
 import thunkMiddleware from 'redux-thunk'
-
 import { IS_DEV } from '@sdog/utils/env'
 
 import { reduxRegister } from './tools'
