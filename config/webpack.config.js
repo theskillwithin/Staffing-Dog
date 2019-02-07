@@ -25,6 +25,10 @@ const alias = {
   '@sdog': paths.src,
 }
 
+const stats = {
+  warningsFilter: warn => warn.indexOf('Conflicting order between:') > -1,
+}
+
 /**
  * Basic Config object for webpack
  */
@@ -35,6 +39,7 @@ const config = {
   module: {},
   plugins: [],
   resolve: { alias },
+  stats,
 }
 
 /**
@@ -171,13 +176,13 @@ config.plugins = [
 config.devServer = {
   port: 8080,
   stats: {
+    ...stats,
     children: false,
     chunks: false,
     chunkModules: false,
     modules: false,
     reasons: false,
     useExports: false,
-    warningsFilter: warn => warn.indexOf('Conflicting order between:') > -1,
   },
 }
 

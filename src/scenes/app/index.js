@@ -2,25 +2,19 @@ import React from 'react'
 import { Route, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { object, func } from 'prop-types'
-import loadable from 'loadable-components'
 import { setHtmlClass, removeHtmlClass } from '@sdog/utils/document'
 import Logo from '@sdog/components/logo'
 import MainMenu from '@sdog/scenes/app/menu'
 import Contact from '@sdog/components/contact'
+import Spinner from '@sdog/components/spinner'
 import { getUserProfile } from '@sdog/store/user'
 
 import theme from './theme.css'
 import './styles.css'
 
-const DashboardScene = loadable(() =>
-  import(/* webpackChunkName: "dashboard" */ '@sdog/scenes/dashboard'),
-)
-const SearchScene = loadable(() =>
-  import(/* webpackChunkName: "search" */ '@sdog/scenes/search'),
-)
-const SettingsScene = loadable(() =>
-  import(/* webpackChunkName: "settings" */ '@sdog/scenes/settings'),
-)
+const DashboardScene = React.lazy(() => import('@sdog/scenes/dashboard'))
+const SearchScene = React.lazy(() => import('@sdog/scenes/search'))
+const SettingsScene = React.lazy(() => import('@sdog/scenes/settings'))
 
 class App extends React.Component {
   componentDidMount() {
@@ -50,9 +44,11 @@ class App extends React.Component {
         </header>
 
         <div className={theme.appContent}>
-          <Route path="/" component={DashboardScene} exact />
-          <Route path="/settings" component={SettingsScene} />
-          <Route path="/search" component={SearchScene} />
+          <React.Suspense fallback={<Spinner />}>
+            <Route path="/" component={DashboardScene} exact />
+            <Route path="/settings" component={SettingsScene} />
+            <Route path="/search" component={SearchScene} />
+          </React.Suspense>
         </div>
       </div>
     )
