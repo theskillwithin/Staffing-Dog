@@ -1,14 +1,9 @@
 import React from 'react'
 import { shape, string } from 'prop-types'
-import loadable from 'loadable-components'
 import { Switch, Route } from 'react-router-dom'
 
-const SearchResults = loadable(() =>
-  import(/* webpackChunkName: "searchResults" */ './components/Results'),
-)
-const ViewJob = loadable(() =>
-  import(/* webpackChunkName: "searchViewJob" */ './components/ViewJob'),
-)
+const SearchResults = React.lazy(() => import('./components/Results'))
+const ViewJob = React.lazy(() => import('./components/ViewJob'))
 
 const Search = ({ match: { path } }) => (
   <Switch>

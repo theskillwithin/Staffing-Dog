@@ -1,5 +1,5 @@
 import React from 'react'
-import { string, bool, oneOfType, func, node } from 'prop-types'
+import { string, bool, oneOfType, func, node, object } from 'prop-types'
 import { Route, Redirect, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 
@@ -17,7 +17,7 @@ const AuthRoute = ({ token = false, to, component: Component, ...props }) => (
 AuthRoute.propTypes = {
   token: oneOfType([string, bool]).isRequired,
   to: string.isRequired,
-  component: oneOfType([func, node]).isRequired,
+  component: oneOfType([func, node, object]).isRequired,
 }
 
 export const mapStateToProps = state => ({ token: findToken(state) })
