@@ -28,7 +28,7 @@ axiosInstance.interceptors.response.use(
       // clear cookies
       removeAllAuth()
       // redirect to login page
-      window.location = '/#/login'
+      window.location = '/login'
     }
 
     return Promise.reject(error)
