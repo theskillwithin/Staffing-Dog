@@ -6,7 +6,7 @@ import Card from '@sdog/components/card'
 import Switch from '@sdog/components/switch'
 import Dropdown from '@sdog/components/dropdown'
 import { getUserJobs, findJobs, findJobsLoading, findJobsError } from '@sdog/store/jobs'
-import { findUserMeta, autoSaveUserProfile } from '@sdog/store/user'
+import { findUserProfile, autoSaveUserProfile } from '@sdog/store/user'
 import CalendarIcon from '@sdog/components/svg/Calendar'
 import Calendar from '@sdog/components/calendar'
 
@@ -24,9 +24,11 @@ class JobSchedule extends React.Component {
     }).isRequired,
     jobsLoading: bool.isRequired,
     jobsError: oneOfType([bool, string]).isRequired,
-    userMeta: shape({
-      capacity: shape({
-        same_day_jobs: bool.isRequired,
+    userProfile: shape({
+      meta: shape({
+        capacity: shape({
+          same_day_jobs: bool.isRequired,
+        }).isRequired,
       }).isRequired,
     }).isRequired,
   }
@@ -107,24 +109,11 @@ class JobSchedule extends React.Component {
     this.setState(({ showSchedule }) => ({ showSchedule: !showSchedule }))
   }
 
-  handleToggle = value => {
-    this.setState(state => ({ form: { ...state.form, switch: value } }))
-  }
-
   handleScheduleChange = (type, value, day) => {
     this.setState(({ form, form: { schedule } }) => ({
       form: {
         ...form,
         schedule: { ...schedule, [day]: { ...schedule[day], [type]: value } },
-      },
-    }))
-  }
-
-  handleChange(input, value) {
-    this.setState(state => ({
-      form: {
-        ...state.form,
-        [input]: value,
       },
     }))
   }
@@ -136,9 +125,10 @@ class JobSchedule extends React.Component {
       availability,
       state,
       updateSchedule,
-      handleChange,
       handleScheduleChange,
-      props: { userMeta },
+      props: {
+        userProfile: { meta },
+      },
     } = this
 
     return (
@@ -165,6 +155,7 @@ class JobSchedule extends React.Component {
                 <div>Exceptions</div>
               </Tabs>
             </div>
+
             {this.state.activeTabIndex === 0 && (
               <div className={theme.schedule}>
                 <div className={theme.inputRow}>
@@ -172,9 +163,9 @@ class JobSchedule extends React.Component {
                   <div className={theme.dropdown}>
                     <Dropdown
                       value={availability.find(
-                        ({ value }) => value === userMeta.capacity.availability,
+                        ({ value }) => value === meta.capacity.availability,
                       )}
-                      onChange={value =>
+                      onChange={({ value }) =>
                         this.props.autoSaveUserProfile(
                           'meta.capacity.availability',
                           value,
@@ -190,21 +181,24 @@ class JobSchedule extends React.Component {
                 <div className={theme.inputRow}>
                   <span>Same day job requests</span>
                   <Switch
-                    checked={userMeta.capacity.same_day_jobs}
+                    checked={meta.capacity.same_day_jobs}
                     onChange={value =>
                       this.props.autoSaveUserProfile('meta.capacity.same_day_jobs', value)
                     }
                   >
-                    {userMeta.capacity.same_day_jobs ? 'Yes' : 'No'}
+                    {meta.capacity.same_day_jobs ? 'Yes' : 'No'}
                   </Switch>
                 </div>
 
                 <div className={theme.inputRow}>
                   <span>Days out I can be scheduled</span>
+
                   <div className={theme.dropdown}>
                     <Dropdown
-                      value={state.form.daysScheduled}
-                      onChange={value => handleChange('daysScheduled', value)}
+                      value={days.find(({ value }) => value === meta.capacity.days_out)}
+                      onChange={({ value }) =>
+                        this.props.autoSaveUserProfile('meta.capacity.days_out', value)
+                      }
                       options={days}
                       height={33}
                       width={120}
@@ -224,6 +218,7 @@ class JobSchedule extends React.Component {
                 </div>
               </div>
             )}
+
             {this.state.activeTabIndex === 1 && <Exceptions />}
             <hr className={theme.divider} />
           </>
@@ -249,7 +244,7 @@ export const mapStateToProps = state => ({
   jobs: findJobs(state),
   jobsLoading: findJobsLoading(state),
   jobsError: findJobsError(state),
-  userMeta: findUserMeta(state),
+  userProfile: findUserProfile(state),
 })
 
 export const mapActionsToProps = { getUserJobs, autoSaveUserProfile }

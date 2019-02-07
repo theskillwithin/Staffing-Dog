@@ -1,5 +1,6 @@
 import set from 'lodash/set'
 import get from 'lodash/get'
+import omit from 'lodash/omit'
 import { API_ROOT } from '@sdog/utils/api'
 
 import { createActionTypes, reduxRegister, buildStore } from '../tools'
@@ -351,14 +352,17 @@ export const autoSaveUserProfile = (name, value) => (dispatch, getState) => {
       method: 'PUT',
       data: {
         id: findUserId(getState()) || getUserId(),
-        data: set(
-          {
-            addresses: findUserProfile(state).addresses,
-            meta: findUserMeta(state),
-            preferences: findUserPreferences(state),
-          },
-          name,
-          value,
+        data: omit(
+          set(
+            {
+              addresses: findUserProfile(state).addresses,
+              meta: findUserMeta(state),
+              preferences: findUserPreferences(state),
+            },
+            name,
+            value,
+          ),
+          ['addresses.geocode'],
         ),
       },
     },
@@ -375,6 +379,7 @@ reducers = {
       name,
       value: get(state.profile, name),
     },
+    lastUpdated: new Date().getTime(),
   }),
   [autoSaveUserProfileTypes.SUCCESS]: (state, { data: { user, ...data } }) => ({
     ...state,
@@ -383,6 +388,7 @@ reducers = {
       ...data,
       ...user,
     },
+    lastUpdated: new Date().getTime(),
   }),
   [autoSaveUserProfileTypes.ERROR]: (state, payload) => ({
     ...state,
@@ -396,6 +402,7 @@ reducers = {
         : state.profile),
       ...spreadLoadingError(false, payload.error || 'error'),
     },
+    lastUpdated: new Date().getTime(),
   }),
 }
 

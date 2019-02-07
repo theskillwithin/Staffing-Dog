@@ -2,9 +2,9 @@ import React from 'react'
 import { object, func, array } from 'prop-types'
 import Arrow from '@sdog/components/svg/Arrow'
 
-import theme from './theme.css'
-
 import Button from '../../../../../components/button'
+
+import theme from './theme.css'
 
 const Nav = ({ steps, goToStep, history }) => (
   <Button

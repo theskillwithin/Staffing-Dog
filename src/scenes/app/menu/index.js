@@ -45,15 +45,10 @@ class MainMenu extends React.Component {
         >
           {this.state.mobileActive ? <CloseIcon /> : <Hambuger />}
         </button>
-        <ul
-          className={clsx(theme.nav, this.state.mobileActive && theme.mobileActive)}
-        >
+        <ul className={clsx(theme.nav, this.state.mobileActive && theme.mobileActive)}>
           <li className={theme.navItem}>
             <Link
-              className={clsx(
-                theme.navItemLink,
-                this.isActive(/^\/$/) && theme.active,
-              )}
+              className={clsx(theme.navItemLink, this.isActive(/^\/$/) && theme.active)}
               to="/"
               onClick={this.handleClickOutside}
             >
@@ -62,10 +57,7 @@ class MainMenu extends React.Component {
           </li>
           <li className={theme.navItem}>
             <Link
-              className={clsx(
-                theme.navItemLink,
-                this.isActive(/search/) && theme.active,
-              )}
+              className={clsx(theme.navItemLink, this.isActive(/search/) && theme.active)}
               to="/search"
               onClick={this.handleClickOutside}
             >

@@ -169,6 +169,7 @@ config.plugins = [
 
 // DevServer
 config.devServer = {
+  port: 8080,
   stats: {
     children: false,
     chunks: false,
