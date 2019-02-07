@@ -107,24 +107,15 @@ reducers = {
     ...state,
     auth: { ...state.auth, loading: false, error: true },
   }),
-  [userLoginTypes.SUCCESS]: (
-    state,
-    {
-      data: {
-        user,
-        full_profile: { user: userProfile, ...userFullProfile },
-      },
-    },
-  ) => ({
+  [userLoginTypes.SUCCESS]: (state, { data: { user, ...userData } }) => ({
     ...state,
     auth: { ...state.auth, loading: true, error: false },
     profile: {
       ...state.profile,
       loading: false,
       error: false,
-      ...(user || {}),
-      ...(userProfile || {}),
-      ...(userFullProfile || {}),
+      ...userData,
+      ...user,
     },
   }),
 }
@@ -151,15 +142,11 @@ export const registerUser = ({ onSuccess = false, onError = false, ...data }) =>
   },
 })
 
-const formatProfileData = (
-  profile,
-  { user, full_profile: { user: userProfile, ...userFullProfile } },
-) => ({
+const formatProfileData = (profile, { user, ...userData }) => ({
   ...profile,
   ...spreadLoadingError(false, false),
+  ...(userData || {}),
   ...(user || {}),
-  ...(userProfile || {}),
-  ...(userFullProfile || {}),
 })
 
 reducers = {
@@ -195,7 +182,7 @@ export const updateRegisterUser = ({ onSuccess = false, onError = false, ...data
   api: {
     url: `${API_ROOT}/register`,
     method: 'PUT',
-    data,
+    data: omit(data, ['addresses.geocode']),
     callbacks: {
       success: onSuccess,
       error: onError,
