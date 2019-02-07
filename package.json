@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "description": "",
   "main": "src/index.js",
+  "engines": {
+    "node": ">=10.15.1",
+    "yarn": ">=1.13.0"
+  },
   "scripts": {
     "start": "webpack-dev-server --mode development",
     "start:open": "webpack-dev-server --mode development --open",
