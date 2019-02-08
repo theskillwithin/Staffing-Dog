@@ -91,7 +91,7 @@ class Login extends React.Component {
                 type="password"
                 thumbprint
               />
-              <Button primary round type="submit" size="medium" onClick={() => {}}>
+              <Button primary round type="submit" size="medium">
                 Sign In
               </Button>
             </form>
