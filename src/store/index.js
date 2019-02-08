@@ -1,6 +1,6 @@
 import { combineReducers, createStore, compose, applyMiddleware } from 'redux'
 import thunkMiddleware from 'redux-thunk'
-import { IS_DEV } from '@sdog/utils/env'
+import { IS_DEV, IS_STAGE } from '@sdog/utils/env'
 
 import { reduxRegister } from './tools'
 import apiActionMiddleware from './apiActionMiddleware'
@@ -8,7 +8,7 @@ import apiActionMiddleware from './apiActionMiddleware'
 const isBrowser = typeof window !== 'undefined'
 
 const composeEnhancers =
-  isBrowser && IS_DEV && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ // eslint-disable-line no-underscore-dangle
+  isBrowser && (IS_DEV || IS_STAGE) && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ // eslint-disable-line no-underscore-dangle
     ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ // eslint-disable-line no-underscore-dangle
     : compose
 
