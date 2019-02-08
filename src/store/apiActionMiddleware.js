@@ -1,7 +1,8 @@
+import get from 'lodash/get'
 import axios from '@sdog/utils/api'
 
 import { createActionTypes } from './createAction'
-import { setToken, getToken } from './storage'
+import { setToken, getToken, removeAllAuth } from './storage'
 import { USER_SET_TOKEN, findToken, findFingerprint } from './user'
 
 const AUTH_TOKEN_NAME = 'x-auth-token'
@@ -78,6 +79,11 @@ export default ({ dispatch, getState }) => next => async action => {
     // run any callbacks sent in the action arguments { onSuccess, onErorr }
     if (callbacks && callbacks.error) {
       callbacks.error(error)
+    }
+
+    if (get(error, 'response.status') === 401) {
+      removeAllAuth()
+      window.location.assign('/login')
     }
   }
 

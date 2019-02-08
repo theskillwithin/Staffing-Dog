@@ -9,6 +9,7 @@ import Tabs from '@sdog/components/tab_bar'
 import Input from '@sdog/components/input'
 import Button from '@sdog/components/button'
 import Arrow from '@sdog/components/svg/Arrow'
+import { IS_DEV, IS_STAGE } from '@sdog/utils/env'
 
 import { login, setToken } from '../../store/user'
 import appTheme from '../app/theme.css'
@@ -25,8 +26,8 @@ class Login extends React.Component {
   state = {
     activeTabIndex: 0,
     form: {
-      email: '',
-      password: '',
+      email: IS_DEV || IS_STAGE ? 'romelu@lukaku.com' : '',
+      password: IS_DEV || IS_STAGE ? 'password1' : '',
     },
   }
 
@@ -47,7 +48,8 @@ class Login extends React.Component {
     this.setState(state => ({ form: { ...state.form, [label]: value } }))
   }
 
-  submit = () => {
+  submit = e => {
+    e.preventDefault()
     const {
       state: {
         form: { email, password },
