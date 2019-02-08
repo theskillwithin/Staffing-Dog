@@ -175,6 +175,8 @@ config.plugins = [
 // DevServer
 config.devServer = {
   port: 8080,
+  historyApiFallback: true,
+  contentBase: path.resolve('../dist'),
   stats: {
     ...stats,
     children: false,
