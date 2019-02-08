@@ -1,5 +1,6 @@
 import axios from 'axios'
 import qs from 'qs'
+import get from 'lodash/get'
 import { removeAllAuth } from '@sdog/store/storage'
 
 import { SIM, IS_DEV, IS_STAGE } from './env'
@@ -16,25 +17,32 @@ export const API_ROOT = IS_DEV ? LOCAL_API_ROOT : PROD_API_ROOT
 
 const axiosInstance = axios.create({
   withCredentials: true,
+  paramsSerializer: params => qs.stringify(params),
 })
 
+const unauthorizedUser = () => {
+  removeAllAuth()
+  window.location.assign('/login')
+}
+
 axiosInstance.interceptors.response.use(
-  res => res,
-  error => {
-    if (
-      400 === error.response.status &&
-      'No User/Profile found.' === error.response.data.error
-    ) {
-      // clear cookies
-      removeAllAuth()
-      // redirect to login page
-      window.location = '/login'
+  res => {
+    if (res.status >= 400) {
+      if (res.status === 401) {
+        unauthorizedUser()
+      }
+
+      return Promise.reject(res)
     }
 
+    return Promise.resolve(res)
+  },
+  error => {
+    if (get(error, 'response.status') === 401) {
+      unauthorizedUser()
+    }
     return Promise.reject(error)
   },
 )
-
-axiosInstance.defaults.paramsSerializer = params => qs.stringify(params)
 
 export default axiosInstance
