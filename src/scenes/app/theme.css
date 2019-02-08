@@ -137,17 +137,11 @@ h6 {
           margin-top: 0;
         }
       }
-
-      & + .column {
-        margin-top: 50px;
-        @media (--sd-desktop) {
-          margin-top: 0;
-        }
-      }
     }
 
     .columnB {
       flex: 0 1 464px;
+      margin-top: 45px;
 
       > * {
         margin-top: 45px;
@@ -157,11 +151,8 @@ h6 {
         }
       }
 
-      & + .column {
-        margin-top: 50px;
-        @media (--sd-desktop) {
-          margin-top: 0;
-        }
+      @media (--sd-desktop) {
+        margin-top: 45px;
       }
     }
   }
