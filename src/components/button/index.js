@@ -63,7 +63,7 @@ Button.defaultProps = {
 }
 
 Button.propTypes = {
-  onClick: func.isRequired,
+  onClick: func,
   primary: bool,
   secondary: bool,
   secondaryDark: bool,
