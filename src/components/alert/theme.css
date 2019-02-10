@@ -20,15 +20,15 @@
 }
 
 .error {
-  border: 1px solid var(--sd-red);
-  background-color: var(--sd-red);
+  border: 1px solid var(--sd-lightRed);
+  background-color: var(--sd-lightRed);
   color: white;
   transition: background-color 0.3s, color 0.3s, transform 0.3s;
 }
 
 .error.stage0,
 .error.stage1 {
-  background-color: var(--sd-redDark);
+  background-color: var(--sd-red);
   color: white;
 }
 
