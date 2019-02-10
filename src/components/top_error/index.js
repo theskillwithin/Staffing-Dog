@@ -4,7 +4,7 @@ import clsx from 'clsx'
 
 import theme from './theme.css'
 
-export const TopError = ({
+export const SingleTopError = ({
   children,
   multiple,
   closeButton,
@@ -47,7 +47,7 @@ export const TopError = ({
   )
 }
 
-TopError.defaultProps = {
+SingleTopError.defaultProps = {
   children: null,
   multiple: null,
   autoClose: false,
@@ -55,7 +55,7 @@ TopError.defaultProps = {
   hasContainer: false,
 }
 
-TopError.propTypes = {
+SingleTopError.propTypes = {
   children: string,
   multiple: number,
   autoClose: bool,
@@ -63,14 +63,14 @@ TopError.propTypes = {
   hasContainer: bool,
 }
 
-const MultipleTopError = ({ children, autoClose, closeButton, MAX_DISPLAY_ERRORS }) => {
+const TopError = ({ children, autoClose, closeButton, MAX_DISPLAY_ERRORS }) => {
   if (!children) return null
 
   if (typeof children === 'string') {
     return (
-      <TopError autoClose={autoClose} closeButton={closeButton}>
+      <SingleTopError autoClose={autoClose} closeButton={closeButton}>
         {children}
-      </TopError>
+      </SingleTopError>
     )
   }
 
@@ -79,7 +79,7 @@ const MultipleTopError = ({ children, autoClose, closeButton, MAX_DISPLAY_ERRORS
   return (
     <div className={theme.topErrorContainer}>
       {kids.map((kid, index) => (
-        <TopError
+        <SingleTopError
           key={`toperror-${kid.charAt(0)}-${index + 1}`}
           multiple={index}
           autoClose={autoClose}
@@ -87,24 +87,24 @@ const MultipleTopError = ({ children, autoClose, closeButton, MAX_DISPLAY_ERRORS
           hasContainer
         >
           {kid}
-        </TopError>
+        </SingleTopError>
       ))}
     </div>
   )
 }
 
-MultipleTopError.defaultProps = {
+TopError.defaultProps = {
   children: false,
   autoClose: false,
   closeButton: false,
   MAX_DISPLAY_ERRORS: 5,
 }
 
-MultipleTopError.propTypes = {
+TopError.propTypes = {
   children: oneOfType([string, array, bool]),
   autoClose: bool,
   closeButton: bool,
   MAX_DISPLAY_ERRORS: number,
 }
 
-export default MultipleTopError
+export default TopError
