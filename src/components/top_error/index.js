@@ -1,9 +1,16 @@
 import React, { useState, useEffect } from 'react'
 import { string, array, number, bool, oneOfType } from 'prop-types'
+import clsx from 'clsx'
 
 import theme from './theme.css'
 
-export const TopError = ({ children, multiple, closeButton, autoClose }) => {
+export const TopError = ({
+  children,
+  multiple,
+  closeButton,
+  autoClose,
+  hasContainer,
+}) => {
   if (!children) return null
   const [delayed, setDelayed] = useState(multiple)
   const [isClose, setClose] = useState(false)
@@ -25,7 +32,7 @@ export const TopError = ({ children, multiple, closeButton, autoClose }) => {
   if (delayed) return null
 
   return (
-    <div className={theme.topError}>
+    <div className={clsx(!hasContainer && theme.topErrorContainer, theme.topError)}>
       <p>{children}</p>
       {closeButton ? (
         <button
@@ -45,6 +52,7 @@ TopError.defaultProps = {
   multiple: null,
   autoClose: false,
   closeButton: false,
+  hasContainer: false,
 }
 
 TopError.propTypes = {
@@ -52,18 +60,17 @@ TopError.propTypes = {
   multiple: number,
   autoClose: bool,
   closeButton: bool,
+  hasContainer: bool,
 }
 
 const MultipleTopError = ({ children, autoClose, closeButton, MAX_DISPLAY_ERRORS }) => {
   if (!children) return null
 
-  if (typeof children === 'string' || (children.length && children.length === 1)) {
+  if (typeof children === 'string') {
     return (
-      <div className={theme.topErrorContainer}>
-        <TopError autoClose={autoClose} closeButton={closeButton}>
-          {children}
-        </TopError>
-      </div>
+      <TopError autoClose={autoClose} closeButton={closeButton}>
+        {children}
+      </TopError>
     )
   }
 
@@ -76,7 +83,8 @@ const MultipleTopError = ({ children, autoClose, closeButton, MAX_DISPLAY_ERRORS
           key={`toperror-${kid.charAt(0)}-${index + 1}`}
           multiple={index}
           autoClose={autoClose}
-          closeButton
+          closeButton={kids.length > 1}
+          hasContainer
         >
           {kid}
         </TopError>
