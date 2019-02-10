@@ -84,13 +84,13 @@ const MultipleTopError = ({ children, autoClose, closeButton }) => {
 }
 
 MultipleTopError.defaultProps = {
-  children: null,
+  children: false,
   autoClose: false,
   closeButton: false,
 }
 
 MultipleTopError.propTypes = {
-  children: oneOfType([string, array]),
+  children: oneOfType([string, array, bool]),
   autoClose: bool,
   closeButton: bool,
 }
