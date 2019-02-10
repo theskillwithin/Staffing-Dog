@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { string, bool, object, func, oneOfType, shape } from 'prop-types'
 import { Route, Switch } from 'react-router-dom'
 import clsx from 'clsx'
+import TopError from '@sdog/components/top_error'
 
 import Logo from '../../../../components/logo'
 import LoadingBar from '../../../../components/loading_bar'
@@ -87,11 +88,7 @@ class Onboarding extends Component {
               <Contact />
             </div>
 
-            {error && (
-              <div className={theme.topError}>
-                <p>{error}</p>
-              </div>
-            )}
+            <TopError>{error}</TopError>
           </div>
 
           <div className={theme.appHeader}>
