@@ -69,18 +69,25 @@
 
   .topError {
     position: absolute;
-    top: 0;
+    top: 30px;
     right: 0;
-    left: 0;
-    background-color: red;
+    left: 50%;
+    background-color: var(--sd-lightRed);
+    max-width: 800px;
+    width: 100%;
     color: white;
     transition: all ease-in-out 300ms;
-    transform: translateZ(0);
+    transform: translateX(-50%);
     text-align: center;
+    border-radius: 8px;
+    box-shadow: 0 3px 6px 0 var(--sd-shadowColor);
+    padding: 13px 0;
 
     p {
       margin: 0;
       padding: 0.25em;
+      font-size: 14px;
+      font-weight: var(--sd-fontWeightMedium);
     }
   }
 }
