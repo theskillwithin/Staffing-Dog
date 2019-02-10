@@ -54,7 +54,7 @@ TopError.propTypes = {
   closeButton: bool,
 }
 
-const MultipleTopError = ({ children, autoClose, closeButton }) => {
+const MultipleTopError = ({ children, autoClose, closeButton, MAX_DISPLAY_ERRORS }) => {
   if (!children) return null
 
   if (typeof children === 'string' || (children.length && children.length === 1)) {
@@ -67,16 +67,18 @@ const MultipleTopError = ({ children, autoClose, closeButton }) => {
     )
   }
 
+  const kids = children.slice(0, MAX_DISPLAY_ERRORS)
+
   return (
     <div className={theme.topErrorContainer}>
-      {children.map((singleChild, index) => (
+      {kids.map((kid, index) => (
         <TopError
-          key={`toperror-${singleChild.charAt(0)}-${index + 1}`}
+          key={`toperror-${kid.charAt(0)}-${index + 1}`}
           multiple={index}
           autoClose={autoClose}
           closeButton
         >
-          {singleChild}
+          {kid}
         </TopError>
       ))}
     </div>
@@ -87,12 +89,14 @@ MultipleTopError.defaultProps = {
   children: false,
   autoClose: false,
   closeButton: false,
+  MAX_DISPLAY_ERRORS: 5,
 }
 
 MultipleTopError.propTypes = {
   children: oneOfType([string, array, bool]),
   autoClose: bool,
   closeButton: bool,
+  MAX_DISPLAY_ERRORS: number,
 }
 
 export default MultipleTopError
