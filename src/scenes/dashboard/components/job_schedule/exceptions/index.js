@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useReducer, useState } from 'react'
 import clsx from 'clsx'
 import DatePicker from '@sdog/components/date_picker'
 import Dropdown from '@sdog/components/dropdown'
@@ -12,150 +12,177 @@ import theme from './theme.css'
 const time = timesOfDay(false, true).map(hour => ({ label: hour, value: hour }))
 const min = minBy15.map(hour => ({ label: hour, value: hour }))
 
-class Exceptions extends React.Component {
-  list = [
-    {
-      id: 1,
-      startDate: '7/4/2019',
-      startTime: '5:00 am',
-      endDate: '7/4/2019',
-      endTime: '7:15 pm',
-      type: 'blue',
-    },
-    {
-      id: 2,
-      startDate: '7/4/2019',
-      startTime: '5:00 am',
-      endDate: '7/4/2019',
-      endTime: '7:15 pm',
-      type: 'red',
-    },
-    {
-      id: 3,
-      startDate: '7/4/2019',
-      startTime: '5:00 am',
-      endDate: '7/4/2019',
-      endTime: '7:15 pm',
-      type: 'red',
-    },
-    {
-      id: 4,
-      startDate: '7/4/2019',
-      startTime: '5:00 am',
-      endDate: '7/4/2019',
-      endTime: '7:15 pm',
-      type: 'red',
-    },
-  ]
+const listOfDefaultExceptions = [
+  {
+    id: 1,
+    startDate: '7/4/2019',
+    startTime: '5:00 am',
+    endDate: '7/4/2019',
+    endTime: '7:15 pm',
+    type: 'blue',
+  },
+  {
+    id: 2,
+    startDate: '7/4/2019',
+    startTime: '5:00 am',
+    endDate: '7/4/2019',
+    endTime: '7:15 pm',
+    type: 'red',
+  },
+  {
+    id: 3,
+    startDate: '7/4/2019',
+    startTime: '5:00 am',
+    endDate: '7/4/2019',
+    endTime: '7:15 pm',
+    type: 'red',
+  },
+  {
+    id: 4,
+    startDate: '7/4/2019',
+    startTime: '5:00 am',
+    endDate: '7/4/2019',
+    endTime: '7:15 pm',
+    type: 'red',
+  },
+]
 
-  state = {
-    form: {
-      switch: false,
-      startTime: time[0],
-      startMin: min[0],
-      endTime: time[0],
-      endMin: min[0],
-    },
-    delete: null,
+const exceptionsReducer = (state, action) => {
+  switch (action.type) {
+    case 'delete':
+      return state.filter(({ id }) => id !== action.id)
+    case 'add':
+      return [...state, { ...action.exception, id: new Date().getTime() }]
+    default:
+      return state
+  }
+}
+
+const Exceptions = () => {
+  const [startTime, setStartTime] = useState('')
+  const [startMin, setStartMin] = useState('')
+  const [endTime, setEndTime] = useState('')
+  const [endMin, setEndMin] = useState('')
+  const [availability, setAvailability] = useState(true)
+  const [deleteId, deleteException] = useState(false)
+  const [exceptions, dispatch] = useReducer(exceptionsReducer, listOfDefaultExceptions)
+
+  const submitNewException = () => {
+    dispatch({
+      type: 'add',
+      exception: {
+        startTime,
+        startMin,
+        endTime,
+        endMin,
+        type: availability ? 'blue' : 'red',
+      },
+    })
+
+    setStartTime('')
+    setStartMin('')
+    setEndTime('')
+    setEndMin('')
+    setAvailability(true)
   }
 
-  handleChange = (input, value) => {
-    this.setState(state => ({ form: { ...state.form, [input]: value } }))
-  }
+  return (
+    <div className={theme.root}>
+      <h4>Add a new availability exception</h4>
 
-  toggleDelete = index => {
-    this.setState({ delete: index })
-  }
-
-  render() {
-    return (
-      <div className={theme.root}>
-        <h4>Add a new availability exception</h4>
-
-        <div className={theme.exceptionRow}>
-          <DatePicker label="Exception Start" />
-          <Dropdown
-            value={this.state.form.startTime}
-            onChange={value => this.handleChange('startTime', value)}
-            options={time}
-            height={33}
-            width={84}
-            small
-          />
-          <span>:</span>
-          <Dropdown
-            value={this.state.form.startMin}
-            onChange={value => this.handleChange('startMin', value)}
-            options={min}
-            height={33}
-            width={61}
-            small
-          />
-        </div>
-
-        <div className={theme.exceptionRow}>
-          <DatePicker label="Exception End" />
-          <Dropdown
-            value={this.state.form.endTime}
-            onChange={value => this.handleChange('endTime', value)}
-            options={time}
-            height={33}
-            width={84}
-            small
-          />
-          <span>:</span>
-          <Dropdown
-            value={this.state.form.endMin}
-            onChange={value => this.handleChange('endMin', value)}
-            options={min}
-            height={33}
-            width={61}
-            small
-          />
-        </div>
-
-        <div className={theme.inputRow}>
-          <div className={theme.available}>
-            <span>Available</span>
-            <Switch
-              checked={this.state.form.switch}
-              onChange={value => this.handleChange('switch', value)}
-            >
-              {this.state.form.switch ? 'Yes' : 'No'}
-            </Switch>
-          </div>
-          <Button primary>Add Exception</Button>
-        </div>
-        {this.list &&
-          this.list.length &&
-          this.list.map(exception => (
-            <div
-              key={exception.id}
-              className={clsx(theme.exception, exception.type && theme[exception.type])}
-            >
-              {this.state.delete === exception.id && (
-                <div className={theme.delete}>
-                  <Button>Cancel Delete</Button>
-                  <Button red>Confirm Delete</Button>
-                </div>
-              )}
-              <span className={theme.startDate}>{exception.startDate}</span>
-              <span className={theme.startTime}>{exception.startTime}</span>
-              <Arrow />
-              <span className={theme.endDate}>{exception.endDate}</span>
-              <span className={theme.endTime}>{exception.endTime}</span>
-              <button
-                className={theme.close}
-                type="button"
-                onClick={() => this.toggleDelete(exception.id)}
-              >
-                &times;
-              </button>
-            </div>
-          ))}
+      <div className={theme.exceptionRow}>
+        <DatePicker label="Exception Start" />
+        <Dropdown
+          value={startTime}
+          onChange={setStartTime}
+          options={time}
+          height={33}
+          width={84}
+          small
+        />
+        <span>:</span>
+        <Dropdown
+          value={startMin}
+          onChange={setStartMin}
+          options={min}
+          height={33}
+          width={61}
+          small
+        />
       </div>
-    )
-  }
+
+      <div className={theme.exceptionRow}>
+        <DatePicker label="Exception End" />
+        <Dropdown
+          value={endTime}
+          onChange={setEndTime}
+          options={time}
+          height={33}
+          width={84}
+          small
+        />
+        <span>:</span>
+        <Dropdown
+          value={endMin}
+          onChange={setEndMin}
+          options={min}
+          height={33}
+          width={61}
+          small
+        />
+      </div>
+
+      <div className={theme.inputRow}>
+        <div className={theme.available}>
+          <span>Available</span>
+          <Switch checked={availability} onChange={setAvailability}>
+            {availability ? 'Yes' : 'No'}
+          </Switch>
+        </div>
+        <Button primary onClick={submitNewException}>
+          Add Exception
+        </Button>
+      </div>
+
+      {exceptions &&
+        exceptions.length &&
+        exceptions.map(exception => (
+          <div
+            key={exception.id}
+            className={clsx(theme.exception, exception.type && theme[exception.type])}
+          >
+            {deleteId === exception.id && (
+              <div className={theme.delete}>
+                <Button secondary onClick={() => deleteException(false)}>
+                  Cancel Delete
+                </Button>
+                <Button
+                  red
+                  onClick={() => {
+                    dispatch({ type: 'delete', id: deleteId })
+                    deleteException(false)
+                  }}
+                >
+                  Confirm Delete
+                </Button>
+              </div>
+            )}
+            <span className={theme.startDate}>{exception.startDate}</span>
+            <span className={theme.startTime}>{exception.startTime}</span>
+            <Arrow />
+            <span className={theme.endDate}>{exception.endDate}</span>
+            <span className={theme.endTime}>{exception.endTime}</span>
+            <button
+              className={theme.close}
+              type="button"
+              onClick={() => deleteException(exception.id)}
+            >
+              &times;
+            </button>
+          </div>
+        ))}
+    </div>
+  )
 }
 
 export default Exceptions
