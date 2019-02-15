@@ -386,6 +386,8 @@ export const goToStep = ({ currentStep, nextStep, history }) => (dispatch, getSt
   }
 
   if (step && nextStep === step.nextStep) {
+    // check validation
+    // check required validation
     const requireds = filter(getSteps(step), { required: true })
     const isRequired = requireds
       .map(
@@ -400,6 +402,37 @@ export const goToStep = ({ currentStep, nextStep, history }) => (dispatch, getSt
           actions.goToStepFailed({
             error: 'You must complete the required fields.',
             errorFields: isRequired,
+            nextStep,
+          }),
+        ),
+      )
+    }
+
+    // check validation types
+
+    const isInvalid = (name, validation) => {
+      if (validation === 'email') {
+        return !/@/.test(values[name]) && 'not a valid email!'
+      }
+      return false
+    }
+
+    const validations = filter(
+      getSteps(step),
+      s => s.validation && s.validation.length,
+    ).map(validation => ({
+      name: validation.name,
+      invalid: isInvalid(validation.name, validation.validation),
+    }))
+
+    const invalids = filter(validations, validation => validation.invalid)
+
+    if (invalids && invalids.length) {
+      return Promise.resolve(
+        dispatch(
+          actions.goToStepFailed({
+            error: invalids.map(invalid => invalid.invalid),
+            errorFields: invalids.map(invalid => invalid.name),
             nextStep,
           }),
         ),

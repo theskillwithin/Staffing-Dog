@@ -64,6 +64,7 @@ export const professional = [
         type: 'input',
         formType: 'email',
         required: true,
+        validation: 'email',
       },
       {
         name: 'password',
@@ -71,6 +72,7 @@ export const professional = [
         type: 'input',
         formType: 'password',
         required: true,
+        validation: 'password',
       },
       {
         name: 'password_confirmation',
@@ -78,6 +80,7 @@ export const professional = [
         type: 'input',
         formType: 'password',
         required: true,
+        validation: 'passwordMatch',
       },
     ],
   },
