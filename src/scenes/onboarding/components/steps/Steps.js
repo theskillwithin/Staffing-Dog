@@ -85,7 +85,14 @@ class Steps extends React.Component {
           props.options = Steps.formatDropdownOptions(field.options)
         }
 
-        return <Dropdown {...props} />
+        return (
+          <Dropdown
+            invalid={
+              this.props.errorFields && this.props.errorFields.includes(field.name)
+            }
+            {...props}
+          />
+        )
     }
 
     return null
