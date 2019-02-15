@@ -414,6 +414,9 @@ export const goToStep = ({ currentStep, nextStep, history }) => (dispatch, getSt
       if (validation === 'email') {
         return !/@/.test(values[name]) && 'not a valid email!'
       }
+      if (validation === 'passwordMatch') {
+        return !(values[name] === values.password) && 'passwords do not match!'
+      }
       return false
     }
 
