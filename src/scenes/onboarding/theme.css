@@ -66,23 +66,6 @@
   .appTopInner {
     display: none;
   }
-
-  .topError {
-    position: absolute;
-    top: 0;
-    right: 0;
-    left: 0;
-    background-color: red;
-    color: white;
-    transition: all ease-in-out 300ms;
-    transform: translateZ(0);
-    text-align: center;
-
-    p {
-      margin: 0;
-      padding: 0.25em;
-    }
-  }
 }
 
 .appTopLoading {

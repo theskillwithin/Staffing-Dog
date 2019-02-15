@@ -1,6 +1,8 @@
 import find from 'lodash/find'
 import get from 'lodash/get'
 import isEmpty from 'lodash/isEmpty'
+import reduce from 'lodash/reduce'
+import filter from 'lodash/filter'
 import build from '@sdog/store/build'
 import {
   registerUser,
@@ -38,6 +40,8 @@ export const INITIAL_STATE = {
   },
   type: 'professional',
   values: {},
+  error: false,
+  errorFields: false,
 }
 
 // take data from api and format for the onboarding redux store
@@ -189,6 +193,7 @@ export const reducers = {
     loadingNextStep: false,
     loadingNextStepValue: false,
     error: payload.error,
+    errorFields: payload.errorFields,
   }),
   [SAVE_STEP]: (state, payload) => ({
     ...state,
@@ -252,9 +257,9 @@ export const actions = {
     type: GO_TO_STEP_SUCCESS,
     payload: { nextStep },
   }),
-  goToStepFailed: ({ error, nextStep }) => ({
+  goToStepFailed: ({ error, nextStep, errorFields }) => ({
     type: GO_TO_STEP_FAILED,
-    payload: { nextStep, error },
+    payload: { nextStep, error, errorFields },
   }),
   setStep: step => ({
     type: SET_STEP,
@@ -362,13 +367,88 @@ export const goToStep = ({ currentStep, nextStep, history }) => (dispatch, getSt
   const steps = findSteps(state)
   const type = findType(state)
   const step = currentStep ? find(steps, s => s.step === currentStep) : false
+  const { values } = state.steps
+
+  const getSteps = stepArray => {
+    if (stepArray && stepArray.fields) {
+      return reduce(
+        stepArray.fields,
+        (all, field) => {
+          if (field.fields) {
+            return [...all, ...getSteps(field)]
+          }
+          return [...all, field]
+        },
+        [],
+      )
+    }
+    return false
+  }
 
   if (step && nextStep === step.nextStep) {
+    // check validation
+    // check required validation
+    const requireds = filter(getSteps(step), { required: true })
+    const isRequired = requireds
+      .map(
+        required =>
+          !(values[required.name] && values[required.name].length > 0) && required.name,
+      )
+      .filter(Boolean)
+
+    if (isRequired && isRequired.length) {
+      return Promise.resolve(
+        dispatch(
+          actions.goToStepFailed({
+            error: 'You must complete the required fields.',
+            errorFields: isRequired,
+            nextStep,
+          }),
+        ),
+      )
+    }
+
+    // check validation types
+
+    const isInvalid = (name, validation) => {
+      if (validation === 'email') {
+        return !/@/.test(values[name]) && 'Not a valid email.'
+      }
+      if (validation === 'passwordMatch') {
+        return (
+          !(values[name] === values.password) &&
+          'Password and Verify Password must match.'
+        )
+      }
+      return false
+    }
+
+    const validations = filter(
+      getSteps(step),
+      s => s.validation && s.validation.length,
+    ).map(validation => ({
+      name: validation.name,
+      invalid: isInvalid(validation.name, validation.validation),
+    }))
+
+    const invalids = filter(validations, validation => validation.invalid)
+
+    if (invalids && invalids.length) {
+      return Promise.resolve(
+        dispatch(
+          actions.goToStepFailed({
+            error: invalids.map(invalid => invalid.invalid),
+            errorFields: invalids.map(invalid => invalid.name),
+            nextStep,
+          }),
+        ),
+      )
+    }
+
     // check if current step is complete
     if (
-      step.needsComplete &&
-      (step.needsCompleteIfToken && findToken(getState())) &&
-      !step.complete
+      (step.needsComplete && step.needsCompleteIfToken && findToken(getState())) ||
+      (step.needsComplete && !step.complete)
     ) {
       return Promise.resolve(
         dispatch(
@@ -416,5 +496,6 @@ export const findSavingStepValue = state => findState(state).savingStepValue
 export const findLoadingNextStep = state => findState(state).loadingNextSteps
 export const findLoadingNextStepValue = state => findState(state).loadingNextStepValue
 export const findError = state => findState(state).error
+export const findErrorFields = state => findState(state).errorFields
 export const findStepValues = state => findState(state).values
 export const findLoading = () => false // findLoadingNextStep(state) || findSavingStep(state)
