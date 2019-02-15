@@ -63,7 +63,7 @@ SingleTopError.propTypes = {
   hasContainer: bool,
 }
 
-const TopError = ({ children, autoClose, closeButton, MAX_DISPLAY_ERRORS }) => {
+const TopError = ({ children, autoClose, closeButton, maxDisplayErrors }) => {
   if (!children) return null
 
   if (typeof children === 'string') {
@@ -74,7 +74,7 @@ const TopError = ({ children, autoClose, closeButton, MAX_DISPLAY_ERRORS }) => {
     )
   }
 
-  const kids = children.slice(0, MAX_DISPLAY_ERRORS)
+  const kids = children.slice(0, maxDisplayErrors)
 
   return (
     <div className={theme.topErrorContainer}>
@@ -97,14 +97,14 @@ TopError.defaultProps = {
   children: false,
   autoClose: false,
   closeButton: false,
-  MAX_DISPLAY_ERRORS: 5,
+  maxDisplayErrors: 5,
 }
 
 TopError.propTypes = {
   children: oneOfType([string, array, bool]),
   autoClose: bool,
   closeButton: bool,
-  MAX_DISPLAY_ERRORS: number,
+  maxDisplayErrors: number,
 }
 
 export default TopError
