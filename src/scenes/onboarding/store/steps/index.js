@@ -368,7 +368,6 @@ export const goToStep = ({ currentStep, nextStep, history }) => (dispatch, getSt
   const type = findType(state)
   const step = currentStep ? find(steps, s => s.step === currentStep) : false
   const { values } = state.steps
-  console.log({ values })
 
   const getSteps = stepArray => {
     if (stepArray && stepArray.fields) {
@@ -386,8 +385,6 @@ export const goToStep = ({ currentStep, nextStep, history }) => (dispatch, getSt
     return false
   }
 
-  console.log('getSteps', getSteps(step))
-
   if (step && nextStep === step.nextStep) {
     const requireds = filter(getSteps(step), { required: true })
     const isRequired = requireds
@@ -396,7 +393,6 @@ export const goToStep = ({ currentStep, nextStep, history }) => (dispatch, getSt
           !(values[required.name] && values[required.name].length > 0) && required.name,
       )
       .filter(Boolean)
-    console.log({ isRequired })
 
     if (isRequired && isRequired.length) {
       return Promise.resolve(
