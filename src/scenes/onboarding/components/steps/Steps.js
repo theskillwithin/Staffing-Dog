@@ -1,5 +1,5 @@
 import React from 'react'
-import { object, func, array, string, shape } from 'prop-types'
+import { object, func, array, string, shape, oneOfType, bool } from 'prop-types'
 import clsx from 'clsx'
 import find from 'lodash/find'
 import map from 'lodash/map'
@@ -61,7 +61,15 @@ class Steps extends React.Component {
 
     switch (field.type) {
       case 'input':
-        return <Input type={field.formType || 'text'} {...props} />
+        return (
+          <Input
+            type={field.formType || 'text'}
+            invalid={
+              this.props.errorFields && this.props.errorFields.includes(field.name)
+            }
+            {...props}
+          />
+        )
       case 'dropdown':
         if (field.optionsByValue) {
           const value = field.optionsByValue.name && getValue(field.optionsByValue.name)
@@ -127,6 +135,7 @@ Steps.propTypes = {
   stepValues: object.isRequired,
   setValue: func.isRequired,
   setStep: func.isRequired,
+  errorFields: oneOfType([array, bool]),
 }
 
 export default Steps
