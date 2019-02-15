@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { string, bool, object, func, oneOfType, shape } from 'prop-types'
+import { string, bool, object, func, oneOfType, shape, array } from 'prop-types'
 import { Route, Switch } from 'react-router-dom'
 import clsx from 'clsx'
 import TopError from '@sdog/components/top_error'
@@ -20,7 +20,7 @@ import theme from '../../theme.css'
 
 class Onboarding extends Component {
   static propTypes = {
-    error: oneOfType([bool, string]),
+    error: oneOfType([bool, string, array]),
     loading: oneOfType([bool, string]),
     location: object.isRequired,
     match: shape({
