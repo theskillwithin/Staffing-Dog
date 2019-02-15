@@ -3,6 +3,7 @@ import { object, func, array, string, shape, oneOfType, bool } from 'prop-types'
 import clsx from 'clsx'
 import find from 'lodash/find'
 import map from 'lodash/map'
+import includes from 'lodash/includes'
 
 import Input from '../../../../components/input'
 import Dropdown from '../../../../components/dropdown'
@@ -65,7 +66,7 @@ class Steps extends React.Component {
           <Input
             type={field.formType || 'text'}
             invalid={
-              this.props.errorFields && this.props.errorFields.includes(field.name)
+              this.props.errorFields && includes(this.props.errorFields, field.name)
             }
             {...props}
           />
@@ -88,7 +89,7 @@ class Steps extends React.Component {
         return (
           <Dropdown
             invalid={
-              this.props.errorFields && this.props.errorFields.includes(field.name)
+              this.props.errorFields && includes(this.props.errorFields, field.name)
             }
             {...props}
           />
