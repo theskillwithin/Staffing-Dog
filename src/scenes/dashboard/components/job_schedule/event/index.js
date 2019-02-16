@@ -1,59 +1,55 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { object, bool } from 'prop-types'
+import get from 'lodash/get'
 import clsx from 'clsx'
 import NearMeIcon from '@sdog/components/svg/NearMe'
 import Map from '@sdog/components/map'
 
 import theme from './theme.css'
 
-class JobScheduleEvent extends React.Component {
-  static propTypes = {
-    event: object.isRequired,
-    open: bool,
-  }
+const JobScheduleEvent = ({ open, event }) => {
+  const [isOpen, setIsOpen] = useState(open)
 
-  static defaultProps = {
-    open: false,
-  }
+  if (!event) return null
 
-  state = { open: this.props.open || false }
+  const practice = get(event, 'criteria.practice_details', {})
 
-  handleClick = () => this.setState(state => ({ open: !state.open }))
+  return (
+    <div>
+      <button type="button" className={theme.event} onClick={() => setIsOpen(!isOpen)}>
+        <h2 className={theme.red}>{event.date}</h2>
 
-  render() {
-    const {
-      handleClick,
-      state,
-      props: { event },
-    } = this
-
-    if (!event) return null
-
-    return (
-      <div>
-        <button type="button" className={theme.event} onClick={handleClick}>
-          <h2 className={event.type && theme[event.type]}>{event.date}</h2>
-
-          <div className={theme.eventDetails}>
-            <h5>
-              {event.location} @ {event.time}
-            </h5>
-            <h6>{event.address}</h6>
-          </div>
-
-          <NearMeIcon />
-        </button>
-
-        <div className={clsx(theme.map, state.open && theme.open)}>
-          <Map
-            isMarkerShown
-            position={{ lat: 40.764411, lng: -111.891559 }}
-            defaultCenter={{ lat: 40.764411, lng: -111.891559 }}
-          />
+        <div className={theme.eventDetails}>
+          <h5>
+            {practice.name} @ {event.time || 'n/a'}
+          </h5>
+          <h6>
+            {practice.address.line_1} {practice.address.city}, {practice.address.state}{' '}
+            {practice.address.zip}
+          </h6>
         </div>
+
+        <NearMeIcon />
+      </button>
+
+      <div className={clsx(theme.map, isOpen && theme.open)}>
+        <Map
+          isMarkerShown
+          position={{ lat: 40.764411, lng: -111.891559 }}
+          defaultCenter={{ lat: 40.764411, lng: -111.891559 }}
+        />
       </div>
-    )
-  }
+    </div>
+  )
+}
+
+JobScheduleEvent.propTypes = {
+  event: object.isRequired,
+  open: bool,
+}
+
+JobScheduleEvent.defaultProps = {
+  open: false,
 }
 
 export default JobScheduleEvent

@@ -75,7 +75,7 @@ Card.defaultProps = {
 
 Card.propTypes = {
   title: string,
-  icon: node,
+  icon: oneOfType([func, node]),
   header: oneOfType([func, bool]),
   children: node.isRequired,
   actionCb: oneOfType([func, bool]),

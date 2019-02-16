@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import clsx from 'clsx'
 import { setTitle, setHtmlClass, removeHtmlClass } from '@sdog/utils/document'
 
@@ -8,30 +8,26 @@ import ToDoList from './components/to_do_list'
 import Messages from './components/messages'
 import JobSchedule from './components/job_schedule'
 
-class Dashboard extends React.Component {
-  componentDidMount() {
+const Dashboard = () => {
+  useEffect(() => {
     setTitle('Dashboard')
     setHtmlClass('html-app')
-  }
 
-  componentWillUnmount() {
-    removeHtmlClass('html-app')
-  }
+    return () => removeHtmlClass('html-app')
+  })
 
-  render() {
-    return (
-      <div className={clsx(theme.pageContent, theme.columns)}>
-        <div className={theme.columnA}>
-          <ToDoList />
-          <Messages />
-        </div>
-
-        <div className={theme.columnB}>
-          <JobSchedule />
-        </div>
+  return (
+    <div className={clsx(theme.pageContent, theme.columns)}>
+      <div className={theme.columnA}>
+        <ToDoList />
+        <Messages />
       </div>
-    )
-  }
+
+      <div className={theme.columnB}>
+        <JobSchedule />
+      </div>
+    </div>
+  )
 }
 
 export default Dashboard

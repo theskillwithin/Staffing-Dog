@@ -131,19 +131,14 @@ class SearchResults extends React.Component {
     ]
 
     const jobTypes = [
-      { label: 'hygienist', value: 'hygienist' },
+      { label: 'dental_hygienist', value: 'dental_hygienist' },
       { label: 'Dentist', value: 'Dentist' },
-      { label: 'Dentist2', value: 'Dentist2' },
-      { label: 'Dentist3', value: 'Dentist3' },
-      { label: 'Dentist4', value: 'Dentist4' },
     ]
 
     const jobPositions = [
-      { label: 'hygienist', value: 'hygienist' },
-      { label: 'Dentist', value: 'Dentist' },
-      { label: 'Dentist2', value: 'Dentist2' },
-      { label: 'Dentist3', value: 'Dentist3' },
-      { label: 'Dentist4', value: 'Dentist4' },
+      { label: 'Full Time', value: 'full_time' },
+      { label: 'Part Time', value: 'part_time' },
+      { label: 'Temp', value: 'temporary' },
     ]
 
     return (
@@ -195,7 +190,7 @@ class SearchResults extends React.Component {
                           to={`/search/job/${job.slug}`}
                           className={clsx(theme.title, job.new && theme.new)}
                         >
-                          {job.criteria.title}
+                          {get(job, 'criteria.title', 'Job')}
                         </Link>
                         {/* <div className={clsx(theme.star, job.star && theme.active)}>
                           <button onClick={() => this.toggleFav(job.id)} type="button">
@@ -203,23 +198,40 @@ class SearchResults extends React.Component {
                           </button>
                         </div> */}
                         <div className={theme.location}>
-                          <span>{job.criteria.provider_details.city}, </span>
-                          <span>{job.criteria.provider_details.state}</span>
-                          <span>{job.distance || 'unkown'} miles away</span>
+                          <span>
+                            {get(job, 'criteria.practice_details.address.city', 'city')},{' '}
+                          </span>
+                          <span>
+                            {get(job, 'criteria.practice_details.address.state', 'state')}
+                          </span>
+                          <span>
+                            {get(
+                              job,
+                              'criteria.practice_details.origin_distance',
+                              'unkown',
+                            )}{' '}
+                            miles away
+                          </span>
                         </div>
                         <div className={theme.details}>
                           <dl>
                             <dt>Position</dt>
-                            <dd>{defineJob('position', job.criteria.position)}</dd>
+                            <dd>
+                              {defineJob('position', get(job, 'criteria.position'))}
+                            </dd>
                             <dt>Experience</dt>
-                            <dd>{job.criteria.experience_preferred}</dd>
+                            <dd>{get(job, 'criteria.experience_preferred')}</dd>
                             <dt>Job Type</dt>
-                            <dd>{defineJob('type', job.criteria.employment_type)}</dd>
+                            <dd>
+                              {defineJob('type', get(job, 'criteria.employment_type'))}
+                            </dd>
                           </dl>
                         </div>
-                        <div className={theme.short}>{job.criteria.description}</div>
+                        <div className={theme.short}>
+                          {get(job, 'criteria.description')}
+                        </div>
                         <div className={theme.actions}>
-                          <div>{job.criteria.hourly_rate}</div>
+                          <div>{get(job, 'criteria.hourly_rate')}/hr</div>
                           <Link to={`/search/job/${job.id}`} className={theme.readMore}>
                             Read More
                           </Link>

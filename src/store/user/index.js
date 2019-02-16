@@ -25,7 +25,9 @@ export const INITIAL_STATE = {
   profile: {
     loading: false,
     error: false,
-    meta: {},
+    meta: {
+      capacity: {},
+    },
     id: '',
   },
   register: {
