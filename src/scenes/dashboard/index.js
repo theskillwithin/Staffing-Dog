@@ -14,7 +14,7 @@ const Dashboard = () => {
     setHtmlClass('html-app')
 
     return () => removeHtmlClass('html-app')
-  })
+  }, false)
 
   return (
     <div className={clsx(theme.pageContent, theme.columns)}>

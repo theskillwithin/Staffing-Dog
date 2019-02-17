@@ -1,6 +1,7 @@
-import React, { useState, useReducer, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { func, string, array, object, shape, oneOfType, bool } from 'prop-types'
 import { connect } from 'react-redux'
+import find from 'lodash/find'
 import Tabs from '@sdog/components/tab_bar'
 import Card from '@sdog/components/card'
 import Switch from '@sdog/components/switch'
@@ -23,58 +24,33 @@ import WeekRow from './weeks'
 import Event from './event'
 import theme from './theme.css'
 
-const formInitialState = {
-  sun: {
-    active: false,
-    from: { label: '6:00 am', value: '6:00 am' },
-    to: { label: '7:00 pm', value: '7:00 pm' },
-  },
-  mon: {
-    active: true,
-    from: { label: '6:00 am', value: '6:00 am' },
-    to: { label: '7:00 pm', value: '7:00 pm' },
-  },
-  tue: {
-    active: true,
-    from: { label: '6:00 am', value: '6:00 am' },
-    to: { label: '7:00 pm', value: '7:00 pm' },
-  },
-  wed: {
-    active: true,
-    from: { label: '6:00 am', value: '6:00 am' },
-    to: { label: '7:00 pm', value: '7:00 pm' },
-  },
-  thu: {
-    active: true,
-    from: { label: '6:00 am', value: '6:00 am' },
-    to: { label: '7:00 pm', value: '7:00 pm' },
-  },
-  fri: {
-    active: true,
-    from: { label: '6:00 am', value: '6:00 am' },
-    to: { label: '7:00 pm', value: '7:00 pm' },
-  },
-  sat: {
-    active: true,
-    from: { label: '6:00 am', value: '6:00 am' },
-    to: { label: '7:00 pm', value: '7:00 pm' },
-  },
-}
+const defaultSchedule = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'].map(day => ({
+  day,
+  active: true,
+  from: '8:00',
+  to: '17:00',
+}))
 
-const scheduleReducer = (state, { payload, type }) => {
-  switch (type) {
-    case 'update':
-      return {
-        ...state,
-        [payload.day]: {
-          ...state[payload.day],
-          [payload.type]: payload.value,
-        },
-      }
-    default:
-      return state
-  }
-}
+const blackoutDates = [
+  {
+    startDate: '2018-11-29',
+    endDate: '2018-12-04',
+    blackout: true,
+  },
+]
+
+const daysOut = [
+  { label: '30 Days', value: '30' },
+  { label: '60 Days', value: '60' },
+  { label: '90 Days', value: '90' },
+  { label: '120 Days', value: '120' },
+]
+
+const availability = [
+  { label: 'Full Time', value: 'full_time' },
+  { label: 'Part Time', value: 'part_time' },
+  { label: 'Temporary', value: 'temporary' },
+]
 
 const JobSchedule = ({
   getUserJobs,
@@ -82,42 +58,26 @@ const JobSchedule = ({
   jobs,
   userProfile: { meta },
 }) => {
-  const backoutDates = [
-    {
-      startDate: '2018-11-29',
-      endDate: '2018-12-04',
-      blackout: true,
-    },
-  ]
-
-  const daysOut = [
-    { label: '30 Days', value: '30' },
-    { label: '60 Days', value: '60' },
-    { label: '90 Days', value: '90' },
-    { label: '120 Days', value: '120' },
-  ]
-
-  const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
-
-  const availability = [
-    { label: 'Full Time', value: 'full_time' },
-    { label: 'Part Time', value: 'part_time' },
-    { label: 'Temporary', value: 'temporary' },
-  ]
-
   const [activeTabIndex, setActiveTab] = useState(0)
   const [showSchedule, setShowSchedule] = useState(false)
-  const [schedule, dispatch] = useReducer(scheduleReducer, formInitialState)
 
   useEffect(() => {
     getUserJobs()
   }, false)
 
-  const handleScheduleChange = (type, value, day) => {
-    dispatch({
-      type: 'update',
-      payload: { type, value, day },
-    })
+  const schedule = defaultSchedule.map(currentDay => ({
+    ...currentDay,
+    ...(find(meta.capacity.default_hours, ({ day }) => day === currentDay) || {}),
+  }))
+
+  const updateSchdule = ({ day, value, type }) => {
+    autoSaveUserProfile(
+      'meta.capacity.default_hours',
+      schedule.map(daySchedule => ({
+        ...daySchedule,
+        ...(daySchedule.day === day ? { [type]: value } : {}),
+      })),
+    )
   }
 
   return (
@@ -194,12 +154,11 @@ const JobSchedule = ({
               </div>
 
               <div className={theme.scheduler}>
-                {daysOfWeek.map(day => (
+                {schedule.map(daySchedule => (
                   <WeekRow
-                    key={day}
-                    day={day.toLowerCase()}
-                    schedule={schedule[day.toLowerCase()]}
-                    onChange={handleScheduleChange}
+                    key={daySchedule.day}
+                    schedule={daySchedule}
+                    onChange={updateSchdule}
                   />
                 ))}
               </div>
@@ -207,11 +166,12 @@ const JobSchedule = ({
           )}
 
           {activeTabIndex === 1 && <Exceptions />}
+
           <hr className={theme.divider} />
         </>
       )}
 
-      <Calendar activeDates={[]} blackoutDates={backoutDates} />
+      <Calendar activeDates={[]} blackoutDates={blackoutDates} />
 
       <div className={theme.events}>
         {jobs.scheduled.map((event, eventIndex) => (
