@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import { func, string, array, object, shape, oneOfType, bool } from 'prop-types'
 import { connect } from 'react-redux'
+import clsx from 'clsx'
+import includes from 'lodash/includes'
 import find from 'lodash/find'
 import Tabs from '@sdog/components/tab_bar'
 import Card from '@sdog/components/card'
-import Switch from '@sdog/components/switch'
+// import Switch from '@sdog/components/switch'
 import Dropdown from '@sdog/components/dropdown'
 import {
   getUserJobs as getUserJobsAction,
@@ -65,10 +67,14 @@ const JobSchedule = ({
     getUserJobs()
   }, false)
 
-  const schedule = defaultSchedule.map(currentDay => ({
-    ...currentDay,
-    ...(find(meta.capacity.default_hours, ({ day }) => day === currentDay) || {}),
-  }))
+  const schedule = defaultSchedule.map(currentDay => {
+    const matchingDay = find(
+      meta.capacity.default_hours || [],
+      ({ day }) => day === currentDay.day,
+    )
+
+    return matchingDay ? { ...currentDay, ...matchingDay } : currentDay
+  })
 
   const updateSchdule = ({ day, value, type }) => {
     autoSaveUserProfile(
@@ -107,25 +113,34 @@ const JobSchedule = ({
 
           {activeTabIndex === 0 && (
             <div className={theme.schedule}>
-              <div className={theme.inputRow}>
+              <div className={clsx(theme.inputRow, theme.availability)}>
                 <span>Availability</span>
 
                 <div className={theme.dropdown}>
                   <Dropdown
-                    value={availability.find(
-                      ({ value }) => value === meta.capacity.availability,
+                    isMulti
+                    isClearable={false}
+                    value={availability.reduce(
+                      (values, avail) => [
+                        ...values,
+                        ...(includes(meta.capacity.availability || [], avail.value)
+                          ? [avail]
+                          : []),
+                      ],
+                      [],
                     )}
-                    onChange={({ value }) =>
-                      autoSaveUserProfile('meta.capacity.availability', value)
+                    onChange={values =>
+                      autoSaveUserProfile(
+                        'meta.capacity.availability',
+                        values.map(({ value }) => value),
+                      )
                     }
                     options={availability}
-                    height={33}
-                    width={120}
                   />
                 </div>
               </div>
 
-              <div className={theme.inputRow}>
+              {/* <div className={theme.inputRow}>
                 <span>Same day job requests</span>
                 <Switch
                   checked={meta.capacity.same_day_jobs}
@@ -135,7 +150,7 @@ const JobSchedule = ({
                 >
                   {meta.capacity.same_day_jobs ? 'Yes' : 'No'}
                 </Switch>
-              </div>
+              </div> */}
 
               <div className={theme.inputRow}>
                 <span>Days out I can be scheduled</span>
@@ -147,7 +162,6 @@ const JobSchedule = ({
                       autoSaveUserProfile('meta.capacity.days_out', value)
                     }
                     options={daysOut}
-                    height={33}
                     width={120}
                   />
                 </div>

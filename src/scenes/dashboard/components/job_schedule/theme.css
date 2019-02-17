@@ -35,6 +35,12 @@
   }
 }
 
+.availability {
+  .dropdown {
+    max-width: 50%;
+  }
+}
+
 .schedule {
   padding-top: 1em;
 }
