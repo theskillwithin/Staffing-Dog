@@ -1,6 +1,4 @@
 import React, { useState, useRef } from 'react'
-// import enhanceWithClickOutside from 'react-click-outside'
-// import enhanceWithClickOutside from '@sdog/utils/enhanceWithClickOutside'
 import useOutsideClick from '@sdog/utils/useOutsideClick'
 import { Link } from 'react-router-dom'
 import { object } from 'prop-types'
