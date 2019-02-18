@@ -67,6 +67,7 @@ export const INITIAL_STATE = {
       },
     },
     id: '',
+    user: {},
   },
   register: {
     loading: false,
@@ -149,15 +150,14 @@ reducers = {
     ...state,
     auth: { ...state.auth, loading: false, error: true },
   }),
-  [userLoginTypes.SUCCESS]: (state, { data: { user, ...userData } }) => ({
+  [userLoginTypes.SUCCESS]: (state, { data }) => ({
     ...state,
     auth: { ...state.auth, loading: true, error: false },
     profile: {
       ...state.profile,
       loading: false,
       error: false,
-      ...userData,
-      ...user,
+      ...data,
     },
   }),
 }
@@ -184,11 +184,10 @@ export const registerUser = ({ onSuccess = false, onError = false, ...data }) =>
   },
 })
 
-const formatProfileData = (profile, { user, ...userData }) => ({
+const formatProfileData = (profile, data) => ({
   ...profile,
+  ...data,
   ...spreadLoadingError(false, false),
-  ...(userData || {}),
-  ...(user || {}),
 })
 
 reducers = {
@@ -301,12 +300,12 @@ reducers = {
       ...spreadLoadingError(true, false),
     },
   }),
-  [userGetProfileTypes.SUCCESS]: (state, { data: { user, ...data } }) => ({
+  [userGetProfileTypes.SUCCESS]: (state, { data }) => ({
     ...state,
     profile: {
       ...state.profile,
       ...data,
-      ...user,
+      ...spreadLoadingError(false, false),
     },
   }),
   [userGetProfileTypes.ERROR]: (state, payload) => ({
@@ -369,38 +368,55 @@ reducers = {
  * Example 'meta.capacity.availablity'
  */
 export const AUTO_SAVE_USER_PROFILE = 'AUTO_SAVE_USER_PROFILE'
+export const AUTH_SAVE_USER_PROFILE_ONLY_REDUX = 'AUTH_SAVE_USER_PROFILE_ONLY_REDUX'
 export const autoSaveUserProfileTypes = createActionTypes(AUTO_SAVE_USER_PROFILE)
 
-export const autoSaveUserProfile = (name, value) => (dispatch, getState) => {
+export const autoSaveUserProfile = (name, value, useApi = true) => (
+  dispatch,
+  getState,
+) => {
   const state = getState()
 
-  dispatch({
-    type: AUTO_SAVE_USER_PROFILE,
-    api: {
-      url: `${API_ROOT}/profiles`,
-      method: 'PUT',
-      data: {
-        id: findUserId(getState()) || getUserId(),
-        data: omit(
-          set(
-            {
-              addresses: findUserProfile(state).addresses,
-              meta: findUserMeta(state),
-              preferences: findUserPreferences(state),
-            },
-            name,
-            value,
+  if (!useApi) {
+    dispatch({
+      type: AUTH_SAVE_USER_PROFILE_ONLY_REDUX,
+      payload: { name, value },
+    })
+  } else {
+    dispatch({
+      type: AUTO_SAVE_USER_PROFILE,
+      api: {
+        url: `${API_ROOT}/profiles`,
+        method: 'PUT',
+        data: {
+          id: findUserId(getState()) || getUserId(),
+          data: omit(
+            set(
+              {
+                addresses: findUserProfile(state).addresses,
+                meta: findUserMeta(state),
+                preferences: findUserPreferences(state),
+                user: findUserProfile(state).user,
+              },
+              name,
+              value,
+            ),
+            ['addresses.geocode'],
           ),
-          ['addresses.geocode'],
-        ),
+        },
       },
-    },
-    payload: { name, value },
-  })
+      payload: { name, value },
+    })
+  }
 }
 
 reducers = {
   ...reducers,
+  [AUTH_SAVE_USER_PROFILE_ONLY_REDUX]: (state, { name, value }) => ({
+    ...state,
+    profile: set({ ...state.profile }, name, value),
+    lastUpdated: new Date().getTime(),
+  }),
   [autoSaveUserProfileTypes.LOADING]: (state, { name, value }) => ({
     ...state,
     profile: set({ ...state.profile }, name, value),
@@ -410,12 +426,11 @@ reducers = {
     },
     lastUpdated: new Date().getTime(),
   }),
-  [autoSaveUserProfileTypes.SUCCESS]: (state, { data: { user, ...data } }) => ({
+  [autoSaveUserProfileTypes.SUCCESS]: (state, { data }) => ({
     ...state,
     profile: {
       ...state.profile,
       ...data,
-      ...user,
     },
     lastUpdated: new Date().getTime(),
   }),

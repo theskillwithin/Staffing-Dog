@@ -1,212 +1,308 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { func, shape, object } from 'prop-types'
+import { connect } from 'react-redux'
 import clsx from 'clsx'
+import find from 'lodash/find'
+import includes from 'lodash/includes'
+import debounce from 'lodash/debounce'
 import Dropzone from 'react-dropzone'
 import ProfilePhotoSVG from '@sdog/components/svg/ProfilePhoto'
 import Input from '@sdog/components/input'
 import Button from '@sdog/components/button'
 import Dropdown from '@sdog/components/dropdown'
+import {
+  findUserProfile,
+  autoSaveUserProfile as autoSaveUserProfileAction,
+} from '@sdog/store/user'
 
 import EmailVerified from './email_verified'
 import theme from './theme.css'
 
-class SettingsAboutMe extends React.Component {
-  states = [
-    { label: 'CA', value: 'CA' },
-    { label: 'UT', value: 'UT' },
-    { label: 'OR', value: 'OR' },
-  ]
+const states = [
+  'AL',
+  'AK',
+  'AS',
+  'AZ',
+  'AR',
+  'CA',
+  'CO',
+  'CT',
+  'DE',
+  'DC',
+  'FM',
+  'FL',
+  'GA',
+  'GU',
+  'HI',
+  'ID',
+  'IL',
+  'IN',
+  'IA',
+  'KS',
+  'KY',
+  'LA',
+  'ME',
+  'MH',
+  'MD',
+  'MA',
+  'MI',
+  'MN',
+  'MS',
+  'MO',
+  'MT',
+  'NE',
+  'NV',
+  'NH',
+  'NJ',
+  'NM',
+  'NY',
+  'NC',
+  'ND',
+  'MP',
+  'OH',
+  'OK',
+  'OR',
+  'PW',
+  'PA',
+  'PR',
+  'RI',
+  'SC',
+  'SD',
+  'TN',
+  'TX',
+  'UT',
+  'VT',
+  'VI',
+  'VA',
+  'WA',
+  'WV',
+  'WI',
+  'WY',
+].map(state => ({ label: state, value: state }))
 
-  availabilitys = [{ label: 'Never', value: '0' }, { label: 'Forever', value: '1' }]
+const availability = [
+  { label: 'Full Time', value: 'full_time' },
+  { label: 'Part Time', value: 'part_time' },
+  { label: 'Temporary', value: 'temporary' },
+]
 
-  specialties = [{ label: 'I can fly!', value: '1' }, { label: 'I run fast', value: '0' }]
+const specialties = [
+  { label: 'I can fly!', value: '1' },
+  { label: 'I run fast', value: '0' },
+]
 
-  state = {
-    form: {
-      files: [],
-      firstName: '',
-      lastName: '',
-      email: '',
-      phone: '',
-      street: '',
-      city: '',
-      state: 'CA',
-      postal: '',
-      profession: '',
-      availability: '0',
-      wage: '',
-      description: '',
-      dentalLicenseNumber: '',
-      specialty: '0',
-      insuranceExpiration: '',
-    },
-    filesError: false,
-    verified: true,
+let debouncedAutoSaveUserProfile = null
+
+const FormSpacer = () => <div className={theme.spacer} />
+
+const SettingsAboutMe = ({ autoSaveUserProfile, profile }) => {
+  if (profile.loading) {
+    return <p>Loading</p>
   }
 
-  onDrop = (files, rejected) => {
-    if (rejected && rejected.length) {
-      return this.setState({ filesError: 'must be a jpeg or png' })
+  useEffect(() => {
+    if (debouncedAutoSaveUserProfile === null) {
+      debouncedAutoSaveUserProfile = debounce(autoSaveUserProfile, 1000)
     }
 
-    return this.setState(({ form }) => ({ filesError: false, form: { ...form, files } }))
+    return () => {
+      debouncedAutoSaveUserProfile = null
+    }
+  }, false)
+
+  const saveForm = (name, value) => {
+    // save in redux only
+    autoSaveUserProfile(name, value, false)
+    // debounce saving with the api
+    debouncedAutoSaveUserProfile(name, value)
   }
 
-  handleChange = (field, value) => {
-    this.setState(({ form }) => ({ form: { ...form, [field]: value } }))
-  }
+  return (
+    <div>
+      <div className={theme.photo}>
+        <Dropzone
+          accept="image/jpeg, image/png"
+          onDrop={files => autoSaveUserProfile('preferences.profile_image_url', files)}
+        >
+          {({ getRootProps, getInputProps, isDragActive }) => (
+            <div
+              {...getRootProps()}
+              className={clsx(theme.dropzone, {
+                'dropzone--isActive': isDragActive,
+              })}
+            >
+              <h5>Profile Photo</h5>
+              <input {...getInputProps()} />
+              {profile.preferences.profile_image_url ? (
+                <img src={profile.preferences.profile_image_url} alt="Profile" />
+              ) : (
+                <ProfilePhotoSVG />
+              )}
 
-  render() {
-    const { form } = this.state
-    return (
-      <div>
-        <div className={theme.photo}>
-          <Dropzone accept="image/jpeg, image/png" onDrop={this.onDrop}>
-            {({ getRootProps, getInputProps, isDragActive }) => (
-              <div
-                {...getRootProps()}
-                className={clsx(theme.dropzone, {
-                  'dropzone--isActive': isDragActive,
-                })}
-              >
-                <h5>Profile Photo</h5>
-                <input {...getInputProps()} />
-                {form.files && form.files.length ? (
-                  <img
-                    src={URL.createObjectURL(form.files[0])}
-                    alt={form.files[0].name}
-                  />
-                ) : (
-                  <ProfilePhotoSVG />
-                )}
-                <span>{isDragActive ? 'Add Photo...' : 'Add Photo'}</span>
-              </div>
-            )}
-          </Dropzone>
-          <div>
-            <ul>
-              <li>
-                Having a complete rich profile will help you stand out from the crowd and
-                attract more employers.
-              </li>
-              <li>
-                This information is visible to employers. Your information is not shared
-                with anyone without your explicit consent.
-              </li>
-            </ul>
-            <p>{this.state.filesError}</p>
-          </div>
+              <span>{isDragActive ? 'Add Photo...' : 'Add Photo'}</span>
+            </div>
+          )}
+        </Dropzone>
+        <div>
+          <ul>
+            <li>
+              Having a complete rich profile will help you stand out from the crowd and
+              attract more employers.
+            </li>
+            <li>
+              This information is visible to employers. Your information is not shared
+              with anyone without your explicit consent.
+            </li>
+          </ul>
         </div>
-        <form className={theme.formContainer}>
-          <div className={theme.inputRow}>
-            <Input
-              label="First Name"
-              value={form.firstName}
-              onChange={value => this.handleChange('firstName', value)}
-            />
-            <Input
-              label="Last Name"
-              value={form.lastName}
-              onChange={value => this.handleChange('lastName', value)}
-            />
-          </div>
-          <div className={theme.inputRow}>
-            <Input
-              label="Email"
-              value={form.email}
-              onChange={value => this.handleChange('email', value)}
-            />
-            <EmailVerified verified={this.state.verified} />
-          </div>
-          <div className={theme.inputRow}>
-            <Input
-              label="Phone Number"
-              value={form.phone}
-              onChange={value => this.handleChange('phone', value)}
-            />
-            <Button primary round className={theme.verifyPhone}>
-              Verify Phone #
-            </Button>
-          </div>
-          <div className={theme.inputRow}>
-            <Input
-              label="Street Address"
-              value={form.street}
-              onChange={value => this.handleChange('street', value)}
-            />
-          </div>
-          <div className={theme.inputRow}>
-            <Input
-              label="City"
-              value={form.city}
-              onChange={value => this.handleChange('city', value)}
-            />
-            <Dropdown
-              label="State"
-              value={form.state}
-              onChange={value => this.handleChange('state', value)}
-              options={this.states}
-            />
-            <Input
-              label="Postal Code"
-              value={form.postal}
-              onChange={value => this.handleChange('postal', value)}
-            />
-          </div>
-          <div className={theme.spacer} />
-          <div className={theme.inputRow}>
-            <Input
-              label="Profession"
-              value={form.profession}
-              onChange={value => this.handleChange('profession', value)}
-            />
-            <Dropdown
-              label="Availability"
-              value={form.availability}
-              onChange={value => this.handleChange('availability', value)}
-              options={this.availabilitys}
-            />
-            <Input
-              label="Hourly Wage"
-              value={form.wage}
-              onChange={value => this.handleChange('wage', value)}
-            />
-          </div>
-          <div className={theme.inputRow}>
-            <Input
-              label="Profile Description"
-              value={form.description}
-              onChange={value => this.handleChange('description', value)}
-              textarea
-            />
-          </div>
-          <div className={theme.spacer} />
-          <div className={theme.inputRow}>
-            <Input
-              label="Dental License Number"
-              value={form.dentalLicenseNumber}
-              onChange={value => this.handleChange('dentalLicenseNumber', value)}
-            />
-            <Dropdown
-              label="Specialty"
-              value={form.specialty}
-              onChange={value => this.handleChange('specialty', value)}
-              options={this.specialties}
-            />
-          </div>
-          <div className={clsx(theme.inputRow, theme.withButton)}>
-            <Input
-              label="Insurance Expiration"
-              value={form.insuranceExpiration}
-              onChange={value => this.handleChange('insuranceExpiration', value)}
-            />
-            <Button primary round>
-              Upload Insurance Declaration
-            </Button>
-          </div>
-        </form>
       </div>
-    )
-  }
+      <form className={theme.formContainer}>
+        <div className={theme.inputRow}>
+          <Input
+            label="First Name"
+            value={profile.user.first_name}
+            onChange={value => saveForm('user.first_name', value)}
+          />
+          <Input
+            label="Last Name"
+            value={profile.user.last_name}
+            onChange={value => saveForm('user.last_name', value)}
+          />
+        </div>
+        <div className={theme.inputRow}>
+          <Input
+            label="Email"
+            value={profile.user.email}
+            onChange={value => saveForm('user.email', value)}
+          />
+          <EmailVerified verified={profile.verified || false} />
+        </div>
+        <div className={theme.inputRow}>
+          <Input
+            label="Phone Number"
+            value={profile.user.phone}
+            onChange={value => saveForm('user.phone', value)}
+          />
+          <Button primary round className={theme.verifyPhone}>
+            Verify Phone #
+          </Button>
+        </div>
+        <div className={theme.inputRow}>
+          <Input
+            label="Street Address"
+            value={profile.addresses.line_1}
+            onChange={value => saveForm('addresses.line_1', value)}
+          />
+        </div>
+        <div className={theme.inputRow}>
+          <Input
+            label="City"
+            value={profile.addresses.city}
+            onChange={value => saveForm('addresses.city', value)}
+          />
+          <Dropdown
+            label="State"
+            value={find(states, state => state.value === profile.addresses.state) || ''}
+            onChange={value => autoSaveUserProfile('addresses.state', value)}
+            options={states}
+          />
+          <Input
+            label="Postal Code"
+            value={profile.addresses.zip}
+            onChange={value => saveForm('addresses.zip', value)}
+          />
+        </div>
+        <FormSpacer />
+        <div className={theme.inputRow}>
+          <Dropdown
+            label="Availability"
+            placeholder="Availability"
+            isMulti
+            isClearable={false}
+            value={availability.reduce(
+              (values, avail) => [
+                ...values,
+                ...(includes(profile.meta.capacity.availability || [], avail.value)
+                  ? [avail]
+                  : []),
+              ],
+              [],
+            )}
+            onChange={values =>
+              autoSaveUserProfile(
+                'meta.capacity.availability',
+                values.map(({ value }) => value),
+              )
+            }
+            options={availability}
+          />
+        </div>
+        <div className={theme.inputRow}>
+          <Input
+            label="Profession"
+            value={profile.meta.summary.profession.type}
+            onChange={value => saveForm('meta.summary.profession.type', value)}
+          />
+          <Input
+            label="Hourly Wage"
+            value={profile.meta.capacity.hourly_wage}
+            onChange={value => saveForm('meta.capacity.hourly_wage', value)}
+          />
+        </div>
+        <FormSpacer />
+        <div className={theme.inputRow}>
+          <Input
+            label="Profile Description"
+            value={profile.description}
+            onChange={value => saveForm('description', value)}
+            textarea
+          />
+        </div>
+        <FormSpacer />
+        <div className={theme.inputRow}>
+          <Input
+            label="Dental License Number"
+            value={profile.dentalLicenseNumber}
+            onChange={value => saveForm('dentalLicenseNumber', value)}
+          />
+          <Dropdown
+            label="Specialty"
+            value={profile.meta.summary.profession.specialty}
+            onChange={value =>
+              autoSaveUserProfile('meta.summary.profession.specialty', value)
+            }
+            options={specialties}
+          />
+        </div>
+        <div className={clsx(theme.inputRow, theme.withButton)}>
+          <Input
+            label="Insurance Expiration"
+            value={profile.insuranceExpiration}
+            onChange={value => saveForm('insuranceExpiration', value)}
+          />
+          <Button primary round>
+            Upload Insurance Declaration
+          </Button>
+        </div>
+      </form>
+    </div>
+  )
 }
 
-export default SettingsAboutMe
+SettingsAboutMe.propTypes = {
+  autoSaveUserProfile: func.isRequired,
+  profile: shape({
+    preferences: object,
+  }).isRequired,
+}
+
+export const mapStateToProps = state => ({
+  profile: findUserProfile(state),
+})
+
+export const mapActionsToProps = { autoSaveUserProfile: autoSaveUserProfileAction }
+
+export default connect(
+  mapStateToProps,
+  mapActionsToProps,
+)(SettingsAboutMe)
