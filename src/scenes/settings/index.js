@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import clsx from 'clsx'
 import { setTitle } from '@sdog/utils/document'
 import Tabs from '@sdog/components/tab_bar'
@@ -8,45 +8,41 @@ import appTheme from '../app/theme.css'
 
 import Header from './components/header'
 import AboutMe from './components/about_me'
-// import theme from './theme.css'
 
-class Settings extends React.Component {
-  state = {
-    activeTabIndex: 0,
-  }
+const Settings = () => {
+  const [activeTabIndex, setActiveTabIndex] = useState(0)
 
-  componentDidMount() {
+  useEffect(() => {
     setTitle('Settings')
-  }
+  }, false)
 
-  render() {
-    return (
-      <div className={clsx(appTheme.pageContent)}>
-        <Card type="large">
-          <Header />
-          <Tabs
-            activeTabIndex={this.state.activeTabIndex}
-            onSelect={tab => this.setState({ activeTabIndex: tab })}
-            underline
-            exactWidthTab
-            left
-            settingsTabs
-            fw500
-          >
-            <div>About Me</div>
-            <div>References</div>
-            <div>Notifications</div>
-            <div>Security</div>
-          </Tabs>
+  return (
+    <div className={clsx(appTheme.pageContent)}>
+      <Card type="large">
+        <Header />
 
-          {this.state.activeTabIndex === 0 && <AboutMe />}
-          {this.state.activeTabIndex === 1 && <h1>References</h1>}
-          {this.state.activeTabIndex === 2 && <h1>Notifications</h1>}
-          {this.state.activeTabIndex === 3 && <h1>Security</h1>}
-        </Card>
-      </div>
-    )
-  }
+        <Tabs
+          activeTabIndex={activeTabIndex}
+          onSelect={setActiveTabIndex}
+          underline
+          exactWidthTab
+          left
+          settingsTabs
+          fw500
+        >
+          <div>About Me</div>
+          <div>References</div>
+          <div>Notifications</div>
+          <div>Security</div>
+        </Tabs>
+
+        {activeTabIndex === 0 && <AboutMe />}
+        {activeTabIndex === 1 && <h1>References</h1>}
+        {activeTabIndex === 2 && <h1>Notifications</h1>}
+        {activeTabIndex === 3 && <h1>Security</h1>}
+      </Card>
+    </div>
+  )
 }
 
 export default Settings
