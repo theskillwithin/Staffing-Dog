@@ -25,7 +25,47 @@ export const INITIAL_STATE = {
   profile: {
     loading: false,
     error: false,
-    meta: {},
+    meta: {
+      capacity: {
+        default_hours: {
+          sun: {
+            active: false,
+            from: { label: '6:00 am', value: '6:00 am' },
+            to: { label: '7:00 pm', value: '7:00 pm' },
+          },
+          mon: {
+            active: true,
+            from: { label: '6:00 am', value: '6:00 am' },
+            to: { label: '7:00 pm', value: '7:00 pm' },
+          },
+          tue: {
+            active: true,
+            from: { label: '6:00 am', value: '6:00 am' },
+            to: { label: '7:00 pm', value: '7:00 pm' },
+          },
+          wed: {
+            active: true,
+            from: { label: '6:00 am', value: '6:00 am' },
+            to: { label: '7:00 pm', value: '7:00 pm' },
+          },
+          thu: {
+            active: true,
+            from: { label: '6:00 am', value: '6:00 am' },
+            to: { label: '7:00 pm', value: '7:00 pm' },
+          },
+          fri: {
+            active: true,
+            from: { label: '6:00 am', value: '6:00 am' },
+            to: { label: '7:00 pm', value: '7:00 pm' },
+          },
+          sat: {
+            active: true,
+            from: { label: '6:00 am', value: '6:00 am' },
+            to: { label: '7:00 pm', value: '7:00 pm' },
+          },
+        },
+      },
+    },
     id: '',
   },
   register: {

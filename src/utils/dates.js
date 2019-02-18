@@ -1,9 +1,9 @@
-const hMM = (hours, minutes, is24h = false, hourOnly = false) =>
+const hMM = (hours, minutes, is24h = true, hourOnly = false) =>
   `${String(is24h ? hours % 24 : (hours % 12) + 1)}${
     !hourOnly ? `:${String(minutes).padStart(2, '0')}` : ''
   }${is24h ? '' : hours >= 12 ? ' pm' : ' am'}`
 
-export const timesOfDay = (is24h = false, hourOnly = false) =>
+export const timesOfDay = (is24h = true, hourOnly = false) =>
   Array.from({ length: 24 }, (_, i) => i)
     .map(x =>
       [hMM(x, 0, is24h, hourOnly), !hourOnly && hMM(x, 30, is24h)].filter(Boolean),

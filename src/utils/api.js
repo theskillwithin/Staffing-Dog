@@ -9,9 +9,9 @@ export { SIM, IS_DEV }
 export const API_VERSION = 'v1'
 export const SIM_TTL = 100
 export const LOCAL_API_ROOT = BYPASS_LUA
-  ? `http:///api.sdog.test:4000/${API_VERSION}`
+  ? `http://api.sdog.test:4000/${API_VERSION}`
   : `http://api.sdog.test/${API_VERSION}`
-console.log(BYPASS_LUA, LOCAL_API_ROOT)
+
 export const STAGE_API_ROOT = `https://api.dev.staffing.dog/${API_VERSION}`
 export const PROD_API_ROOT = IS_STAGE
   ? STAGE_API_ROOT

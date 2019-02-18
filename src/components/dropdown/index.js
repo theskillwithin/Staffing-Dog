@@ -1,109 +1,97 @@
-import React, { Component } from 'react'
-import { bool, func, string, object, number, oneOfType } from 'prop-types'
+import React, { useState } from 'react'
+import { bool, func, string, object, array, number, oneOfType } from 'prop-types'
 import Select from 'react-select'
 
-class Dropdown extends Component {
-  static propTypes = {
-    onChange: func,
-    outlined: bool,
-    value: oneOfType([string, object]),
-    height: number,
-    width: oneOfType([bool, number]),
-    small: bool,
+const Dropdown = ({ onChange, value, ...props }) => {
+  const [isOpen, setOpen] = useState(false)
+
+  const internalOnChange = dropdownValue => {
+    if (onChange) onChange(dropdownValue)
   }
 
-  static defaultProps = {
-    outlined: true,
-    value: '',
-    height: 48,
-    width: false,
-    small: false,
+  const customStyles = {
+    option: (base, state) => ({
+      ...base,
+      cursor: state.isDisabled ? 'not-allowed' : 'pointer',
+      minWidth: 'auto',
+    }),
+    control: styles => ({
+      ...styles,
+      cursor: 'pointer',
+      height: props.height,
+      zIndex: isOpen ? 90 : 'inherit',
+      minWidth: 'auto',
+      minHeight: props.height ? props.height : 38,
+      width: props.width ? props.width : 'auto',
+      border: '1px solid rgba(152, 160, 178, 0.54)',
+      borderRadius: 3,
+      boxShadow: 0,
+      fontWeight: 500,
+    }),
+    value: styles => ({ ...styles, background: '#0072FF', color: 'rgb(31, 39, 64)' }),
+    selectContainer: styles => ({ ...styles, minWidth: 'auto' }),
+    valueContainer: styles => ({
+      ...styles,
+      paddingLeft: '1em',
+      minWidth: 'auto',
+      width: props.width ? props.width : 'auto',
+    }),
+    placeholder: styles => ({
+      ...styles,
+      color: 'rgb(187, 193, 209)',
+    }),
+    dropdownIndicator: styles => ({
+      ...styles,
+      padding: props.small ? 4 : 8,
+    }),
+    indicatorSeparator: () => ({ display: 'none' }),
+    singleValue: styles => ({
+      ...styles,
+      marginLeft: props.small ? '-4px' : '0',
+      fontWeight: 500,
+      color: 'rgb(31, 39, 64)',
+      minWidth: 'auto',
+    }),
   }
 
-  state = {
-    open: false,
-  }
+  return (
+    <Select
+      styles={customStyles}
+      onChange={internalOnChange}
+      placeholder={props.placeholder || props.label}
+      onMenuOpen={() => setOpen(true)}
+      onMenuClose={() => setOpen(false)}
+      value={value}
+      isDisabled={props.disabled}
+      isMulti={props.isMulti}
+      {...props}
+    />
+  )
+}
 
-  onChange = value => {
-    if (this.props.onChange) {
-      this.props.onChange(value)
-    }
-  }
+Dropdown.propTypes = {
+  onChange: func,
+  outlined: bool,
+  value: oneOfType([string, object, array]),
+  height: number,
+  width: oneOfType([bool, number]),
+  small: bool,
+  isMulti: bool,
+  placeholder: string,
+  label: string,
+  disabled: bool,
+}
 
-  open = () => {
-    this.setState({ open: true })
-  }
-
-  close = () => {
-    this.setState({ open: false })
-  }
-
-  render() {
-    const { onChange, ...props } = this.props
-
-    const value =
-      this.props.value && typeof this.props.value === 'string'
-        ? { label: this.props.value, value: this.props.value }
-        : value
-
-    const customStyles = {
-      option: (base, state) => ({
-        ...base,
-        cursor: state.isDisabled ? 'not-allowed' : 'pointer',
-        minWidth: 'auto',
-      }),
-      control: styles => ({
-        ...styles,
-        cursor: 'pointer',
-        height: this.props.height,
-        zIndex: this.state.open ? 90 : 'inherit',
-        minWidth: 'auto',
-        minHeight: this.props.height ? this.props.height : 38,
-        width: this.props.width ? this.props.width : 'auto',
-        border: '1px solid rgba(152, 160, 178, 0.54)',
-        borderRadius: 3,
-        boxShadow: 0,
-        fontWeight: 500,
-      }),
-      value: styles => ({ ...styles, background: '#0072FF', color: 'rgb(31, 39, 64)' }),
-      selectContainer: styles => ({ ...styles, minWidth: 'auto' }),
-      valueContainer: styles => ({
-        ...styles,
-        paddingLeft: '1em',
-        minWidth: 'auto',
-        width: this.props.width ? this.props.width : 'auto',
-      }),
-      placeholder: styles => ({
-        ...styles,
-        color: 'rgb(187, 193, 209)',
-      }),
-      dropdownIndicator: styles => ({
-        ...styles,
-        padding: this.props.small ? 4 : 8,
-      }),
-      indicatorSeparator: () => ({ display: 'none' }),
-      singleValue: styles => ({
-        ...styles,
-        marginLeft: this.props.small ? '-4px' : '0',
-        fontWeight: 500,
-        color: 'rgb(31, 39, 64)',
-        minWidth: 'auto',
-      }),
-    }
-
-    return (
-      <Select
-        styles={customStyles}
-        onChange={this.onChange}
-        placeholder={props.placeholder || props.label}
-        onMenuOpen={this.open}
-        onMenuClose={this.close}
-        value={value}
-        isDisabled={props.disabled}
-        {...props}
-      />
-    )
-  }
+Dropdown.defaultProps = {
+  outlined: true,
+  value: '',
+  height: 48,
+  width: false,
+  small: false,
+  isMulti: false,
+  placeholder: '',
+  label: 'Select...',
+  disabled: false,
 }
 
 export default Dropdown

@@ -51,7 +51,7 @@ class ViewJob extends React.Component {
               <img src="http://fillmurray.com/133/92" alt="Job Logo" />
               <div>
                 <h2>{job.criteria.title}</h2>
-                <h4>{job.criteria.provider_details.practice_name}</h4>
+                <h4>{job.criteria.practice_details.practice_name}</h4>
               </div>
             </section>
             <section>
@@ -59,8 +59,8 @@ class ViewJob extends React.Component {
               <div className={theme.location}>
                 <LocationOnIcon />
                 <strong>
-                  {job.criteria.provider_details.city},{' '}
-                  {job.criteria.provider_details.state}
+                  {job.criteria.practice_details.city},{' '}
+                  {job.criteria.practice_details.state}
                 </strong>
               </div>
               <div className={theme.details}>
