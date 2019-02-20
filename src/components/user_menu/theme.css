@@ -184,9 +184,27 @@
   }
 
   .userMenuDesktop {
+    display: flex;
     font-weight: var(--sd-fontWeightMedium);
     @media (--sd-preBreakTablet) {
       display: none;
+    }
+
+    .photo {
+      width: 48px;
+      height: 48px;
+      margin-right: 20px;
+    }
+
+    span {
+      color: var(--sd-gray);
+    }
+
+    .user {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      margin-right: 20px;
     }
   }
 
