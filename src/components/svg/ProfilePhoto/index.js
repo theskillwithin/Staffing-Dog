@@ -6,22 +6,24 @@ import SVGProfilePhoto from '../files/profile-photo.svg'
 
 import theme from './theme.css'
 
-const ProfilePhotoSVG = props => (
+const ProfilePhotoSVG = ({ size, color, className }) => (
   <span
-    className={clsx(props.className, theme.svg)}
+    className={clsx(className, theme.svg, color && theme[color])}
     dangerouslySetInnerHTML={{ __html: SVGProfilePhoto }}
-    style={{ width: props.size, height: props.size }}
+    style={{ width: size, height: size }}
   />
 )
 
 ProfilePhotoSVG.defaultProps = {
   className: '',
   size: 122,
+  color: 'grey',
 }
 
 ProfilePhotoSVG.propTypes = {
   className: string,
   size: number,
+  color: string,
 }
 
 export default ProfilePhotoSVG

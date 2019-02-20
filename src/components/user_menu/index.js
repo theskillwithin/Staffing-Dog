@@ -26,7 +26,7 @@ const UserMenu = () => {
       <div className={theme.userMenuInner} ref={pRef}>
         <div className={theme.userMenuDesktop}>
           <div className={theme.photo}>
-            <ProfilePhotoSVG />
+            <ProfilePhotoSVG color="purple" />
           </div>
           <div className={theme.user}>
             <div>Name L.</div>
@@ -34,7 +34,9 @@ const UserMenu = () => {
               <span>Office</span>
             </div>
           </div>
-          <Chevron direction="down" />
+          <div className={theme.chevron}>
+            <Chevron direction="down" />
+          </div>
         </div>
         <button
           onClick={handleMobileToggle}

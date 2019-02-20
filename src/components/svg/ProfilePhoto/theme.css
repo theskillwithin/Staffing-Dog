@@ -2,8 +2,8 @@
 
 .svg {
   :global {
-
-    .cls-1, .cls-2 {
+    .cls-1,
+    .cls-2 {
       fill: var(--sd-gray);
     }
 
@@ -11,5 +11,17 @@
       opacity: 0.381;
     }
   }
-}
 
+  &.purple {
+    :global {
+      .cls-1,
+      .cls-2 {
+        fill: var(--sd-lightPurple);
+      }
+
+      .cls-1 {
+        opacity: 0.38;
+      }
+    }
+  }
+}
