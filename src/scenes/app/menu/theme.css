@@ -1,35 +1,39 @@
 @import '../../../styles/config.css';
 
 .navContainer {
-  @media (--sd-tablet) {
-    flex: 3;
+  @media (--sd-preBreakTablet) {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
     display: flex;
-    align-items: center;
     justify-content: center;
+    align-items: center;
+    background: white;
+    height: 61px;
+    box-shadow: 0 -1px 3px 0 var(--sd-shadowColor);
   }
 }
 
 .nav {
-  display: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   list-style-type: none;
   margin: -0.2em 0 0 0;
   padding: 0;
-  flex: 1;
 
-  @media (--sd-tablet) {
-    flex: 4;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  @media (--sd-desktopMax) {
-    flex: 3;
-  }
+   @media (--sd-preBreakTablet) {
+     margin-top: 0;
+   }
 
   .navItem {
     margin: 0 3em 0 3em;
     padding: 0;
+
+     @media (--sd-mobile) {
+       margin: 0 1em;
+     }
 
     .navItemLink {
       position: relative;
@@ -42,7 +46,6 @@
       &.active {
         font-weight: var(--sd-fontWeightMedium);
         color: var(--sd-blackTxt);
-        @media (--sd-tablet) {
           &:after {
             content: '';
             display: block;
@@ -54,29 +57,13 @@
             height: 4px;
             border-radius: 2px;
             background-color: var(--sd-primary);
+
+            @media (--sd-preBreakTablet) {
+              bottom: auto;
+              top: -18px;
+            }
           }
-        }
-        @media (--sd-mobile) {
-          color: white;
-        }
       }
-
-      @media (--sd-mobile) {
-        display: block;
-        padding-left: 3em;
-
-        &:hover {
-          background: var(--sd-primary);
-        }
-      }
-    }
-
-    @media (--sd-preBreakTablet) {
-      margin-right: 1em;
-    }
-
-    @media (--sd-mobile) {
-      margin: 0;
     }
   }
 
@@ -86,50 +73,5 @@
       align-items: center;
     }
   }
-
-  @media (--sd-mobile) {
-    flex-direction: column;
-    position: absolute;
-    top: 5em;
-    left: 1em;
-    right: 1em;
-    padding: 0.7em 0;
-    background-color: var(--sd-blackTxt);
-    box-shadow: 0 3px 6px 0 var(--sd-shadowColor);
-    color: white;
-    border-radius: 8px;
-    &.mobileActive {
-      display: flex;
-    }
-
-    a {
-      padding: 1em;
-    }
-  }
 }
 
-.contactMobile {
-  display: none;
-  border: none;
-  background: transparent;
-  cursor: pointer;
-  outline: none;
-
-  @media (--sd-mobile) {
-    display: block;
-  }
-}
-
-.mobileActive {
-  @media (--sd-mobile) {
-    display: block;
-  }
-}
-
-.mobileOnly {
-  display: none;
-
-  @media (--sd-mobile) {
-    display: block;
-  }
-}
