@@ -1,0 +1,31 @@
+@import '../../../styles/config.css';
+
+.svg {
+  :global .cls-1 {
+    fill: currentColor;
+  }
+  svg {
+    vertical-align: middle;
+    width: 25px;
+  }
+
+  &.gray svg {
+    color: var(--sd-gray);
+  }
+
+  &.white svg {
+    color: white;
+  }
+
+  &.up svg {
+    transform: rotate(180deg);
+  }
+
+  &.right svg {
+    transform: rotate(-90deg);
+  }
+
+  &.left svg {
+    transform: rotate(90deg);
+  }
+}

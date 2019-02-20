@@ -2,6 +2,7 @@ import React, { useState, useRef } from 'react'
 import useOutsideClick from '@sdog/utils/useOutsideClick'
 import clsx from 'clsx'
 import Arrow from '@sdog/components/svg/Arrow'
+import Chevron from '@sdog/components/svg/Chevron'
 import ProfilePhotoSVG from '@sdog/components/svg/ProfilePhoto'
 import CloseIcon from '@sdog/components/svg/Close'
 import Hambuger from '@sdog/components/svg/Hamburger'
@@ -33,7 +34,7 @@ const UserMenu = () => {
               <span>Office</span>
             </div>
           </div>
-          <Arrow direction="down" />
+          <Chevron direction="down" />
         </div>
         <button
           onClick={handleMobileToggle}
@@ -50,7 +51,9 @@ const UserMenu = () => {
           <a href="/test">Billing</a>
           <a href="/test">Users</a>
           <a href="/test">Account</a>
-          <a href="/test">Logout</a>
+          <a href="/test">
+            Logout <Arrow />
+          </a>
         </div>
       </div>
     </div>
