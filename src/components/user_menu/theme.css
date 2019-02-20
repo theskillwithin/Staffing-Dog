@@ -178,6 +178,7 @@
   }
 
   &:hover .userMenuActive {
+    cursor: pointer;
     @media (--sd-notMobile) {
       display: block;
     }
@@ -186,6 +187,7 @@
   .userMenuDesktop {
     display: flex;
     font-weight: var(--sd-fontWeightMedium);
+    cursor: pointer;
     @media (--sd-preBreakTablet) {
       display: none;
     }
