@@ -5,8 +5,7 @@ import ContactSVG from '@sdog/components/svg/Contact'
 import HeadsetSVG from '@sdog/components/svg/Headset'
 import EmailUsSVG from '@sdog/components/svg/EmailUs'
 import LiveChatSVG from '@sdog/components/svg/LiveChat'
-import CloseIcon from '@sdog/components/svg/Close'
-import Hambuger from '@sdog/components/svg/Hamburger'
+import Hamburger from '@sdog/components/hamburger'
 import { Link } from 'react-router-dom'
 
 import theme from './theme.css'
@@ -47,7 +46,7 @@ class Contact extends React.Component {
             className={theme.contactMobile}
             type="button"
           >
-            {this.state.mobileActive ? <CloseIcon /> : <Hambuger />}
+            <Hamburger active={this.state.mobileActive} />
           </button>
         </div>
         <div

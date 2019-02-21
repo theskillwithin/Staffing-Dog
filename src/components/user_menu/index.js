@@ -5,8 +5,7 @@ import clsx from 'clsx'
 import Arrow from '@sdog/components/svg/Arrow'
 import Chevron from '@sdog/components/svg/Chevron'
 import ProfilePhotoSVG from '@sdog/components/svg/ProfilePhoto'
-import CloseIcon from '@sdog/components/svg/Close'
-import Hambuger from '@sdog/components/svg/Hamburger'
+import Hamburger from '@sdog/components/hamburger'
 
 import theme from './theme.css'
 
@@ -44,7 +43,7 @@ const UserMenu = ({ type }) => {
           className={theme.userMenuMobile}
           type="button"
         >
-          {mobileActive ? <CloseIcon /> : <Hambuger />}
+          <Hamburger active={mobileActive} />
         </button>
       </div>
       <div className={clsx(theme.userMenuActive, mobileActive && theme.mobileActive)}>
