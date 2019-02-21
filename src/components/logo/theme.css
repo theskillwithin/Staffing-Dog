@@ -28,3 +28,9 @@
 .path2 {
   fill: #0072ff;
 }
+
+.hideTextOnMobile {
+  @media (--sd-mobile) {
+    display: none;
+  }
+}
