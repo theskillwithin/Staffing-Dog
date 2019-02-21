@@ -466,6 +466,7 @@ export const findUserAuth = state => findState(state).auth
 export const findSchedule = state => findState(state).schedule
 export const findUserProfile = state => findState(state).profile
 export const findUserMeta = state => findUserProfile(state).meta
+export const findUserUser = state => findUserProfile(state).user
 export const findUserPreferences = state => findUserProfile(state).preferences
 
 export const findScheduleEvents = state => findSchedule(state).events

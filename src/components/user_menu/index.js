@@ -1,5 +1,7 @@
 import React, { useState, useRef } from 'react'
 import { string } from 'prop-types'
+import { connect } from 'react-redux'
+import { findUserUser } from '@sdog/store/user'
 import useOutsideClick from '@sdog/utils/useOutsideClick'
 import clsx from 'clsx'
 import Arrow from '@sdog/components/svg/Arrow'
@@ -9,7 +11,7 @@ import Hamburger from '@sdog/components/hamburger'
 
 import theme from './theme.css'
 
-const UserMenu = ({ type }) => {
+const UserMenu = ({ type, first, last }) => {
   const [mobileActive, setMobileActive] = useState(false)
   const pRef = useRef()
   const handleMobileToggle = () => setMobileActive(!mobileActive)
@@ -21,6 +23,8 @@ const UserMenu = ({ type }) => {
   }
   useOutsideClick(pRef, handleClickOutside)
 
+  if (!type || !first || !last) return null // TEMP FIX
+
   return (
     <div className={theme.userMenu}>
       <div className={theme.userMenuInner} ref={pRef}>
@@ -29,7 +33,9 @@ const UserMenu = ({ type }) => {
             <ProfilePhotoSVG color="purple" />
           </div>
           <div className={theme.user}>
-            <div>Name L.</div>
+            <div>
+              {first} {last.charAt(0)}.
+            </div>
             <div>
               <span>Office</span>
             </div>
@@ -48,7 +54,9 @@ const UserMenu = ({ type }) => {
       </div>
       <div className={clsx(theme.userMenuActive, mobileActive && theme.mobileActive)}>
         <div className={theme.userMenuActiveInner}>
-          <div className={theme.mobileOption}>Name L. Office</div>
+          <div className={theme.mobileOption}>
+            {first} {last.charAt(0)}. Office
+          </div>
           <a href="/test">Profile</a>
           {type === 'provider' && (
             <>
@@ -68,6 +76,14 @@ const UserMenu = ({ type }) => {
 
 UserMenu.propTypes = {
   type: string.isRequired,
+  first: string.isRequired,
+  last: string.isRequired,
 }
 
-export default UserMenu
+const mapState = state => ({
+  type: findUserUser(state).type,
+  first: findUserUser(state).first_name,
+  last: findUserUser(state).last_name,
+})
+
+export default connect(mapState)(UserMenu)
