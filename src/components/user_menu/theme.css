@@ -76,6 +76,7 @@
     display: none;
     background-color: var(--sd-primary);
     border-radius: 8px 8px 0 0;
+    padding: 15px 20px;
 
     @media (--sd-preBreakTablet) {
       display: block;
@@ -86,12 +87,13 @@
     position: relative;
     display: flex;
     flex-direction: column;
-    margin-top: 35px;
+    margin-top: 70px;
     width: 170px;
-    height: 136px;
+    height: auto;
     border-radius: 8px;
     background-color: var(--sd-white);
     filter: drop-shadow(0 3px 6px var(--sd-shadowColorContact));
+    padding-top: 10px;
 
     a {
       height: 35px;
@@ -100,6 +102,24 @@
       display: flex;
       align-items: center;
       font-size: 14px;
+      padding-left: 1.5em;
+
+      &.logout {
+        display: flex;
+        justify-content: space-between;
+        border-top: 2px solid var(--sd-grayLighterer);
+        margin-top: 0;
+        padding-top: 23px;
+        padding-bottom: 23px;
+
+        span {
+          margin-right: 5px;
+        }
+
+        svg {
+          width: 25px;
+        }
+      }
 
       i,
       svg {
@@ -119,7 +139,11 @@
       }
 
       @media (--sd-preBreakTablet) {
-        padding-left: 8px;
+        height: 45px;
+      }
+
+      &:last-child {
+        border-radius: 0 0 8px 8px;
       }
     }
 
@@ -128,25 +152,6 @@
         height: 40px;
         margin-top: 3px;
         margin-bottom: 2px;
-      }
-    }
-
-    .legal {
-      display: none;
-      position: absolute;
-      bottom: 1em;
-      right: 1em;
-      text-align: right;
-      background: var(--sd-grayLighter);
-      width: 100px;
-      height: 28px;
-      border-radius: 50px;
-      text-align: center;
-      justify-content: center;
-      align-items: center;
-
-      @media (--sd-preBreakTablet) {
-        display: flex;
       }
     }
 
@@ -169,11 +174,12 @@
     }
 
     @media (--sd-preBreakTablet) {
-      height: 217px;
+      height: auto;
       width: 100%;
       background-color: var(--sd-blackTxt);
       box-shadow: 0 3px 6px 0 var(--sd-shadowColor);
       color: white;
+      padding-top: 0;
     }
   }
 
