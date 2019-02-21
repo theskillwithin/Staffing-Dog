@@ -1,0 +1,239 @@
+@import '../../styles/config.css';
+
+.userMenu {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  font-size: 14px;
+
+  @media (--sd-preBreakTablet) {
+    position: absolute;
+    top: 1.5em;
+    right: 2em;
+  }
+
+  .userMenuInner a {
+    padding-bottom: 1em;
+  }
+
+  a {
+    text-decoration: none;
+    color: var(--sd-blackTxt);
+
+    i,
+    svg {
+      width: 30px;
+      color: var(--sd-primary);
+
+      @media (--sd-preBreakTablet) {
+        width: 20px;
+      }
+    }
+
+    @media (--sd-preBreakTablet) {
+      color: var(--sd-white);
+    }
+
+    @media (--sd-preBreakTablet) {
+      font-size: 14px;
+    }
+  }
+
+  .userMenuSVG {
+    svg {
+      margin-top: -2px;
+      margin-right: 5px;
+    }
+  }
+
+  .userMenuActive {
+    display: none;
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    left: -40px;
+
+    @media (--sd-notMobile) {
+      top: 5px;
+
+      &:hover {
+        display: block;
+      }
+    }
+
+    @media (--sd-preBreakTablet) {
+      left: calc(-100vw + 5em);
+      right: 5px;
+    }
+  }
+
+  .mobileActive {
+    display: block;
+  }
+
+  .mobileOption {
+    position: relative;
+    display: none;
+    background-color: var(--sd-primary);
+    border-radius: 8px 8px 0 0;
+    padding: 15px 20px;
+
+    @media (--sd-preBreakTablet) {
+      display: block;
+    }
+  }
+
+  .userMenuActiveInner {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    margin-top: 70px;
+    width: 170px;
+    height: auto;
+    border-radius: 8px;
+    background-color: var(--sd-white);
+    filter: drop-shadow(0 3px 6px var(--sd-shadowColorContact));
+    padding-top: 10px;
+
+    a {
+      height: 35px;
+      width: 100%;
+      margin-top: 0.5em;
+      display: flex;
+      align-items: center;
+      font-size: 14px;
+      padding-left: 1.5em;
+
+      &.logout {
+        display: flex;
+        justify-content: space-between;
+        border-top: 2px solid var(--sd-grayLighterer);
+        margin-top: 0;
+        padding-top: 23px;
+        padding-bottom: 23px;
+
+        span {
+          margin-right: 5px;
+        }
+
+        svg {
+          width: 25px;
+        }
+      }
+
+      i,
+      svg {
+        margin: 0 0.8em 0 0.8em;
+
+        @media (--sd-preBreakTablet) {
+          color: var(--sd-white);
+        }
+      }
+
+      &:hover {
+        background: var(--sd-offWhite);
+
+        @media (--sd-preBreakTablet) {
+          background: var(--sd-primary);
+        }
+      }
+
+      @media (--sd-preBreakTablet) {
+        height: 45px;
+      }
+
+      &:last-child {
+        border-radius: 0 0 8px 8px;
+      }
+    }
+
+    .mobileOption {
+      a {
+        height: 40px;
+        margin-top: 3px;
+        margin-bottom: 2px;
+      }
+    }
+
+    &:before {
+      content: '';
+      display: block;
+      position: absolute;
+      top: 25px;
+      right: 10px;
+      transform-origin: top;
+      transform: rotate(45deg) translate(-50%, -50%);
+      width: 35.4px;
+      height: 35.4px;
+      background-color: var(--sd-white);
+      z-index: -1;
+
+      @media (--sd-preBreakTablet) {
+        display: none;
+      }
+    }
+
+    @media (--sd-preBreakTablet) {
+      height: auto;
+      width: 100%;
+      background-color: var(--sd-blackTxt);
+      box-shadow: 0 3px 6px 0 var(--sd-shadowColor);
+      color: white;
+      padding-top: 0;
+    }
+  }
+
+  &:hover .userMenuActive {
+    cursor: pointer;
+    @media (--sd-notMobile) {
+      display: block;
+    }
+  }
+
+  .userMenuDesktop {
+    display: flex;
+    font-weight: var(--sd-fontWeightMedium);
+    cursor: pointer;
+    @media (--sd-preBreakTablet) {
+      display: none;
+    }
+
+    .photo {
+      width: 48px;
+      height: 48px;
+      margin-right: 20px;
+    }
+
+    .chevron {
+      display: flex;
+      align-items: center;
+    }
+
+    span {
+      color: var(--sd-gray);
+    }
+
+    .user {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      margin-right: 20px;
+    }
+  }
+
+  .userMenuMobile {
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: 999;
+    display: none;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    outline: none;
+
+    @media (--sd-preBreakTablet) {
+      display: block;
+    }
+  }
+}

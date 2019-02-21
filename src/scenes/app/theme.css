@@ -45,14 +45,10 @@ h6 {
   right: 0;
   z-index: 100;
 
-  .contact {
+  .userMenu {
     flex: 1;
     display: flex;
     justify-content: flex-end;
-
-    @media (--sd-mobile) {
-      display: none;
-    }
   }
 
   .appHeaderInner {

@@ -5,7 +5,7 @@ import { object, func } from 'prop-types'
 import { setHtmlClass, removeHtmlClass } from '@sdog/utils/document'
 import Logo from '@sdog/components/logo'
 import MainMenu from '@sdog/scenes/app/menu'
-import Contact from '@sdog/components/contact'
+import UserMenu from '@sdog/components/user_menu'
 import Spinner from '@sdog/components/spinner'
 import { getUserProfile } from '@sdog/store/user'
 
@@ -37,8 +37,8 @@ class App extends React.Component {
 
             <MainMenu location={this.props.location} />
 
-            <div className={theme.contact}>
-              <Contact />
+            <div className={theme.userMenu}>
+              <UserMenu />
             </div>
           </div>
         </header>
