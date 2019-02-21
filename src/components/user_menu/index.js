@@ -1,4 +1,5 @@
 import React, { useState, useRef } from 'react'
+import { string } from 'prop-types'
 import useOutsideClick from '@sdog/utils/useOutsideClick'
 import clsx from 'clsx'
 import Arrow from '@sdog/components/svg/Arrow'
@@ -9,7 +10,7 @@ import Hambuger from '@sdog/components/svg/Hamburger'
 
 import theme from './theme.css'
 
-const UserMenu = () => {
+const UserMenu = ({ type }) => {
   const [mobileActive, setMobileActive] = useState(false)
   const pRef = useRef()
   const handleMobileToggle = () => setMobileActive(!mobileActive)
@@ -50,16 +51,24 @@ const UserMenu = () => {
         <div className={theme.userMenuActiveInner}>
           <div className={theme.mobileOption}>Name L. Office</div>
           <a href="/test">Profile</a>
-          <a href="/test">Billing</a>
-          <a href="/test">Users</a>
+          {type === 'provider' && (
+            <>
+              <a href="/test">Billing</a>
+              <a href="/test">Users</a>
+            </>
+          )}
           <a href="/test">Account</a>
-          <a href="/test">
+          <a href="/test" className={theme.logout}>
             Logout <Arrow />
           </a>
         </div>
       </div>
     </div>
   )
+}
+
+UserMenu.propTypes = {
+  type: string.isRequired,
 }
 
 export default UserMenu
