@@ -22,4 +22,8 @@ module.exports = {
   },
   moduleFileExtensions: ['js', 'jsx'],
   setupFiles: ['<rootDir>/config/jest.polyfills.js', '<rootDir>/config/jest.setup.js'],
+  setupFilesAfterEnv: [
+    'jest-dom/extend-expect',
+    'react-testing-library/cleanup-after-each',
+  ],
 }
