@@ -27,7 +27,7 @@ Chevron.defaultProps = {
 Chevron.propTypes = {
   className: string,
   color: oneOf(['gray', 'white']),
-  direction: oneOf(['up', 'right', 'bottom', 'left']),
+  direction: oneOf(['up', 'right', 'down', 'left']),
 }
 
 export default Chevron
