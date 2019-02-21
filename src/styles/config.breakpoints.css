@@ -6,3 +6,4 @@
 @custom-media --sd-notMobile (min-width: 600px);
 @custom-media --sd-notDesktop (max-width: 1024px);
 @custom-media --sd-preBreakTablet (max-width: 800px);
+@custom-media --sd-notPreBreakTablet (min-width: 800px);

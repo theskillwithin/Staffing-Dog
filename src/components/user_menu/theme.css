@@ -53,7 +53,7 @@
     top: 0;
     left: -40px;
 
-    @media (--sd-notMobile) {
+    @media (--sd-notPreBreakTablet) {
       top: 5px;
 
       &:hover {
@@ -185,7 +185,7 @@
 
   &:hover .userMenuActive {
     cursor: pointer;
-    @media (--sd-notMobile) {
+    @media (--sd-notPreBreakTablet) {
       display: block;
     }
   }
