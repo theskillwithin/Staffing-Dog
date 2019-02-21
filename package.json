@@ -9,7 +9,7 @@
   },
   "scripts": {
     "start": "webpack-dev-server --mode development",
-    "start:no-lua": "cross-env BYPASS_LUA=1 webpack-dev-server --mode development",
+    "start:no-lua": "cross-env BYPASS_LUA=1 webpack-dev-server --mode production",
     "start:open": "webpack-dev-server --mode development --open",
     "start:mock": "cross-env MOCK_DATA=1 webpack-dev-server --port 8181 --mode development",
     "build": "cross-env BUILD_STAGE=1 webpack --mode production",
@@ -101,6 +101,7 @@
     "react-select": "^2.4.0",
     "react-textarea-autosize": "^7.1.0",
     "redux": "^4.0.1",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "terser-webpack-plugin": "^1.2.2"
   }
 }

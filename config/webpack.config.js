@@ -3,7 +3,8 @@ import path from 'path'
 import webpack from 'webpack'
 import HtmlWebPackPlugin from 'html-webpack-plugin'
 import MiniCssExtractPlugin from 'mini-css-extract-plugin'
-import UglifyJsPlugin from 'uglifyjs-webpack-plugin'
+// import UglifyJsPlugin from 'uglifyjs-webpack-plugin' switched to terser for temp bug
+import TerserPlugin from 'terser-webpack-plugin'
 import OptimizeCSSAssetsPlugin from 'optimize-css-assets-webpack-plugin'
 import postcssPresetEnv from 'postcss-preset-env'
 import postcssImport from 'postcss-import'
@@ -142,7 +143,7 @@ config.optimization = {
   minimize: IS_PROD || false,
   minimizer: IS_PROD
     ? [
-        new UglifyJsPlugin({
+        new TerserPlugin({
           cache: true,
           parallel: true,
           sourceMap: true, // set to true if you want JS source maps
