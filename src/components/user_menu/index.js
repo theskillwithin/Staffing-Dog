@@ -36,9 +36,11 @@ const UserMenu = ({ type, first, last }) => {
             <div>
               {first} {last.charAt(0)}.
             </div>
-            <div>
-              <span>Office</span>
-            </div>
+            {type === 'provider' && (
+              <div>
+                <span>Office</span>
+              </div>
+            )}
           </div>
           <div className={theme.chevron}>
             <Chevron direction="down" />
