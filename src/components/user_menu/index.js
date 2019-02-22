@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react'
 import { string } from 'prop-types'
 import { connect } from 'react-redux'
-import { findUserUser } from '@sdog/store/user'
+import { findUserInfo } from '@sdog/store/user'
 import useOutsideClick from '@sdog/utils/useOutsideClick'
 import clsx from 'clsx'
 import Arrow from '@sdog/components/svg/Arrow'
@@ -25,6 +25,8 @@ const UserMenu = ({ type, first, last, office }) => {
 
   if (!type || !first || !last) return null // TEMP FIX
 
+  const displayUserName = `${first} ${last.trim().charAt(0)}.`
+
   return (
     <div className={theme.userMenu}>
       <div className={theme.userMenuInner} ref={pRef}>
@@ -33,10 +35,8 @@ const UserMenu = ({ type, first, last, office }) => {
             <ProfilePhotoSVG color="purple" />
           </div>
           <div className={theme.user}>
-            <div>
-              {first} {last.charAt(0)}.
-            </div>
-            {type === 'provider' && office && (
+            <div>{displayUserName}</div>
+            {type === 'practice' && office && (
               <div>
                 <span>{office}</span>
               </div>
@@ -57,10 +57,10 @@ const UserMenu = ({ type, first, last, office }) => {
       <div className={clsx(theme.userMenuActive, mobileActive && theme.mobileActive)}>
         <div className={theme.userMenuActiveInner}>
           <div className={theme.mobileOption}>
-            {first} {last.charAt(0)}. {type === 'provider' && office && office}
+            {displayUserName} {type === 'practice' && office && office}
           </div>
           <a href="/test">Profile</a>
-          {type === 'provider' && (
+          {type === 'practice' && (
             <>
               <a href="/test">Billing</a>
               <a href="/test">Users</a>
@@ -84,9 +84,9 @@ UserMenu.propTypes = {
 }
 
 const mapState = state => ({
-  type: findUserUser(state).type,
-  first: findUserUser(state).first_name,
-  last: findUserUser(state).last_name,
+  type: findUserInfo(state).type,
+  first: findUserInfo(state).first_name,
+  last: findUserInfo(state).last_name,
   office: 'Office',
 })
 
