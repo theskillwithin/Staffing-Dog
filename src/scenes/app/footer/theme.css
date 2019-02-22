@@ -1,0 +1,20 @@
+@import '../../../styles/config.css';
+
+.footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 36.5px;
+  border-top: 1px solid var(--sd-footerBorder);
+
+  @media (--sd-preBreakTablet) {
+    margin-bottom: 61px;
+  }
+
+  nav a {
+    color: var(--sd-grayLighter);
+    padding: 12px;
+    font-size: 14px;
+    text-decoration: none;
+  }
+}
