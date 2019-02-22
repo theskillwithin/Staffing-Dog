@@ -11,7 +11,7 @@ import Hamburger from '@sdog/components/hamburger'
 
 import theme from './theme.css'
 
-const UserMenu = ({ type, first, last }) => {
+const UserMenu = ({ type, first, last, office }) => {
   const [mobileActive, setMobileActive] = useState(false)
   const pRef = useRef()
   const handleMobileToggle = () => setMobileActive(!mobileActive)
@@ -36,9 +36,9 @@ const UserMenu = ({ type, first, last }) => {
             <div>
               {first} {last.charAt(0)}.
             </div>
-            {type === 'provider' && (
+            {type === 'provider' && office && (
               <div>
-                <span>Office</span>
+                <span>{office}</span>
               </div>
             )}
           </div>
@@ -57,7 +57,7 @@ const UserMenu = ({ type, first, last }) => {
       <div className={clsx(theme.userMenuActive, mobileActive && theme.mobileActive)}>
         <div className={theme.userMenuActiveInner}>
           <div className={theme.mobileOption}>
-            {first} {last.charAt(0)}. Office
+            {first} {last.charAt(0)}. {type === 'provider' && office && office}
           </div>
           <a href="/test">Profile</a>
           {type === 'provider' && (
@@ -80,12 +80,14 @@ UserMenu.propTypes = {
   type: string.isRequired,
   first: string.isRequired,
   last: string.isRequired,
+  office: string,
 }
 
 const mapState = state => ({
-  type: findUserUser(state).type,
+  type: 'findUserUser(state).type',
   first: findUserUser(state).first_name,
   last: findUserUser(state).last_name,
+  office: 'Office',
 })
 
 export default connect(mapState)(UserMenu)
