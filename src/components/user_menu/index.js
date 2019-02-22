@@ -84,7 +84,7 @@ UserMenu.propTypes = {
 }
 
 const mapState = state => ({
-  type: 'findUserUser(state).type',
+  type: findUserUser(state).type,
   first: findUserUser(state).first_name,
   last: findUserUser(state).last_name,
   office: 'Office',
