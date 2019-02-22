@@ -32,7 +32,7 @@ class App extends React.Component {
         <header className={theme.appHeader}>
           <div className={theme.appHeaderInner}>
             <div className={theme.logo}>
-              <Logo />
+              <Logo hideTextOnMobile />
             </div>
 
             <MainMenu location={this.props.location} />

@@ -4,13 +4,9 @@ import clsx from 'clsx'
 
 import theme from './theme.css'
 
-const LogoInternals = props => (
-  <div className={clsx(props.className, theme.logo)}>
-    <svg
-      width={props.width}
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="555 12 63.116 46.148"
-    >
+const LogoInternals = ({ className, width, hideText, hideTextOnMobile }) => (
+  <div className={clsx(className, theme.logo)}>
+    <svg width={width} xmlns="http://www.w3.org/2000/svg" viewBox="555 12 63.116 46.148">
       <g transform="translate(555 12)">
         <path className={theme.path} d="M515,93" transform="translate(-463.557 -83.71)" />
         <path
@@ -20,7 +16,11 @@ const LogoInternals = props => (
       </g>
     </svg>
 
-    {!props.hideText ? <span className={theme.logoText}>StaffingDog</span> : null}
+    {!hideText ? (
+      <span className={clsx(theme.logoText, hideTextOnMobile && theme.hideTextOnMobile)}>
+        StaffingDog
+      </span>
+    ) : null}
   </div>
 )
 
@@ -37,12 +37,14 @@ LogoInternals.defaultProps = {
   width: '54px',
   className: '',
   hideText: false,
+  hideTextOnMobile: false,
 }
 
 LogoInternals.propTypes = {
   width: string,
   className: string,
   hideText: bool,
+  hideTextOnMobile: bool,
 }
 
 Logo.defaultProps = {

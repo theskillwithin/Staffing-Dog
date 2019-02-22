@@ -1,0 +1,61 @@
+@import '../../styles/config.css';
+
+.hamburger {
+  width: 25px;
+  height: 21px;
+  cursor: pointer;
+  transform: translateY(5px);
+}
+
+.lines,
+.lines:after,
+.lines:before {
+  width: 25px;
+  height: 4px;
+  border-radius: 4px;
+}
+
+.lines {
+  position: relative;
+  transform: translateY(2px);
+  background: var(--sd-primary);
+  transition: all 0ms 300ms;
+
+  &.active {
+    background: rgba(255, 255, 255, 0);
+  }
+}
+
+.lines:before {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 7px;
+  background: var(--sd-primary);
+  transition: bottom 250ms 250ms cubic-bezier(0.23, 1, 0.32, 1),
+    transform 250ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.lines:after {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 7px;
+  background: var(--sd-primary);
+  transition: top 250ms 250ms cubic-bezier(0.23, 1, 0.32, 1),
+    transform 250ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.lines.active:after {
+  top: 0;
+  transform: rotate(45deg);
+  transition: top 250ms cubic-bezier(0.23, 1, 0.32, 1),
+    transform 250ms 250ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.lines.active:before {
+  bottom: 0;
+  transform: rotate(-45deg);
+  transition: bottom 250ms cubic-bezier(0.23, 1, 0.32, 1),
+    transform 250ms 250ms cubic-bezier(0.23, 1, 0.32, 1);
+}

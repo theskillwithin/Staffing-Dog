@@ -92,7 +92,6 @@
     "prop-types": "^15.7.2",
     "qs": "^6.6.0",
     "react": "^16.8.2",
-    "react-click-outside": "^3.0.1",
     "react-dom": "^16.8.2",
     "react-dropzone": "^8.2.0",
     "react-google-maps": "^9.4.5",
