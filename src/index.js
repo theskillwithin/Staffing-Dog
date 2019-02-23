@@ -4,8 +4,13 @@ import { Provider } from 'react-redux'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import createStore from '@sdog/store'
 import reducers from '@sdog/store/reducers'
+import {
+  getToken,
+  getFingerprint,
+  setFingerprint,
+  removeAllAuth,
+} from '@sdog/store/storage'
 
-import { getToken, getFingerprint, setFingerprint } from './store/storage'
 import createFingerprint from './utils/fingerprint'
 import Spinner from './components/spinner'
 import AuthRoute from './components/AuthRoute'
@@ -35,6 +40,13 @@ render(
     <Router>
       <React.Suspense fallback={<Spinner />}>
         <Switch>
+          <Route
+            path="/logout"
+            render={({ history }) => {
+              removeAllAuth()
+              history.push('/login')
+            }}
+          />
           <Route path="/onboarding" component={OnboardingScene} />
           <Route path="/login" component={LoginScene} />
           <AuthRoute path="/" component={App} to="/login" />

@@ -75,7 +75,7 @@ export const INITIAL_STATE = {
   },
 }
 
-const spreadLoadingError = (loading, error) => ({ loading, error })
+const spreadLoadingError = (loading = false, error = false) => ({ loading, error })
 
 let reducers = {}
 
@@ -144,15 +144,15 @@ reducers = {
   ...reducers,
   [userLoginTypes.LOADING]: state => ({
     ...state,
-    auth: { ...state.auth, loading: true, error: false },
+    auth: { ...state.auth, ...spreadLoadingError(true, false) },
   }),
   [userLoginTypes.ERROR]: state => ({
     ...state,
-    auth: { ...state.auth, loading: false, error: true },
+    auth: { ...state.auth, ...spreadLoadingError(false, true) },
   }),
   [userLoginTypes.SUCCESS]: (state, { data }) => ({
     ...state,
-    auth: { ...state.auth, loading: true, error: false },
+    auth: { ...state.auth, ...spreadLoadingError(false, false) },
     profile: {
       ...state.profile,
       loading: false,

@@ -18,15 +18,26 @@ export const PROD_API_ROOT = IS_STAGE
   : `https://api.staffing.dog/${API_VERSION}`
 export const API_ROOT = IS_DEV ? LOCAL_API_ROOT : PROD_API_ROOT
 
+let lastUsedRequest = null
+
+export const getLastUsedRequest = () => lastUsedRequest
+
 const axiosInstance = axios.create({
   withCredentials: true,
   paramsSerializer: params => qs.stringify(params),
 })
 
-const unauthorizedUser = () => {
-  removeAllAuth()
-  window.location.assign('/login')
+export const unauthorizedUser = () => {
+  if (get(lastUsedRequest, 'url', false) !== `${API_ROOT}/login`) {
+    removeAllAuth()
+    window.location.assign('/login')
+  }
 }
+
+axiosInstance.interceptors.request.use(config => {
+  lastUsedRequest = { ...config }
+  return config
+})
 
 axiosInstance.interceptors.response.use(
   res => {
