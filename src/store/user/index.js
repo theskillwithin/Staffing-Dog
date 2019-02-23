@@ -124,7 +124,7 @@ export const login = ({
     data: { email, password },
     callbacks: {
       success: res => {
-        setUserIdCookie(res.data.user.id)
+        setUserIdCookie(res.data.id)
         if (onSuccess) onSuccess(res)
 
         if (history) {
@@ -176,7 +176,7 @@ export const registerUser = ({ onSuccess = false, onError = false, ...data }) =>
     data,
     callbacks: {
       success: res => {
-        setUserIdCookie(res.data.user.id)
+        setUserIdCookie(res.data.id)
         if (onSuccess) onSuccess(res)
       },
       error: onError,
