@@ -8,6 +8,7 @@ import OptimizeCSSAssetsPlugin from 'optimize-css-assets-webpack-plugin'
 import postcssPresetEnv from 'postcss-preset-env'
 import postcssImport from 'postcss-import'
 import postcssNested from 'postcss-nested'
+import CopyWebpackPlugin from 'copy-webpack-plugin'
 
 const ENV = process.env.NODE_ENV
 const IS_DEV = ENV === 'development'
@@ -117,6 +118,7 @@ config.module.rules = [
       loader: 'file-loader',
       options: {
         name: '[name].[ext]',
+        publicPath: 'images',
       },
     },
   },
@@ -157,6 +159,7 @@ config.optimization = {
 // Plugins
 config.plugins = [
   new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
+  new CopyWebpackPlugin([{ from: 'src/images', to: '../dist/images' }]),
   new HtmlWebPackPlugin({
     template: './src/index.html',
     filename: './index.html',

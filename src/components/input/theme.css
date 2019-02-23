@@ -77,7 +77,7 @@
 
 .password {
   &:after {
-    content: url('/src/images/thumbprint.svg');
+    content: url('/images/thumbprint.svg');
     display: block;
     position: absolute;
     right: 1em;

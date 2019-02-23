@@ -28,7 +28,7 @@ class Filter extends Component {
       alignItems: 'center',
       display: 'flex',
       ':before': {
-        content: selected ? `url('/src/images/check.svg')` : '""',
+        content: selected ? `url('/images/check.svg')` : '""',
         display: 'block',
         marginRight: '0.8em',
         height: 18,
