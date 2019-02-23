@@ -67,7 +67,7 @@ const UserMenu = ({ type, first, last, office }) => {
             </>
           )}
           <a href="/test">Account</a>
-          <a href="/test" className={theme.logout}>
+          <a href="/logout" className={theme.logout}>
             Logout <Arrow />
           </a>
         </div>
