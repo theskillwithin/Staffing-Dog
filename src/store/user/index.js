@@ -458,7 +458,7 @@ export const uploadUserPhotoTypes = createActionTypes(UPLOAD_USER_PHOTO)
 
 export const uploadUserPhoto = file => {
   const data = new FormData()
-  data.append('file', file)
+  data.append('profileimg', file)
 
   return {
     type: USER_GET_SCHEDULE,
