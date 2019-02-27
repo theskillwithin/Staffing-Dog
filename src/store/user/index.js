@@ -456,14 +456,19 @@ reducers = {
 export const UPLOAD_USER_PHOTO = 'UPLOAD_USER_PHOTO'
 export const uploadUserPhotoTypes = createActionTypes(UPLOAD_USER_PHOTO)
 
-export const uploadUserPhoto = file => ({
-  type: USER_GET_SCHEDULE,
-  api: {
-    url: `${API_ROOT}/profile/uploads`,
-    method: 'POST',
-    data: { file },
-  },
-})
+export const uploadUserPhoto = file => {
+  const data = new FormData()
+  data.append('file', file)
+
+  return {
+    type: USER_GET_SCHEDULE,
+    api: {
+      url: `${API_ROOT}/profile/uploads`,
+      method: 'POST',
+      data,
+    },
+  }
+}
 
 reducers = {
   ...reducers,

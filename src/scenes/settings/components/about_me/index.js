@@ -147,6 +147,7 @@ const SettingsAboutMe = ({ autoSaveUserProfile, uploadUserPhoto, profile }) => {
             </div>
           )}
         </Dropzone>
+
         <div>
           <ul>
             <li>
