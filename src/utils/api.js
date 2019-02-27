@@ -34,6 +34,16 @@ export const unauthorizedUser = () => {
   }
 }
 
+export const onErrorByStatus = res => {
+  if (
+    res.status === 401 ||
+    (res.status === 400 &&
+      get(res, 'data.error', false) === 'fingerprint collision detected')
+  ) {
+    unauthorizedUser()
+  }
+}
+
 axiosInstance.interceptors.request.use(config => {
   lastUsedRequest = { ...config }
   return config
@@ -42,9 +52,7 @@ axiosInstance.interceptors.request.use(config => {
 axiosInstance.interceptors.response.use(
   res => {
     if (res.status >= 400) {
-      if (res.status === 401) {
-        unauthorizedUser()
-      }
+      onErrorByStatus(res)
 
       return Promise.reject(res)
     }
@@ -52,9 +60,8 @@ axiosInstance.interceptors.response.use(
     return Promise.resolve(res)
   },
   error => {
-    if (get(error, 'response.status') === 401) {
-      unauthorizedUser()
-    }
+    onErrorByStatus(get(error, 'response', {}))
+
     return Promise.reject(error)
   },
 )

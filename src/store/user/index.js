@@ -451,6 +451,40 @@ reducers = {
 }
 
 /**
+ * Upload User Photo
+ */
+export const UPLOAD_USER_PHOTO = 'UPLOAD_USER_PHOTO'
+export const uploadUserPhotoTypes = createActionTypes(UPLOAD_USER_PHOTO)
+
+export const uploadUserPhoto = file => ({
+  type: USER_GET_SCHEDULE,
+  api: {
+    url: `${API_ROOT}/profile/uploads`,
+    method: 'POST',
+    data: { file },
+  },
+})
+
+reducers = {
+  ...reducers,
+  [uploadUserPhotoTypes.LOADING]: state => ({
+    ...state,
+    loadingUserProfile: true,
+    loadingUserProfileError: false,
+  }),
+  [uploadUserPhotoTypes.SUCCESS]: state => ({
+    ...state,
+    loadingUserProfile: false,
+    loadingUserProfileError: false,
+  }),
+  [uploadUserPhotoTypes.ERROR]: state => ({
+    ...state,
+    loadingUserProfile: false,
+    loadingUserProfileError: true,
+  }),
+}
+
+/**
  * Create Store
  */
 export const reducer = buildStore(reducers, INITIAL_STATE)

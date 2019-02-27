@@ -13,6 +13,7 @@ import Dropdown from '@sdog/components/dropdown'
 import {
   findUserProfile,
   autoSaveUserProfile as autoSaveUserProfileAction,
+  uploadUserPhoto as uploadUserPhotoAction,
 } from '@sdog/store/user'
 
 import EmailVerified from './email_verified'
@@ -95,7 +96,7 @@ let debouncedAutoSaveUserProfile = null
 
 const FormSpacer = () => <div className={theme.spacer} />
 
-const SettingsAboutMe = ({ autoSaveUserProfile, profile }) => {
+const SettingsAboutMe = ({ autoSaveUserProfile, uploadUserPhoto, profile }) => {
   if (profile.loading) {
     return <p>Loading</p>
   }
@@ -117,13 +118,16 @@ const SettingsAboutMe = ({ autoSaveUserProfile, profile }) => {
     debouncedAutoSaveUserProfile(name, value)
   }
 
+  const uplodateFile = files => {
+    if (files[0]) {
+      uploadUserPhoto(files[0])
+    }
+  }
+
   return (
     <div>
       <div className={theme.photo}>
-        <Dropzone
-          accept="image/jpeg, image/png"
-          onDrop={files => autoSaveUserProfile('preferences.profile_image_url', files)}
-        >
+        <Dropzone accept="image/jpeg, image/png" onDrop={files => uplodateFile(files)}>
           {({ getRootProps, getInputProps, isDragActive }) => (
             <div
               {...getRootProps()}
@@ -291,6 +295,7 @@ const SettingsAboutMe = ({ autoSaveUserProfile, profile }) => {
 
 SettingsAboutMe.propTypes = {
   autoSaveUserProfile: func.isRequired,
+  uploadUserPhoto: func.isRequired,
   profile: shape({
     preferences: object,
   }).isRequired,
@@ -300,7 +305,10 @@ export const mapStateToProps = state => ({
   profile: findUserProfile(state),
 })
 
-export const mapActionsToProps = { autoSaveUserProfile: autoSaveUserProfileAction }
+export const mapActionsToProps = {
+  autoSaveUserProfile: autoSaveUserProfileAction,
+  uploadUserPhoto: uploadUserPhotoAction,
+}
 
 export default connect(
   mapStateToProps,
