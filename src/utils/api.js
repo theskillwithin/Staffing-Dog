@@ -12,7 +12,7 @@ export const LOCAL_API_ROOT = BYPASS_LUA
   ? `http://api.sdog.test:4000/${API_VERSION}`
   : `http://api.sdog.test/${API_VERSION}`
 
-export const STAGE_API_ROOT = `https://api.dev.staffing.dog:4000/${API_VERSION}`
+export const STAGE_API_ROOT = `https://api.dev.staffing.dog/${API_VERSION}`
 export const PROD_API_ROOT = IS_STAGE
   ? STAGE_API_ROOT
   : `https://api.staffing.dog/${API_VERSION}`
