@@ -138,7 +138,12 @@ const SettingsAboutMe = ({ autoSaveUserProfile, uploadUserPhoto, profile }) => {
               <h5>Profile Photo</h5>
               <input {...getInputProps()} />
               {profile.preferences.profile_image_url ? (
-                <img src={profile.preferences.profile_image_url} alt="Profile" />
+                <img
+                  src={profile.preferences.profile_image_url}
+                  alt="Profile"
+                  width="122"
+                  height="122"
+                />
               ) : (
                 <ProfilePhotoSVG />
               )}
