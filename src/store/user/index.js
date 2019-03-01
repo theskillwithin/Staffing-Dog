@@ -451,6 +451,53 @@ reducers = {
 }
 
 /**
+ * Upload User Photo
+ */
+export const UPLOAD_USER_PHOTO = 'UPLOAD_USER_PHOTO'
+export const uploadUserPhotoTypes = createActionTypes(UPLOAD_USER_PHOTO)
+
+export const uploadUserPhoto = file => (dispatch, getState) => {
+  const data = new FormData()
+  data.append('profileimg', file)
+  data.append('user_id', findUserId(getState()) || getUserId())
+
+  dispatch({
+    type: USER_GET_SCHEDULE,
+    api: {
+      url: `${API_ROOT}/profile/uploads`,
+      method: 'POST',
+      data,
+    },
+  })
+}
+
+reducers = {
+  ...reducers,
+  [uploadUserPhotoTypes.LOADING]: state => ({
+    ...state,
+    loadingUserProfile: true,
+    loadingUserProfileError: false,
+  }),
+  [uploadUserPhotoTypes.SUCCESS]: (state, { data }) => ({
+    ...state,
+    loadingUserProfile: false,
+    loadingUserProfileError: false,
+    profile: {
+      ...state.profile,
+      preferences: {
+        ...state.profile.preferences,
+        profile_img_url: data.profile_img_url,
+      },
+    },
+  }),
+  [uploadUserPhotoTypes.ERROR]: state => ({
+    ...state,
+    loadingUserProfile: false,
+    loadingUserProfileError: true,
+  }),
+}
+
+/**
  * Create Store
  */
 export const reducer = buildStore(reducers, INITIAL_STATE)

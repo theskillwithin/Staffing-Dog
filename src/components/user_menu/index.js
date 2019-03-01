@@ -1,6 +1,7 @@
 import React, { useState, useRef } from 'react'
 import { string } from 'prop-types'
 import { connect } from 'react-redux'
+import { Link } from 'react-router-dom'
 import { findUserInfo } from '@sdog/store/user'
 import useOutsideClick from '@sdog/utils/useOutsideClick'
 import clsx from 'clsx'
@@ -59,17 +60,17 @@ const UserMenu = ({ type, first, last, office }) => {
           <div className={theme.mobileOption}>
             {displayUserName} {type === 'practice' && office && office}
           </div>
-          <a href="/test">Profile</a>
+          <Link to="/settings">Profile</Link>
           {type === 'practice' && (
             <>
-              <a href="/test">Billing</a>
-              <a href="/test">Users</a>
+              <Link to="/settings">Billing</Link>
+              <Link to="/settings">Users</Link>
             </>
           )}
-          <a href="/test">Account</a>
-          <a href="/logout" className={theme.logout}>
+          <Link to="/settings">Account</Link>
+          <Link to="/logout" className={theme.logout}>
             Logout <Arrow />
-          </a>
+          </Link>
         </div>
       </div>
     </div>
