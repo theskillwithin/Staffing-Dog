@@ -35,4 +35,12 @@
       margin: 0 1em;
     }
   }
+
+  &Split {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
 }

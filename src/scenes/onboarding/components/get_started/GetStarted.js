@@ -24,6 +24,31 @@ class GetStarted extends Component {
   }
 
   render() {
+    if (!this.props.type) {
+      return (
+        <div className={clsx(theme.gettingStarted, theme.gettingStartedSplit)}>
+          <div className="left">
+            <Person className={clsx(theme.group, theme.person, theme.man)} name="man" />
+            <Person
+              className={clsx(theme.group, theme.person, theme.woman3)}
+              name="woman3"
+            />
+            <Person
+              className={clsx(theme.group, theme.person, theme.woman2)}
+              name="woman2"
+            />
+          </div>
+          <div className="right">
+            <Svg name="dentist_chair" className={clsx(theme.group, theme.chair)} />
+
+            <Person
+              className={clsx(theme.group, theme.person, theme.woman)}
+              name="woman"
+            />
+          </div>
+        </div>
+      )
+    }
     return (
       <div className={theme.gettingStarted}>
         <StarTitle title="Power to the Professional" />
