@@ -55,7 +55,6 @@ const ActionNav = ({ match, history, steps, goToStep, savingStep, loadingNextSte
               })
             }
             disabled={savingStep || loadingNextStep}
-            loading={savingStep || loadingNextStep}
             size="medium"
             round
           >
