@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { func, shape } from 'prop-types'
 import { Link, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
@@ -11,56 +11,29 @@ import Button from '@sdog/components/button'
 import Arrow from '@sdog/components/svg/Arrow'
 import { IS_DEV, IS_STAGE } from '@sdog/utils/env'
 
-import { login, setToken } from '../../store/user'
+import { login as loginAction } from '../../store/user'
 import appTheme from '../app/theme.css'
 
 import theme from './theme.css'
 
-class Login extends React.Component {
-  static propTypes = {
-    login: func.isRequired,
-    setToken: func.isRequired,
-    history: shape({ push: func.isRequired }).isRequired,
-  }
+const Login = ({ history, login }) => {
+  const [tabIndex, setTabIndex] = useState(0)
+  const [email, setEmail] = useState(IS_DEV || IS_STAGE ? 'romelu@lukaku.com' : '')
+  const [password, setPassword] = useState(IS_DEV || IS_STAGE ? 'password1' : '')
 
-  state = {
-    activeTabIndex: 0,
-    form: {
-      email: IS_DEV || IS_STAGE ? 'romelu@lukaku.com' : '',
-      password: IS_DEV || IS_STAGE ? 'password1' : '',
-    },
-  }
-
-  componentDidMount() {
+  useEffect(() => {
     setTitle('Login')
     setHtmlClass('html-login')
-  }
 
-  componentWillUnmount() {
-    removeHtmlClass('html-login')
-  }
+    return removeHtmlClass('html-login')
+  })
 
-  handleChangeTab = tab => {
-    this.setState({ activeTabIndex: tab })
-  }
-
-  handleChange = (label, value) => {
-    this.setState(state => ({ form: { ...state.form, [label]: value } }))
-  }
-
-  submit = e => {
+  const onSubmit = e => {
     e.preventDefault()
-    const {
-      state: {
-        form: { email, password },
-      },
-      props: { history },
-    } = this
-
-    this.props.login({ email, password, history })
+    login({ email, password, history })
   }
 
-  render = () => (
+  return (
     <div className={appTheme.pageContent}>
       <header className={theme.header}>
         <Contact />
@@ -72,24 +45,17 @@ class Login extends React.Component {
         <div className={theme.signin}>
           <h2>Sign In</h2>
           <div>
-            <Tabs
-              activeTabIndex={this.state.activeTabIndex}
-              onSelect={tab => this.handleChangeTab(tab)}
-            >
+            <Tabs activeTabIndex={tabIndex} onSelect={setTabIndex}>
               <div>Dental Professional</div>
               <div>Dental Provider</div>
             </Tabs>
 
-            <form className={theme.form} onSubmit={this.submit}>
-              <Input
-                label="Email"
-                value={this.state.form.email}
-                onChange={value => this.handleChange('email', value)}
-              />
+            <form className={theme.form} onSubmit={onSubmit}>
+              <Input label="Email" value={email} onChange={setEmail} />
               <Input
                 label="Password"
-                value={this.state.form.password}
-                onChange={value => this.handleChange('password', value)}
+                value={password}
+                onChange={setPassword}
                 type="password"
                 thumbprint
               />
@@ -120,7 +86,12 @@ class Login extends React.Component {
   )
 }
 
-const mapActionsToProps = { login, setToken }
+Login.propTypes = {
+  login: func.isRequired,
+  history: shape({ push: func.isRequired }).isRequired,
+}
+
+const mapActionsToProps = { login: loginAction }
 
 export default withRouter(
   connect(
