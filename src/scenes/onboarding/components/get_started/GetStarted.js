@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { func, string, object } from 'prop-types'
-import { withRouter } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import clsx from 'clsx'
 import Arrow from '@sdog/components/svg/Arrow'
 import Button from '@sdog/components/button'
@@ -40,12 +40,14 @@ const GetStarted = ({ type, setStep }) => {
               name="woman2"
             />
           </div>
-          <Button round className={theme.letsGetStartedButton}>
-            Get Started as a Professional{' '}
-            <span>
-              <Arrow small color="white" />
-            </span>
-          </Button>
+          <Link to="/onboarding/proffesional/step/1">
+            <Button round className={theme.letsGetStartedButton}>
+              Get Started as a Professional{' '}
+              <span>
+                <Arrow small color="white" />
+              </span>
+            </Button>
+          </Link>
         </div>
         <div className={theme.divider} />
         <div className={theme.right}>
@@ -57,12 +59,14 @@ const GetStarted = ({ type, setStep }) => {
               name="woman"
             />
           </div>
-          <Button round className={theme.letsGetStartedButton}>
-            Get Started as a Practice{' '}
-            <span>
-              <Arrow small color="white" />
-            </span>
-          </Button>
+          <Link to="/onboarding/practice/step/1">
+            <Button round className={theme.letsGetStartedButton}>
+              Get Started as a Practice{' '}
+              <span>
+                <Arrow small color="white" />
+              </span>
+            </Button>
+          </Link>
         </div>
       </div>
     )
@@ -140,4 +144,4 @@ GetStarted.propTypes = {
   history: object,
 }
 
-export default withRouter(GetStarted)
+export default GetStarted
