@@ -1,12 +1,13 @@
 import React, { Component } from 'react'
 import { func, string } from 'prop-types'
 import clsx from 'clsx'
-
-import SVGCertification from '../../../../components/svg/files/certification.svg'
-import SVGPlantTall from '../../../../components/svg/files/plant_tall.svg'
-import Person from '../../../../components/svg/Person'
-import Svg from '../../../../components/svg'
-import StarTitle from '../../../../components/star_title'
+import Arrow from '@sdog/components/svg/Arrow'
+import Button from '@sdog/components/button'
+import SVGCertification from '@sdog/components/svg/files/certification.svg'
+import SVGPlantTall from '@sdog/components/svg/files/plant_tall.svg'
+import Person from '@sdog/components/svg/Person'
+import Svg from '@sdog/components/svg'
+import StarTitle from '@sdog/components/star_title'
 
 import theme from './theme.css'
 
@@ -28,24 +29,40 @@ class GetStarted extends Component {
       return (
         <div className={clsx(theme.gettingStarted, theme.gettingStartedSplit)}>
           <div className="left">
-            <Person className={clsx(theme.group, theme.person, theme.man)} name="man" />
-            <Person
-              className={clsx(theme.group, theme.person, theme.woman3)}
-              name="woman3"
-            />
-            <Person
-              className={clsx(theme.group, theme.person, theme.woman2)}
-              name="woman2"
-            />
+            <div>
+              <Person className={clsx(theme.group, theme.person, theme.man)} name="man" />
+              <Person
+                className={clsx(theme.group, theme.person, theme.woman3)}
+                name="woman3"
+              />
+              <Person
+                className={clsx(theme.group, theme.person, theme.woman2)}
+                name="woman2"
+              />
+            </div>
+            <Button round className={theme.letsGetStartedButton}>
+              Get Started as a Professional{' '}
+              <span>
+                <Arrow small color="white" />
+              </span>
+            </Button>
           </div>
           <div className={theme.divider} />
           <div className="right">
-            <Svg name="dentist_chair" className={clsx(theme.group, theme.chair)} />
+            <div>
+              <Svg name="dentist_chair" className={clsx(theme.group, theme.chair)} />
 
-            <Person
-              className={clsx(theme.group, theme.person, theme.woman)}
-              name="woman"
-            />
+              <Person
+                className={clsx(theme.group, theme.person, theme.woman)}
+                name="woman"
+              />
+            </div>
+            <Button round className={theme.letsGetStartedButton}>
+              Get Started as a Practice{' '}
+              <span>
+                <Arrow small color="white" />
+              </span>
+            </Button>
           </div>
         </div>
       )

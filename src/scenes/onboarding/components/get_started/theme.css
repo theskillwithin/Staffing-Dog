@@ -56,3 +56,18 @@
     }
   }
 }
+
+.letsGetStartedButton {
+  margin-top: 6em;
+  position: relative;
+  width: 268px;
+  height: 40px;
+  margin-bottom: 1em;
+
+  span {
+    position: absolute;
+    top: 50%;
+    right: 5px;
+    transform: translateY(-50%);
+  }
+}
