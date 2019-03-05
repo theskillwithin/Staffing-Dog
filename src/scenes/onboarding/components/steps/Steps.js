@@ -52,7 +52,6 @@ class Steps extends React.Component {
     const props = {
       value: getValue(field.name),
       onChange: v => onChange(field.name, v),
-      label: field.label,
       theme: theme.element,
     }
 
@@ -65,6 +64,7 @@ class Steps extends React.Component {
         return (
           <Input
             type={field.formType || 'text'}
+            label={field.label}
             invalid={
               this.props.errorFields && includes(this.props.errorFields, field.name)
             }
@@ -91,6 +91,7 @@ class Steps extends React.Component {
             invalid={
               this.props.errorFields && includes(this.props.errorFields, field.name)
             }
+            placeholder={field.label}
             {...props}
           />
         )
