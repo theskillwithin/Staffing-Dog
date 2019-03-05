@@ -447,7 +447,7 @@ export const goToStep = ({ currentStep, nextStep, history }) => (dispatch, getSt
 
     // check if current step is complete
     if (
-      (step.needsComplete && step.needsCompleteIfToken && findToken(getState())) ||
+      (step.needsComplete && step.needsCompleteIfToken && !findToken(getState())) ||
       (step.needsComplete && !step.complete)
     ) {
       return Promise.resolve(
@@ -460,11 +460,14 @@ export const goToStep = ({ currentStep, nextStep, history }) => (dispatch, getSt
       )
     }
 
-    dispatch(actions.goToStepSuccess(nextStep, type))
-    history.push(`/onboarding/${type}/step/${nextStep}`)
-
     // save current step
-    return saveStep({ step: step.step })(dispatch, getState)
+    return saveStep({
+      step: step.step,
+      onSuccess: () => {
+        dispatch(actions.goToStepSuccess(nextStep, type))
+        history.push(`/onboarding/${type}/step/${nextStep}`)
+      },
+    })(dispatch, getState)
   }
 
   // we are trying to jump to another step
