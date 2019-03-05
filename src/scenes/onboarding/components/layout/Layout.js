@@ -104,7 +104,9 @@ class Onboarding extends Component {
           <div
             className={clsx(
               theme.appContent,
-              location.pathname === '/onboarding/' && theme.noType,
+              (location.pathname === '/onboarding/' ||
+                location.pathname === '/onboarding') &&
+                theme.noType,
               /complete/.test(location.pathname) && theme.appContentComplete,
             )}
           >
