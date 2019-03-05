@@ -38,6 +38,7 @@ class GetStarted extends Component {
               name="woman2"
             />
           </div>
+          <div className={theme.divider} />
           <div className="right">
             <Svg name="dentist_chair" className={clsx(theme.group, theme.chair)} />
 

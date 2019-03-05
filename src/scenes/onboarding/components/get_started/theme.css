@@ -37,10 +37,22 @@
   }
 
   &Split {
+    position: relative;
     display: flex;
     align-items: center;
     height: 100%;
     display: grid;
     grid-template-columns: 1fr 1fr;
+
+    .divider {
+      position: absolute;
+      left: 50%;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: var(--sd-backgroundColor);
+      box-shadow: var(--sd-shadowColorSolid);
+      height: 100%;
+    }
   }
 }
