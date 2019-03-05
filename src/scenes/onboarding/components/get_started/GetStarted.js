@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import { func, string } from 'prop-types'
+import { func, string, object } from 'prop-types'
+import { withRouter } from 'react-router-dom'
 import clsx from 'clsx'
 import Arrow from '@sdog/components/svg/Arrow'
 import Button from '@sdog/components/button'
@@ -28,7 +29,7 @@ class GetStarted extends Component {
     if (!this.props.type) {
       return (
         <div className={clsx(theme.gettingStarted, theme.gettingStartedSplit)}>
-          <div className="left">
+          <div className={theme.left}>
             <div>
               <Person className={clsx(theme.group, theme.person, theme.man)} name="man" />
               <Person
@@ -48,7 +49,7 @@ class GetStarted extends Component {
             </Button>
           </div>
           <div className={theme.divider} />
-          <div className="right">
+          <div className={theme.right}>
             <div>
               <Svg name="dentist_chair" className={clsx(theme.group, theme.chair)} />
 
@@ -141,6 +142,7 @@ class GetStarted extends Component {
 GetStarted.propTypes = {
   setStep: func.isRequired,
   type: string,
+  history: object,
 }
 
-export default GetStarted
+export default withRouter(GetStarted)
