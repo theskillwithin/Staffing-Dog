@@ -192,6 +192,21 @@
       margin-top: -1em;
     }
   }
+
+  &.noType {
+    .box {
+      grid-template-rows: 1fr;
+      grid-template-areas: 'stepContent';
+
+      .stepContentHolder {
+        height: 100%;
+      }
+
+      .stepNav {
+        display: none;
+      }
+    }
+  }
 }
 
 .appFooter {

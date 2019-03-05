@@ -122,7 +122,7 @@ class GetStarted extends Component {
 
 GetStarted.propTypes = {
   setStep: func.isRequired,
-  type: string.isRequired,
+  type: string,
 }
 
 export default GetStarted
