@@ -32,8 +32,7 @@ class Onboarding extends React.Component {
     return (
       <Switch>
         {/* <Redirect exact from={match.url} to={`${match.url}/professional`} /> */}
-        <Route path={`${match.url}/:type`} component={Layout} />
-        <Route path="/onboarding" component={Layout} />
+        <Route path={`${match.url}/:type?`} component={Layout} />
       </Switch>
     )
   }
