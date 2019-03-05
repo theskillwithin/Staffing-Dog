@@ -51,8 +51,6 @@ class Steps extends React.Component {
     const { getValue, onChange } = this
     const props = {
       value: getValue(field.name),
-      onChange: v => onChange(field.name, v),
-      label: field.label,
       theme: theme.element,
     }
 
@@ -65,6 +63,8 @@ class Steps extends React.Component {
         return (
           <Input
             type={field.formType || 'text'}
+            label={field.label}
+            onChange={v => onChange(field.name, v)}
             invalid={
               this.props.errorFields && includes(this.props.errorFields, field.name)
             }
@@ -76,7 +76,7 @@ class Steps extends React.Component {
           const value = field.optionsByValue.name && getValue(field.optionsByValue.name)
 
           props.options = Steps.formatDropdownOptions(
-            value ? field.optionsByValue.options[value.value] : [],
+            value ? field.optionsByValue.options[value] : [],
           )
 
           if (!value) {
@@ -91,7 +91,10 @@ class Steps extends React.Component {
             invalid={
               this.props.errorFields && includes(this.props.errorFields, field.name)
             }
+            onChange={v => onChange(field.name, v.value)}
+            placeholder={field.label}
             {...props}
+            value={find(props.options, option => option.value === props.value)}
           />
         )
     }

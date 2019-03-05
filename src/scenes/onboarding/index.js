@@ -1,43 +1,37 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { string, shape, func } from 'prop-types'
 import { connect } from 'react-redux'
 import { Route, Redirect, Switch } from 'react-router-dom'
 
 import { setHtmlClass, removeHtmlClass } from '../../utils/document'
-import { getUserProfile } from '../../store/user'
+import { getUserProfile as getUserProfileAction } from '../../store/user'
 
 import Layout from './components/layout'
 
-class Onboarding extends React.Component {
-  static propTypes = {
-    getUserProfile: func.isRequired,
-    match: shape({
-      url: string.isRequired,
-    }).isRequired,
-  }
-
-  componentDidMount() {
+const Onboarding = ({ match, getUserProfile }) => {
+  useEffect(() => {
     setHtmlClass('html-onboarding')
-    this.props.getUserProfile()
-  }
+    getUserProfile()
 
-  componentWillUnmount() {
-    removeHtmlClass('html-onboarding')
-  }
+    return removeHtmlClass('html-onboarding')
+  }, [])
 
-  render() {
-    const { match } = this.props
-
-    return (
-      <Switch>
-        <Redirect exact from={match.url} to={`${match.url}/professional`} />
-        <Route path={`${match.url}/:type`} component={Layout} />
-      </Switch>
-    )
-  }
+  return (
+    <Switch>
+      <Redirect exact from={match.url} to={`${match.url}/professional`} />
+      <Route path={`${match.url}/:type`} component={Layout} />
+    </Switch>
+  )
 }
 
-export const mapActionsToProps = { getUserProfile }
+Onboarding.propTypes = {
+  getUserProfile: func.isRequired,
+  match: shape({
+    url: string.isRequired,
+  }).isRequired,
+}
+
+export const mapActionsToProps = { getUserProfile: getUserProfileAction }
 
 export default connect(
   null,

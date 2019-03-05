@@ -3,6 +3,7 @@ import { object, bool, func, array, string, shape } from 'prop-types'
 import find from 'lodash/find'
 import clsx from 'clsx'
 import Arrow from '@sdog/components/svg/Arrow'
+import Spinner from '@sdog/components/spinner'
 
 import Button from '../../../../components/button'
 
@@ -32,7 +33,11 @@ const ActionNav = ({ match, history, steps, goToStep, savingStep, loadingNextSte
           >
             <span className={theme.iconLeft}>
               <span>
-                <Arrow small direction="left" color="white" />
+                {savingStep || loadingNextStep ? (
+                  <Spinner size="20" />
+                ) : (
+                  <Arrow small direction="left" color="white" />
+                )}
               </span>{' '}
               Previous
             </span>
@@ -56,7 +61,11 @@ const ActionNav = ({ match, history, steps, goToStep, savingStep, loadingNextSte
             <span className={theme.iconRight}>
               Next Step{' '}
               <span>
-                <Arrow small color="white" />
+                {savingStep || loadingNextStep ? (
+                  <Spinner size="20" />
+                ) : (
+                  <Arrow small color="white" />
+                )}
               </span>
             </span>
           </Button>
