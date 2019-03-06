@@ -89,11 +89,7 @@ class Onboarding extends Component {
               <Contact />
             </div>
 
-            {findRegisterError ? (
-              <TopError>{findRegisterError}</TopError>
-            ) : (
-              <TopError>{error}</TopError>
-            )}
+            <TopError>{findRegisterError || error}</TopError>
           </div>
 
           <div className={theme.appHeader}>
