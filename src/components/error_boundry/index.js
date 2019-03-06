@@ -9,14 +9,15 @@ class ErrorBoundry extends React.Component {
     return { hasErorr }
   }
 
-  componentDidCatch(error, errorInfo) {
-    this.setState({ error, errorInfo })
+  componentDidCatch(hasError, errorInfo) {
+    this.setState({ hasError })
+
     Sentry.withScope(scope => {
       Object.keys(errorInfo).forEach(key => {
         scope.setExtra(key, errorInfo[key])
       })
 
-      Sentry.captureException(error)
+      Sentry.captureException(hasError)
     })
   }
 
