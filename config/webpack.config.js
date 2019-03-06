@@ -69,21 +69,6 @@ config.module.rules = [
     },
   },
   {
-    test: /\.html$/,
-    use: [
-      {
-        loader: 'html-loader',
-        options: { minimize: true },
-      },
-    ],
-  },
-  // TODO: THIS WILL BE AEWSOME!!! Make class names super small like google
-  /**
-   * getLocalIdent: (context, localIdentName, localName, options) => {
-      return 'whatever_random_class_name' pull from a cache with auto building small names
-    } 
-   */
-  {
     test: /\.css$/,
     include: [paths.src],
     exclude: [/node_modules/],
@@ -164,6 +149,7 @@ config.plugins = [
     template: './src/index.html',
     filename: './index.html',
     inject: true,
+    templateParameters: { ENV: process.env.ENV },
   }),
   new MiniCssExtractPlugin({
     // Options similar to the same options in webpackOptions.output
@@ -172,7 +158,7 @@ config.plugins = [
     chunkFilename: '[id].[hash].css',
   }),
   new webpack.DefinePlugin({
-    'process.env.MOCK_DATA': JSON.stringify(process.env.MOCK_DATA || false),
+    'process.env.ENV': JSON.stringify(process.env.ENV || 'prod'),
     'process.env.BUILD_STAGE': JSON.stringify(process.env.BUILD_STAGE || false),
     'process.env.BYPASS_LUA': JSON.stringify(process.env.BYPASS_LUA || false),
   }),

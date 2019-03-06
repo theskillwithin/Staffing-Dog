@@ -3,11 +3,10 @@ import qs from 'qs'
 import get from 'lodash/get'
 import { removeAllAuth } from '@sdog/store/storage'
 
-import { SIM, IS_DEV, IS_STAGE, BYPASS_LUA } from './env'
+import { IS_DEV, IS_STAGE, BYPASS_LUA } from './env'
 
-export { SIM, IS_DEV }
+export { IS_DEV }
 export const API_VERSION = 'v1'
-export const SIM_TTL = 100
 export const LOCAL_API_ROOT = BYPASS_LUA
   ? `http://api.sdog.test:4000/${API_VERSION}`
   : `http://api.sdog.test/${API_VERSION}`
