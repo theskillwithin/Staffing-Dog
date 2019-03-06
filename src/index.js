@@ -14,6 +14,7 @@ import {
 import createFingerprint from './utils/fingerprint'
 import Spinner from './components/spinner'
 import AuthRoute from './components/AuthRoute'
+import ErrorBoundry from './components/error_boundry'
 
 import './fonts/index.css'
 
@@ -38,20 +39,22 @@ const store = createStore(storeData, reducers)
 render(
   <Provider store={store}>
     <Router>
-      <React.Suspense fallback={<Spinner />}>
-        <Switch>
-          <Route
-            path="/logout"
-            render={({ history }) => {
-              removeAllAuth()
-              history.push('/login')
-            }}
-          />
-          <Route path="/onboarding" component={OnboardingScene} />
-          <Route path="/login" component={LoginScene} />
-          <AuthRoute path="/" component={App} to="/login" />
-        </Switch>
-      </React.Suspense>
+      <ErrorBoundry hideFallback>
+        <React.Suspense fallback={<Spinner />}>
+          <Switch>
+            <Route
+              path="/logout"
+              render={({ history }) => {
+                removeAllAuth()
+                history.push('/login')
+              }}
+            />
+            <Route path="/onboarding" component={OnboardingScene} />
+            <Route path="/login" component={LoginScene} />
+            <AuthRoute path="/" component={App} to="/login" />
+          </Switch>
+        </React.Suspense>
+      </ErrorBoundry>
     </Router>
   </Provider>,
   document.getElementById('app'),

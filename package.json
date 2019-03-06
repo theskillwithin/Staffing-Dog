@@ -81,6 +81,7 @@
   "dependencies": {
     "@babel/polyfill": "^7.2.5",
     "@babel/runtime": "^7.3.4",
+    "@sentry/browser": "^4.6.4",
     "axios": "^0.18.0",
     "axios-mock-adapter": "^1.16.0",
     "babel-plugin-module-resolver": "^3.2.0",

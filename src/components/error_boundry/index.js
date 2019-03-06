@@ -1,48 +1,50 @@
 import React from 'react'
-import { node } from 'prop-types'
+import * as Sentry from '@sentry/browser'
+import { node, bool } from 'prop-types'
 
 class ErrorBoundry extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = { error: null, errorInfo: null }
-    // if (window.location.hostname !== 'localhost') {
-    //   Raven.config(
-    //     'https://994f29befea14fa290b422f2903557bb@sentry.io/1186797',
-    //   ).install();
-    // }
+  state = { hasErorr: null }
+
+  static getDerivedStateFromError(hasErorr) {
+    return { hasErorr }
   }
 
   componentDidCatch(error, errorInfo) {
-    this.setState({ error })
-    this.setState({ errorInfo })
-    // if (window.location.hostname !== 'localhost') {
-    //   Raven.captureException(error, { extra: errorInfo });
-    // }
+    this.setState({ error, errorInfo })
+    Sentry.withScope(scope => {
+      Object.keys(errorInfo).forEach(key => {
+        scope.setExtra(key, errorInfo[key])
+      })
+
+      Sentry.captureException(error)
+    })
   }
 
-  // handleOnClick() {
-  //   return Raven.lastEventId() && Raven.showReportDialog();
-  // }
-
   render() {
-    if (this.state.error) {
-      // render fallback UI
+    if (this.state.hasErorr && !this.props.hideFallback) {
       return (
         <div className="snap">
           <p>sorry — something wrong.</p>
-          <p>Our team has been notified, but click here fill out a report.</p>
-          <p>{this.state.error}</p>
-          <p>{this.state.errorInfo}</p>
+          <p>Our team has been notified, but click below fill out a report.</p>
+
+          <button type="button" onClick={() => Sentry.showReportDialog()}>
+            Report feeback
+          </button>
         </div>
       )
     }
-    // when there's not an error, render children untouched
+
     return this.props.children
   }
 }
 
 ErrorBoundry.propTypes = {
   children: node.isRequired,
+  hideFallback: bool,
+}
+
+ErrorBoundry.defaultProps = {
+  hideFallback: false,
 }
 
 export default ErrorBoundry
