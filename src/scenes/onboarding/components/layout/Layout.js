@@ -21,6 +21,7 @@ import theme from '../../theme.css'
 class Onboarding extends Component {
   static propTypes = {
     error: oneOfType([bool, string, array]),
+    findRegisterError: oneOfType([bool, string, array]),
     loading: oneOfType([bool, string]),
     location: object.isRequired,
     match: shape({
@@ -71,7 +72,7 @@ class Onboarding extends Component {
   }
 
   render() {
-    const { loading, error, location, match } = this.props
+    const { loading, error, findRegisterError, location, match } = this.props
 
     const hasStep = RegExp('/step/([0-9]+)')
     const showSidebar = hasStep.test(location.pathname)
@@ -88,7 +89,11 @@ class Onboarding extends Component {
               <Contact />
             </div>
 
-            <TopError>{error}</TopError>
+            {findRegisterError ? (
+              <TopError>{findRegisterError}</TopError>
+            ) : (
+              <TopError>{error}</TopError>
+            )}
           </div>
 
           <div className={theme.appHeader}>

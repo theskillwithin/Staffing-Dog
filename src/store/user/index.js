@@ -511,6 +511,7 @@ reduxRegister.register('user', reducer)
 export const findState = state => state.user
 export const findUserAuth = state => findState(state).auth
 export const findSchedule = state => findState(state).schedule
+export const findRegister = state => findState(state).register
 export const findUserProfile = state => findState(state).profile
 export const findUserMeta = state => findUserProfile(state).meta
 export const findUserInfo = state => findUserProfile(state).user
@@ -519,6 +520,8 @@ export const findUserPreferences = state => findUserProfile(state).preferences
 export const findScheduleEvents = state => findSchedule(state).events
 export const findScheduleLoading = state => findSchedule(state).loading
 export const findScheduleError = state => findSchedule(state).error
+
+export const findRegisterError = state => findRegister(state).error
 
 export const findToken = state => findUserAuth(state).token
 export const findFingerprint = state => findUserAuth(state).fingerprint
