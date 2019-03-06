@@ -1,8 +1,7 @@
 import React from 'react'
 import { object, func, array } from 'prop-types'
 import Arrow from '@sdog/components/svg/Arrow'
-
-import Button from '../../../../../components/button'
+import Button from '@sdog/components/button'
 
 import theme from './theme.css'
 

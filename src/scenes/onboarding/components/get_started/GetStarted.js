@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { func, string, object } from 'prop-types'
-import { Link } from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
 import clsx from 'clsx'
 import Arrow from '@sdog/components/svg/Arrow'
 import Button from '@sdog/components/button'
@@ -12,7 +12,7 @@ import StarTitle from '@sdog/components/star_title'
 
 import theme from './theme.css'
 
-const GetStarted = ({ type, setStep }) => {
+const GetStarted = ({ type, setStep, goToStep, setType, history }) => {
   useEffect(() => {
     setStep(false)
   })
@@ -40,14 +40,23 @@ const GetStarted = ({ type, setStep }) => {
               name="woman2"
             />
           </div>
-          <Link to="/onboarding/proffesional/step/1">
-            <Button round className={theme.letsGetStartedButton}>
-              Get Started as a Professional{' '}
-              <span>
-                <Arrow small color="white" />
-              </span>
-            </Button>
-          </Link>
+          <Button
+            onClick={() => {
+              setType('professional')
+              goToStep({
+                currentStep: false,
+                nextStep: 1,
+                history,
+              })
+            }}
+            round
+            className={theme.letsGetStartedButton}
+          >
+            Get Started as a Professional{' '}
+            <span>
+              <Arrow small color="white" />
+            </span>
+          </Button>
         </div>
         <div className={theme.divider} />
         <div className={theme.right}>
@@ -59,14 +68,23 @@ const GetStarted = ({ type, setStep }) => {
               name="woman"
             />
           </div>
-          <Link to="/onboarding/practice/step/1">
-            <Button round className={theme.letsGetStartedButton}>
-              Get Started as a Practice{' '}
-              <span>
-                <Arrow small color="white" />
-              </span>
-            </Button>
-          </Link>
+          <Button
+            onClick={() => {
+              setType('practice')
+              goToStep({
+                currentStep: false,
+                nextStep: 1,
+                history,
+              })
+            }}
+            round
+            className={theme.letsGetStartedButton}
+          >
+            Get Started as a Practice{' '}
+            <span>
+              <Arrow small color="white" />
+            </span>
+          </Button>
         </div>
       </div>
     )
@@ -141,7 +159,9 @@ const GetStarted = ({ type, setStep }) => {
 GetStarted.propTypes = {
   setStep: func.isRequired,
   type: string,
-  history: object,
+  history: object.isRequired,
+  goToStep: func.isRequired,
+  setType: func.isRequired,
 }
 
-export default GetStarted
+export default withRouter(GetStarted)
