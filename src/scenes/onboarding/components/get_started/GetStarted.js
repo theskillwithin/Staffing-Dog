@@ -14,7 +14,7 @@ import theme from './theme.css'
 const GetStarted = ({ type, setStep, goToStep, setType, history }) => {
   useEffect(() => {
     setStep(false)
-  })
+  }, [])
 
   const renderSVG = (SVGComponent, isType = 'professional') => {
     if (type === isType) {
