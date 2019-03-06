@@ -1,6 +1,5 @@
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
-import get from 'lodash/get'
 
 import { findLoading, findError, setType } from '../../store/steps'
 import { findRegisterError } from '../../../../store/user'
@@ -12,7 +11,7 @@ export default withRouter(
     state => ({
       loading: findLoading(state),
       error: findError(state),
-      findRegisterError: get(findRegisterError(state), 'response.data.error', false),
+      findRegisterError: findRegisterError(state),
     }),
     { setType },
   )(Layout),

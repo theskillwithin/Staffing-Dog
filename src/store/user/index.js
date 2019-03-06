@@ -207,7 +207,7 @@ reducers = {
     ...state,
     register: {
       ...state.register,
-      ...spreadLoadingError(false, error),
+      ...spreadLoadingError(false, error.response.data.error),
     },
   }),
 }
