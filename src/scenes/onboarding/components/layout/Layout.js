@@ -26,7 +26,7 @@ class Onboarding extends Component {
     match: shape({
       path: string.isRequired,
       params: shape({
-        type: string.isRequired,
+        type: string,
       }),
     }),
     setType: func.isRequired,
@@ -104,6 +104,9 @@ class Onboarding extends Component {
           <div
             className={clsx(
               theme.appContent,
+              (location.pathname === '/onboarding/' ||
+                location.pathname === '/onboarding') &&
+                theme.noType,
               /complete/.test(location.pathname) && theme.appContentComplete,
             )}
           >

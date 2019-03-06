@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { string, shape, func } from 'prop-types'
 import { connect } from 'react-redux'
-import { Route, Redirect, Switch } from 'react-router-dom'
+import { Route, Switch } from 'react-router-dom'
 
 import { setHtmlClass, removeHtmlClass } from '../../utils/document'
 import { getUserProfile as getUserProfileAction } from '../../store/user'
@@ -18,8 +18,7 @@ const Onboarding = ({ match, getUserProfile }) => {
 
   return (
     <Switch>
-      <Redirect exact from={match.url} to={`${match.url}/professional`} />
-      <Route path={`${match.url}/:type`} component={Layout} />
+      <Route path={`${match.url}/:type?`} component={Layout} />
     </Switch>
   )
 }
