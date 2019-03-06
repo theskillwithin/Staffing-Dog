@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react'
 import { func, string, object } from 'prop-types'
-import { withRouter } from 'react-router-dom'
 import clsx from 'clsx'
 import Arrow from '@sdog/components/svg/Arrow'
 import Button from '@sdog/components/button'
@@ -164,4 +163,4 @@ GetStarted.propTypes = {
   setType: func.isRequired,
 }
 
-export default withRouter(GetStarted)
+export default GetStarted
