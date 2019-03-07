@@ -1,5 +1,6 @@
 import React from 'react'
 import { render } from 'react-dom'
+import * as Sentry from '@sentry/browser'
 import { Provider } from 'react-redux'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import createStore from '@sdog/store'
@@ -14,8 +15,14 @@ import {
 import createFingerprint from './utils/fingerprint'
 import Spinner from './components/spinner'
 import AuthRoute from './components/AuthRoute'
+import ErrorBoundry from './components/error_boundry'
 
 import './fonts/index.css'
+
+Sentry.init({
+  dsn: 'https://e7a4ea4c993e4619afcfc16dd9fe6b06@sentry.io/200333',
+  environment: process.env.ENV,
+})
 
 const OnboardingScene = React.lazy(() => import('@sdog/scenes/onboarding'))
 const App = React.lazy(() => import('@sdog/scenes/app'))
@@ -38,20 +45,22 @@ const store = createStore(storeData, reducers)
 render(
   <Provider store={store}>
     <Router>
-      <React.Suspense fallback={<Spinner />}>
-        <Switch>
-          <Route
-            path="/logout"
-            render={({ history }) => {
-              removeAllAuth()
-              history.push('/login')
-            }}
-          />
-          <Route path="/onboarding" component={OnboardingScene} />
-          <Route path="/login" component={LoginScene} />
-          <AuthRoute path="/" component={App} to="/login" />
-        </Switch>
-      </React.Suspense>
+      <ErrorBoundry hideFallback>
+        <React.Suspense fallback={<Spinner />}>
+          <Switch>
+            <Route
+              path="/logout"
+              render={({ history }) => {
+                removeAllAuth()
+                history.push('/login')
+              }}
+            />
+            <Route path="/onboarding" component={OnboardingScene} />
+            <Route path="/login" component={LoginScene} />
+            <AuthRoute path="/" component={App} to="/login" />
+          </Switch>
+        </React.Suspense>
+      </ErrorBoundry>
     </Router>
   </Provider>,
   document.getElementById('app'),

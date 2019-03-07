@@ -1,3 +1,4 @@
+import * as Sentry from '@sentry/browser'
 import get from 'lodash/get'
 import axios, { unauthorizedUser } from '@sdog/utils/api'
 
@@ -68,6 +69,8 @@ export default ({ dispatch, getState }) => next => async action => {
       callbacks.success(response)
     }
   } catch (error) {
+    Sentry.captureException(new Error(error))
+
     dispatch({ type: actionTypes.ERROR, payload: { ...payload, error } })
 
     // dispatch any action types set in the api dispatch values:
