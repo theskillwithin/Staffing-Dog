@@ -43,6 +43,14 @@
     display: block; /* FF fix */
     white-space: nowrap; /* FF fix */
   }
+
+  .spinnerRight {
+    position: relative;
+    left: 20px;
+    top: 5px;
+    display: inline-block;
+    width: 30px;
+  }
 }
 
 .nextStep {

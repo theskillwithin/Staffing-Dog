@@ -4,9 +4,9 @@ import clsx from 'clsx'
 
 import theme from './theme.css'
 
-const Spinner = ({ center, size, zIndex }) => (
+const Spinner = ({ inverted, center, size, zIndex }) => (
   <svg
-    className={clsx(theme.spinner, center && theme.center)}
+    className={clsx(theme.spinner, center && theme.center, inverted && theme.inverted)}
     width={size}
     height={size}
     viewBox="0 0 50 50"
@@ -20,12 +20,14 @@ Spinner.defaultProps = {
   center: true,
   size: 50,
   zIndex: 2,
+  inverted: false,
 }
 
 Spinner.propTypes = {
   center: bool,
   size: number,
   zIndex: number,
+  inverted: bool,
 }
 
 export default Spinner
