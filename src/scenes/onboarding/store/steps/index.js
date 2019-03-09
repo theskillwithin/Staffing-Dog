@@ -197,19 +197,19 @@ export const reducers = {
   }),
   [SAVE_STEP]: (state, payload) => ({
     ...state,
-    // savingStep: true,
+    savingStep: true,
     savingStepValue: payload.step,
     error: false,
   }),
   [SAVE_STEP_SUCCESS]: (state, payload) => ({
     ...state,
-    // savingStep: false,
+    savingStep: false,
     savingStepValue: payload.step,
     error: false,
   }),
   [SAVE_STEP_FAILED]: (state, payload) => ({
     ...state,
-    // savingStep: false,
+    savingStep: false,
     savingStepValue: false,
     error: payload.error,
   }),

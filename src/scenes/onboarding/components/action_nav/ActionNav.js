@@ -33,17 +33,14 @@ const ActionNav = ({ match, history, steps, goToStep, savingStep, loadingNextSte
           >
             <span className={theme.iconLeft}>
               <span>
-                {savingStep || loadingNextStep ? (
-                  <Spinner size="20" />
-                ) : (
-                  <Arrow small direction="left" color="white" />
-                )}
+                <Arrow small direction="left" color="white" />
               </span>{' '}
               Previous
             </span>
           </Button>
         </div>
       )}
+
       {currentStep.nextStep && (
         <div className={clsx(theme.step, theme.nextStep)}>
           <Button
@@ -60,9 +57,11 @@ const ActionNav = ({ match, history, steps, goToStep, savingStep, loadingNextSte
           >
             <span className={theme.iconRight}>
               Next Step{' '}
-              <span>
+              <span
+                className={clsx({ [theme.spinnerRight]: savingStep || loadingNextStep })}
+              >
                 {savingStep || loadingNextStep ? (
-                  <Spinner size="20" />
+                  <Spinner size={20} center={false} />
                 ) : (
                   <Arrow small color="white" />
                 )}
