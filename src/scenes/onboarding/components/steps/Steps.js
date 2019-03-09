@@ -10,28 +10,31 @@ import Dropdown from '../../../../components/dropdown'
 
 import theme from './theme.css'
 
-class Steps extends React.Component {
-  static formatDropdownOptions(options) {
-    return map(options, option => ({
+const Steps = ({
+  setValue,
+  stepValues,
+  errorFields,
+  match: {
+    params: { step },
+  },
+  steps,
+  history,
+  goToStep,
+}) => {
+  const currentStep = find(steps, s => s.step === step)
+  const isComplete = 'complete' === currentStep.step
+
+  const formatDropdownOptions = options =>
+    map(options, option => ({
       label: option.label || option.value || option,
       value: option.value || option.label || option,
     }))
-  }
 
-  onChange = (name, value) => this.props.setValue(name, value)
+  const onChange = (name, value) => setValue(name, value)
+  const getValue = name => stepValues[name] || ''
 
-  getValue = name => this.props.stepValues[name] || ''
-
-  renderComplete = () => (
-    <div className={theme.completeVideo}>
-      <span>Video</span>
-    </div>
-  )
-
-  renderFields = (fields, key = 'row') => {
-    const { renderFields, renderField } = this
-
-    return map(fields, (field, i) => (
+  const renderFields = (fields, key = 'row') =>
+    map(fields, (field, i) => (
       <div
         key={`form:field:${key}:${i + 1}`}
         className={clsx(
@@ -45,17 +48,15 @@ class Steps extends React.Component {
           : renderField(field)}
       </div>
     ))
-  }
 
-  renderField = field => {
-    const { getValue, onChange } = this
-    const props = {
+  const renderField = field => {
+    const fieldProps = {
       value: getValue(field.name),
       theme: theme.element,
     }
 
     if (field.fullWidth) {
-      props.fullWidth = field.fullWidth
+      fieldProps.fullWidth = field.fullWidth
     }
 
     switch (field.type) {
@@ -65,36 +66,32 @@ class Steps extends React.Component {
             type={field.formType || 'text'}
             label={field.label}
             onChange={v => onChange(field.name, v)}
-            invalid={
-              this.props.errorFields && includes(this.props.errorFields, field.name)
-            }
-            {...props}
+            invalid={errorFields && includes(errorFields, field.name)}
+            {...fieldProps}
           />
         )
       case 'dropdown':
         if (field.optionsByValue) {
           const value = field.optionsByValue.name && getValue(field.optionsByValue.name)
 
-          props.options = Steps.formatDropdownOptions(
+          fieldProps.options = formatDropdownOptions(
             value ? field.optionsByValue.options[value] : [],
           )
 
           if (!value) {
-            props.disabled = true
+            fieldProps.disabled = true
           }
         } else {
-          props.options = Steps.formatDropdownOptions(field.options)
+          fieldProps.options = formatDropdownOptions(field.options)
         }
 
         return (
           <Dropdown
-            invalid={
-              this.props.errorFields && includes(this.props.errorFields, field.name)
-            }
+            invalid={errorFields && includes(errorFields, field.name)}
             onChange={v => onChange(field.name, v.value)}
             placeholder={field.label}
-            {...props}
-            value={find(props.options, option => option.value === props.value)}
+            {...fieldProps}
+            value={find(fieldProps.options, option => option.value === fieldProps.value)}
           />
         )
     }
@@ -102,39 +99,42 @@ class Steps extends React.Component {
     return null
   }
 
-  render() {
-    const {
-      match: {
-        params: { step },
-      },
-      steps,
-    } = this.props
+  return (
+    <div className={theme.steps}>
+      <div
+        className={clsx(
+          theme.stepsContent,
+          /complete/.test(currentStep.step) && theme.stepsContentComplete,
+        )}
+      >
+        <h2 className={theme.stepTitle}>{currentStep.title}</h2>
 
-    const currentStep = find(steps, s => s.step === step)
-    const isComplete = 'complete' === currentStep.step
+        <div className={theme.stepForm}>
+          {isComplete ? (
+            <div className={theme.completeVideo}>
+              <span>Video / Welcome Graphic</span>
+            </div>
+          ) : (
+            <form
+              onSubmit={e => {
+                e.preventDefault()
 
-    return (
-      <div className={theme.steps}>
-        <div
-          className={clsx(
-            theme.stepsContent,
-            /complete/.test(currentStep.step) && theme.stepsContentComplete,
+                goToStep({
+                  currentStep: currentStep.step,
+                  nextStep: currentStep.nextStep,
+                  history,
+                })
+              }}
+            >
+              <button type="submit" styles={{ display: 'none' }} />
+              {renderFields(currentStep.fields)}
+            </form>
           )}
-        >
-          <h2 className={theme.stepTitle}>{currentStep.title}</h2>
-
-          <div className={theme.stepForm}>
-            {isComplete
-              ? this.renderComplete(currentStep)
-              : this.renderFields(currentStep.fields)}
-          </div>
         </div>
       </div>
-    )
-  }
+    </div>
+  )
 }
-
-Steps.defaultProps = {}
 
 Steps.propTypes = {
   match: shape({
@@ -142,10 +142,12 @@ Steps.propTypes = {
       step: string.isRequired,
     }),
   }),
+  history: object.isRequired,
   steps: array.isRequired,
   stepValues: object.isRequired,
   setValue: func.isRequired,
   setStep: func.isRequired,
+  goToStep: func.isRequired,
   errorFields: oneOfType([array, bool]),
 }
 
