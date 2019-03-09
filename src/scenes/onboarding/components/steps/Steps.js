@@ -126,7 +126,7 @@ const Steps = ({
                 })
               }}
             >
-              <button type="submit" styles={{ display: 'none' }} />
+              <button type="submit" style={{ display: 'none' }} />
               {renderFields(currentStep.fields)}
             </form>
           )}
