@@ -1,41 +1,38 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { func, string, bool, number, oneOfType } from 'prop-types'
 import clsx from 'clsx'
-
-import Check from '../svg/Check'
-import Invalid from '../svg/Invalid'
+import Check from '@sdog/components/svg/Check'
+import Invalid from '@sdog/components/svg/Invalid'
 
 import s from './theme.css'
 
-class Input extends Component {
-  id = `input-id-${Math.random()
+const Input = ({
+  label,
+  theme,
+  outlined,
+  textarea,
+  onChange,
+  type,
+  thumbprint,
+  invalid,
+  valid,
+  value,
+  disabled,
+  subLabel,
+  ...props
+}) => {
+  const id = `input-id-${Math.random()
     .toString()
     .slice(2)}`
 
-  onChange = e => {
-    if (this.props.onChange) {
-      this.props.onChange(e.target.value)
+  const handleOnChange = e => {
+    if (onChange) {
+      onChange(e.target.value)
     }
   }
 
-  render() {
-    const {
-      label,
-      id,
-      theme,
-      outlined,
-      textarea,
-      onChange,
-      type,
-      thumbprint,
-      invalid,
-      valid,
-      value,
-      disabled,
-      ...props
-    } = this.props
-
-    return (
+  return (
+    <>
       <div
         className={clsx(
           s.root,
@@ -49,31 +46,31 @@ class Input extends Component {
       >
         {textarea ? (
           <textarea
-            id={this.id}
+            id={id}
             className={clsx(
               s.input,
               outlined && s.outlined,
               value && value.length > 0 && s.filled,
             )}
-            onChange={this.onChange}
+            onChange={handleOnChange}
             value={value}
             {...props}
           />
         ) : (
           <input
-            id={this.id}
+            id={id}
             className={clsx(
               s.input,
               outlined && s.outlined,
               value && value.length > 0 && s.filled,
             )}
-            onChange={this.onChange}
+            onChange={handleOnChange}
             type={type}
             value={value}
             {...props}
           />
         )}
-        <label className={s.label} htmlFor={this.id}>
+        <label className={s.label} htmlFor={id}>
           {label}
         </label>
         {valid && (
@@ -87,8 +84,9 @@ class Input extends Component {
           </div>
         )}
       </div>
-    )
-  }
+      {subLabel && <div className={s.subLabel}>{subLabel}</div>}
+    </>
+  )
 }
 
 Input.defaultProps = {
@@ -99,11 +97,11 @@ Input.defaultProps = {
   valid: false,
   disabled: false,
   thumbprint: false,
+  subLabel: false,
 }
 
 Input.propTypes = {
   label: string.isRequired,
-  id: string,
   onChange: func,
   theme: string,
   outlined: bool,
@@ -114,6 +112,7 @@ Input.propTypes = {
   value: oneOfType([string, number]),
   disabled: bool,
   thumbprint: bool,
+  subLabel: bool,
 }
 
 export default Input

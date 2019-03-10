@@ -67,6 +67,7 @@ const Steps = ({
             label={field.label}
             onChange={v => onChange(field.name, v)}
             invalid={errorFields && includes(errorFields, field.name)}
+            subLabel={field.subLabel}
             {...fieldProps}
           />
         )
