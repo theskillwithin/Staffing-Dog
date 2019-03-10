@@ -86,3 +86,13 @@
     width: 30px;
   }
 }
+
+.subLabel {
+  margin-top: 1em;
+  padding: 0.5em 1em;
+  line-height: 1.5;
+  font-weight: var(--sd-fontWeightMedium);
+  background: var(--sd-primary);
+  color: white;
+  border-radius: 3px;
+}

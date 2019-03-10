@@ -73,6 +73,7 @@ export const professional = [
         formType: 'password',
         required: true,
         validation: 'password',
+        subLabel: 'Password must contain: 12 length 1 upper 1 lower 1 number 1 symbol',
       },
       {
         name: 'password_confirmation',
@@ -239,6 +240,8 @@ export const practice = [
         type: 'input',
         formType: 'password',
         required: true,
+        validation: 'password',
+        subLabel: 'Password must contain: 12 length 1 upper 1 lower 1 number 1 symbol',
       },
       {
         name: 'password_confirmation',
@@ -246,6 +249,7 @@ export const practice = [
         type: 'input',
         formType: 'password',
         required: true,
+        validation: 'passwordMatch',
       },
     ],
   },
