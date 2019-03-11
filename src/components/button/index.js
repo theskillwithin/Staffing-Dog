@@ -1,7 +1,7 @@
 import React from 'react'
 import { bool, string, oneOfType, func, node, oneOf } from 'prop-types'
 import clsx from 'clsx'
-import Spinner from '@sdog/components/Spinner'
+import Spinner from '@sdog/components/spinner'
 
 import theme from './theme.css'
 
