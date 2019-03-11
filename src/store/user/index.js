@@ -7,7 +7,9 @@ import { createActionTypes, reduxRegister, buildStore } from '../tools'
 import {
   getUserId,
   setToken as setTokenInCookie,
+  setFingerprint as setFingerprintInCookie,
   setUserId as setUserIdCookie,
+  removeAllAuth,
 } from '../storage'
 
 export const INITIAL_STATE = {
@@ -105,6 +107,31 @@ reducers = {
 }
 
 /**
+ * SET USER FINGERPRINT
+ */
+export const USER_SET_FINGERPRINT = 'USER_SET_FINGERPRINT'
+
+export const setFingerprint = fingerprint => dispatch => {
+  setFingerprintInCookie(fingerprint)
+
+  dispatch({
+    type: USER_SET_FINGERPRINT,
+    payload: { fingerprint },
+  })
+}
+
+reducers = {
+  ...reducers,
+  [USER_SET_FINGERPRINT]: (state, { fingerprint }) => ({
+    ...state,
+    auth: {
+      ...state.auth,
+      fingerprint,
+    },
+  }),
+}
+
+/**
  * LOGIN USER
  */
 export const USER_LOGIN = 'USER_LOGIN'
@@ -137,6 +164,12 @@ export const login = ({
       },
       error: onError,
     },
+    dispatches: [
+      () => ({
+        type: USER_SET_FINGERPRINT,
+        payload: { fingerprint: false },
+      }),
+    ],
   },
 })
 
@@ -146,9 +179,18 @@ reducers = {
     ...state,
     auth: { ...state.auth, ...spreadLoadingError(true, false) },
   }),
-  [userLoginTypes.ERROR]: state => ({
+  [userLoginTypes.ERROR]: (
+    state,
+    {
+      error: {
+        response: {
+          data: { error },
+        },
+      },
+    },
+  ) => ({
     ...state,
-    auth: { ...state.auth, ...spreadLoadingError(false, true) },
+    auth: { ...state.auth, ...spreadLoadingError(false, error) },
   }),
   [userLoginTypes.SUCCESS]: (state, { data }) => ({
     ...state,
@@ -160,6 +202,16 @@ reducers = {
       ...data,
     },
   }),
+}
+
+/**
+ * Logout User
+ */
+export const logout = (cb = false) => () => {
+  removeAllAuth()
+  setToken(false)
+  setFingerprint(false)
+  if (cb) cb()
 }
 
 /**

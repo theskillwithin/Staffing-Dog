@@ -1,6 +1,7 @@
 import React from 'react'
 import { bool, string, oneOfType, func, node, oneOf } from 'prop-types'
 import clsx from 'clsx'
+import Spinner from '@sdog/components/Spinner'
 
 import theme from './theme.css'
 
@@ -36,6 +37,7 @@ const Button = ({
       size && theme[size],
       width && theme.width,
       disabled && theme.disabled,
+      loading && theme.loading,
     )}
     onClick={onClick}
     type={type}
@@ -44,6 +46,11 @@ const Button = ({
     {...props}
   >
     {children}
+    {loading && (
+      <span className={theme.spinner}>
+        <Spinner inverted size={20} center={false} />
+      </span>
+    )}
   </button>
 )
 
