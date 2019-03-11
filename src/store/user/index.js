@@ -7,6 +7,7 @@ import { createActionTypes, reduxRegister, buildStore } from '../tools'
 import {
   getUserId,
   setToken as setTokenInCookie,
+  setFingerprint as setFingerprintInCookie,
   setUserId as setUserIdCookie,
   removeAllAuth,
 } from '../storage'
@@ -111,7 +112,7 @@ reducers = {
 export const USER_SET_FINGERPRINT = 'USER_SET_FINGERPRINT'
 
 export const setFingerprint = fingerprint => dispatch => {
-  setTokenInCookie(fingerprint)
+  setFingerprintInCookie(fingerprint)
 
   dispatch({
     type: USER_SET_FINGERPRINT,
@@ -163,6 +164,12 @@ export const login = ({
       },
       error: onError,
     },
+    dispatches: [
+      () => ({
+        type: USER_SET_FINGERPRINT,
+        payload: { fingerprint: false },
+      }),
+    ],
   },
 })
 
