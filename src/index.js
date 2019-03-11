@@ -5,6 +5,7 @@ import { Provider } from 'react-redux'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import createStore from '@sdog/store'
 import reducers from '@sdog/store/reducers'
+import { INITIAL_STATE as USER_INITIAL_STATE } from '@sdog/store/user'
 import { getToken, getFingerprint, setFingerprint } from '@sdog/store/storage'
 
 import createFingerprint from './utils/fingerprint'
@@ -29,7 +30,9 @@ setFingerprint(fingerprint)
 
 const storeData = {
   user: {
+    ...USER_INITIAL_STATE,
     auth: {
+      ...USER_INITIAL_STATE.auth,
       token: getToken(),
       fingerprint,
     },

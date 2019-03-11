@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react'
-import { bool, func, shape } from 'prop-types'
+import { bool, func, string, array, oneOfType, shape } from 'prop-types'
 import { Link, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { setTitle, setHtmlClass, removeHtmlClass } from '@sdog/utils/document'
 import Contact from '@sdog/components/contact'
+import TopError from '@sdog/components/top_error'
 import Logo from '@sdog/components/logo'
 import Tabs from '@sdog/components/tab_bar'
 import Input from '@sdog/components/input'
@@ -16,7 +17,7 @@ import appTheme from '../app/theme.css'
 
 import theme from './theme.css'
 
-const Login = ({ history, login, isLoading }) => {
+const Login = ({ history, login, isLoading, error }) => {
   const [tabIndex, setTabIndex] = useState(0)
   const [email, setEmail] = useState(IS_DEV || IS_STAGE ? 'romelu@lukaku.com' : '')
   const [password, setPassword] = useState(IS_DEV || IS_STAGE ? 'Password1234$' : '')
@@ -35,6 +36,8 @@ const Login = ({ history, login, isLoading }) => {
 
   return (
     <div className={appTheme.pageContent}>
+      <TopError>{error}</TopError>
+
       <header className={theme.header}>
         <Contact />
       </header>
@@ -120,10 +123,12 @@ Login.propTypes = {
   login: func.isRequired,
   history: shape({ push: func.isRequired }).isRequired,
   isLoading: bool,
+  error: oneOfType([string, array, bool]).isRequired,
 }
 
 const mapStateToProps = state => ({
   isLoading: findUserAuth(state).loading,
+  error: findUserAuth(state).error,
 })
 
 const mapActionsToProps = { login: loginAction }

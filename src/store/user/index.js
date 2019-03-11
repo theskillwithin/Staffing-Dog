@@ -179,9 +179,18 @@ reducers = {
     ...state,
     auth: { ...state.auth, ...spreadLoadingError(true, false) },
   }),
-  [userLoginTypes.ERROR]: state => ({
+  [userLoginTypes.ERROR]: (
+    state,
+    {
+      error: {
+        response: {
+          data: { error },
+        },
+      },
+    },
+  ) => ({
     ...state,
-    auth: { ...state.auth, ...spreadLoadingError(false, true) },
+    auth: { ...state.auth, ...spreadLoadingError(false, error) },
   }),
   [userLoginTypes.SUCCESS]: (state, { data }) => ({
     ...state,
