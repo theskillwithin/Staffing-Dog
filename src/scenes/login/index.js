@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { func, shape } from 'prop-types'
+import { bool, func, shape } from 'prop-types'
 import { Link, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { setTitle, setHtmlClass, removeHtmlClass } from '@sdog/utils/document'
@@ -11,12 +11,12 @@ import Button from '@sdog/components/button'
 import Arrow from '@sdog/components/svg/Arrow'
 import { IS_DEV, IS_STAGE } from '@sdog/utils/env'
 
-import { login as loginAction } from '../../store/user'
+import { login as loginAction, findUserAuth } from '../../store/user'
 import appTheme from '../app/theme.css'
 
 import theme from './theme.css'
 
-const Login = ({ history, login }) => {
+const Login = ({ history, login, isLoading }) => {
   const [tabIndex, setTabIndex] = useState(0)
   const [email, setEmail] = useState(IS_DEV || IS_STAGE ? 'romelu@lukaku.com' : '')
   const [password, setPassword] = useState(IS_DEV || IS_STAGE ? 'password1' : '')
@@ -38,12 +38,15 @@ const Login = ({ history, login }) => {
       <header className={theme.header}>
         <Contact />
       </header>
+
       <div className={theme.signinContainer}>
         <div className={theme.logo}>
           <Logo />
         </div>
+
         <div className={theme.signin}>
           <h2>Sign In</h2>
+
           <div>
             <Tabs activeTabIndex={tabIndex} onSelect={setTabIndex}>
               <div>Dental Professional</div>
@@ -52,6 +55,7 @@ const Login = ({ history, login }) => {
 
             <form className={theme.form} onSubmit={onSubmit}>
               <Input label="Email" value={email} onChange={setEmail} />
+
               <Input
                 label="Password"
                 value={password}
@@ -59,14 +63,24 @@ const Login = ({ history, login }) => {
                 type="password"
                 thumbprint
               />
-              <Button primary round type="submit" size="medium">
-                Sign In
+
+              <Button
+                loading={isLoading}
+                disabled={isLoading}
+                primary
+                round
+                type="submit"
+                size="medium"
+              >
+                {isLoading ? 'Authenticating' : 'Sign In'}
               </Button>
             </form>
+
             <div className={theme.underForm}>
               <a href="/forgot-password" className={theme.forgot}>
                 Forgot Password?
               </a>
+
               <div className={theme.signup}>
                 <Link to="/onboarding">
                   Don’t have an account? Sign Up{' '}
@@ -89,13 +103,18 @@ const Login = ({ history, login }) => {
 Login.propTypes = {
   login: func.isRequired,
   history: shape({ push: func.isRequired }).isRequired,
+  isLoading: bool,
 }
+
+const mapStateToProps = state => ({
+  isLoading: findUserAuth(state).loading,
+})
 
 const mapActionsToProps = { login: loginAction }
 
 export default withRouter(
   connect(
-    null,
+    mapStateToProps,
     mapActionsToProps,
   )(Login),
 )

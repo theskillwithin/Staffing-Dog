@@ -80,3 +80,13 @@
     background: var(--sd-gray);
   }
 }
+
+.loading {
+  .spinner {
+    position: relative;
+    left: 20px;
+    top: 5px;
+    display: inline-block;
+    width: 30px;
+  }
+}
