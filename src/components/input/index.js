@@ -19,6 +19,7 @@ const Input = ({
   value,
   disabled,
   subLabel,
+  className,
   ...props
 }) => {
   const id = `input-id-${Math.random()
@@ -35,6 +36,7 @@ const Input = ({
     <>
       <div
         className={clsx(
+          className,
           s.root,
           theme,
           invalid && s.invalid,
@@ -98,6 +100,7 @@ Input.defaultProps = {
   disabled: false,
   thumbprint: false,
   subLabel: false,
+  className: '',
 }
 
 Input.propTypes = {
@@ -113,6 +116,7 @@ Input.propTypes = {
   disabled: bool,
   thumbprint: bool,
   subLabel: bool,
+  className: '',
 }
 
 export default Input

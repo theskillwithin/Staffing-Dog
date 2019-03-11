@@ -1,9 +1,13 @@
 @import '../../styles/config.css';
 
-html {
+:global(.html-login) {
   @media (--sd-mobile) {
     background-color: var(--sd-white);
   }
+}
+
+:root {
+  --loginMaxWidth: 480px;
 }
 
 .header {
@@ -24,7 +28,7 @@ html {
   position: relative;
   padding: 32px 32px 45px 32px;
   margin: 2em;
-  max-width: 480px;
+  max-width: var(--loginMaxWidth);
   width: 100%;
   border-radius: 8px;
   background-color: var(--sd-white);
@@ -47,12 +51,12 @@ html {
   margin: 0.55em 0;
   width: 100%;
 
-  > div {
+  .input {
     margin-top: 22px;
   }
 
-  > button {
-    margin-top: 22px;
+  .button {
+    margin-top: 30px;
   }
 }
 
@@ -74,13 +78,9 @@ html {
 .forgot {
   font-size: 14px;
   line-height: 1.14;
-  color: var(--sd-grayLighter);
   text-decoration: none;
   margin: 2em auto;
-
-  @media (--sd-mobile) {
-    color: var(--sd-blue);
-  }
+  color: var(--sd-blue);
 }
 
 .signup {
@@ -126,7 +126,31 @@ html {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 261px;
+  width: 100%;
+  padding: 0 20px;
+  max-width: var(--loginMaxWidth);
+  font-size: 12px;
+  line-height: 1.14;
+  color: var(--sd-grayLighter);
+  text-decoration: none;
+
+  .bottomLeft {
+    flex: 1;
+  }
+
+  .bottomCenter {
+    flex: 10;
+    text-align: center;
+  }
+
+  .bottomRight {
+    flex: 1;
+    text-align: right;
+  }
+
+  p {
+    margin: 0;
+  }
 
   a {
     position: relative;

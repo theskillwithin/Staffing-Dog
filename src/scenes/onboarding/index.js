@@ -13,7 +13,7 @@ const Onboarding = ({ match, getUserProfile }) => {
     setHtmlClass('html-onboarding')
     getUserProfile()
 
-    return removeHtmlClass('html-onboarding')
+    return () => removeHtmlClass('html-onboarding')
   }, [])
 
   return (

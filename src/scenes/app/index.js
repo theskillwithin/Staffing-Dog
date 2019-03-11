@@ -22,7 +22,7 @@ const App = ({ getUserProfile, location }) => {
     setHtmlClass('html-app')
     getUserProfile()
 
-    return removeHtmlClass('html-app')
+    return () => removeHtmlClass('html-app')
   }, [])
 
   return (

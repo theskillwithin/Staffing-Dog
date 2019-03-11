@@ -25,8 +25,8 @@ const Login = ({ history, login, isLoading }) => {
     setTitle('Login')
     setHtmlClass('html-login')
 
-    return removeHtmlClass('html-login')
-  })
+    return () => removeHtmlClass('html-login')
+  }, [])
 
   const onSubmit = e => {
     e.preventDefault()
@@ -54,9 +54,15 @@ const Login = ({ history, login, isLoading }) => {
             </Tabs>
 
             <form className={theme.form} onSubmit={onSubmit}>
-              <Input label="Email" value={email} onChange={setEmail} />
+              <Input
+                className={theme.input}
+                label="Email"
+                value={email}
+                onChange={setEmail}
+              />
 
               <Input
+                className={theme.input}
                 label="Password"
                 value={password}
                 onChange={setPassword}
@@ -65,6 +71,7 @@ const Login = ({ history, login, isLoading }) => {
               />
 
               <Button
+                className={theme.button}
                 loading={isLoading}
                 disabled={isLoading}
                 primary
@@ -92,8 +99,17 @@ const Login = ({ history, login, isLoading }) => {
             </div>
           </div>
         </div>
+
         <div className={theme.bottom}>
-          <a href="/">Find a Job</a> <a href="/">Post a Job</a> <a href="/">Legal</a>
+          <div cassName={theme.bottomLeft} />
+
+          <div className={theme.bottomCenter}>
+            <p>Copyright &copy; 2019 StaffingDog</p>
+          </div>
+
+          <div className={theme.bottomRight}>
+            <a href="/">Legal</a>
+          </div>
         </div>
       </div>
     </div>
