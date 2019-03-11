@@ -8,6 +8,7 @@ import {
   getUserId,
   setToken as setTokenInCookie,
   setUserId as setUserIdCookie,
+  removeAllAuth,
 } from '../storage'
 
 export const INITIAL_STATE = {
@@ -105,6 +106,31 @@ reducers = {
 }
 
 /**
+ * SET USER FINGERPRINT
+ */
+export const USER_SET_FINGERPRINT = 'USER_SET_FINGERPRINT'
+
+export const setFingerprint = fingerprint => dispatch => {
+  setTokenInCookie(fingerprint)
+
+  dispatch({
+    type: USER_SET_FINGERPRINT,
+    payload: { fingerprint },
+  })
+}
+
+reducers = {
+  ...reducers,
+  [USER_SET_FINGERPRINT]: (state, { fingerprint }) => ({
+    ...state,
+    auth: {
+      ...state.auth,
+      fingerprint,
+    },
+  }),
+}
+
+/**
  * LOGIN USER
  */
 export const USER_LOGIN = 'USER_LOGIN'
@@ -160,6 +186,16 @@ reducers = {
       ...data,
     },
   }),
+}
+
+/**
+ * Logout User
+ */
+export const logout = (cb = false) => () => {
+  removeAllAuth()
+  setToken(false)
+  setFingerprint(false)
+  if (cb) cb()
 }
 
 /**

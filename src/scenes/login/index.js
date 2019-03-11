@@ -101,7 +101,7 @@ const Login = ({ history, login, isLoading }) => {
         </div>
 
         <div className={theme.bottom}>
-          <div cassName={theme.bottomLeft} />
+          <div className={theme.bottomLeft} />
 
           <div className={theme.bottomCenter}>
             <p>Copyright &copy; 2019 StaffingDog</p>

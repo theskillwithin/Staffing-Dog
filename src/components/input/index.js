@@ -116,7 +116,7 @@ Input.propTypes = {
   disabled: bool,
   thumbprint: bool,
   subLabel: bool,
-  className: '',
+  className: string,
 }
 
 export default Input

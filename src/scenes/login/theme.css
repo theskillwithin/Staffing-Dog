@@ -79,7 +79,7 @@
   font-size: 14px;
   line-height: 1.14;
   text-decoration: none;
-  margin: 2em auto;
+  margin: 20px auto 30px auto;
   color: var(--sd-blue);
 }
 
@@ -129,7 +129,7 @@
   width: 100%;
   padding: 0 20px;
   max-width: var(--loginMaxWidth);
-  font-size: 12px;
+  font-size: 13px;
   line-height: 1.14;
   color: var(--sd-grayLighter);
   text-decoration: none;
@@ -154,10 +154,8 @@
 
   a {
     position: relative;
-    font-size: 14px;
     line-height: 1.14;
     color: var(--sd-grayLighter);
-    text-decoration: none;
   }
 
   a + a:before {

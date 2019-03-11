@@ -28,3 +28,7 @@ body {
     font-weight: var(--sd-fontWeightBold);
   }
 }
+
+h2 {
+  font-size: 32px;
+}
