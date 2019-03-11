@@ -41,6 +41,7 @@ const config = {
   plugins: [],
   resolve: { alias },
   stats,
+  devtool: false,
 }
 
 /**
@@ -161,6 +162,10 @@ config.plugins = [
     'process.env.ENV': JSON.stringify(process.env.ENV || 'prod'),
     'process.env.BUILD_STAGE': JSON.stringify(process.env.BUILD_STAGE || false),
     'process.env.BYPASS_LUA': JSON.stringify(process.env.BYPASS_LUA || false),
+  }),
+  new webpack.SourceMapDevToolPlugin({
+    filename: '[file].map',
+    exclude: ['vendor'],
   }),
 ]
 
