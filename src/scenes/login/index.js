@@ -19,7 +19,7 @@ import theme from './theme.css'
 const Login = ({ history, login, isLoading }) => {
   const [tabIndex, setTabIndex] = useState(0)
   const [email, setEmail] = useState(IS_DEV || IS_STAGE ? 'romelu@lukaku.com' : '')
-  const [password, setPassword] = useState(IS_DEV || IS_STAGE ? 'password1' : '')
+  const [password, setPassword] = useState(IS_DEV || IS_STAGE ? 'Password1234$' : '')
 
   useEffect(() => {
     setTitle('Login')
