@@ -61,7 +61,7 @@ const ActionNav = ({ match, history, steps, goToStep, savingStep, loadingNextSte
                 className={clsx({ [theme.spinnerRight]: savingStep || loadingNextStep })}
               >
                 {savingStep || loadingNextStep ? (
-                  <Spinner size={20} center={false} />
+                  <Spinner inverted size={20} center={false} />
                 ) : (
                   <Arrow small color="white" />
                 )}
