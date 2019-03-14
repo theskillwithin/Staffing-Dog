@@ -25,6 +25,7 @@ export const SET_TYPE = `${BASE}_SET_TYPE`
 export const GO_TO_STEP = `${BASE}_GO_TO_STEP`
 export const GO_TO_STEP_SUCCESS = `${GO_TO_STEP}_SUCCESS`
 export const GO_TO_STEP_FAILED = `${GO_TO_STEP}_FAILED`
+export const GO_TO_STEP_CLEAR_ERROR = `${GO_TO_STEP}_CLEAR_ERROR`
 export const SAVE_STEP = `${BASE}_SAVE_STEP`
 export const SAVE_STEP_SUCCESS = `${SAVE_STEP}_SUCCESS`
 export const SAVE_STEP_FAILED = `${SAVE_STEP}_FAILED`
@@ -195,6 +196,11 @@ export const reducers = {
     error: payload.error,
     errorFields: payload.errorFields,
   }),
+  [GO_TO_STEP_CLEAR_ERROR]: state => ({
+    ...state,
+    error: null,
+    errorFields: null,
+  }),
   [SAVE_STEP]: (state, payload) => ({
     ...state,
     savingStep: true,
@@ -260,6 +266,9 @@ export const actions = {
   goToStepFailed: ({ error, nextStep, errorFields }) => ({
     type: GO_TO_STEP_FAILED,
     payload: { nextStep, error, errorFields },
+  }),
+  goToStepClearError: () => ({
+    type: GO_TO_STEP_CLEAR_ERROR,
   }),
   setStep: step => ({
     type: SET_STEP,
@@ -482,6 +491,12 @@ export const goToStep = ({ currentStep, nextStep, history }) => (dispatch, getSt
 export const setType = type => dispatch => {
   return new Promise(resolve => {
     resolve(dispatch(actions.setType(type)))
+  })
+}
+
+export const clearError = () => dispatch => {
+  return new Promise(resolve => {
+    resolve(dispatch(actions.goToStepClearError()))
   })
 }
 
