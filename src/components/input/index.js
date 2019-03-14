@@ -115,7 +115,7 @@ Input.propTypes = {
   value: oneOfType([string, number]),
   disabled: bool,
   thumbprint: bool,
-  subLabel: bool,
+  subLabel: oneOfType([string, bool]),
   className: string,
 }
 
