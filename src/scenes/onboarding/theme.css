@@ -236,6 +236,10 @@
       color: var(--sd-grayLighter);
       font-size: 12px;
       font-weight: 500;
+
+      &:hover {
+        color: var(--sd-primary);
+      }
     }
 
     @media (--sd-mobile) {
