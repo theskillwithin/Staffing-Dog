@@ -31,6 +31,8 @@ class Onboarding extends Component {
       }),
     }),
     setType: func.isRequired,
+    clearError: func.isRequired,
+    clearRegisterUserError: func.isRequired,
   }
 
   static defaultProps = {
@@ -68,6 +70,8 @@ class Onboarding extends Component {
 
     if (prevProps.location.pathname !== this.props.location.pathname) {
       window.scrollTo(0, 0)
+      this.props.clearError()
+      this.props.clearRegisterUserError()
     }
   }
 
