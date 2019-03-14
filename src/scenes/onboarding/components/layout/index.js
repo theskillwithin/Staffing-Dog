@@ -2,7 +2,7 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 
 import { findLoading, findError, setType, clearError } from '../../store/steps'
-import { findRegisterError } from '../../../../store/user'
+import { findRegisterError, clearRegisterUserError } from '../../../../store/user'
 
 import Layout from './Layout'
 
@@ -13,6 +13,6 @@ export default withRouter(
       error: findError(state),
       findRegisterError: findRegisterError(state),
     }),
-    { setType, clearError },
+    { setType, clearError, clearRegisterUserError },
   )(Layout),
 )

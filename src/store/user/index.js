@@ -550,6 +550,29 @@ reducers = {
 }
 
 /**
+ * Clear Error Register
+ */
+
+export const USER_REGISTER_CLEAR_ERROR = 'USER_REGISTER_CLEAR_ERROR'
+
+export const clearRegisterUserError = () => dispatch => {
+  dispatch({
+    type: USER_REGISTER_CLEAR_ERROR,
+  })
+}
+
+reducers = {
+  ...reducers,
+  [USER_REGISTER_CLEAR_ERROR]: state => ({
+    ...state,
+    register: {
+      ...state.register,
+      error: null,
+    },
+  }),
+}
+
+/**
  * Create Store
  */
 export const reducer = buildStore(reducers, INITIAL_STATE)
