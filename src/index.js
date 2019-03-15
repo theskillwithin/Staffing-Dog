@@ -7,6 +7,7 @@ import createStore from '@sdog/store'
 import reducers from '@sdog/store/reducers'
 import { INITIAL_STATE as USER_INITIAL_STATE } from '@sdog/store/user'
 import { getToken, getFingerprint, setFingerprint } from '@sdog/store/storage'
+import Footer from '@sdog/components/Footer'
 
 import createFingerprint from './utils/fingerprint'
 import Spinner from './components/spinner'
@@ -55,6 +56,7 @@ render(
         </React.Suspense>
       </ErrorBoundry>
     </Router>
+    <Footer />
   </Provider>,
   document.getElementById('app'),
 )

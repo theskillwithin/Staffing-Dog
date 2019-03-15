@@ -102,18 +102,6 @@ const Login = ({ history, login, isLoading, error }) => {
             </div>
           </div>
         </div>
-
-        <div className={theme.bottom}>
-          <div className={theme.bottomLeft} />
-
-          <div className={theme.bottomCenter}>
-            <p>Copyright &copy; 2019 StaffingDog</p>
-          </div>
-
-          <div className={theme.bottomRight}>
-            <a href="/">Legal</a>
-          </div>
-        </div>
       </div>
     </div>
   )
