@@ -3,20 +3,23 @@
 .iconRight {
   margin-left: -1em;
   span {
-    margin-right: -1em;
-    padding-left: 3px;
-    padding-right: 5px;
+    margin-right: -1.7em;
+    padding-left: 8px;
 
     svg {
-      margin-bottom: 2px;
+      margin-bottom: 1px;
     }
   }
   display: block; /* FF fix */
   white-space: nowrap; /* FF fix */
 }
 
+.setupBtn {
+  width: 176px;
+}
+
 .stepNavComplete {
-  padding: 1em 4em;
+  padding: 1em;
   width: 100%;
 
   @media (--sd-mobile) {
