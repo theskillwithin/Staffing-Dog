@@ -140,16 +140,6 @@ class Onboarding extends Component {
               </div>
             </div>
           </div>
-
-          <footer className={theme.appFooter}>
-            <span className={theme.footerLeft}>&nbsp;</span>
-            <span className={theme.footerCenter}>
-              Copyright &copy; 2018 Staffing Dog&nbsp;
-            </span>
-            <span className={theme.footerRight}>
-              <a href="/legal">Legal</a>
-            </span>
-          </footer>
         </div>
       </div>
     )
