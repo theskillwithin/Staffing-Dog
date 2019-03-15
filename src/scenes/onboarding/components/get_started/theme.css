@@ -68,6 +68,10 @@
         border-radius: 0;
         overflow-x: hidden;
         white-space: nowrap;
+
+        .chair {
+          margin-right: -40px;
+        }
       }
     }
 
