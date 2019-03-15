@@ -33,61 +33,66 @@ const Input = ({
   }
 
   return (
-    <>
-      <div
-        className={clsx(
-          className,
-          s.root,
-          theme,
-          invalid && s.invalid,
-          valid && s.valid,
-          (textarea || type === 'textarea') && s.textarea,
-          disabled && s.disabled,
-          !invalid && !valid && thumbprint && s.password,
-        )}
-      >
-        {textarea ? (
-          <textarea
-            id={id}
-            className={clsx(
-              s.input,
-              outlined && s.outlined,
-              value && value.length > 0 && s.filled,
-            )}
-            onChange={handleOnChange}
-            value={value}
-            {...props}
-          />
-        ) : (
-          <input
-            id={id}
-            className={clsx(
-              s.input,
-              outlined && s.outlined,
-              value && value.length > 0 && s.filled,
-            )}
-            onChange={handleOnChange}
-            type={type}
-            value={value}
-            {...props}
-          />
-        )}
+    <div
+      className={clsx(
+        className,
+        s.root,
+        theme,
+        invalid && s.invalid,
+        valid && s.valid,
+        (textarea || type === 'textarea') && s.textarea,
+        disabled && s.disabled,
+        !invalid && !valid && thumbprint && s.password,
+      )}
+    >
+      {textarea ? (
+        <textarea
+          id={id}
+          className={clsx(
+            s.input,
+            outlined && s.outlined,
+            value && value.length > 0 && s.filled,
+          )}
+          onChange={handleOnChange}
+          value={value}
+          {...props}
+        />
+      ) : (
+        <input
+          id={id}
+          className={clsx(
+            s.input,
+            outlined && s.outlined,
+            value && value.length > 0 && s.filled,
+          )}
+          onChange={handleOnChange}
+          type={type}
+          value={value}
+          {...props}
+        />
+      )}
+      {subLabel ? (
+        <label className={clsx(s.label, s.subLabel)} htmlFor={id}>
+          <span className={s.showLabel}>{label}</span>
+          <span className={s.showSubLabel}>{subLabel}</span>
+        </label>
+      ) : (
         <label className={s.label} htmlFor={id}>
           {label}
         </label>
-        {valid && (
-          <div className={s.check}>
-            <Check color="green" />
-          </div>
-        )}
-        {invalid && (
-          <div className={s.invalidStar}>
-            <Invalid />
-          </div>
-        )}
-      </div>
-      {subLabel && <div className={s.subLabel}>{subLabel}</div>}
-    </>
+      )}
+
+      {valid && (
+        <div className={s.check}>
+          <Check color="green" />
+        </div>
+      )}
+      {invalid && (
+        <div className={s.invalidStar}>
+          <Invalid />
+        </div>
+      )}
+    </div>
   )
 }
 
