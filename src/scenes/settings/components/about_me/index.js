@@ -294,6 +294,10 @@ const SettingsAboutMe = ({ autoSaveUserProfile, uploadUserPhoto, profile }) => {
             Upload Insurance Declaration
           </Button>
         </div>
+        <hr />
+        <Button type="submit" className={theme.submit}>
+          Save
+        </Button>
       </form>
     </div>
   )
