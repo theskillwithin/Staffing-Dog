@@ -291,7 +291,7 @@ export const actions = {
     payload: { type },
   }),
   saveStepAPIFailed: (nextStep, res) => ({
-    type: GO_TO_STEP_FAILED,
+    type: SAVE_STEP_FAILED,
     payload: {
       error:
         res && res.data && res.data.message
@@ -317,13 +317,23 @@ export const setValue = (name, value) => dispatch => {
 export const setStep = step => dispatch =>
   Promise.resolve(dispatch(actions.setStep(step)))
 
-export const saveStep = ({ step, onSuccess = false, onFail = false }) => (
+export const saveStep = ({ step, onSuccess = false, onError = false }) => (
   dispatch,
   getState,
 ) => {
   dispatch(actions.saveStep(step))
 
   const onApiSuccess = res => {
+    if (get(res, 'data.error', false)) {
+      dispatch(
+        actions.saveStepFailed({
+          error: get(res.data.error),
+        }),
+      )
+
+      if (onError) onError(res.data.error)
+    }
+
     dispatch(
       actions.saveStepSuccess({
         step,
@@ -335,13 +345,13 @@ export const saveStep = ({ step, onSuccess = false, onFail = false }) => (
       }),
     )
 
-    if (onSuccess) onSuccess()
+    if (onSuccess) onSuccess(res)
   }
 
   const onApiError = res => {
     dispatch(actions.saveStepAPIFailed(step, res))
 
-    if (onFail) onFail()
+    if (onError) onError(res)
   }
 
   const isInitialRegister = !findToken(getState())
@@ -489,6 +499,14 @@ export const goToStep = ({ currentStep, nextStep, history }) => (dispatch, getSt
       onSuccess: () => {
         dispatch(actions.goToStepSuccess(nextStep, type))
         history.push(`/onboarding/${type}/step/${nextStep}`)
+      },
+      onError: errorRes => {
+        dispatch(
+          actions.goToStepFailed({
+            error: get(errorRes, 'response.data.error', errorRes),
+            nextStep,
+          }),
+        )
       },
     })(dispatch, getState)
   }

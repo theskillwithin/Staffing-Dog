@@ -179,18 +179,19 @@ reducers = {
     ...state,
     auth: { ...state.auth, ...spreadLoadingError(true, false) },
   }),
-  [userLoginTypes.ERROR]: (
-    state,
-    {
-      error: {
-        response: {
-          data: { error },
-        },
-      },
-    },
-  ) => ({
+  [userLoginTypes.ERROR]: (state, { error }) => ({
     ...state,
-    auth: { ...state.auth, ...spreadLoadingError(false, error) },
+    auth: {
+      ...state.auth,
+      ...spreadLoadingError(
+        false,
+        get(
+          error,
+          'response.data.error',
+          'There was an issue attempting to login. Please try again or contact support.',
+        ),
+      ),
+    },
   }),
   [userLoginTypes.SUCCESS]: (state, { data }) => ({
     ...state,
@@ -259,7 +260,14 @@ reducers = {
     ...state,
     register: {
       ...state.register,
-      ...spreadLoadingError(false, error.response.data.error),
+      ...spreadLoadingError(
+        false,
+        get(
+          error,
+          'response.data.error',
+          'There was an unkown api error attempting to save this step. Please try again or contact support',
+        ),
+      ),
     },
   }),
 }
@@ -304,7 +312,14 @@ reducers = {
     ...state,
     register: {
       ...state.register,
-      ...spreadLoadingError(false, error),
+      ...spreadLoadingError(
+        false,
+        get(
+          error,
+          'response.data.error',
+          'There was an error attempting to save your data. Please try again or contact support.',
+        ),
+      ),
     },
   }),
 }
@@ -360,11 +375,18 @@ reducers = {
       ...spreadLoadingError(false, false),
     },
   }),
-  [userGetProfileTypes.ERROR]: (state, payload) => ({
+  [userGetProfileTypes.ERROR]: (state, { error }) => ({
     ...state,
     profile: {
       ...state.profile,
-      ...spreadLoadingError(false, payload.error || 'error'),
+      ...spreadLoadingError(
+        false,
+        get(
+          error,
+          'response.data.error',
+          'There was an error attemtping to get your profile data. Please contact support if this error continues.',
+        ),
+      ),
     },
   }),
 }
@@ -555,11 +577,9 @@ reducers = {
 
 export const USER_REGISTER_CLEAR_ERROR = 'USER_REGISTER_CLEAR_ERROR'
 
-export const clearRegisterUserError = () => dispatch => {
-  dispatch({
-    type: USER_REGISTER_CLEAR_ERROR,
-  })
-}
+export const clearRegisterUserError = () => ({
+  type: USER_REGISTER_CLEAR_ERROR,
+})
 
 reducers = {
   ...reducers,
