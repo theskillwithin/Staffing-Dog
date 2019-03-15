@@ -4,7 +4,7 @@ import clsx from 'clsx'
 
 import theme from './theme.css'
 
-const LogoInternals = ({ className, width, hideText, hideTextOnMobile }) => (
+const LogoInternals = ({ className, width, hideText, hideTextOnMobile, largeTxt }) => (
   <div className={clsx(className, theme.logo)}>
     <svg width={width} xmlns="http://www.w3.org/2000/svg" viewBox="555 12 63.116 46.148">
       <g transform="translate(555 12)">
@@ -17,7 +17,13 @@ const LogoInternals = ({ className, width, hideText, hideTextOnMobile }) => (
     </svg>
 
     {!hideText ? (
-      <span className={clsx(theme.logoText, hideTextOnMobile && theme.hideTextOnMobile)}>
+      <span
+        className={clsx(
+          theme.logoText,
+          hideTextOnMobile && theme.hideTextOnMobile,
+          largeTxt && theme.largeTxt,
+        )}
+      >
         StaffingDog
       </span>
     ) : null}
@@ -35,6 +41,7 @@ const Logo = props => {
 
 LogoInternals.defaultProps = {
   width: '54px',
+  largeTxt: false,
   className: '',
   hideText: false,
   hideTextOnMobile: false,
@@ -42,6 +49,7 @@ LogoInternals.defaultProps = {
 
 LogoInternals.propTypes = {
   width: string,
+  largeTxt: bool,
   className: string,
   hideText: bool,
   hideTextOnMobile: bool,

@@ -98,7 +98,7 @@ class Onboarding extends Component {
 
           <div className={theme.appHeader}>
             <div className={theme.logo}>
-              <Logo />
+              <Logo width={63} largeTxt />
             </div>
 
             <div className={clsx(theme.stepSidebar, theme.stepSidebarMobile)}>

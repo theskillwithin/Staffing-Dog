@@ -44,7 +44,7 @@ const Login = ({ history, login, isLoading, error }) => {
 
       <div className={theme.signinContainer}>
         <div className={theme.logo}>
-          <Logo />
+          <Logo width={63} largeTxt />
         </div>
 
         <div className={theme.signin}>
