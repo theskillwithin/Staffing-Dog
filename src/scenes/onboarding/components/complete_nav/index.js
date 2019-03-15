@@ -28,7 +28,7 @@ const CompleteNav = () => (
 
         <div>
           <Link to="/">
-            <Button primary round size="medium">
+            <Button primary round size="medium" className={theme.setupBtn}>
               <span className={theme.iconRight}>
                 Profile Setup{' '}
                 <span>
