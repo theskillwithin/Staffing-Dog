@@ -5,7 +5,7 @@ import { object, func } from 'prop-types'
 import { setHtmlClass, removeHtmlClass } from '@sdog/utils/document'
 import Logo from '@sdog/components/logo'
 import MainMenu from '@sdog/scenes/app/menu'
-import DashFooter from '@sdog/scenes/app/footer'
+import Footer from '@sdog/components/footer'
 import UserMenu from '@sdog/components/user_menu'
 import Spinner from '@sdog/components/spinner'
 import { getUserProfile as getUserProfileAction } from '@sdog/store/user'
@@ -48,7 +48,7 @@ const App = ({ getUserProfile, location }) => {
           <Route path="/search" component={SearchScene} />
         </React.Suspense>
       </div>
-      <DashFooter />
+      <Footer />
     </div>
   )
 }
