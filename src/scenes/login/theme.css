@@ -80,10 +80,10 @@
   line-height: 1.14;
   text-decoration: none;
   margin: 20px auto 30px auto;
-  color: var(--sd-blue);
+  color: var(--sd-grayLighter);
 
   &:hover {
-    color: var(--sd-blueDark);
+    color: var(--sd-primary);
   }
 }
 
