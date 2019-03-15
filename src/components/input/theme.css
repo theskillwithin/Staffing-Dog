@@ -6,6 +6,10 @@
   flex: 1;
 }
 
+.showSubLabel {
+  display: none;
+}
+
 .input {
   flex: 1;
   height: 48px;
@@ -13,12 +17,21 @@
   font-size: 15px;
   color: var(--sd-blackTxt);
   border-radius: 3px;
+
   &:focus ~ label,
   &.filled ~ label {
     top: 6px;
     left: 16px;
     font-size: 11px;
     transform: translateY(0%);
+
+    .showSubLabel {
+      display: block;
+    }
+
+    .showLabel {
+      display: none;
+    }
   }
 }
 
@@ -31,6 +44,10 @@
   line-height: 1;
   color: var(--sd-gray);
   transition: 0.1s ease-in-out;
+}
+
+.subLabel {
+  transition: none;
 }
 
 .outlined {
@@ -85,14 +102,4 @@
     transform: translateY(-50%);
     width: 30px;
   }
-}
-
-.subLabel {
-  margin: 0.3em 0 -0.3em 0;
-  padding: 0.5em 0 0 0;
-  font-size: 12px;
-  line-height: 1.5;
-  font-weight: var(--sd-fontWeightMedium);
-  color: var(--sd-grayDark);
-  border-radius: 3px;
 }
