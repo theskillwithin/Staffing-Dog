@@ -48,7 +48,7 @@ const Dropdown = ({ onChange, value, ...props }) => {
     singleValue: styles => ({
       ...styles,
       marginLeft: props.small ? '-4px' : '0',
-      fontWeight: 500,
+      fontWeight: 400,
       color: 'rgb(31, 39, 64)',
       minWidth: 'auto',
     }),
