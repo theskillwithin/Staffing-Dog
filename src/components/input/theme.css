@@ -49,6 +49,10 @@
   label {
     color: var(--sd-red);
   }
+
+  input:focus {
+    border: 1px solid var(--sd-red);
+  }
 }
 
 .valid {
