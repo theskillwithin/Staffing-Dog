@@ -429,6 +429,20 @@ export const goToStep = ({ currentStep, nextStep, history }) => (dispatch, getSt
           'Password and Verify Password must match.'
         )
       }
+      if (/minDigits/.test(validation)) {
+        const minChars = /minDigits(\d*)/.exec(validation)[1]
+        return (
+          values[name].length < parseInt(minChars, 10) &&
+          `${name} must be contain ${minChars} digits`
+        )
+      }
+      if (/minChars/.test(validation)) {
+        const minChars = /minChars(\d*)/.exec(validation)[1]
+        return (
+          values[name].length < parseInt(minChars, 10) &&
+          `${name} must be contain ${minChars} characters`
+        )
+      }
       return false
     }
 
