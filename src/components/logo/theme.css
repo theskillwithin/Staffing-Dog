@@ -16,6 +16,12 @@
   font-weight: var(--sd-fontWeightMedium);
   color: var(--sd-blackTxt);
 
+  &.largeTxt {
+    font-size: 20px;
+    margin-bottom: -15px;
+    margin-left: 5px;
+  }
+
   @media (--sd-desktopMax) {
     font-size: 1em;
   }
