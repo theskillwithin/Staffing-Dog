@@ -43,6 +43,20 @@
     height: 100%;
     display: grid;
     grid-template-columns: 1fr 1fr;
+    grid-gap: 40px;
+    padding: 0;
+
+    .left,
+    .right {
+      height: 394px;
+      width: 439px;
+      margin-top: -10em;
+      background: white;
+      border: 1px solid var(--sd-borderColor);
+      border-radius: 8px;
+      box-shadow: 0 3px 6px 0 var(--sd-shadowColor);
+      padding: 3em 1em 1em 1em;
+    }
 
     @media (--sd-preBreakTablet) {
       grid-template-columns: 1fr;
@@ -53,36 +67,16 @@
       }
     }
 
-    .divider {
-      position: absolute;
-      left: 50%;
-      top: 0;
-      bottom: 0;
-      width: 2px;
-      background: var(--sd-backgroundColor);
-      box-shadow: var(--sd-shadowColorSolid);
-      height: 100%;
-
-      @media (--sd-preBreakTablet) {
-        top: 50%;
-        left: 0;
-        right: 0;
-        height: 2px;
-        width: 100%;
-        bottom: auto;
-      }
-
-      @media (--sd-mobile) {
-        display: none;
-      }
+    @media (--sd-mobile) {
+      box-shadow: none;
     }
   }
 }
 
 .letsGetStartedButton {
-  margin-top: 6em;
+  margin-top: 3.5em;
   position: relative;
-  width: calc(100% - 5em);
+  width: 310px;
   height: 40px;
   margin-bottom: 1em;
 

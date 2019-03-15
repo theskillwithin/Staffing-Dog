@@ -31,12 +31,12 @@ const GetStarted = ({ type, setStep, goToStep, setType, history }) => {
           <div>
             <Person className={clsx(theme.group, theme.person, theme.man)} name="man" />
             <Person
-              className={clsx(theme.group, theme.person, theme.woman3)}
-              name="woman3"
-            />
-            <Person
               className={clsx(theme.group, theme.person, theme.woman2)}
               name="woman2"
+            />
+            <Person
+              className={clsx(theme.group, theme.person, theme.woman3)}
+              name="woman3"
             />
           </div>
           <Button
@@ -57,15 +57,13 @@ const GetStarted = ({ type, setStep, goToStep, setType, history }) => {
             </span>
           </Button>
         </div>
-        <div className={theme.divider} />
         <div className={theme.right}>
           <div>
-            <Svg name="dentist_chair" className={clsx(theme.group, theme.chair)} />
-
             <Person
               className={clsx(theme.group, theme.person, theme.woman)}
               name="woman"
             />
+            <Svg name="dentist_chair" className={clsx(theme.group, theme.chair)} />
           </div>
           <Button
             onClick={() => {
