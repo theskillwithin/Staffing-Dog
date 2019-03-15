@@ -2,6 +2,7 @@ import set from 'lodash/set'
 import get from 'lodash/get'
 import omit from 'lodash/omit'
 import { API_ROOT } from '@sdog/utils/api'
+import createFingerprint from '@sdog/utils/fingerprint'
 
 import { createActionTypes, reduxRegister, buildStore } from '../tools'
 import {
@@ -164,12 +165,14 @@ export const login = ({
       },
       error: onError,
     },
-    dispatches: [
-      () => ({
-        type: USER_SET_FINGERPRINT,
-        payload: { fingerprint: false },
-      }),
-    ],
+    dispatches: {
+      error: [
+        () => ({
+          type: USER_SET_FINGERPRINT,
+          payload: { fingerprint: false },
+        }),
+      ],
+    },
   },
 })
 
@@ -207,12 +210,36 @@ reducers = {
 /**
  * Logout User
  */
-export const logout = (cb = false) => () => {
+export const USER_LOGOUT = 'USER_LOGOUT'
+export const userLogoutTypes = createActionTypes(USER_LOGOUT)
+
+const onLogoutDispatches = [
+  () => ({ type: USER_SET_FINGERPRINT, payload: { fingerprint: createFingerprint() } }),
+  () => ({ type: USER_SET_TOKEN, payload: { token: false } }),
+]
+
+const onLogoutCallback = cb => {
   removeAllAuth()
-  setToken(false)
-  setFingerprint(false)
   if (cb) cb()
 }
+
+export const logout = (cb = false) => (dispatch, getState) =>
+  dispatch({
+    type: USER_LOGOUT,
+    api: {
+      url: `${API_ROOT}/logout`,
+      method: 'POST',
+      data: { user_id: findUserId(getState()) },
+      callbacks: {
+        success: () => onLogoutCallback(cb),
+        error: () => onLogoutCallback(cb),
+      },
+      dispatches: {
+        success: onLogoutDispatches,
+        error: onLogoutDispatches,
+      },
+    },
+  })
 
 /**
  * REGISTER USER
