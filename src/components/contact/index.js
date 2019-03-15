@@ -2,7 +2,7 @@ import React, { useState, useRef } from 'react'
 import clsx from 'clsx'
 import useOutsideClick from '@sdog/utils/useOutsideClick'
 import ContactSVG from '@sdog/components/svg/Contact'
-import HeadsetSVG from '@sdog/components/svg/Headset'
+// import HeadsetSVG from '@sdog/components/svg/Headset'
 import EmailUsSVG from '@sdog/components/svg/EmailUs'
 import LiveChatSVG from '@sdog/components/svg/LiveChat'
 import Hamburger from '@sdog/components/hamburger'
@@ -45,10 +45,10 @@ const Contact = () => {
               <ContactSVG className={theme.contactSVG} /> Contact Us
             </Link>
           </div>
-          <a href="/test">
+          {/* <a href="/test">
             <HeadsetSVG />
             (385) 707-0156
-          </a>
+          </a> */}
           <a href="/test">
             <EmailUsSVG />
             Email Us

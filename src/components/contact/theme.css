@@ -43,7 +43,7 @@
   .contactActive {
     display: none;
     position: absolute;
-    z-index: 1;
+    z-index: 1001;
     top: 0;
     left: -40px;
 
@@ -82,7 +82,8 @@
     flex-direction: column;
     margin-top: 35px;
     width: 170px;
-    height: 136px;
+    /* height: 136px; */
+    height: 95px;
     border-radius: 8px;
     background-color: var(--sd-white);
     filter: drop-shadow(0 3px 6px var(--sd-shadowColorContact));
@@ -163,7 +164,8 @@
     }
 
     @media (--sd-mobile) {
-      height: 217px;
+      /* height: 217px; */
+      height: 177px;
       width: 100%;
       background-color: var(--sd-blackTxt);
       box-shadow: 0 3px 6px 0 var(--sd-shadowColor);
