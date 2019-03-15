@@ -46,6 +46,10 @@
     grid-gap: 40px;
     padding: 0;
 
+    .woman3 {
+      display: inline-block;
+    }
+
     .left,
     .right {
       height: 394px;
@@ -56,6 +60,21 @@
       border-radius: 8px;
       box-shadow: 0 3px 6px 0 var(--sd-shadowColor);
       padding: 3em 1em 1em 1em;
+
+      @media (--sd-mobile) {
+        box-shadow: none;
+        border: none;
+        width: 100vw;
+        border-radius: 0;
+        overflow-x: hidden;
+        white-space: nowrap;
+      }
+    }
+
+    .left {
+      @media (--sd-mobile) {
+        border-bottom: solid 1px rgb(187, 193, 209, 0.5);
+      }
     }
 
     @media (--sd-preBreakTablet) {
@@ -64,10 +83,6 @@
       align-content: center;
       justify-items: center;
       margin-top: 3em;
-    }
-
-    @media (--sd-mobile) {
-      box-shadow: none;
     }
   }
 }
