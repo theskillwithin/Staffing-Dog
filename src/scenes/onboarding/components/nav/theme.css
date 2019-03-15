@@ -38,7 +38,7 @@
   &:hover {
 
     @media (--sd-notMobile) {
-      background-color: var(--sd-blueGrayShade10);
+      background-color: var(--sd-blueGray);
     }
   }
 }
