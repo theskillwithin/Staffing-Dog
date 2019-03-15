@@ -60,11 +60,10 @@
 
     @media (--sd-preBreakTablet) {
       grid-template-columns: 1fr;
-      grid-template-rows: 1fr 1fr;
-
-      .right {
-        margin-top: 2em;
-      }
+      grid-template-rows: 394px 394px;
+      align-content: center;
+      justify-items: center;
+      margin-top: 3em;
     }
 
     @media (--sd-mobile) {
