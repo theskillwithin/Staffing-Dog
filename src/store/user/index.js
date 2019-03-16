@@ -552,6 +552,47 @@ reducers = {
 }
 
 /**
+ * Save User Profile Data
+ */
+export const SAVE_USER_PROFILE = 'SAVE_USER_PROFILE'
+export const saveUserProfileTypes = createActionTypes(SAVE_USER_PROFILE)
+
+export const saveUserProfile = form => (dispatch, getState) => {
+  dispatch({
+    type: SAVE_USER_PROFILE,
+    api: {
+      url: `${API_ROOT}/profiles`,
+      method: 'PUT',
+      data: { data: form.profile, id: findUserId(getState()) || getUserId() },
+    },
+    payload: form.profile,
+  })
+}
+
+reducers = {
+  ...reducers,
+  [saveUserProfileTypes.LOADING]: state => ({
+    ...state,
+    profile: { ...state.profile, ...spreadLoadingError(true, false) },
+  }),
+  [saveUserProfileTypes.SUCCESS]: (state, { data }) => ({
+    ...state,
+    profile: {
+      ...state.profile,
+      ...data,
+      ...spreadLoadingError(false, false),
+    },
+  }),
+  [saveUserProfileTypes.ERROR]: (state, payload) => ({
+    ...state,
+    profile: {
+      ...state.profile,
+      ...spreadLoadingError(false, payload.error || 'error'),
+    },
+  }),
+}
+
+/**
  * Upload User Photo
  */
 export const UPLOAD_USER_PHOTO = 'UPLOAD_USER_PHOTO'
