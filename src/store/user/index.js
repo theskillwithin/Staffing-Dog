@@ -563,9 +563,9 @@ export const saveUserProfile = form => dispatch => {
     api: {
       url: `${API_ROOT}/profiles`,
       method: 'PUT',
-      data: form,
+      data: { data: form.profile },
     },
-    payload: form,
+    payload: form.profile,
   })
 }
 
