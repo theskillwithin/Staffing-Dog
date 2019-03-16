@@ -5,6 +5,7 @@ import clsx from 'clsx'
 import find from 'lodash/find'
 import includes from 'lodash/includes'
 import Dropzone from 'react-dropzone'
+import Spinner from '@sdog/components/spinner'
 import ProfilePhotoSVG from '@sdog/components/svg/ProfilePhoto'
 import Input from '@sdog/components/input'
 import Button from '@sdog/components/button'
@@ -95,7 +96,11 @@ const FormSpacer = () => <div className={theme.spacer} />
 
 const SettingsAboutMe = ({ saveProfile, uploadUserPhoto, profile }) => {
   if (profile.loading) {
-    return <p>Loading</p>
+    return (
+      <div className={theme.loading}>
+        <Spinner />
+      </div>
+    )
   }
 
   const [form, setForm] = React.useState({
