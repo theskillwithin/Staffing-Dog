@@ -139,7 +139,7 @@ const SettingsAboutMe = ({ saveProfile, uploadUserPhoto, profile }) => {
   })
 
   const submit = e => {
-    e.preventDefeault()
+    e.preventDefault()
     saveProfile(form)
   }
 

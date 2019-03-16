@@ -557,31 +557,15 @@ reducers = {
 export const SAVE_USER_PROFILE = 'SAVE_USER_PROFILE'
 export const saveUserProfileTypes = createActionTypes(SAVE_USER_PROFILE)
 
-export const saveUserProfile = (name, value) => (dispatch, getState) => {
-  const state = getState()
+export const saveUserProfile = form => dispatch => {
   dispatch({
     type: SAVE_USER_PROFILE,
     api: {
       url: `${API_ROOT}/profiles`,
       method: 'PUT',
-      data: {
-        id: findUserId(getState()) || getUserId(),
-        data: omit(
-          set(
-            {
-              addresses: findUserProfile(state).addresses,
-              meta: findUserMeta(state),
-              preferences: findUserPreferences(state),
-              user: findUserProfile(state).user,
-            },
-            name,
-            value,
-          ),
-          ['addresses.geocode'],
-        ),
-      },
+      data: form,
     },
-    payload: { name, value },
+    payload: form,
   })
 }
 
@@ -590,11 +574,6 @@ reducers = {
   [saveUserProfileTypes.LOADING]: (state, { name, value }) => ({
     ...state,
     profile: set({ ...state.profile }, name, value),
-    previousProfileUpdate: {
-      name,
-      value: get(state.profile, name),
-    },
-    // lastUpdated: new Date().getTime(),
   }),
   [saveUserProfileTypes.SUCCESS]: (state, { data }) => ({
     ...state,
@@ -602,7 +581,6 @@ reducers = {
       ...state.profile,
       ...data,
     },
-    // lastUpdated: new Date().getTime(),
   }),
   [saveUserProfileTypes.ERROR]: (state, payload) => ({
     ...state,
@@ -616,7 +594,6 @@ reducers = {
         : state.profile),
       ...spreadLoadingError(false, payload.error || 'error'),
     },
-    // lastUpdated: new Date().getTime(),
   }),
 }
 
