@@ -571,27 +571,22 @@ export const saveUserProfile = form => dispatch => {
 
 reducers = {
   ...reducers,
-  [saveUserProfileTypes.LOADING]: (state, { name, value }) => ({
+  [saveUserProfileTypes.LOADING]: state => ({
     ...state,
-    profile: set({ ...state.profile }, name, value),
+    profile: { ...state.profile, ...spreadLoadingError(true, false) },
   }),
   [saveUserProfileTypes.SUCCESS]: (state, { data }) => ({
     ...state,
     profile: {
       ...state.profile,
       ...data,
+      ...spreadLoadingError(false, false),
     },
   }),
   [saveUserProfileTypes.ERROR]: (state, payload) => ({
     ...state,
     profile: {
-      ...(state.profile.previousProfileUpdate
-        ? set(
-            { ...state.profile },
-            state.profile.previousProfileUpdate.name,
-            state.profile.previousProfileUpdate.value,
-          )
-        : state.profile),
+      ...state.profile,
       ...spreadLoadingError(false, payload.error || 'error'),
     },
   }),
