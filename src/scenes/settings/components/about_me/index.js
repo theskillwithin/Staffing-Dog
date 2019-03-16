@@ -138,7 +138,8 @@ const SettingsAboutMe = ({ saveProfile, uploadUserPhoto, profile }) => {
     },
   })
 
-  const submit = () => {
+  const submit = e => {
+    e.preventDefeault()
     saveProfile(form)
   }
 
@@ -190,7 +191,7 @@ const SettingsAboutMe = ({ saveProfile, uploadUserPhoto, profile }) => {
           </ul>
         </div>
       </div>
-      <form className={theme.formContainer} onSubmit={submit}>
+      <form className={theme.formContainer} onSubmit={e => submit(e)}>
         <div className={theme.inputRow}>
           <Input
             label="First Name"
