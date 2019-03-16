@@ -552,6 +552,75 @@ reducers = {
 }
 
 /**
+ * Save User Profile Data
+ */
+export const SAVE_USER_PROFILE = 'SAVE_USER_PROFILE'
+export const saveUserProfileTypes = createActionTypes(SAVE_USER_PROFILE)
+
+export const saveUserProfile = (name, value) => (dispatch, getState) => {
+  const state = getState()
+  dispatch({
+    type: AUTO_SAVE_USER_PROFILE,
+    api: {
+      url: `${API_ROOT}/profiles`,
+      method: 'PUT',
+      data: {
+        id: findUserId(getState()) || getUserId(),
+        data: omit(
+          set(
+            {
+              addresses: findUserProfile(state).addresses,
+              meta: findUserMeta(state),
+              preferences: findUserPreferences(state),
+              user: findUserProfile(state).user,
+            },
+            name,
+            value,
+          ),
+          ['addresses.geocode'],
+        ),
+      },
+    },
+    payload: { name, value },
+  })
+}
+
+reducers = {
+  ...reducers,
+  [saveUserProfileTypes.LOADING]: (state, { name, value }) => ({
+    ...state,
+    profile: set({ ...state.profile }, name, value),
+    previousProfileUpdate: {
+      name,
+      value: get(state.profile, name),
+    },
+    // lastUpdated: new Date().getTime(),
+  }),
+  [saveUserProfileTypes.SUCCESS]: (state, { data }) => ({
+    ...state,
+    profile: {
+      ...state.profile,
+      ...data,
+    },
+    // lastUpdated: new Date().getTime(),
+  }),
+  [saveUserProfileTypes.ERROR]: (state, payload) => ({
+    ...state,
+    profile: {
+      ...(state.profile.previousProfileUpdate
+        ? set(
+            { ...state.profile },
+            state.profile.previousProfileUpdate.name,
+            state.profile.previousProfileUpdate.value,
+          )
+        : state.profile),
+      ...spreadLoadingError(false, payload.error || 'error'),
+    },
+    // lastUpdated: new Date().getTime(),
+  }),
+}
+
+/**
  * Upload User Photo
  */
 export const UPLOAD_USER_PHOTO = 'UPLOAD_USER_PHOTO'
