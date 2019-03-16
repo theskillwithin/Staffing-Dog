@@ -560,7 +560,7 @@ export const saveUserProfileTypes = createActionTypes(SAVE_USER_PROFILE)
 export const saveUserProfile = (name, value) => (dispatch, getState) => {
   const state = getState()
   dispatch({
-    type: AUTO_SAVE_USER_PROFILE,
+    type: SAVE_USER_PROFILE,
     api: {
       url: `${API_ROOT}/profiles`,
       method: 'PUT',
