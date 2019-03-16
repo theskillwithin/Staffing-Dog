@@ -140,7 +140,30 @@ const SettingsAboutMe = ({ saveProfile, uploadUserPhoto, profile }) => {
 
   const submit = e => {
     e.preventDefault()
-    saveProfile(form)
+    const modifyDropdownsData = {
+      profile: {
+        ...form.profile,
+        addresses: {
+          ...form.profile.addresses,
+          state: form.profile.addresses.state.value,
+        },
+        meta: {
+          ...form.profile.meta,
+          capacity: {
+            ...form.profile.meta.capacity,
+            availability: form.profile.meta.capacity.availability.value,
+          },
+          summary: {
+            ...form.profile.meta.summary,
+            profession: {
+              ...form.profile.meta.summary.profession,
+              type: profile.meta.summary.profession.type.value,
+            },
+          },
+        },
+      },
+    }
+    saveProfile(modifyDropdownsData)
   }
 
   const uplodateFile = files => {
