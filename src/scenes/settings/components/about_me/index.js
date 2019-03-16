@@ -6,6 +6,7 @@ import find from 'lodash/find'
 import includes from 'lodash/includes'
 import Dropzone from 'react-dropzone'
 import Spinner from '@sdog/components/spinner'
+import Alert from '@sdog/components/alert'
 import ProfilePhotoSVG from '@sdog/components/svg/ProfilePhoto'
 import Input from '@sdog/components/input'
 import Button from '@sdog/components/button'
@@ -510,6 +511,7 @@ const SettingsAboutMe = ({ saveProfile, uploadUserPhoto, profile }) => {
         <Button type="submit" className={theme.submit}>
           Save
         </Button>
+        <Alert error>{profile.error}</Alert>
       </form>
     </div>
   )
