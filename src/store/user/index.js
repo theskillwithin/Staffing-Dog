@@ -604,7 +604,7 @@ export const uploadUserPhoto = file => (dispatch, getState) => {
   data.append('user_id', findUserId(getState()) || getUserId())
 
   dispatch({
-    type: USER_GET_SCHEDULE,
+    type: UPLOAD_USER_PHOTO,
     api: {
       url: `${API_ROOT}/profile/uploads`,
       method: 'POST',
@@ -628,7 +628,7 @@ reducers = {
       ...state.profile,
       preferences: {
         ...state.profile.preferences,
-        profile_img_url: data.profile_img_url,
+        profile_image_url: data.profile_img_url,
       },
     },
   }),
@@ -672,6 +672,10 @@ reduxRegister.register('user', reducer)
  */
 
 export const findState = state => state.user
+
+export const loadingUserProfile = state => findState(state).loadingUserProfile
+export const loadingUserProfileError = state => findState(state).loadingUserProfileError
+
 export const findUserAuth = state => findState(state).auth
 export const findSchedule = state => findState(state).schedule
 export const findRegister = state => findState(state).register

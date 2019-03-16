@@ -1,5 +1,5 @@
 import React from 'react'
-import { func, shape, object } from 'prop-types'
+import { func, shape, object, string } from 'prop-types'
 import { connect } from 'react-redux'
 import clsx from 'clsx'
 import find from 'lodash/find'
@@ -14,6 +14,8 @@ import Dropdown from '@sdog/components/dropdown'
 import {
   findUserProfile,
   saveUserProfile,
+  loadingUserProfile,
+  loadingUserProfileError,
   uploadUserPhoto as uploadUserPhotoAction,
 } from '@sdog/store/user'
 
@@ -95,7 +97,13 @@ const specialties = [
 
 const FormSpacer = () => <div className={theme.spacer} />
 
-const SettingsAboutMe = ({ saveProfile, uploadUserPhoto, profile }) => {
+const SettingsAboutMe = ({
+  saveProfile,
+  uploadUserPhoto,
+  profile,
+  photoError,
+  photoLoading,
+}) => {
   if (profile.loading) {
     return (
       <div className={theme.loading}>
@@ -157,13 +165,14 @@ const SettingsAboutMe = ({ saveProfile, uploadUserPhoto, profile }) => {
           ...form.profile.meta,
           capacity: {
             ...form.profile.meta.capacity,
-            availability: form.profile.meta.capacity.availability.value,
+            availability: form.profile.meta.capacity.availability.map(avil => avil.value),
           },
           summary: {
             ...form.profile.meta.summary,
             profession: {
               ...form.profile.meta.summary.profession,
               type: profile.meta.summary.profession.type.value,
+              specailty: profile.meta.summary.profession.type.value,
             },
           },
         },
@@ -181,6 +190,11 @@ const SettingsAboutMe = ({ saveProfile, uploadUserPhoto, profile }) => {
   return (
     <div>
       <div className={theme.photo}>
+        {photoLoading && (
+          <div className={theme.photoLoading}>
+            <Spinner center={false} />
+          </div>
+        )}
         <Dropzone accept="image/jpeg, image/png" onDrop={files => uplodateFile(files)}>
           {({ getRootProps, getInputProps, isDragActive }) => (
             <div
@@ -218,6 +232,7 @@ const SettingsAboutMe = ({ saveProfile, uploadUserPhoto, profile }) => {
               with anyone without your explicit consent.
             </li>
           </ul>
+          <Alert error>{photoError}</Alert>
         </div>
       </div>
       <form className={theme.formContainer} onSubmit={e => submit(e)}>
@@ -523,10 +538,14 @@ SettingsAboutMe.propTypes = {
   profile: shape({
     preferences: object,
   }).isRequired,
+  photoLoading: string,
+  photoError: string,
 }
 
 export const mapStateToProps = state => ({
   profile: findUserProfile(state),
+  photoLoading: loadingUserProfile(state),
+  photoError: loadingUserProfileError(state),
 })
 
 export const mapActionsToProps = {
