@@ -1,10 +1,9 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { func, shape, object } from 'prop-types'
 import { connect } from 'react-redux'
 import clsx from 'clsx'
 import find from 'lodash/find'
 import includes from 'lodash/includes'
-import debounce from 'lodash/debounce'
 import Dropzone from 'react-dropzone'
 import ProfilePhotoSVG from '@sdog/components/svg/ProfilePhoto'
 import Input from '@sdog/components/input'
@@ -12,7 +11,7 @@ import Button from '@sdog/components/button'
 import Dropdown from '@sdog/components/dropdown'
 import {
   findUserProfile,
-  autoSaveUserProfile as autoSaveUserProfileAction,
+  saveUserProfile,
   uploadUserPhoto as uploadUserPhotoAction,
 } from '@sdog/store/user'
 
@@ -92,30 +91,55 @@ const specialties = [
   { label: 'I run fast', value: '0' },
 ]
 
-let debouncedAutoSaveUserProfile = null
-
 const FormSpacer = () => <div className={theme.spacer} />
 
-const SettingsAboutMe = ({ autoSaveUserProfile, uploadUserPhoto, profile }) => {
+const SettingsAboutMe = ({ saveProfile, uploadUserPhoto, profile }) => {
   if (profile.loading) {
     return <p>Loading</p>
   }
 
-  useEffect(() => {
-    if (debouncedAutoSaveUserProfile === null) {
-      debouncedAutoSaveUserProfile = debounce(autoSaveUserProfile, 1000)
-    }
+  const [form, setForm] = React.useState({
+    profile: {
+      description: profile.description,
+      dentalLicenseNumber: profile.dentalLicenseNumber,
+      insuranceExpiration: profile.insuranceExpiration,
+      user: {
+        first_name: profile.user.first_name,
+        last_name: profile.user.last_name,
+        email: profile.user.email,
+        phone: profile.user.phone,
+      },
+      addresses: {
+        line_1: profile.addresses.line_1,
+        city: profile.addresses.city,
+        state: find(states, state => state.value === profile.addresses.state) || '',
+        zip: profile.addresses.zip,
+      },
+      meta: {
+        capacity: {
+          availability: availability.reduce(
+            (values, avail) => [
+              ...values,
+              ...(includes(profile.meta.capacity.availability || [], avail.value)
+                ? [avail]
+                : []),
+            ],
+            [],
+          ),
+          hourly_wage: profile.meta.capacity.hourly_wage,
+        },
+        summary: {
+          profession: {
+            type: profile.meta.summary.profession.type,
+            specialty: profile.meta.summary.profession.specialty,
+          },
+        },
+      },
+    },
+  })
 
-    return () => {
-      debouncedAutoSaveUserProfile = null
-    }
-  }, false)
-
-  const saveForm = (name, value) => {
-    // save in redux only
-    autoSaveUserProfile(name, value, false)
-    // debounce saving with the api
-    debouncedAutoSaveUserProfile(name, value)
+  const submit = () => {
+    saveProfile(form)
   }
 
   const uplodateFile = files => {
@@ -166,32 +190,76 @@ const SettingsAboutMe = ({ autoSaveUserProfile, uploadUserPhoto, profile }) => {
           </ul>
         </div>
       </div>
-      <form className={theme.formContainer}>
+      <form className={theme.formContainer} onSubmit={submit}>
         <div className={theme.inputRow}>
           <Input
             label="First Name"
-            value={profile.user.first_name}
-            onChange={value => saveForm('user.first_name', value)}
+            value={form.profile.user.first_name}
+            onChange={value =>
+              setForm({
+                ...form,
+                profile: {
+                  ...form.profile,
+                  user: {
+                    ...form.profile.user,
+                    first_name: value,
+                  },
+                },
+              })
+            }
           />
           <Input
             label="Last Name"
-            value={profile.user.last_name}
-            onChange={value => saveForm('user.last_name', value)}
+            value={form.profile.user.last_name}
+            onChange={value =>
+              setForm({
+                ...form,
+                profile: {
+                  ...form.profile,
+                  user: {
+                    ...form.profile.user,
+                    last_name: value,
+                  },
+                },
+              })
+            }
           />
         </div>
         <div className={theme.inputRow}>
           <Input
             label="Email"
-            value={profile.user.email}
-            onChange={value => saveForm('user.email', value)}
+            value={form.profile.user.email}
+            onChange={value =>
+              setForm({
+                ...form,
+                profile: {
+                  ...form.profile,
+                  user: {
+                    ...form.profile.user,
+                    email: value,
+                  },
+                },
+              })
+            }
           />
           <EmailVerified verified={profile.verified || false} />
         </div>
         <div className={theme.inputRow}>
           <Input
             label="Phone Number"
-            value={profile.user.phone}
-            onChange={value => saveForm('user.phone', value)}
+            value={form.profile.user.phone}
+            onChange={value =>
+              setForm({
+                ...form,
+                profile: {
+                  ...form.profile,
+                  user: {
+                    ...form.profile.user,
+                    phone: value,
+                  },
+                },
+              })
+            }
           />
           <Button primary round className={theme.verifyPhone}>
             Verify Phone #
@@ -200,26 +268,70 @@ const SettingsAboutMe = ({ autoSaveUserProfile, uploadUserPhoto, profile }) => {
         <div className={theme.inputRow}>
           <Input
             label="Street Address"
-            value={profile.addresses.line_1}
-            onChange={value => saveForm('addresses.line_1', value)}
+            value={form.profile.addresses.line_1}
+            onChange={value =>
+              setForm({
+                ...form,
+                profile: {
+                  ...form.profile,
+                  addresses: {
+                    ...form.profile.addresses,
+                    line_1: value,
+                  },
+                },
+              })
+            }
           />
         </div>
         <div className={theme.inputRow}>
           <Input
             label="City"
-            value={profile.addresses.city}
-            onChange={value => saveForm('addresses.city', value)}
+            value={form.profile.addresses.city}
+            onChange={value =>
+              setForm({
+                ...form,
+                profile: {
+                  ...form.profile,
+                  addresses: {
+                    ...form.profile.addresses,
+                    city: value,
+                  },
+                },
+              })
+            }
           />
           <Dropdown
             label="State"
-            value={find(states, state => state.value === profile.addresses.state) || ''}
-            onChange={value => autoSaveUserProfile('addresses.state', value)}
+            value={form.profile.addresses.state}
+            onChange={value =>
+              setForm({
+                ...form,
+                profile: {
+                  ...form.profile,
+                  addresses: {
+                    ...form.profile.addresses,
+                    state: value,
+                  },
+                },
+              })
+            }
             options={states}
           />
           <Input
             label="Postal Code"
-            value={profile.addresses.zip}
-            onChange={value => saveForm('addresses.zip', value)}
+            value={form.profile.addresses.zip}
+            onChange={value =>
+              setForm({
+                ...form,
+                profile: {
+                  ...form.profile,
+                  addresses: {
+                    ...form.profile.addresses,
+                    zip: value,
+                  },
+                },
+              })
+            }
           />
         </div>
         <FormSpacer />
@@ -229,20 +341,21 @@ const SettingsAboutMe = ({ autoSaveUserProfile, uploadUserPhoto, profile }) => {
             placeholder="Availability"
             isMulti
             isClearable={false}
-            value={availability.reduce(
-              (values, avail) => [
-                ...values,
-                ...(includes(profile.meta.capacity.availability || [], avail.value)
-                  ? [avail]
-                  : []),
-              ],
-              [],
-            )}
-            onChange={values =>
-              autoSaveUserProfile(
-                'meta.capacity.availability',
-                values.map(({ value }) => value),
-              )
+            value={form.profile.meta.capacity.availability}
+            onChange={value =>
+              setForm({
+                ...form,
+                profile: {
+                  ...form.profile,
+                  meta: {
+                    ...form.profile.meta,
+                    capacity: {
+                      ...form.profile.meta.capacity,
+                      availability: value,
+                    },
+                  },
+                },
+              })
             }
             options={availability}
           />
@@ -250,21 +363,60 @@ const SettingsAboutMe = ({ autoSaveUserProfile, uploadUserPhoto, profile }) => {
         <div className={theme.inputRow}>
           <Input
             label="Profession"
-            value={profile.meta.summary.profession.type}
-            onChange={value => saveForm('meta.summary.profession.type', value)}
+            value={form.profile.meta.summary.profession.type}
+            onChange={value =>
+              setForm({
+                ...form,
+                profile: {
+                  ...form.profile,
+                  meta: {
+                    ...form.profile.meta,
+                    summary: {
+                      ...form.profile.meta.summary,
+                      profession: {
+                        ...form.profile.meta.summary.profession,
+                        type: value,
+                      },
+                    },
+                  },
+                },
+              })
+            }
           />
           <Input
             label="Hourly Wage"
-            value={profile.meta.capacity.hourly_wage}
-            onChange={value => saveForm('meta.capacity.hourly_wage', value)}
+            value={form.profile.meta.capacity.hourly_wage}
+            onChange={value =>
+              setForm({
+                ...form,
+                profile: {
+                  ...form.profile,
+                  meta: {
+                    ...form.profile.meta,
+                    capacity: {
+                      ...form.profile.meta.capacity,
+                      hourly_wage: value,
+                    },
+                  },
+                },
+              })
+            }
           />
         </div>
         <FormSpacer />
         <div className={theme.inputRow}>
           <Input
             label="Profile Description"
-            value={profile.description}
-            onChange={value => saveForm('description', value)}
+            value={form.profile.description}
+            onChange={value =>
+              setForm({
+                ...form,
+                profile: {
+                  ...form.profile,
+                  description: value,
+                },
+              })
+            }
             textarea
           />
         </div>
@@ -272,14 +424,37 @@ const SettingsAboutMe = ({ autoSaveUserProfile, uploadUserPhoto, profile }) => {
         <div className={theme.inputRow}>
           <Input
             label="Dental License Number"
-            value={profile.dentalLicenseNumber}
-            onChange={value => saveForm('dentalLicenseNumber', value)}
+            value={form.profile.dentalLicenseNumber}
+            onChange={value =>
+              setForm({
+                ...form,
+                profile: {
+                  ...form.profile,
+                  dentalLicenseNumber: value,
+                },
+              })
+            }
           />
           <Dropdown
             label="Specialty"
-            value={profile.meta.summary.profession.specialty}
+            value={form.profile.meta.summary.profession.specialty}
             onChange={value =>
-              autoSaveUserProfile('meta.summary.profession.specialty', value)
+              setForm({
+                ...form,
+                profile: {
+                  ...form.profile,
+                  meta: {
+                    ...form.profile.meta,
+                    summary: {
+                      ...form.profile.meta.summary,
+                      profession: {
+                        ...form.profile.meta.summary.profession,
+                        specialty: value,
+                      },
+                    },
+                  },
+                },
+              })
             }
             options={specialties}
           />
@@ -287,8 +462,16 @@ const SettingsAboutMe = ({ autoSaveUserProfile, uploadUserPhoto, profile }) => {
         <div className={clsx(theme.inputRow, theme.withButton)}>
           <Input
             label="Insurance Expiration"
-            value={profile.insuranceExpiration}
-            onChange={value => saveForm('insuranceExpiration', value)}
+            value={form.profile.insuranceExpiration}
+            onChange={value =>
+              setForm({
+                ...form,
+                profile: {
+                  ...form.profile,
+                  insuranceExpiration: value,
+                },
+              })
+            }
           />
           <Button primary round>
             Upload Insurance Declaration
@@ -304,7 +487,7 @@ const SettingsAboutMe = ({ autoSaveUserProfile, uploadUserPhoto, profile }) => {
 }
 
 SettingsAboutMe.propTypes = {
-  autoSaveUserProfile: func.isRequired,
+  saveProfile: func.isRequired,
   uploadUserPhoto: func.isRequired,
   profile: shape({
     preferences: object,
@@ -316,7 +499,7 @@ export const mapStateToProps = state => ({
 })
 
 export const mapActionsToProps = {
-  autoSaveUserProfile: autoSaveUserProfileAction,
+  saveProfile: saveUserProfile,
   uploadUserPhoto: uploadUserPhotoAction,
 }
 
