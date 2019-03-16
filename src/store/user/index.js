@@ -557,13 +557,13 @@ reducers = {
 export const SAVE_USER_PROFILE = 'SAVE_USER_PROFILE'
 export const saveUserProfileTypes = createActionTypes(SAVE_USER_PROFILE)
 
-export const saveUserProfile = form => dispatch => {
+export const saveUserProfile = form => (dispatch, getState) => {
   dispatch({
     type: SAVE_USER_PROFILE,
     api: {
       url: `${API_ROOT}/profiles`,
       method: 'PUT',
-      data: { data: form.profile },
+      data: { data: form.profile, id: findUserId(getState()) || getUserId() },
     },
     payload: form.profile,
   })
