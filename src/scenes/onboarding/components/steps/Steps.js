@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { object, func, array, string, shape, oneOfType, bool } from 'prop-types'
 import clsx from 'clsx'
 import find from 'lodash/find'
@@ -15,12 +15,22 @@ const Steps = ({
   stepValues,
   errorFields,
   match: {
-    params: { step },
+    params: { step, type },
   },
   steps,
   history,
   goToStep,
+  token,
 }) => {
+  useEffect(
+    () => {
+      if (step === '1' && token) {
+        history.replace(`/onboarding/${type}/step/2`)
+      }
+    },
+    [step],
+  )
+
   const currentStep = find(steps, s => s.step === step)
   const isComplete = 'complete' === currentStep.step
 
@@ -150,6 +160,7 @@ Steps.propTypes = {
   setStep: func.isRequired,
   goToStep: func.isRequired,
   errorFields: oneOfType([array, bool]),
+  token: oneOfType([bool, string]),
 }
 
 export default Steps

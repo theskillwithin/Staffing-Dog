@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { useEffect } from 'react'
 import { string, bool, object, func, oneOfType, shape, array } from 'prop-types'
 import { Route, Switch } from 'react-router-dom'
 import clsx from 'clsx'
@@ -18,132 +18,120 @@ import ActionNav from '../action_nav'
 import '../../styles.css'
 import theme from '../../theme.css'
 
-class Onboarding extends Component {
-  static propTypes = {
-    error: oneOfType([bool, string, array]),
-    findRegisterError: oneOfType([bool, string, array]),
-    loading: oneOfType([bool, string]),
-    location: object.isRequired,
-    match: shape({
-      path: string.isRequired,
-      params: shape({
-        type: string,
-      }),
-    }),
-    setType: func.isRequired,
-    clearError: func.isRequired,
-    clearRegisterUserError: func.isRequired,
-  }
-
-  static defaultProps = {
-    error: false,
-    loading: false,
-  }
-
-  componentDidMount() {
-    // TODO: Check if the user has already completed any steps. Go to the next step required
-    window.scrollTo(0, 0)
-
-    const {
-      match: {
-        params: { type },
-      },
-      setType,
-    } = this.props
-
-    setTitle(`Onboarding - set - ${type}`)
-    setType(type)
-  }
-
-  componentDidUpdate(prevProps) {
-    const {
-      match: {
-        params: { type },
-      },
-      setType,
-    } = this.props
-
-    if (prevProps.match.params.type !== type) {
-      setType(type)
-      setTitle(`Onboarding - ${type}`)
-    }
-
-    if (prevProps.location.pathname !== this.props.location.pathname) {
+const OnboardingLayout = ({
+  loading,
+  error,
+  findRegisterError,
+  setType,
+  clearError,
+  clearRegisterUserError,
+  location: { pathname },
+  match: {
+    path,
+    params: { type },
+  },
+}) => {
+  useEffect(
+    () => {
       window.scrollTo(0, 0)
-      this.props.clearError()
-      this.props.clearRegisterUserError()
-    }
-  }
+      setTitle(`Onboarding - ${type}`)
+      setType(type)
+    },
+    [type],
+  )
 
-  render() {
-    const { loading, error, findRegisterError, location, match } = this.props
+  useEffect(
+    () => {
+      clearError()
+      clearRegisterUserError()
+    },
+    [pathname],
+  )
 
-    const hasStep = RegExp('/step/([0-9]+)')
-    const showSidebar = hasStep.test(location.pathname)
+  const hasStep = RegExp('/step/([0-9]+)')
+  const showSidebar = hasStep.test(pathname)
 
-    return (
-      <div className={theme.app}>
-        <div className={theme.appInner}>
-          <div className={clsx(theme.appTop, loading && theme.appTopLoading)}>
-            <div className={theme.appTopInner}>
-              <LoadingBar />
-            </div>
-
-            <div className={theme.contactUs}>
-              <Contact />
-            </div>
-
-            <TopError>{findRegisterError || error}</TopError>
+  return (
+    <div className={theme.app}>
+      <div className={theme.appInner}>
+        <div className={clsx(theme.appTop, loading && theme.appTopLoading)}>
+          <div className={theme.appTopInner}>
+            <LoadingBar />
           </div>
 
-          <div className={theme.appHeader}>
-            <div className={theme.logo}>
-              <Logo width="63px" largeTxt />
-            </div>
-
-            <div className={clsx(theme.stepSidebar, theme.stepSidebarMobile)}>
-              <Route path={`${match.path}/step/:step(\\d)`} component={Nav} />
-            </div>
+          <div className={theme.contactUs}>
+            <Contact />
           </div>
 
-          <div
-            className={clsx(
-              theme.appContent,
-              (location.pathname === '/onboarding/' ||
-                location.pathname === '/onboarding') &&
-                theme.noType,
-              /complete/.test(location.pathname) && theme.appContentComplete,
-            )}
-          >
-            <div className={clsx(theme.box, showSidebar && theme.showSidebar)}>
-              <div className={theme.stepContent}>
-                <div className={theme.stepLinksHolder}>
-                  <Route path={`${match.path}/step/:step(\\d)`} component={Nav} />
-                </div>
+          <TopError>{findRegisterError || error}</TopError>
+        </div>
 
-                <div className={theme.stepContentHolder}>
-                  <Route path={`${match.path}`} exact component={GetStarted} />
-                  <Route path={`${match.path}/step/:step`} component={Steps} />
-                </div>
+        <div className={theme.appHeader}>
+          <div className={theme.logo}>
+            <Logo width="63px" largeTxt />
+          </div>
+
+          <div className={clsx(theme.stepSidebar, theme.stepSidebarMobile)}>
+            <Route path={`${path}/step/:step(\\d)`} component={Nav} />
+          </div>
+        </div>
+
+        <div
+          className={clsx(
+            theme.appContent,
+            (pathname === '/onboarding/' || pathname === '/onboarding') && theme.noType,
+            /complete/.test(pathname) && theme.appContentComplete,
+          )}
+        >
+          <div className={clsx(theme.box, showSidebar && theme.showSidebar)}>
+            <div className={theme.stepContent}>
+              <div className={theme.stepLinksHolder}>
+                <Route path={`${path}/step/:step(\\d)`} component={Nav} />
               </div>
 
-              <div className={clsx(theme.stepSidebar, showSidebar && theme.show)}>
-                <Route path={`${match.path}/step/:step(\\d)`} component={StepsSidebar} />
+              <div className={theme.stepContentHolder}>
+                <Route path={`${path}`} exact component={GetStarted} />
+                <Route path={`${path}/step/:step`} component={Steps} />
               </div>
+            </div>
 
-              <div className={theme.stepNav}>
-                <Switch>
-                  <Route path={`${match.path}`} exact component={GetStartedNav} />
-                  <Route path={`${match.path}/step/complete`} component={CompleteNav} />
-                  <Route path={`${match.path}/step/:step`} component={ActionNav} />
-                </Switch>
-              </div>
+            <div className={clsx(theme.stepSidebar, showSidebar && theme.show)}>
+              <Route path={`${path}/step/:step(\\d)`} component={StepsSidebar} />
+            </div>
+
+            <div className={theme.stepNav}>
+              <Switch>
+                <Route path={`${path}`} exact component={GetStartedNav} />
+                <Route path={`${path}/step/complete`} component={CompleteNav} />
+                <Route path={`${path}/step/:step`} component={ActionNav} />
+              </Switch>
             </div>
           </div>
         </div>
       </div>
-    )
-  }
+    </div>
+  )
 }
 
-export default Onboarding
+OnboardingLayout.propTypes = {
+  error: oneOfType([bool, string, array]),
+  findRegisterError: oneOfType([bool, string, array]),
+  loading: oneOfType([bool, string]),
+  location: object.isRequired,
+  match: shape({
+    path: string.isRequired,
+    params: shape({
+      type: string,
+    }),
+  }),
+  setType: func.isRequired,
+  clearError: func.isRequired,
+  clearRegisterUserError: func.isRequired,
+}
+
+OnboardingLayout.defaultProps = {
+  error: false,
+  loading: false,
+}
+
+export default OnboardingLayout
