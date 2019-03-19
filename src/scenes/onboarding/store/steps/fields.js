@@ -316,7 +316,7 @@ export const practice = [
     needsCompleteIfToken: true,
     title: 'Practice Address',
     sidebar: {
-      title: 'DayHire &tm;',
+      title: 'DayHire &trade;',
       description:
         'Never depend on an early morning phone call again. DayHire  is a location based, on-demand hiring alternative to calling a temp agency.',
       svg: 'mobile',
