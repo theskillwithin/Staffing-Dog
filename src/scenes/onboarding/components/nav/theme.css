@@ -36,10 +36,13 @@
   }
 
   &:hover {
-
     @media (--sd-notMobile) {
       background-color: var(--sd-blueGray);
     }
+  }
+
+  &.disabled {
+    cursor: not-allowed;
   }
 }
 

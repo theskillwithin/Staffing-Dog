@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { string, array, object, func } from 'prop-types'
 import { Link } from 'react-router-dom'
 import clsx from 'clsx'
@@ -14,53 +14,51 @@ const stepLinkClasses = (currentStep, step, visited) => {
     pInt(currentStep) === pInt(step) && theme.stepButtonActive,
     theme.stepButton,
     visited >= pInt(step) && theme.visited,
+    pInt(currentStep) > 1 && pInt(step) === 1 && theme.disabled,
   )
 }
 
-class Nav extends React.Component {
-  state = {
-    visited: 1,
-  }
+const Nav = ({ steps, goToStep, exclude, history, className, match: { params } }) => {
+  const [visited, setVisited] = useState(params.step || 1)
 
-  static getDerivedStateFromProps(nextProps, prevState) {
-    if (nextProps.match.params.step > prevState.visited) {
-      return { visited: nextProps.match.params.step }
-    }
-    return null
-  }
+  useEffect(
+    () => {
+      if (params.step > visited) {
+        setVisited(params.step)
+      }
+    },
+    [params.step],
+  )
 
-  render() {
-    const { steps, goToStep, exclude, match, history, className } = this.props
+  return (
+    <ul className={clsx(theme.stepLinks, className)}>
+      {map(steps, step =>
+        indexOf(exclude, step.step) === -1 ? (
+          <li key={`stepNav:item:${step.step}`} className={theme.stepLinksItem}>
+            <Link
+              to={`/step/${step.step}`}
+              className={stepLinkClasses(params.step, step.step, visited)}
+              onClick={e => {
+                e.preventDefault()
 
-    return (
-      <ul className={clsx(theme.stepLinks, className)}>
-        {map(steps, step =>
-          indexOf(exclude, step.step) === -1 ? (
-            <li key={`stepNav:item:${step.step}`} className={theme.stepLinksItem}>
-              <Link
-                to={`/step/${step.step}`}
-                className={stepLinkClasses(
-                  match.params.step,
-                  step.step,
-                  this.state.visited,
-                )}
-                onClick={e => {
-                  e.preventDefault()
-                  goToStep({
-                    currentStep: match.params.step,
-                    nextStep: step.step,
-                    history,
-                  })
-                }}
-              >
-                {step.step}
-              </Link>
-            </li>
-          ) : null,
-        )}
-      </ul>
-    )
-  }
+                if (pInt(params.step) > 1 && pInt(step.step) === 1) {
+                  return false
+                }
+
+                return goToStep({
+                  currentStep: params.step,
+                  nextStep: step.step,
+                  history,
+                })
+              }}
+            >
+              {step.step}
+            </Link>
+          </li>
+        ) : null,
+      )}
+    </ul>
+  )
 }
 
 Nav.defaultProps = {
