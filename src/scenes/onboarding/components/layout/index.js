@@ -6,6 +6,7 @@ import {
   findRegisterError,
   clearRegisterUserError,
   findToken,
+  findUserProfile,
 } from '../../../../store/user'
 
 import Layout from './Layout'
@@ -17,6 +18,7 @@ export default withRouter(
       error: findError(state),
       findRegisterError: findRegisterError(state),
       token: findToken(state),
+      userProfile: findUserProfile(state),
     }),
     { setType, clearError, clearRegisterUserError },
   )(Layout),

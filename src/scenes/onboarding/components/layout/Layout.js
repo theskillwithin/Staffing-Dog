@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import { string, bool, object, func, oneOfType, shape, array } from 'prop-types'
 import { Route, Switch } from 'react-router-dom'
 import clsx from 'clsx'
+import get from 'lodash/get'
 import TopError from '@sdog/components/top_error'
 
 import Logo from '../../../../components/logo'
@@ -26,18 +27,37 @@ const OnboardingLayout = ({
   clearError,
   clearRegisterUserError,
   location: { pathname },
+  history,
+  token,
   match: {
     path,
     params: { type },
   },
+  userProfile,
 }) => {
+  const isStepPage = RegExp('/step').test(pathname)
+  const hasStep = RegExp('/step/([0-9]+)')
+  const showSidebar = hasStep.test(pathname)
+  const userType = get(userProfile, 'user.type', type || false)
+
   useEffect(
     () => {
-      window.scrollTo(0, 0)
-      setTitle(`Onboarding - ${type}`)
-      setType(type)
+      if (token && !isStepPage && userType) {
+        history.replace(`/onboarding/${userType}/step/1`)
+      }
     },
-    [type],
+    [isStepPage, token, userType],
+  )
+
+  useEffect(
+    () => {
+      if (userType) {
+        window.scrollTo(0, 0)
+        setTitle(`Onboarding - ${userType}`)
+        setType(userType)
+      }
+    },
+    [userType],
   )
 
   useEffect(
@@ -47,9 +67,6 @@ const OnboardingLayout = ({
     },
     [pathname],
   )
-
-  const hasStep = RegExp('/step/([0-9]+)')
-  const showSidebar = hasStep.test(pathname)
 
   return (
     <div className={theme.app}>
@@ -124,9 +141,14 @@ OnboardingLayout.propTypes = {
       type: string,
     }),
   }),
+  history: shape({ replace: func }).isRequired,
   setType: func.isRequired,
   clearError: func.isRequired,
   clearRegisterUserError: func.isRequired,
+  token: oneOfType([bool, string]),
+  userProfile: shape({
+    user: shape({ type: string }),
+  }).isRequired,
 }
 
 OnboardingLayout.defaultProps = {

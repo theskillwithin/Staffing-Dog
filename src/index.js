@@ -6,7 +6,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import createStore from '@sdog/store'
 import reducers from '@sdog/store/reducers'
 import { INITIAL_STATE as USER_INITIAL_STATE } from '@sdog/store/user'
-import { getToken, getFingerprint, setFingerprint } from '@sdog/store/storage'
+import { getToken, getFingerprint, setFingerprint, getUserId } from '@sdog/store/storage'
 import Footer from '@sdog/components/footer'
 
 import createFingerprint from './utils/fingerprint'
@@ -32,6 +32,10 @@ setFingerprint(fingerprint)
 const storeData = {
   user: {
     ...USER_INITIAL_STATE,
+    profile: {
+      ...USER_INITIAL_STATE.profile,
+      id: getUserId(),
+    },
     auth: {
       ...USER_INITIAL_STATE.auth,
       token: getToken(),
