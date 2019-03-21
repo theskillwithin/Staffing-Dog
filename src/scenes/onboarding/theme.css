@@ -93,7 +93,7 @@
   justify-content: stretch;
   align-items: stretch;
   display: grid;
-  padding: 0.25em;
+  padding-top: 0.25em;
 
   .box {
     display: grid;

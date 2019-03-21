@@ -28,7 +28,8 @@ const GetStarted = ({ type, setStep, goToStep, setType, history }) => {
     return (
       <div className={clsx(theme.gettingStarted, theme.gettingStartedSplit)}>
         <div className={theme.left}>
-          <div>
+          <StarTitle title="Professional" />
+          <div className={theme.people}>
             <Person className={clsx(theme.group, theme.person, theme.man)} name="man" />
             <Person
               className={clsx(theme.group, theme.person, theme.woman2)}
@@ -58,7 +59,8 @@ const GetStarted = ({ type, setStep, goToStep, setType, history }) => {
           </Button>
         </div>
         <div className={theme.right}>
-          <div>
+          <StarTitle title="Practice" />
+          <div className={theme.people}>
             <Person
               className={clsx(theme.group, theme.person, theme.woman)}
               name="woman"
