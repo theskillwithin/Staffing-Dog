@@ -69,7 +69,7 @@ SingleToaster.propTypes = {
   autoClose: bool,
   closeButton: bool,
   hasContainer: bool,
-  type: oneOf('error', 'success'),
+  type: oneOf(['error', 'success']),
 }
 
 const toaster = ({ children, autoClose, closeButton, maxDisplayErrors, type }) => {
@@ -116,7 +116,7 @@ toaster.propTypes = {
   autoClose: bool,
   closeButton: bool,
   maxDisplayErrors: number,
-  type: oneOf('error', 'success'),
+  type: oneOf(['error', 'success']),
 }
 
 export default toaster
