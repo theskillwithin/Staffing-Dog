@@ -76,6 +76,11 @@ export const INITIAL_STATE = {
     loading: false,
     error: false,
   },
+  forgot: {
+    loading: false,
+    error: false,
+    success: false,
+  },
 }
 
 const spreadLoadingError = (loading = false, error = false) => ({ loading, error })
@@ -661,6 +666,68 @@ reducers = {
 }
 
 /**
+ * FORGOT PASSWORD
+ */
+export const USER_FORGOT_PASSWORD = 'USER_FORGOT_PASSWORD'
+export const USER_FORGOT_PASSWORD_CLEAR_SUCCESS = 'USER_FORGOT_PASSWORD_CLEAR_SUCCESS'
+export const userForgotPasswordTypes = createActionTypes(USER_FORGOT_PASSWORD)
+
+export const displayedForgotPasswordClearSuccess = () => ({
+  type: USER_FORGOT_PASSWORD_CLEAR_SUCCESS,
+})
+
+export const submitForgotPasswordEmail = ({ email, history }) => ({
+  type: USER_FORGOT_PASSWORD,
+  api: {
+    url: `${API_ROOT}/login/forgot-password`,
+    method: 'POST',
+    data: { email },
+    callbacks: {
+      success: () => {
+        if (history) {
+          history.push('/login')
+        }
+      },
+    },
+  },
+})
+
+reducers = {
+  ...reducers,
+  [userForgotPasswordTypes.LOADING]: state => ({
+    ...state,
+    forgot: {
+      ...state.forgot,
+      ...spreadLoadingError(true, false),
+      success: false,
+    },
+  }),
+  [userForgotPasswordTypes.ERROR]: state => ({
+    ...state,
+    forgot: {
+      ...state.forgot,
+      ...spreadLoadingError(false, 'Unknown API Error'),
+      success: false,
+    },
+  }),
+  [userForgotPasswordTypes.SUCCESS]: (state, { data }) => ({
+    ...state,
+    forgot: {
+      ...state.forgot,
+      ...spreadLoadingError(false, false),
+      success: get(data, 'message', true),
+    },
+  }),
+  [USER_FORGOT_PASSWORD_CLEAR_SUCCESS]: state => ({
+    ...state,
+    forgot: {
+      ...state.forgot,
+      success: false,
+    },
+  }),
+}
+
+/**
  * Create Store
  */
 export const reducer = buildStore(reducers, INITIAL_STATE)
@@ -679,6 +746,7 @@ export const loadingUserProfileError = state => findState(state).loadingUserProf
 export const findUserAuth = state => findState(state).auth
 export const findSchedule = state => findState(state).schedule
 export const findRegister = state => findState(state).register
+export const findForgot = state => findState(state).forgot
 export const findUserProfile = state => findState(state).profile
 export const findUserMeta = state => findUserProfile(state).meta
 export const findUserInfo = state => findUserProfile(state).user
@@ -687,6 +755,10 @@ export const findUserPreferences = state => findUserProfile(state).preferences
 export const findScheduleEvents = state => findSchedule(state).events
 export const findScheduleLoading = state => findSchedule(state).loading
 export const findScheduleError = state => findSchedule(state).error
+
+export const findForgotLoading = state => findForgot(state).loading
+export const findForgotError = state => findForgot(state).error
+export const findForgotSuccess = state => findForgot(state).success
 
 export const findRegisterError = state => findRegister(state).error
 

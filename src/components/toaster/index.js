@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from 'react'
-import { string, array, number, bool, oneOfType } from 'prop-types'
+import { string, array, number, bool, oneOfType, oneOf } from 'prop-types'
 import clsx from 'clsx'
 
 import theme from './theme.css'
 
-export const SingleTopError = ({
+export const SingleToaster = ({
   children,
   multiple,
   closeButton,
   autoClose,
   hasContainer,
+  type,
 }) => {
   if (!children) return null
   const [delayed, setDelayed] = useState(multiple)
@@ -32,7 +33,13 @@ export const SingleTopError = ({
   if (delayed) return null
 
   return (
-    <div className={clsx(!hasContainer && theme.topErrorContainer, theme.topError)}>
+    <div
+      className={clsx(
+        !hasContainer && theme.toasterContainer,
+        theme.toaster,
+        theme[type],
+      )}
+    >
       <p>{children}</p>
       {closeButton ? (
         <button
@@ -47,64 +54,69 @@ export const SingleTopError = ({
   )
 }
 
-SingleTopError.defaultProps = {
+SingleToaster.defaultProps = {
   children: null,
   multiple: null,
   autoClose: false,
   closeButton: false,
   hasContainer: false,
+  type: null,
 }
 
-SingleTopError.propTypes = {
+SingleToaster.propTypes = {
   children: string,
   multiple: number,
   autoClose: bool,
   closeButton: bool,
   hasContainer: bool,
+  type: oneOf('error', 'success'),
 }
 
-const TopError = ({ children, autoClose, closeButton, maxDisplayErrors }) => {
+const toaster = ({ children, autoClose, closeButton, maxDisplayErrors, type }) => {
   if (!children) return null
 
   if (typeof children === 'string') {
     return (
-      <SingleTopError autoClose={autoClose} closeButton={closeButton}>
+      <SingleToaster autoClose={autoClose} closeButton={closeButton} type={type}>
         {children}
-      </SingleTopError>
+      </SingleToaster>
     )
   }
 
   const kids = children.slice(0, maxDisplayErrors)
 
   return (
-    <div className={theme.topErrorContainer}>
+    <div className={theme.toasterContainer}>
       {kids.map((kid, index) => (
-        <SingleTopError
-          key={`toperror-${kid.charAt(0)}-${index + 1}`}
+        <SingleToaster
+          key={`toaster-${kid.charAt(0)}-${index + 1}`}
           multiple={index}
           autoClose={autoClose}
           closeButton={kids.length > 1}
           hasContainer
+          type={type}
         >
           {kid}
-        </SingleTopError>
+        </SingleToaster>
       ))}
     </div>
   )
 }
 
-TopError.defaultProps = {
+toaster.defaultProps = {
   children: false,
   autoClose: false,
   closeButton: false,
   maxDisplayErrors: 5,
+  type: 'error',
 }
 
-TopError.propTypes = {
+toaster.propTypes = {
   children: oneOfType([string, array, bool]),
   autoClose: bool,
   closeButton: bool,
   maxDisplayErrors: number,
+  type: oneOf('error', 'success'),
 }
 
-export default TopError
+export default toaster

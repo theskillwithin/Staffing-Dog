@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { string, bool, object, func, oneOfType, shape, array } from 'prop-types'
 import { Route, Switch } from 'react-router-dom'
 import clsx from 'clsx'
-import TopError from '@sdog/components/top_error'
+import Toaster from '@sdog/components/toaster'
 
 import Logo from '../../../../components/logo'
 import LoadingBar from '../../../../components/loading_bar'
@@ -63,7 +63,7 @@ const OnboardingLayout = ({
             <Contact />
           </div>
 
-          <TopError>{findRegisterError || error}</TopError>
+          <Toaster>{findRegisterError || error}</Toaster>
         </div>
 
         <div className={theme.appHeader}>
