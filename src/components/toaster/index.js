@@ -72,7 +72,7 @@ SingleToaster.propTypes = {
   type: oneOf(['error', 'success']),
 }
 
-const toaster = ({ children, autoClose, closeButton, maxDisplayErrors, type }) => {
+const Toaster = ({ children, autoClose, closeButton, maxDisplayErrors, type }) => {
   if (!children) return null
 
   if (typeof children === 'string') {
@@ -103,7 +103,7 @@ const toaster = ({ children, autoClose, closeButton, maxDisplayErrors, type }) =
   )
 }
 
-toaster.defaultProps = {
+Toaster.defaultProps = {
   children: false,
   autoClose: false,
   closeButton: false,
@@ -111,7 +111,7 @@ toaster.defaultProps = {
   type: 'error',
 }
 
-toaster.propTypes = {
+Toaster.propTypes = {
   children: oneOfType([string, array, bool]),
   autoClose: bool,
   closeButton: bool,
