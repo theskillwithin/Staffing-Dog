@@ -119,4 +119,4 @@ Toaster.propTypes = {
   type: oneOf(['error', 'success']),
 }
 
-export default toaster
+export default Toaster
