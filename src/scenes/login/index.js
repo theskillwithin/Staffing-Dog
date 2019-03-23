@@ -17,12 +17,22 @@ import {
   findUserAuth,
   findForgotSuccess,
   displayedForgotPasswordClearSuccess,
+  findResetSuccess,
+  displayedResetPasswordClearSuccess,
 } from '../../store/user'
 import appTheme from '../app/theme.css'
 
 import theme from './theme.css'
 
-const Login = ({ history, login, isLoading, error, success, clearSuccess }) => {
+const Login = ({
+  history,
+  login,
+  isLoading,
+  error,
+  success,
+  clearPWSuccess,
+  clearResetSuccess,
+}) => {
   const [tabIndex, setTabIndex] = useState(0)
   const [email, setEmail] = useState(IS_DEV || IS_STAGE ? 'romelu@lukaku.com' : '')
   const [password, setPassword] = useState(IS_DEV || IS_STAGE ? 'Password1234$' : '')
@@ -33,7 +43,8 @@ const Login = ({ history, login, isLoading, error, success, clearSuccess }) => {
 
     return () => {
       removeHtmlClass('html-login')
-      clearSuccess()
+      clearPWSuccess()
+      clearResetSuccess()
     }
   }, [])
 
@@ -118,7 +129,8 @@ const Login = ({ history, login, isLoading, error, success, clearSuccess }) => {
 
 Login.propTypes = {
   login: func.isRequired,
-  clearSuccess: func.isRequired,
+  clearPWSuccess: func.isRequired,
+  clearResetSuccess: func.isRequired,
   history: shape({ push: func.isRequired }).isRequired,
   isLoading: bool,
   error: oneOfType([string, array, bool]).isRequired,
@@ -128,12 +140,13 @@ Login.propTypes = {
 const mapStateToProps = state => ({
   isLoading: findUserAuth(state).loading,
   error: findUserAuth(state).error,
-  success: findForgotSuccess(state),
+  success: findForgotSuccess(state) || findResetSuccess(state),
 })
 
 const mapActionsToProps = {
   login: loginAction,
-  clearSuccess: displayedForgotPasswordClearSuccess,
+  clearPWSuccess: displayedForgotPasswordClearSuccess,
+  clearResetSuccess: displayedResetPasswordClearSuccess,
 }
 
 export default withRouter(
