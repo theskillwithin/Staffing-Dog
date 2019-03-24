@@ -76,6 +76,21 @@ export const INITIAL_STATE = {
     loading: false,
     error: false,
   },
+  forgot: {
+    loading: false,
+    error: false,
+    success: false,
+  },
+  reset: {
+    loading: false,
+    error: false,
+    success: false,
+    validate: {
+      loading: true,
+      error: false,
+      success: false,
+    },
+  },
 }
 
 const spreadLoadingError = (loading = false, error = false) => ({ loading, error })
@@ -661,6 +676,174 @@ reducers = {
 }
 
 /**
+ * FORGOT PASSWORD
+ */
+export const USER_FORGOT_PASSWORD = 'USER_FORGOT_PASSWORD'
+export const USER_FORGOT_PASSWORD_CLEAR_SUCCESS = 'USER_FORGOT_PASSWORD_CLEAR_SUCCESS'
+export const userForgotPasswordTypes = createActionTypes(USER_FORGOT_PASSWORD)
+
+export const displayedForgotPasswordClearSuccess = () => ({
+  type: USER_FORGOT_PASSWORD_CLEAR_SUCCESS,
+})
+
+export const submitForgotPasswordEmail = ({ email, history }) => ({
+  type: USER_FORGOT_PASSWORD,
+  api: {
+    url: `${API_ROOT}/login/forgot-password`,
+    method: 'POST',
+    data: { email },
+    callbacks: {
+      success: () => {
+        if (history) {
+          history.push('/login')
+        }
+      },
+    },
+  },
+})
+
+reducers = {
+  ...reducers,
+  [userForgotPasswordTypes.LOADING]: state => ({
+    ...state,
+    forgot: {
+      ...state.forgot,
+      ...spreadLoadingError(true, false),
+      success: false,
+    },
+  }),
+  [userForgotPasswordTypes.ERROR]: state => ({
+    ...state,
+    forgot: {
+      ...state.forgot,
+      ...spreadLoadingError(false, 'Unknown API Error'),
+      success: false,
+    },
+  }),
+  [userForgotPasswordTypes.SUCCESS]: (state, { data }) => ({
+    ...state,
+    forgot: {
+      ...state.forgot,
+      ...spreadLoadingError(false, false),
+      success: get(data, 'message', true),
+    },
+  }),
+  [USER_FORGOT_PASSWORD_CLEAR_SUCCESS]: state => ({
+    ...state,
+    forgot: {
+      ...state.forgot,
+      success: false,
+    },
+  }),
+}
+
+/**
+ * RESET PASSWORD
+ */
+export const USER_RESET_PASSWORD = 'USER_RESET_PASSWORD'
+export const USER_VALIDATE_PASSWORD = 'USER_VALIDATE_PASSWORD'
+export const USER_RESET_PASSWORD_CLEAR_SUCCESS = 'USER_RESET_PASSWORD_CLEAR_SUCCESS'
+export const userResetPasswordTypes = createActionTypes(USER_RESET_PASSWORD)
+export const userValidatePasswordTypes = createActionTypes(USER_VALIDATE_PASSWORD)
+
+export const displayedResetPasswordClearSuccess = () => ({
+  type: USER_RESET_PASSWORD_CLEAR_SUCCESS,
+})
+
+export const validateResetPasswordEmail = ({ anchor, token }) => ({
+  type: USER_VALIDATE_PASSWORD,
+  api: {
+    url: `${API_ROOT}/login/validate-reset`,
+    method: 'POST',
+    data: { anchor, token },
+  },
+})
+
+export const submitResetPasswordEmail = ({ anchor, token, data, history }) => ({
+  type: USER_RESET_PASSWORD,
+  api: {
+    url: `${API_ROOT}/login/reset-password`,
+    method: 'POST',
+    data: { anchor, token, data },
+    callbacks: {
+      success: () => {
+        if (history) {
+          history.push('/login')
+        }
+      },
+    },
+  },
+})
+
+reducers = {
+  ...reducers,
+  [userValidatePasswordTypes.LOADING]: state => ({
+    ...state,
+    reset: {
+      ...state.reset,
+      validate: {
+        ...state.reset.validate,
+        ...spreadLoadingError(true, false),
+        success: false,
+      },
+    },
+  }),
+  [userValidatePasswordTypes.ERROR]: (state, { error }) => ({
+    ...state,
+    reset: {
+      ...state.reset,
+      validate: {
+        ...state.reset.validate,
+        ...spreadLoadingError(false, get(error, 'message', 'Unknown API Error')),
+        success: false,
+      },
+    },
+  }),
+  [userValidatePasswordTypes.SUCCESS]: (state, { data }) => ({
+    ...state,
+    reset: {
+      ...state.reset,
+      validate: {
+        ...state.reset.validate,
+        ...spreadLoadingError(false, false),
+        success: get(data, 'message', true),
+      },
+    },
+  }),
+  [userResetPasswordTypes.LOADING]: state => ({
+    ...state,
+    reset: {
+      ...state.reset,
+      ...spreadLoadingError(true, false),
+      success: false,
+    },
+  }),
+  [userResetPasswordTypes.ERROR]: (state, { error }) => ({
+    ...state,
+    reset: {
+      ...state.reset,
+      ...spreadLoadingError(false, get(error, 'message', 'Unknown API Error')),
+      success: false,
+    },
+  }),
+  [userResetPasswordTypes.SUCCESS]: (state, { data }) => ({
+    ...state,
+    reset: {
+      ...state.reset,
+      ...spreadLoadingError(false, false),
+      success: get(data, 'message', true),
+    },
+  }),
+  [USER_RESET_PASSWORD_CLEAR_SUCCESS]: state => ({
+    ...state,
+    reset: {
+      ...state.reset,
+      success: false,
+    },
+  }),
+}
+
+/**
  * Create Store
  */
 export const reducer = buildStore(reducers, INITIAL_STATE)
@@ -679,6 +862,9 @@ export const loadingUserProfileError = state => findState(state).loadingUserProf
 export const findUserAuth = state => findState(state).auth
 export const findSchedule = state => findState(state).schedule
 export const findRegister = state => findState(state).register
+export const findForgot = state => findState(state).forgot
+export const findReset = state => findState(state).reset
+export const findResetValidate = state => findReset(state).validate
 export const findUserProfile = state => findState(state).profile
 export const findUserMeta = state => findUserProfile(state).meta
 export const findUserInfo = state => findUserProfile(state).user
@@ -687,6 +873,18 @@ export const findUserPreferences = state => findUserProfile(state).preferences
 export const findScheduleEvents = state => findSchedule(state).events
 export const findScheduleLoading = state => findSchedule(state).loading
 export const findScheduleError = state => findSchedule(state).error
+
+export const findForgotLoading = state => findForgot(state).loading
+export const findForgotError = state => findForgot(state).error
+export const findForgotSuccess = state => findForgot(state).success
+
+export const findResetValidateLoading = state => findResetValidate(state).loading
+export const findResetValidateError = state => findResetValidate(state).error
+export const findResetValidateSuccess = state => findResetValidate(state).success
+
+export const findResetLoading = state => findReset(state).loading
+export const findResetError = state => findReset(state).error
+export const findResetSuccess = state => findReset(state).success
 
 export const findRegisterError = state => findRegister(state).error
 

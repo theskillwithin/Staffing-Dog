@@ -4,7 +4,7 @@ import { Link, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { setTitle, setHtmlClass, removeHtmlClass } from '@sdog/utils/document'
 import Contact from '@sdog/components/contact'
-import TopError from '@sdog/components/top_error'
+import Toaster from '@sdog/components/toaster'
 import Logo from '@sdog/components/logo'
 import Tabs from '@sdog/components/tab_bar'
 import Input from '@sdog/components/input'
@@ -12,12 +12,27 @@ import Button from '@sdog/components/button'
 import Arrow from '@sdog/components/svg/Arrow'
 import { IS_DEV, IS_STAGE } from '@sdog/utils/env'
 
-import { login as loginAction, findUserAuth } from '../../store/user'
+import {
+  login as loginAction,
+  findUserAuth,
+  findForgotSuccess,
+  displayedForgotPasswordClearSuccess,
+  findResetSuccess,
+  displayedResetPasswordClearSuccess,
+} from '../../store/user'
 import appTheme from '../app/theme.css'
 
 import theme from './theme.css'
 
-const Login = ({ history, login, isLoading, error }) => {
+const Login = ({
+  history,
+  login,
+  isLoading,
+  error,
+  success,
+  clearPWSuccess,
+  clearResetSuccess,
+}) => {
   const [tabIndex, setTabIndex] = useState(0)
   const [email, setEmail] = useState(IS_DEV || IS_STAGE ? 'romelu@lukaku.com' : '')
   const [password, setPassword] = useState(IS_DEV || IS_STAGE ? 'Password1234$' : '')
@@ -26,7 +41,11 @@ const Login = ({ history, login, isLoading, error }) => {
     setTitle('Login')
     setHtmlClass('html-login')
 
-    return () => removeHtmlClass('html-login')
+    return () => {
+      removeHtmlClass('html-login')
+      clearPWSuccess()
+      clearResetSuccess()
+    }
   }, [])
 
   const onSubmit = e => {
@@ -36,7 +55,8 @@ const Login = ({ history, login, isLoading, error }) => {
 
   return (
     <div className={appTheme.pageContent}>
-      <TopError>{error}</TopError>
+      <Toaster>{error}</Toaster>
+      {!error && <Toaster type="success">{success}</Toaster>}
 
       <header className={theme.header}>
         <Contact />
@@ -109,17 +129,25 @@ const Login = ({ history, login, isLoading, error }) => {
 
 Login.propTypes = {
   login: func.isRequired,
+  clearPWSuccess: func.isRequired,
+  clearResetSuccess: func.isRequired,
   history: shape({ push: func.isRequired }).isRequired,
   isLoading: bool,
   error: oneOfType([string, array, bool]).isRequired,
+  success: oneOfType([string, array, bool]).isRequired,
 }
 
 const mapStateToProps = state => ({
   isLoading: findUserAuth(state).loading,
   error: findUserAuth(state).error,
+  success: findForgotSuccess(state) || findResetSuccess(state),
 })
 
-const mapActionsToProps = { login: loginAction }
+const mapActionsToProps = {
+  login: loginAction,
+  clearPWSuccess: displayedForgotPasswordClearSuccess,
+  clearResetSuccess: displayedResetPasswordClearSuccess,
+}
 
 export default withRouter(
   connect(
