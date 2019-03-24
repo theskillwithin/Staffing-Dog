@@ -1,0 +1,95 @@
+@import '../../styles/config.css';
+
+:global(.html-landing) {
+  @media (--sd-mobile) {
+    background-color: var(--sd-white);
+  }
+}
+
+:root {
+  --landingMaxWidth: 800px;
+}
+
+.header {
+  position: absolute;
+  top: 2em;
+  right: 2em;
+}
+
+.landingContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 80vh;
+}
+
+.landing {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  position: relative;
+  padding: 32px 32px 45px 32px;
+  margin: 2em;
+  max-width: var(--landingMaxWidth);
+  width: 100%;
+  border-radius: 8px;
+  background-color: var(--sd-white);
+  box-shadow: 0 3px 6px 0 var(--sd-shadowColor);
+  height: 540px;
+
+  .svgScene {
+    padding: 20px 0;
+  }
+
+  .group {
+    display: inline-block;
+    max-width: 100px;
+    margin: 0 0.5em;
+  }
+
+  .chair {
+    max-width: 250px;
+  }
+
+  .man2,
+  .woman3,
+  .groupPlant {
+    display: none;
+  }
+
+  @media (--sd-tablet) {
+    .man2,
+    .woman3,
+    .groupPlant {
+      display: inline-block;
+    }
+
+    .group {
+      margin: 0 1em;
+    }
+  }
+
+  .bottom {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100px;
+    background: var(--sd-primary);
+    color: white;
+    letter-spacing: -0.2px;
+    text-align: center;
+    line-height: 1.56;
+    font-size: 18px;
+    border-radius: 0 0 8px 8px;
+  }
+
+  @media (--sd-mobile) {
+    box-shadow: unset;
+  }
+}
