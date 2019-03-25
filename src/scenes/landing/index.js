@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react'
-import { setTitle, setHtmlClass, removeHtmlClass } from '@sdog/utils/document'
+import React from 'react'
+import { useDocumentTitle, useHtmlClass } from '@sdog/utils/document'
 import clsx from 'clsx'
 import Contact from '@sdog/components/contact'
 import Logo from '@sdog/components/logo'
@@ -13,14 +13,8 @@ import appTheme from '../app/theme.css'
 import theme from './theme.css'
 
 const Landing = () => {
-  useEffect(() => {
-    setTitle('Login')
-    setHtmlClass('html-landing')
-
-    return () => {
-      removeHtmlClass('html-landing')
-    }
-  }, [])
+  useHtmlClass('html-landing')
+  useDocumentTitle('Login')
 
   return (
     <div className={appTheme.pageContent}>

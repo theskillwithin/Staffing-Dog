@@ -7,7 +7,7 @@ import {
   findRegisterError,
   clearRegisterUserError as clearRegisterUserErrorAction,
 } from '@sdog/store/user'
-import { setHtmlClass, removeHtmlClass } from '@sdog/utils/document'
+import { useHtmlClass, useDocumentTitle } from '@sdog/utils/document'
 
 import { findError, findLoading, clearError as clearErrorAction } from './store/steps'
 import RootScene from './scenes/Root'
@@ -26,11 +26,11 @@ const Onboarding = ({
   error,
   loading,
 }) => {
-  useEffect(() => {
-    setHtmlClass('html-onboarding')
-    getUserProfile()
+  useHtmlClass('html-onboarding')
+  useDocumentTitle('Onboarding')
 
-    return () => removeHtmlClass('html-onboarding')
+  useEffect(() => {
+    getUserProfile()
   }, [])
 
   useEffect(

@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { Route, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { object, func, shape } from 'prop-types'
-import { setHtmlClass, removeHtmlClass } from '@sdog/utils/document'
+import { useHtmlClass } from '@sdog/utils/document'
 import get from 'lodash/get'
 import Logo from '@sdog/components/logo'
 import MainMenu from '@sdog/scenes/app/menu'
@@ -20,11 +20,9 @@ const SettingsScene = React.lazy(() => import('@sdog/scenes/settings'))
 const App = ({ getUserProfile, location, history, userProfile }) => {
   const userOnboardingStatus = get(userProfile, 'user.onboarding_status', false)
 
+  useHtmlClass('html-app')
   useEffect(() => {
-    setHtmlClass('html-app')
     getUserProfile()
-
-    return () => removeHtmlClass('html-app')
   }, [])
 
   useEffect(

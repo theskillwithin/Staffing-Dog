@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { bool, func, string, array, oneOfType, shape } from 'prop-types'
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { setTitle, setHtmlClass, removeHtmlClass } from '@sdog/utils/document'
+import { useHtmlClass, useDocumentTitle } from '@sdog/utils/document'
 import Contact from '@sdog/components/contact'
 import Toaster from '@sdog/components/toaster'
 import Spinner from '@sdog/components/spinner'
@@ -28,26 +28,21 @@ const ResetPassword = ({
   isLoading,
   loadingPage,
   error,
-  match,
+  match: { anchor, token },
   validate,
 }) => {
   const [password, setPassword] = useState('')
   const [passwordConfirmation, setpasswordConfirmation] = useState('')
 
-  useEffect(() => {
-    setTitle('Reset Password')
-    setHtmlClass('html-reset-password')
-    const { anchor } = match.params
-    const { token } = match.params
-    validate({ anchor, token })
+  useHtmlClass('html-reset-password')
+  useDocumentTitle('Reset Password')
 
-    return () => removeHtmlClass('html-reset-password')
+  useEffect(() => {
+    validate({ anchor, token })
   }, [])
 
   const onSubmit = e => {
     e.preventDefault()
-    const { anchor } = match.params
-    const { token } = match.params
     const data = { password, password_confirmation: passwordConfirmation }
     submit({ anchor, token, data, history })
   }
@@ -115,7 +110,7 @@ ResetPassword.propTypes = {
   submit: func.isRequired,
   validate: func.isRequired,
   history: shape({ push: func.isRequired }).isRequired,
-  match: shape({ params: func.isRequired }).isRequired,
+  match: shape({ params: shape({ anchor: string, token: string }) }).isRequired,
   isLoading: bool,
   loadingPage: bool,
   error: oneOfType([string, array, bool]).isRequired,

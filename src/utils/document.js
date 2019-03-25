@@ -1,3 +1,5 @@
+import { useEffect } from 'react'
+
 export const setTitle = (page = '', params = {}) => {
   const { main = 'Staffing Dog', sep = '-' } = params
 
@@ -23,3 +25,17 @@ export const removeHtmlClass = className => {
 }
 
 export const isBrowser = () => !!window
+
+export const useDocumentTitle = (title, onChange = []) => {
+  useEffect(() => {
+    setTitle(title)
+  }, onChange)
+}
+
+export const useHtmlClass = (className, changeOn = []) => {
+  useEffect(() => {
+    setHtmlClass(className)
+
+    return () => removeHtmlClass(className)
+  }, changeOn)
+}
