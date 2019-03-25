@@ -1,6 +1,6 @@
 @import '../../styles/config.css';
 
-.topErrorContainer {
+.toasterContainer {
   position: absolute;
   top: 18px;
   right: 0;
@@ -16,9 +16,9 @@
   }
 }
 
-.topError {
-  background-color: var(--sd-lightRed);
+.toaster {
   max-width: 800px;
+  background-color: var(--sd-gray);
   width: 100%;
   color: white;
   transition: all ease-in-out 300ms;
@@ -31,7 +31,17 @@
   animation: popin 300ms;
   transform-origin: left;
 
-  & + .topError {
+  &.success {
+    color: white;
+    background: var(--sd-green);
+  }
+
+  &.error {
+    background-color: var(--sd-lightRed);
+    color: white;
+  }
+
+  & + .toaster {
     margin-top: 5px;
   }
 

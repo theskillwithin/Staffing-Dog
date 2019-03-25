@@ -1,0 +1,135 @@
+import React, { useState, useEffect } from 'react'
+import { bool, func, string, array, oneOfType, shape } from 'prop-types'
+import { withRouter } from 'react-router-dom'
+import { connect } from 'react-redux'
+import { setTitle, setHtmlClass, removeHtmlClass } from '@sdog/utils/document'
+import Contact from '@sdog/components/contact'
+import Toaster from '@sdog/components/toaster'
+import Spinner from '@sdog/components/spinner'
+import Logo from '@sdog/components/logo'
+import Input from '@sdog/components/input'
+import Button from '@sdog/components/button'
+
+import {
+  findResetLoading,
+  findResetError,
+  findResetValidateLoading,
+  findResetValidateError,
+  submitResetPasswordEmail,
+  validateResetPasswordEmail,
+} from '../../store/user'
+import appTheme from '../app/theme.css'
+
+import theme from './theme.css'
+
+const ResetPassword = ({
+  history,
+  submit,
+  isLoading,
+  loadingPage,
+  error,
+  match,
+  validate,
+}) => {
+  const [password, setPassword] = useState('')
+  const [passwordConfirmation, setpasswordConfirmation] = useState('')
+
+  useEffect(() => {
+    setTitle('Reset Password')
+    setHtmlClass('html-reset-password')
+    const { anchor } = match.params
+    const { token } = match.params
+    validate({ anchor, token })
+
+    return () => removeHtmlClass('html-reset-password')
+  }, [])
+
+  const onSubmit = e => {
+    e.preventDefault()
+    const { anchor } = match.params
+    const { token } = match.params
+    const data = { password, password_confirmation: passwordConfirmation }
+    submit({ anchor, token, data, history })
+  }
+
+  return (
+    <div className={appTheme.pageContent}>
+      <Toaster>{error}</Toaster>
+
+      <header className={theme.header}>
+        <Contact />
+      </header>
+
+      <div className={theme.resetContainer}>
+        <div className={theme.logo}>
+          <Logo width="63px" largeTxt />
+        </div>
+
+        <div className={theme.reset}>
+          <h2>Reset Password</h2>
+
+          {loadingPage ? (
+            <div className={theme.loading}>
+              <Spinner />
+            </div>
+          ) : (
+            <div>
+              <form className={theme.form} onSubmit={onSubmit}>
+                <Input
+                  className={theme.input}
+                  label="New Password"
+                  value={password}
+                  onChange={setPassword}
+                  type="password"
+                />
+
+                <Input
+                  className={theme.input}
+                  label="Verify New Password"
+                  value={passwordConfirmation}
+                  onChange={setpasswordConfirmation}
+                  type="password"
+                />
+
+                <Button
+                  className={theme.button}
+                  loading={isLoading}
+                  disabled={isLoading}
+                  primary
+                  round
+                  type="submit"
+                  size="medium"
+                >
+                  {isLoading ? 'Loading' : 'Update my password'}
+                </Button>
+              </form>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  )
+}
+
+ResetPassword.propTypes = {
+  submit: func.isRequired,
+  validate: func.isRequired,
+  history: shape({ push: func.isRequired }).isRequired,
+  match: shape({ params: func.isRequired }).isRequired,
+  isLoading: bool,
+  loadingPage: bool,
+  error: oneOfType([string, array, bool]).isRequired,
+}
+
+const mapStateToProps = state => ({
+  isLoading: findResetLoading(state),
+  error: findResetValidateError(state) || findResetError(state),
+  loadingPage: findResetValidateLoading(state),
+})
+
+export default withRouter(
+  connect(
+    mapStateToProps,
+    { submit: submitResetPasswordEmail, validate: validateResetPasswordEmail },
+  )(ResetPassword),
+)

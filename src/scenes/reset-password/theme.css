@@ -1,0 +1,65 @@
+@import '../../styles/config.css';
+
+:global(.html-reset-password) {
+  @media (--sd-mobile) {
+    background-color: var(--sd-white);
+  }
+}
+
+:root {
+  --resetMaxWidth: 480px;
+}
+
+.header {
+  position: absolute;
+  top: 2em;
+  right: 2em;
+}
+
+.resetContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 80vh;
+}
+
+.reset {
+  position: relative;
+  padding: 32px 32px 45px 32px;
+  margin: 2em;
+  max-width: var(--resetMaxWidth);
+  width: 100%;
+  border-radius: 8px;
+  background-color: var(--sd-white);
+  box-shadow: 0 3px 6px 0 var(--sd-shadowColor);
+
+  h2 {
+    text-align: center;
+    font-weight: var(--sd-fontWeightLight);
+  }
+
+  @media (--sd-mobile) {
+    box-shadow: unset;
+  }
+}
+
+.form {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  margin: 0.55em 0;
+  width: 100%;
+
+  .input {
+    margin-top: 22px;
+  }
+
+  .button {
+    margin-top: 30px;
+  }
+}
+
+.loading {
+  min-height: 218px;
+}
