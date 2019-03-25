@@ -52,10 +52,12 @@ render(
         <React.Suspense fallback={<Spinner />}>
           <Switch>
             <Route path="/logout" component={LogoutScene} />
+            {/* --- TMP OVERRIDE --- */}
             <Route
               path="/onboarding/professional/step/complete"
               component={LandingScene}
             />
+            {/* --- end TMP OVERRIDE --- */}
             <Route path="/onboarding" component={OnboardingScene} />
             <Route path="/login" component={LoginScene} />
             <Route path="/landing" component={LandingScene} />
