@@ -117,12 +117,12 @@
 
   span {
     position: absolute;
-    top: 50%;
+    top: 49%;
     right: 5px;
     transform: translateY(-50%);
   }
 
   svg {
-    width: 20px;
+    width: 23px;
   }
 }
