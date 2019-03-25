@@ -42,12 +42,13 @@
   @media (--sd-tablet) {
     grid-template-rows:
       4px auto minmax(50px, 80px) minmax(auto, min-content)
-      auto;
+      auto auto;
     grid-template-areas:
       'appTop'
       '.'
       'appHeader'
       'appContent'
+      '.'
       '.';
   }
 
