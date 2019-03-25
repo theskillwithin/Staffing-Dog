@@ -52,6 +52,10 @@ render(
         <React.Suspense fallback={<Spinner />}>
           <Switch>
             <Route path="/logout" component={LogoutScene} />
+            <Route
+              path="/onboarding/professional/step/complete"
+              component={LandingScene}
+            />
             <Route path="/onboarding" component={OnboardingScene} />
             <Route path="/login" component={LoginScene} />
             <Route path="/landing" component={LandingScene} />
