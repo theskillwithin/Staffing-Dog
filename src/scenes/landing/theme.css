@@ -30,7 +30,7 @@
   align-items: center;
   flex-direction: column;
   position: relative;
-  padding: 32px 32px 45px 32px;
+  padding: 0 1em 6em 1em;
   margin: 2em;
   max-width: var(--landingMaxWidth);
   width: 100%;
@@ -38,6 +38,21 @@
   background-color: var(--sd-white);
   box-shadow: 0 3px 6px 0 var(--sd-shadowColor);
   height: 540px;
+
+  .starTitle > h2 {
+    padding: 0.25em 3em;
+  }
+
+  @media (--sd-preBreakTablet) {
+    height: auto;
+    padding-bottom: 2em;
+    position: initial;
+    padding: 0;
+
+    .starTitle > h2 {
+      padding: 1em;
+    }
+  }
 
   .svgScene {
     padding: 20px 0;
@@ -47,6 +62,20 @@
     display: inline-block;
     max-width: 100px;
     margin: 0 0.5em;
+
+    @media (--sd-preBreakTablet) {
+      margin: 0 1em;
+    }
+  }
+
+  .groupPlant {
+    > div {
+      margin: 0.5em;
+      text-align: center;
+      &:first-child {
+        margin: 0 0.5em 1em 0.5em;
+      }
+    }
   }
 
   .chair {
@@ -87,6 +116,13 @@
     line-height: 1.56;
     font-size: 18px;
     border-radius: 0 0 8px 8px;
+    padding: 1em 6em;
+
+    @media (--sd-preBreakTablet) {
+      height: auto;
+      border-radius: 0;
+      padding: 1em;
+    }
   }
 
   @media (--sd-mobile) {

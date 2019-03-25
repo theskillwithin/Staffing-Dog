@@ -34,7 +34,9 @@ const Landing = () => {
         </div>
 
         <div className={theme.landing}>
-          <StarTitle title="Setup Compelete" />
+          <div className={theme.starTitle}>
+            <StarTitle title="Setup Complete" />
+          </div>
 
           <div className={theme.svgScene}>
             <span className={clsx(theme.group, theme.groupPlant)}>
@@ -69,9 +71,8 @@ const Landing = () => {
           </div>
 
           <div className={theme.bottom}>
-            We are almost ready to let you into our staffing network exclusively for{' '}
-            <br />
-            Dental Professionals like you! We will reach out when it’s go time…{' '}
+            We are almost ready to let you into our staffing network exclusively for
+            Dental Professionals like you! We will reach out when it’s go time…
           </div>
         </div>
       </div>
