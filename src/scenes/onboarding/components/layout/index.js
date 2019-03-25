@@ -1,6 +1,6 @@
 import React from 'react'
 import clsx from 'clsx'
-import { node, bool } from 'prop-types'
+import { node, bool, string, array, oneOfType } from 'prop-types'
 import Logo from '@sdog/components/logo'
 import LoadingBar from '@sdog/components/loading_bar'
 import Contact from '@sdog/components/contact'
@@ -19,7 +19,11 @@ export const Layout = ({ children, loading, error }) => (
   </div>
 )
 
-Layout.propTypes = { children: node, loading: bool, error: bool }
+Layout.propTypes = {
+  children: node,
+  loading: bool,
+  error: oneOfType([string, array, bool]),
+}
 Layout.defaultProps = { children: null, loading: false, error: false }
 
 export const Top = ({ children, loading, error }) => (
@@ -38,7 +42,7 @@ export const Top = ({ children, loading, error }) => (
   </div>
 )
 
-Top.propTypes = { children: node, loading: bool, error: bool }
+Top.propTypes = { children: node, loading: bool, error: oneOfType([string, array, bool]) }
 Top.defaultProps = { children: null, loading: false, error: false }
 
 export const Header = ({ children }) => (
@@ -83,29 +87,3 @@ Content.defaultProps = {
   showBox: false,
   showComplete: false,
 }
-
-// import { connect } from 'react-redux'
-// import { withRouter } from 'react-router-dom'
-
-// import { findLoading, findError, setType, clearError } from '../../store/steps'
-// import {
-//   findRegisterError,
-//   clearRegisterUserError,
-//   findToken,
-//   findUserProfile,
-// } from '../../../../store/user'
-
-// import Layout from './Layout'
-
-// export default withRouter(
-//   connect(
-//     state => ({
-//       loading: findLoading(state),
-//       error: findError(state),
-//       findRegisterError: findRegisterError(state),
-//       token: findToken(state),
-//       userProfile: findUserProfile(state),
-//     }),
-//     { setType, clearError, clearRegisterUserError },
-//   )(Layout),
-// )
