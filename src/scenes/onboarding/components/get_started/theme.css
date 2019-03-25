@@ -121,4 +121,8 @@
     right: 5px;
     transform: translateY(-50%);
   }
+
+  svg {
+    width: 20px;
+  }
 }
