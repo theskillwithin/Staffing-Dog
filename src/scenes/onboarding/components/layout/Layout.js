@@ -34,10 +34,9 @@ const OnboardingLayout = ({
     params: { type },
   },
   userProfile,
+  showSidebar,
 }) => {
   const isStepPage = RegExp('/step').test(pathname)
-  const hasStep = RegExp('/step/([0-9]+)')
-  const showSidebar = hasStep.test(pathname)
   const userType = get(userProfile, 'user.type', type || false)
 
   useEffect(
@@ -149,11 +148,13 @@ OnboardingLayout.propTypes = {
   userProfile: shape({
     user: shape({ type: string }),
   }).isRequired,
+  showSidebar: bool,
 }
 
 OnboardingLayout.defaultProps = {
   error: false,
   loading: false,
+  showSidebar: false,
 }
 
 export default OnboardingLayout

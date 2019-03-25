@@ -1,14 +1,30 @@
 import React, { useEffect } from 'react'
-import { string, shape, func } from 'prop-types'
+import { string, shape, func, bool, array, oneOfType } from 'prop-types'
 import { connect } from 'react-redux'
-import { Route } from 'react-router-dom'
+import { Route, Switch, Redirect } from 'react-router-dom'
+import {
+  getUserProfile as getUserProfileAction,
+  findRegisterError,
+  clearRegisterUserError as clearRegisterUserErrorAction,
+} from '@sdog/store/user'
+import { setHtmlClass, removeHtmlClass } from '@sdog/utils/document'
 
-import { setHtmlClass, removeHtmlClass } from '../../utils/document'
-import { getUserProfile as getUserProfileAction } from '../../store/user'
+import { findError, clearError as clearErrorAction } from './store/steps'
+import RootScene from './scenes/Root'
+import TypeScene from './scenes/Type'
+import StepScene from './scenes/Step'
+import CompleteScene from './scenes/Complete'
+import { Layout } from './components/layout'
 
-import Layout from './components/layout'
-
-const Onboarding = ({ match, getUserProfile }) => {
+const Onboarding = ({
+  match,
+  getUserProfile,
+  location,
+  clearRegisterUserError,
+  clearError,
+  registerError,
+  error,
+}) => {
   useEffect(() => {
     setHtmlClass('html-onboarding')
     getUserProfile()
@@ -16,7 +32,36 @@ const Onboarding = ({ match, getUserProfile }) => {
     return () => removeHtmlClass('html-onboarding')
   }, [])
 
-  return <Route path={`${match.url}/:type?`} component={Layout} />
+  useEffect(
+    () => {
+      clearError()
+      clearRegisterUserError()
+    },
+    [location.pathname],
+  )
+
+  return (
+    <Layout error={registerError || error}>
+      <Switch>
+        <Route exact path={match.url} component={RootScene} />
+
+        <Route
+          exact
+          path={`${match.url}/:type(professional|practice)`}
+          component={TypeScene}
+        />
+
+        <Route
+          path={`${match.url}/:type(professional|practice)/step/:step`}
+          component={StepScene}
+        />
+
+        <Route path={`${match.url}/complete`} component={CompleteScene} />
+
+        <Redirect to={match.url} />
+      </Switch>
+    </Layout>
+  )
 }
 
 Onboarding.propTypes = {
@@ -24,11 +69,29 @@ Onboarding.propTypes = {
   match: shape({
     url: string.isRequired,
   }).isRequired,
+  location: shape({ pathname: string }).isRequired,
+  clearError: func.isRequired,
+  clearRegisterUserError: func.isRequired,
+  registerError: oneOfType([bool, string, array]),
+  error: oneOfType([bool, string, array]),
 }
 
-export const mapActionsToProps = { getUserProfile: getUserProfileAction }
+Onboarding.defaultProps = {
+  registerError: false,
+  error: false,
+}
+
+export const mapStateToProps = state => ({
+  registerError: findRegisterError(state),
+  error: findError(state),
+})
+export const mapActionsToProps = {
+  getUserProfile: getUserProfileAction,
+  clearError: clearErrorAction,
+  clearRegisterUserError: clearRegisterUserErrorAction,
+}
 
 export default connect(
-  null,
+  mapStateToProps,
   mapActionsToProps,
 )(Onboarding)
