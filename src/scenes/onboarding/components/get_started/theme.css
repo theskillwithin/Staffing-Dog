@@ -58,7 +58,7 @@
       border: 1px solid var(--sd-borderColor);
       border-radius: 8px;
       box-shadow: 0 3px 6px 0 var(--sd-shadowColor);
-      padding: 1em;
+      padding: 1.28em 1em 1em;
       overflow-x: hidden;
       white-space: nowrap;
 
@@ -117,8 +117,12 @@
 
   span {
     position: absolute;
-    top: 50%;
+    top: 49%;
     right: 5px;
     transform: translateY(-50%);
+  }
+
+  svg {
+    width: 23px;
   }
 }
