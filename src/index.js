@@ -58,7 +58,7 @@ render(
             <Route path="/logout" component={LogoutScene} />
             {/* --- TMP OVERRIDE --- */}
             <Route
-              path="/onboarding/professional/step/complete"
+              path="/onboarding/:type(professional|practice)/step/complete"
               component={LandingScene}
             />
             {/* --- end TMP OVERRIDE --- */}

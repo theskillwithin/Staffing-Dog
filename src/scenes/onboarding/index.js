@@ -1,9 +1,12 @@
 import React, { useEffect } from 'react'
-import { string, shape, func, bool, array, oneOfType } from 'prop-types'
+import { string, shape, func, bool, array, oneOfType, object } from 'prop-types'
 import { connect } from 'react-redux'
 import { Route, Switch, Redirect } from 'react-router-dom'
+import get from 'lodash/get'
+import indexOf from 'lodash/indexOf'
 import {
   getUserProfile as getUserProfileAction,
+  findUserProfile,
   findRegisterError,
   clearRegisterUserError as clearRegisterUserErrorAction,
 } from '@sdog/store/user'
@@ -19,13 +22,17 @@ import { Layout } from './components/layout'
 const Onboarding = ({
   match,
   getUserProfile,
+  userProfile,
   location,
+  history,
   clearRegisterUserError,
   clearError,
   registerError,
   error,
   loading,
 }) => {
+  const userOnboardingStatus = get(userProfile, 'user.onboarding_status', false)
+
   useHtmlClass('html-onboarding')
   useDocumentTitle('Onboarding')
 
@@ -39,6 +46,19 @@ const Onboarding = ({
       clearRegisterUserError()
     },
     [location.pathname],
+  )
+
+  // If user has alrady completed the onboarding process, send them to the app
+  useEffect(
+    () => {
+      if (
+        userOnboardingStatus &&
+        indexOf(['pending', 'complete'], userOnboardingStatus) !== -1
+      ) {
+        history.push('/')
+      }
+    },
+    [userOnboardingStatus],
   )
 
   return (
@@ -74,22 +94,26 @@ Onboarding.propTypes = {
     url: string.isRequired,
   }).isRequired,
   location: shape({ pathname: string }).isRequired,
+  history: shape({ push: func }).isRequired,
   clearError: func.isRequired,
   clearRegisterUserError: func.isRequired,
   registerError: oneOfType([bool, string, array]),
   error: oneOfType([bool, string, array]),
   loading: bool.isRequired,
+  userProfile: object,
 }
 
 Onboarding.defaultProps = {
   registerError: false,
   error: false,
+  userProfile: {},
 }
 
 export const mapStateToProps = state => ({
   registerError: findRegisterError(state),
   error: findError(state),
   loading: findLoading(state),
+  userProfile: findUserProfile(state),
 })
 export const mapActionsToProps = {
   getUserProfile: getUserProfileAction,
