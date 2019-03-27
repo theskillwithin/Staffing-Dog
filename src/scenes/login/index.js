@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { bool, func, string, array, oneOfType, shape } from 'prop-types'
 import { Link, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { setTitle, setHtmlClass, removeHtmlClass } from '@sdog/utils/document'
+import { useDocumentTitle, useHtmlClass } from '@sdog/utils/document'
 import Contact from '@sdog/components/contact'
 import Toaster from '@sdog/components/toaster'
 import Logo from '@sdog/components/logo'
@@ -37,16 +37,15 @@ const Login = ({
   const [email, setEmail] = useState(IS_DEV || IS_STAGE ? 'romelu@lukaku.com' : '')
   const [password, setPassword] = useState(IS_DEV || IS_STAGE ? 'Password1234$' : '')
 
-  useEffect(() => {
-    setTitle('Login')
-    setHtmlClass('html-login')
+  useDocumentTitle('Login')
+  useHtmlClass('html-login')
 
+  useEffect(() => {
     return () => {
-      removeHtmlClass('html-login')
       clearPWSuccess()
       clearResetSuccess()
     }
-  }, [])
+  })
 
   const onSubmit = e => {
     e.preventDefault()

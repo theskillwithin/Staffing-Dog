@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import clsx from 'clsx'
-import { setTitle, setHtmlClass, removeHtmlClass } from '@sdog/utils/document'
+import { useHtmlClass, useDocumentTitle } from '@sdog/utils/document'
 
 import theme from '../app/theme.css'
 
@@ -9,12 +9,8 @@ import Messages from './components/messages'
 import JobSchedule from './components/job_schedule'
 
 const Dashboard = () => {
-  useEffect(() => {
-    setTitle('Dashboard')
-    setHtmlClass('html-app')
-
-    return () => removeHtmlClass('html-app')
-  }, [])
+  useDocumentTitle('Dashboard')
+  useHtmlClass('html-app')
 
   return (
     <div className={clsx(theme.pageContent, theme.columns)}>

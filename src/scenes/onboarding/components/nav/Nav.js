@@ -4,19 +4,19 @@ import { Link } from 'react-router-dom'
 import clsx from 'clsx'
 import map from 'lodash/map'
 import indexOf from 'lodash/indexOf'
+import find from 'lodash/find'
 
 import theme from './theme.css'
 
 const pInt = n => parseInt(n, 10)
 
-const stepLinkClasses = (currentStep, step, visited) => {
-  return clsx(
+const stepLinkClasses = (currentStep, step, visited, disabled) =>
+  clsx(
     pInt(currentStep) === pInt(step) && theme.stepButtonActive,
     theme.stepButton,
     visited >= pInt(step) && theme.visited,
-    pInt(currentStep) > 1 && pInt(step) === 1 && theme.disabled,
+    disabled && theme.disabled,
   )
-}
 
 const Nav = ({ steps, goToStep, exclude, history, className, match: { params } }) => {
   const [visited, setVisited] = useState(params.step || 1)
@@ -30,6 +30,18 @@ const Nav = ({ steps, goToStep, exclude, history, className, match: { params } }
     [params.step],
   )
 
+  const isStepDisabled = stepToCheck => {
+    if (pInt(params.step) > 1 && pInt(stepToCheck) === 1) {
+      return true
+    }
+
+    const previousStep =
+      stepToCheck.previousStep &&
+      find(steps, checkStep => checkStep.step === stepToCheck.previousStep)
+
+    return previousStep && !previousStep.complete
+  }
+
   return (
     <ul className={clsx(theme.stepLinks, className)}>
       {map(steps, step =>
@@ -37,11 +49,16 @@ const Nav = ({ steps, goToStep, exclude, history, className, match: { params } }
           <li key={`stepNav:item:${step.step}`} className={theme.stepLinksItem}>
             <Link
               to={`/step/${step.step}`}
-              className={stepLinkClasses(params.step, step.step, visited)}
+              className={stepLinkClasses(
+                params.step,
+                step.step,
+                visited,
+                isStepDisabled(step),
+              )}
               onClick={e => {
                 e.preventDefault()
 
-                if (pInt(params.step) > 1 && pInt(step.step) === 1) {
+                if (isStepDisabled(step)) {
                   return false
                 }
 

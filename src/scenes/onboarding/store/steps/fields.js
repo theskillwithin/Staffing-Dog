@@ -30,6 +30,7 @@ export const professional = [
     forceAllow: true,
     step: '1',
     nextStep: '2',
+    previousStep: 0,
     complete: false,
     needsComplete: true,
     needsCompleteIfToken: false,
@@ -88,6 +89,7 @@ export const professional = [
   {
     step: '2',
     nextStep: '3',
+    previousStep: '1',
     complete: false,
     needsComplete: true,
     needsCompleteIfToken: true,
@@ -185,6 +187,7 @@ export const professional = [
   {
     step: '3',
     nextStep: 'complete',
+    previousStep: '2',
     complete: false,
     needsComplete: true,
     needsCompleteIfToken: true,
@@ -241,6 +244,7 @@ export const professional = [
   },
   {
     step: 'complete',
+    previousStep: '3',
     complete: false,
     needsComplete: false,
     needsCompleteIfToken: false,
@@ -253,6 +257,7 @@ export const practice = [
     forceAllow: true,
     step: '1',
     nextStep: '2',
+    previousStep: 0,
     complete: false,
     needsComplete: true,
     needsCompleteIfToken: false,
@@ -311,6 +316,7 @@ export const practice = [
   {
     step: '2',
     nextStep: '3',
+    previousStep: '2',
     complete: false,
     needsComplete: true,
     needsCompleteIfToken: true,
@@ -408,6 +414,7 @@ export const practice = [
   {
     step: '3',
     nextStep: 'complete',
+    previousStep: '2',
     complete: false,
     needsComplete: true,
     needsCompleteIfToken: true,
@@ -466,6 +473,7 @@ export const practice = [
   },
   {
     step: 'complete',
+    previousStep: '3',
     complete: false,
     needsComplete: false,
     needsCompleteIfToken: false,

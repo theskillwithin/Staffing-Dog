@@ -47,7 +47,7 @@ export const INITIAL_STATE = {
 
 // take data from api and format for the onboarding redux store
 export const formatDataFromApi = (apiData, values, type = INITIAL_STATE.type) => ({
-  street: get(apiData, 'addresses.street', values.street),
+  street: get(apiData, 'addresses.line_1', values.street),
   state: get(apiData, 'addresses.state', values.state),
   city: get(apiData, 'addresses.city', values.city),
   zip: get(apiData, 'addresses.zip', values.zip),
@@ -101,6 +101,10 @@ export const formatDataFromOnboarding = (values, profile, type = INITIAL_STATE.t
   },
   meta: {
     ...(profile.meta || {}),
+    capacity: {
+      ...get(profile, 'meta.summary.capacity', {}),
+      ...(values.availability ? { availability: values.availability } : {}),
+    },
     summary: {
       ...get(profile, 'meta.summary', {}),
       ...('professional' === type
@@ -109,10 +113,6 @@ export const formatDataFromOnboarding = (values, profile, type = INITIAL_STATE.t
               ...get(profile, 'meta.summary.profession', {}),
               ...(values.profession ? { type: values.profession } : {}),
               ...(values.specialty ? { specialty: values.specialty } : {}),
-            },
-            capacity: {
-              ...get(profile, 'meta.summary.capacity', {}),
-              ...(values.availability ? { availability: values.availability } : {}),
             },
           }
         : {

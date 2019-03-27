@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { bool, func, string, array, oneOfType, shape } from 'prop-types'
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { setTitle, setHtmlClass, removeHtmlClass } from '@sdog/utils/document'
+import { useDocumentTitle, useHtmlClass } from '@sdog/utils/document'
 import Contact from '@sdog/components/contact'
 import Toaster from '@sdog/components/toaster'
 import Logo from '@sdog/components/logo'
@@ -21,12 +21,8 @@ import theme from './theme.css'
 const ForgotPassword = ({ history, submit, isLoading, error }) => {
   const [email, setEmail] = useState('')
 
-  useEffect(() => {
-    setTitle('Forgot Password')
-    setHtmlClass('html-forgot-password')
-
-    return () => removeHtmlClass('html-forgot-password')
-  }, [])
+  useHtmlClass('html-forgot-password')
+  useDocumentTitle('Forgot Password')
 
   const onSubmit = e => {
     e.preventDefault()
