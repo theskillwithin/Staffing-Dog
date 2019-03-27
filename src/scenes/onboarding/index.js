@@ -53,13 +53,13 @@ const Onboarding = ({
         />
 
         <Route
-          path={`${match.url}/:type(professional|practice)/step/:step`}
-          component={StepScene}
+          path={`${match.url}/:type(professional|practice)/step/:step(complete)`}
+          component={CompleteScene}
         />
 
         <Route
-          path={`${match.url}/:type(professional|practice)/step/complete`}
-          component={CompleteScene}
+          path={`${match.url}/:type(professional|practice)/step/:step`}
+          component={StepScene}
         />
 
         <Redirect to={match.url} />
