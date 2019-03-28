@@ -163,17 +163,22 @@ export const reducers = {
   [BLUR_INVALID]: (state, payload) => ({
     ...state,
     error: payload.error
-      ? Array.isArray(state.error) && state.error.length
-        ? [...state.error, payload.error]
+      ? Array.isArray(state.error)
+        ? state.error.includes(payload.error)
+          ? state.error
+          : [...state.error, payload.error]
         : [payload.error]
-      : state.error.filter(
-          x => x !== find(state.errorFields, { field: payload.errorField }).error,
-        ),
+      : filter(state.error, x => {
+          const findFields = find(state.errorFields, { field: payload.errorField })
+          return x !== findFields.error
+        }),
     errorFields: payload.error
       ? state.errorFields
-        ? [...state.errorFields, { error: payload.error, field: payload.errorField }]
+        ? state.errorFields.includes(payload.errorField)
+          ? state.errorFields
+          : [...state.errorFields, { error: payload.error, field: payload.errorField }]
         : [{ error: payload.error, field: payload.errorField }]
-      : state.errorFields.filter(x => x.field !== payload.errorField),
+      : filter(state.errorFields, x => x.field !== payload.errorField),
   }),
   [SET_VALUE]: (state, payload) => ({
     ...state,
