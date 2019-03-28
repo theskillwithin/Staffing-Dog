@@ -61,8 +61,6 @@ const Steps = ({
       fieldProps.fullWidth = field.fullWidth
     }
 
-    console.log(field)
-
     switch (field.type) {
       case 'input':
         return (
