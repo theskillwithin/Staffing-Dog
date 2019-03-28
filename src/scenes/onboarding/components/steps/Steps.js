@@ -4,6 +4,7 @@ import clsx from 'clsx'
 import find from 'lodash/find'
 import map from 'lodash/map'
 import includes from 'lodash/includes'
+import isInvalid from 'utils/validation'
 
 import Input from '../../../../components/input'
 import Dropdown from '../../../../components/dropdown'
@@ -20,6 +21,7 @@ const Steps = ({
   steps,
   history,
   goToStep,
+  blurInvalid,
 }) => {
   const currentStep = find(steps, s => s.step === step)
   const isComplete = 'complete' === currentStep.step
@@ -68,6 +70,15 @@ const Steps = ({
             onChange={v => onChange(field.name, v)}
             invalid={errorFields && includes(errorFields, field.name)}
             subLabel={field.subLabel}
+            onBlur={e => {
+              const check = isInvalid(
+                e.target.value,
+                field.label,
+                field.validation,
+                field.required,
+              )
+              blurInvalid(check, field.name)
+            }}
             {...fieldProps}
           />
         )
@@ -150,6 +161,7 @@ Steps.propTypes = {
   setStep: func.isRequired,
   goToStep: func.isRequired,
   errorFields: oneOfType([array, bool]),
+  blurInvalid: func.isRequired,
 }
 
 export default Steps

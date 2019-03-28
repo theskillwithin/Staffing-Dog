@@ -16,6 +16,7 @@ import {
   setValue,
   goToStep,
   setStep,
+  blurInvalid,
 } from '../store/steps'
 
 export default Component =>
@@ -34,6 +35,6 @@ export default Component =>
         type: findType(state),
         token: findToken(state),
       }),
-      { setValue, goToStep, setStep },
+      { setValue, goToStep, setStep, blurInvalid },
     )(Component),
   )
