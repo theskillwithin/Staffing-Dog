@@ -27,7 +27,7 @@ export const SingleToaster = ({
     setTimeout(() => {
       setDelayed(false)
     }, multiple * 300)
-  })
+  }, [])
 
   if (isClose) return null
   if (delayed) return null
