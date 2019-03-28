@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import { Route, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { object, func, shape } from 'prop-types'
+import { IS_PROD } from '@sdog/utils/env'
 import { useHtmlClass } from '@sdog/utils/document'
 import get from 'lodash/get'
 import Logo from '@sdog/components/logo'
@@ -18,6 +19,11 @@ const SearchScene = React.lazy(() => import('@sdog/scenes/search'))
 const SettingsScene = React.lazy(() => import('@sdog/scenes/settings'))
 
 const App = ({ getUserProfile, location, history, userProfile }) => {
+  if (IS_PROD) {
+    window.location = '/landing'
+    return null
+  }
+
   const userOnboardingStatus = get(userProfile, 'user.onboarding_status', false)
 
   useHtmlClass('html-app')
