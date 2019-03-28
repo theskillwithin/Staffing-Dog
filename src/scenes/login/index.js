@@ -6,7 +6,6 @@ import { useDocumentTitle, useHtmlClass } from '@sdog/utils/document'
 import Contact from '@sdog/components/contact'
 import Toaster from '@sdog/components/toaster'
 import Logo from '@sdog/components/logo'
-import Tabs from '@sdog/components/tab_bar'
 import Input from '@sdog/components/input'
 import Button from '@sdog/components/button'
 import Arrow from '@sdog/components/svg/Arrow'
@@ -35,7 +34,6 @@ const Login = ({
   clearResetSuccess,
   token,
 }) => {
-  const [tabIndex, setTabIndex] = useState(0)
   const [email, setEmail] = useState(IS_DEV || IS_STAGE ? 'romelu@lukaku.com' : '')
   const [password, setPassword] = useState(IS_DEV || IS_STAGE ? 'Password1234$' : '')
 
@@ -74,11 +72,6 @@ const Login = ({
           <h2>Sign In</h2>
 
           <div>
-            <Tabs activeTabIndex={tabIndex} onSelect={setTabIndex}>
-              <div>Dental Professional</div>
-              <div>Dental Provider</div>
-            </Tabs>
-
             <form className={theme.form} onSubmit={onSubmit}>
               <Input
                 className={theme.input}
