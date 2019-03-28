@@ -19,6 +19,7 @@ import {
   displayedForgotPasswordClearSuccess,
   findResetSuccess,
   displayedResetPasswordClearSuccess,
+  findToken,
 } from '../../store/user'
 import appTheme from '../app/theme.css'
 
@@ -32,6 +33,7 @@ const Login = ({
   success,
   clearPWSuccess,
   clearResetSuccess,
+  token,
 }) => {
   const [tabIndex, setTabIndex] = useState(0)
   const [email, setEmail] = useState(IS_DEV || IS_STAGE ? 'romelu@lukaku.com' : '')
@@ -40,11 +42,13 @@ const Login = ({
   useDocumentTitle('Login')
   useHtmlClass('html-login')
 
-  useEffect(() => {
-    return () => {
-      clearPWSuccess()
-      clearResetSuccess()
-    }
+  if (token) {
+    history.push('/')
+  }
+
+  useEffect(() => () => {
+    clearPWSuccess()
+    clearResetSuccess()
   })
 
   const onSubmit = e => {
@@ -134,12 +138,14 @@ Login.propTypes = {
   isLoading: bool,
   error: oneOfType([string, array, bool]).isRequired,
   success: oneOfType([string, array, bool]).isRequired,
+  token: oneOfType([bool, string]).isRequired,
 }
 
 const mapStateToProps = state => ({
   isLoading: findUserAuth(state).loading,
   error: findUserAuth(state).error,
   success: findForgotSuccess(state) || findResetSuccess(state),
+  token: findToken(state),
 })
 
 const mapActionsToProps = {

@@ -402,7 +402,7 @@ export const practice = [
         ],
       },
       {
-        name: 'postal_code',
+        name: 'zip',
         label: 'Postal Code',
         type: 'input',
         formType: 'number',

@@ -62,19 +62,15 @@ export const formatDataFromApi = (apiData, values, type = INITIAL_STATE.type) =>
         practice_type: get(apiData, 'meta.summary.practice_type', values.practice_type),
         practice_first_name: get(
           apiData,
-          'meta.summary.practice_first_name',
+          'meta.summary.contact_first_name',
           values.practice_first_name,
         ),
         practice_last_name: get(
           apiData,
-          'meta.summary.practice_last_name',
+          'meta.summary.contact_last_name',
           values.practice_last_name,
         ),
-        practice_email: get(
-          apiData,
-          'meta.summary.practice_email',
-          values.practice_email,
-        ),
+        practice_email: get(apiData, 'meta.summary.contact_email', values.practice_email),
       }),
 })
 
@@ -118,13 +114,13 @@ export const formatDataFromOnboarding = (values, profile, type = INITIAL_STATE.t
         : {
             ...(values.practice_name ? { practice_name: values.practice_name } : {}),
             ...(values.practice_type ? { practice_type: values.practice_type } : {}),
-            ...(values.practice_first_name
+            ...(values.contact_first_name
               ? { contact_first_name: values.practice_first_name }
               : {}),
-            ...(values.practice_last_name
+            ...(values.contact_last_name
               ? { contact_last_name: values.practice_last_name }
               : {}),
-            ...(values.practice_email ? { contact_email: values.practice_email } : {}),
+            ...(values.contact_email ? { contact_email: values.practice_email } : {}),
           }),
     },
   },
@@ -222,28 +218,33 @@ export const reducers = {
   // When Updating the user, we want to make sure to update the steps data as well
   [userRegisterTypes.SUCCESS]: updateStepValuesFromRegister,
   [userRegisterUpdateTypes.SUCCESS]: updateStepValuesFromRegister,
-  [userGetProfileTypes.SUCCESS]: (state, { data }) => ({
-    ...state,
-    values: {
+  [userGetProfileTypes.SUCCESS]: (state, { data }) => {
+    const values = {
       ...state.values,
       ...formatDataFromApi(data, state.values, state.type),
       first_name: get(data, 'user.first_name', state.values.first_name),
       last_name: get(data, 'user.last_name', state.values.last_name),
       email: get(data, 'user.email', state.values.email),
-    },
-    steps: {
-      ...state.steps,
-      [state.type]: state.steps[state.type].map(step => ({
-        ...step,
-        ...(step.step === '1' // Allows us to skip step 1 since we have already created the user
-          ? {
-              needsComplete: false,
-              complete: true,
-            }
-          : {}),
-      })),
-    },
-  }),
+    }
+
+    return {
+      ...state,
+      values,
+      steps: {
+        ...state.steps,
+        [state.type]: state.steps[state.type].map(step => ({
+          ...step,
+          complete: areStepsComplete(step, values),
+          ...(step.step === '1' // Allows us to skip step 1 since we have already created the user
+            ? {
+                needsComplete: false,
+                complete: true,
+              }
+            : {}),
+        })),
+      },
+    }
+  },
 }
 
 // Actions Creators

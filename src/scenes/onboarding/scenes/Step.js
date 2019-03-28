@@ -22,12 +22,11 @@ const OnboardingStepScene = ({
   token,
   setType,
 }) => {
-  useEffect(() => {
-    setType(type)
-  }, type)
+  useEffect(() => void setType(type), type)
 
   useEffect(
     () => {
+      // don't allow access to the first step if they have already registered
       if (step === '1' && token) {
         history.replace(`/onboarding/${type}/step/2`)
       }

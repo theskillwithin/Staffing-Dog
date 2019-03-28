@@ -37,9 +37,7 @@ const ResetPassword = ({
   useHtmlClass('html-reset-password')
   useDocumentTitle('Reset Password')
 
-  useEffect(() => {
-    validate({ anchor, token })
-  }, [])
+  useEffect(() => void validate({ anchor, token }), [])
 
   const onSubmit = e => {
     e.preventDefault()

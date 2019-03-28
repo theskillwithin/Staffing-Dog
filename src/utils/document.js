@@ -27,9 +27,7 @@ export const removeHtmlClass = className => {
 export const isBrowser = () => !!window
 
 export const useDocumentTitle = (title, onChange = []) => {
-  useEffect(() => {
-    setTitle(title)
-  }, onChange)
+  useEffect(() => void setTitle(title), onChange)
 }
 
 export const useHtmlClass = (className, changeOn = []) => {

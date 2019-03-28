@@ -53,6 +53,7 @@
         "allowForLoopAfterthoughts": true
       }
     ],
+    "no-void": "off",
     "no-multi-assign": "off",
     "react/forbid-prop-types": "off",
     "react/require-default-props": "off",
@@ -73,7 +74,6 @@
         "ignoreStateless": true
       }
     ],
-
     "react/destructuring-assignment": 0,
     "import/extensions": ["error", "never"],
     "import/newline-after-import": [

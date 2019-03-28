@@ -12,9 +12,7 @@ import StarTitle from '@sdog/components/star_title'
 import theme from './theme.css'
 
 const GetStarted = ({ chooseType, type, setStep, goToStep, setType, history }) => {
-  useEffect(() => {
-    setStep(false)
-  }, [])
+  useEffect(() => void setStep(false), [])
 
   const renderSVG = (SVGComponent, isType = 'professional') => {
     if (type === isType) {

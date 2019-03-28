@@ -14,6 +14,7 @@ import {
 } from '../storage'
 
 export const INITIAL_STATE = {
+  lastUpdated: false,
   auth: {
     loading: false,
     error: false,
@@ -93,6 +94,9 @@ export const INITIAL_STATE = {
   },
 }
 
+const getLastUpdated = () => new Date().getTime()
+const spreadLastUpdated = () => ({ lastUpdated: getLastUpdated() })
+
 const spreadLoadingError = (loading = false, error = false) => ({ loading, error })
 
 let reducers = {}
@@ -140,6 +144,7 @@ reducers = {
   ...reducers,
   [USER_SET_FINGERPRINT]: (state, { fingerprint }) => ({
     ...state,
+    ...spreadLastUpdated(),
     auth: {
       ...state.auth,
       fingerprint,
@@ -195,10 +200,12 @@ reducers = {
   ...reducers,
   [userLoginTypes.LOADING]: state => ({
     ...state,
+    ...spreadLastUpdated(),
     auth: { ...state.auth, ...spreadLoadingError(true, false) },
   }),
   [userLoginTypes.ERROR]: (state, { error }) => ({
     ...state,
+    ...spreadLastUpdated(),
     auth: {
       ...state.auth,
       ...spreadLoadingError(
@@ -213,6 +220,7 @@ reducers = {
   }),
   [userLoginTypes.SUCCESS]: (state, { data }) => ({
     ...state,
+    ...spreadLastUpdated(),
     auth: { ...state.auth, ...spreadLoadingError(false, false) },
     profile: {
       ...state.profile,
@@ -239,23 +247,30 @@ const onLogoutCallback = cb => {
   if (cb) cb()
 }
 
-export const logout = (cb = false) => (dispatch, getState) =>
-  dispatch({
-    type: USER_LOGOUT,
-    api: {
-      url: `${API_ROOT}/logout`,
-      method: 'POST',
-      data: { user_id: findUserId(getState()) },
-      callbacks: {
-        success: () => onLogoutCallback(cb),
-        error: () => onLogoutCallback(cb),
+export const logout = (cb = false) => (dispatch, getState) => {
+  const userId = findUserId(getState())
+
+  if (userId) {
+    dispatch({
+      type: USER_LOGOUT,
+      api: {
+        url: `${API_ROOT}/logout`,
+        method: 'POST',
+        data: { user_id: userId },
+        callbacks: {
+          success: () => onLogoutCallback(cb),
+          error: () => onLogoutCallback(cb),
+        },
+        dispatches: {
+          success: onLogoutDispatches,
+          error: onLogoutDispatches,
+        },
       },
-      dispatches: {
-        success: onLogoutDispatches,
-        error: onLogoutDispatches,
-      },
-    },
-  })
+    })
+  } else {
+    onLogoutCallback(cb)
+  }
+}
 
 /**
  * REGISTER USER
@@ -289,6 +304,7 @@ reducers = {
   ...reducers,
   [userRegisterTypes.LOADING]: state => ({
     ...state,
+    ...spreadLastUpdated(),
     register: {
       ...state.register,
       ...spreadLoadingError(true, false),
@@ -296,10 +312,12 @@ reducers = {
   }),
   [userRegisterTypes.SUCCESS]: (state, { data }) => ({
     ...state,
+    ...spreadLastUpdated(),
     profile: formatProfileData(state.profile, data),
   }),
   [userRegisterTypes.ERROR]: (state, { error }) => ({
     ...state,
+    ...spreadLastUpdated(),
     register: {
       ...state.register,
       ...spreadLoadingError(
@@ -337,6 +355,7 @@ reducers = {
   ...reducers,
   [userRegisterUpdateTypes.LOADING]: state => ({
     ...state,
+    ...spreadLastUpdated(),
     register: {
       ...state.register,
       ...spreadLoadingError(true, false),
@@ -344,6 +363,7 @@ reducers = {
   }),
   [userRegisterUpdateTypes.SUCCESS]: (state, { data }) => ({
     ...state,
+    ...spreadLastUpdated(),
     register: {
       ...state.register,
       ...spreadLoadingError(false, false),
@@ -352,6 +372,7 @@ reducers = {
   }),
   [userRegisterUpdateTypes.ERROR]: (state, { error }) => ({
     ...state,
+    ...spreadLastUpdated(),
     register: {
       ...state.register,
       ...spreadLoadingError(
@@ -404,6 +425,7 @@ reducers = {
   ...reducers,
   [userGetProfileTypes.LOADING]: state => ({
     ...state,
+    ...spreadLastUpdated(),
     profile: {
       ...state.profile,
       ...spreadLoadingError(true, false),
@@ -411,6 +433,7 @@ reducers = {
   }),
   [userGetProfileTypes.SUCCESS]: (state, { data }) => ({
     ...state,
+    ...spreadLastUpdated(),
     profile: {
       ...state.profile,
       ...data,
@@ -419,6 +442,7 @@ reducers = {
   }),
   [userGetProfileTypes.ERROR]: (state, { error }) => ({
     ...state,
+    ...spreadLastUpdated(),
     profile: {
       ...state.profile,
       ...spreadLoadingError(
@@ -452,6 +476,7 @@ reducers = {
   ...reducers,
   [userGetScheduleTypes.LOADING]: state => ({
     ...state,
+    ...spreadLastUpdated(),
     schedule: {
       ...state.schedule,
       ...spreadLoadingError(true, false),
@@ -459,6 +484,7 @@ reducers = {
   }),
   [userGetScheduleTypes.ERROR]: state => ({
     ...state,
+    ...spreadLastUpdated(),
     schedule: {
       ...state.schedule,
       ...spreadLoadingError(false, true),
@@ -466,6 +492,7 @@ reducers = {
   }),
   [userGetScheduleTypes.SUCCESS]: state => ({
     ...state,
+    ...spreadLastUpdated(),
     schedule: {
       ...state.schedule,
       ...spreadLoadingError(false, false),
@@ -530,11 +557,13 @@ reducers = {
   ...reducers,
   [AUTH_SAVE_USER_PROFILE_ONLY_REDUX]: (state, { name, value }) => ({
     ...state,
+    ...spreadLastUpdated(),
     profile: set({ ...state.profile }, name, value),
     lastUpdated: new Date().getTime(),
   }),
   [autoSaveUserProfileTypes.LOADING]: (state, { name, value }) => ({
     ...state,
+    ...spreadLastUpdated(),
     profile: set({ ...state.profile }, name, value),
     previousProfileUpdate: {
       name,
@@ -544,6 +573,7 @@ reducers = {
   }),
   [autoSaveUserProfileTypes.SUCCESS]: (state, { data }) => ({
     ...state,
+    ...spreadLastUpdated(),
     profile: {
       ...state.profile,
       ...data,
@@ -552,6 +582,7 @@ reducers = {
   }),
   [autoSaveUserProfileTypes.ERROR]: (state, payload) => ({
     ...state,
+    ...spreadLastUpdated(),
     profile: {
       ...(state.profile.previousProfileUpdate
         ? set(
@@ -588,10 +619,12 @@ reducers = {
   ...reducers,
   [saveUserProfileTypes.LOADING]: state => ({
     ...state,
+    ...spreadLastUpdated(),
     profile: { ...state.profile, ...spreadLoadingError(true, false) },
   }),
   [saveUserProfileTypes.SUCCESS]: (state, { data }) => ({
     ...state,
+    ...spreadLastUpdated(),
     profile: {
       ...state.profile,
       ...data,
@@ -600,6 +633,7 @@ reducers = {
   }),
   [saveUserProfileTypes.ERROR]: (state, payload) => ({
     ...state,
+    ...spreadLastUpdated(),
     profile: {
       ...state.profile,
       ...spreadLoadingError(false, payload.error || 'error'),
@@ -632,11 +666,13 @@ reducers = {
   ...reducers,
   [uploadUserPhotoTypes.LOADING]: state => ({
     ...state,
+    ...spreadLastUpdated(),
     loadingUserProfile: true,
     loadingUserProfileError: false,
   }),
   [uploadUserPhotoTypes.SUCCESS]: (state, { data }) => ({
     ...state,
+    ...spreadLastUpdated(),
     loadingUserProfile: false,
     loadingUserProfileError: false,
     profile: {
@@ -649,6 +685,7 @@ reducers = {
   }),
   [uploadUserPhotoTypes.ERROR]: state => ({
     ...state,
+    ...spreadLastUpdated(),
     loadingUserProfile: false,
     loadingUserProfileError: true,
   }),
@@ -668,6 +705,7 @@ reducers = {
   ...reducers,
   [USER_REGISTER_CLEAR_ERROR]: state => ({
     ...state,
+    ...spreadLastUpdated(),
     register: {
       ...state.register,
       error: null,
@@ -706,6 +744,7 @@ reducers = {
   ...reducers,
   [userForgotPasswordTypes.LOADING]: state => ({
     ...state,
+    ...spreadLastUpdated(),
     forgot: {
       ...state.forgot,
       ...spreadLoadingError(true, false),
@@ -714,6 +753,7 @@ reducers = {
   }),
   [userForgotPasswordTypes.ERROR]: state => ({
     ...state,
+    ...spreadLastUpdated(),
     forgot: {
       ...state.forgot,
       ...spreadLoadingError(false, 'Unknown API Error'),
@@ -722,6 +762,7 @@ reducers = {
   }),
   [userForgotPasswordTypes.SUCCESS]: (state, { data }) => ({
     ...state,
+    ...spreadLastUpdated(),
     forgot: {
       ...state.forgot,
       ...spreadLoadingError(false, false),
@@ -730,6 +771,7 @@ reducers = {
   }),
   [USER_FORGOT_PASSWORD_CLEAR_SUCCESS]: state => ({
     ...state,
+    ...spreadLastUpdated(),
     forgot: {
       ...state.forgot,
       success: false,
@@ -779,6 +821,7 @@ reducers = {
   ...reducers,
   [userValidatePasswordTypes.LOADING]: state => ({
     ...state,
+    ...spreadLastUpdated(),
     reset: {
       ...state.reset,
       validate: {
@@ -790,6 +833,7 @@ reducers = {
   }),
   [userValidatePasswordTypes.ERROR]: (state, { error }) => ({
     ...state,
+    ...spreadLastUpdated(),
     reset: {
       ...state.reset,
       validate: {
@@ -801,6 +845,7 @@ reducers = {
   }),
   [userValidatePasswordTypes.SUCCESS]: (state, { data }) => ({
     ...state,
+    ...spreadLastUpdated(),
     reset: {
       ...state.reset,
       validate: {
@@ -812,6 +857,7 @@ reducers = {
   }),
   [userResetPasswordTypes.LOADING]: state => ({
     ...state,
+    ...spreadLastUpdated(),
     reset: {
       ...state.reset,
       ...spreadLoadingError(true, false),
@@ -820,6 +866,7 @@ reducers = {
   }),
   [userResetPasswordTypes.ERROR]: (state, { error }) => ({
     ...state,
+    ...spreadLastUpdated(),
     reset: {
       ...state.reset,
       ...spreadLoadingError(false, get(error, 'message', 'Unknown API Error')),
@@ -828,6 +875,7 @@ reducers = {
   }),
   [userResetPasswordTypes.SUCCESS]: (state, { data }) => ({
     ...state,
+    ...spreadLastUpdated(),
     reset: {
       ...state.reset,
       ...spreadLoadingError(false, false),
@@ -836,6 +884,7 @@ reducers = {
   }),
   [USER_RESET_PASSWORD_CLEAR_SUCCESS]: state => ({
     ...state,
+    ...spreadLastUpdated(),
     reset: {
       ...state.reset,
       success: false,
