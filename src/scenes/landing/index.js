@@ -14,7 +14,7 @@ import theme from './theme.css'
 
 const Landing = () => {
   useHtmlClass('html-landing')
-  useDocumentTitle('Login')
+  useDocumentTitle('Setup Complete')
 
   return (
     <div className={appTheme.pageContent}>

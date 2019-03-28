@@ -63,9 +63,7 @@ const JobSchedule = ({
   const [activeTabIndex, setActiveTab] = useState(0)
   const [showSchedule, setShowSchedule] = useState(false)
 
-  useEffect(() => {
-    getUserJobs()
-  }, false)
+  useEffect(() => void getUserJobs(), [])
 
   const schedule = defaultSchedule.map(currentDay => {
     const matchingDay = find(

@@ -29,7 +29,7 @@ const axiosInstance = axios.create({
 export const unauthorizedUser = () => {
   if (get(lastUsedRequest, 'url', false) !== `${API_ROOT}/login`) {
     removeAllAuth()
-    window.location.assign('/login')
+    window.location = '/logout'
   }
 }
 

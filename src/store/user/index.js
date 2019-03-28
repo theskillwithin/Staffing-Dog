@@ -247,23 +247,30 @@ const onLogoutCallback = cb => {
   if (cb) cb()
 }
 
-export const logout = (cb = false) => (dispatch, getState) =>
-  dispatch({
-    type: USER_LOGOUT,
-    api: {
-      url: `${API_ROOT}/logout`,
-      method: 'POST',
-      data: { user_id: findUserId(getState()) },
-      callbacks: {
-        success: () => onLogoutCallback(cb),
-        error: () => onLogoutCallback(cb),
+export const logout = (cb = false) => (dispatch, getState) => {
+  const userId = findUserId(getState())
+
+  if (userId) {
+    dispatch({
+      type: USER_LOGOUT,
+      api: {
+        url: `${API_ROOT}/logout`,
+        method: 'POST',
+        data: { user_id: userId },
+        callbacks: {
+          success: () => onLogoutCallback(cb),
+          error: () => onLogoutCallback(cb),
+        },
+        dispatches: {
+          success: onLogoutDispatches,
+          error: onLogoutDispatches,
+        },
       },
-      dispatches: {
-        success: onLogoutDispatches,
-        error: onLogoutDispatches,
-      },
-    },
-  })
+    })
+  } else {
+    onLogoutCallback(cb)
+  }
+}
 
 /**
  * REGISTER USER

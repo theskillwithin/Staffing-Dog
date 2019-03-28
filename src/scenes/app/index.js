@@ -21,9 +21,7 @@ const App = ({ getUserProfile, location, history, userProfile }) => {
   const userOnboardingStatus = get(userProfile, 'user.onboarding_status', false)
 
   useHtmlClass('html-app')
-  useEffect(() => {
-    getUserProfile()
-  }, [])
+  useEffect(() => void getUserProfile(), [])
 
   useEffect(
     () => {
