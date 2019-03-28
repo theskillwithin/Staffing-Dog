@@ -43,9 +43,8 @@ export const INITIAL_STATE = {
   },
   type: 'professional',
   values: {},
-  error: false,
-  errorFields: false,
-  errorMemory: [],
+  error: [],
+  errorFields: [],
 }
 
 // take data from api and format for the onboarding redux store
@@ -163,10 +162,18 @@ export const blurInvalid = (error, errorField) => dispatch => {
 export const reducers = {
   [BLUR_INVALID]: (state, payload) => ({
     ...state,
-    error: state.error ? [...state.error, payload.error] : [payload.error],
-    errorFields: state.errorFields
-      ? [...state.errorFields, payload.errorField]
-      : [payload.errorField],
+    error: payload.error
+      ? Array.isArray(state.error) && state.error.length
+        ? [...state.error, payload.error]
+        : [payload.error]
+      : state.error.filter(
+          x => x !== find(state.errorFields, { field: payload.errorField }).error,
+        ),
+    errorFields: payload.error
+      ? state.errorFields
+        ? [...state.errorFields, { error: payload.error, field: payload.errorField }]
+        : [{ error: payload.error, field: payload.errorField }]
+      : state.errorFields.filter(x => x.field !== payload.errorField),
   }),
   [SET_VALUE]: (state, payload) => ({
     ...state,
@@ -448,7 +455,10 @@ export const goToStep = ({ currentStep, nextStep, history }) => (dispatch, getSt
         dispatch(
           actions.goToStepFailed({
             error: invalids.map(invalid => invalid.invalid),
-            errorFields: invalids.map(invalid => invalid.name),
+            errorFields: invalids.map(invalid => ({
+              error: invalid.invalid,
+              field: invalid.name,
+            })),
             nextStep,
           }),
         ),

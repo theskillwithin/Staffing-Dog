@@ -68,7 +68,9 @@ const Steps = ({
             type={field.formType || 'text'}
             label={field.label}
             onChange={v => onChange(field.name, v)}
-            invalid={errorFields && includes(errorFields, field.name)}
+            invalid={
+              errorFields && includes(errorFields.map(fields => fields.field), field.name)
+            }
             subLabel={field.subLabel}
             onBlur={e => {
               const check = isInvalid(
