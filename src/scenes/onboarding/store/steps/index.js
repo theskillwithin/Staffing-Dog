@@ -443,7 +443,7 @@ export const goToStep = ({ currentStep, nextStep, history }) => (dispatch, getSt
         values[validation.name],
         validation.name,
         validation.validation,
-        true,
+        true, // will have to add logic if any fields become not required
         values.password,
         validation.label,
       ),
