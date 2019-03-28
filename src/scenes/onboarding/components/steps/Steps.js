@@ -61,6 +61,8 @@ const Steps = ({
       fieldProps.fullWidth = field.fullWidth
     }
 
+    console.log(field)
+
     switch (field.type) {
       case 'input':
         return (
@@ -75,9 +77,11 @@ const Steps = ({
             onBlur={e => {
               const check = isInvalid(
                 e.target.value,
-                field.label,
+                field.name,
                 field.validation,
                 field.required,
+                false,
+                field.label,
               )
               blurInvalid(check, field.name)
             }}

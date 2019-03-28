@@ -1,6 +1,6 @@
-const isInvalid = (value, name, validation, required = false, pwMatch = false) => {
+const isInvalid = (value, name, validation, required = false, pwMatch = false, label) => {
   if ((required && !value) || (required && value === '')) {
-    return `${name} is a required field`
+    return `${label || name} is a required field`
   }
   if (validation === 'email') {
     return !/@/.test(value) && 'Not a valid email.'
@@ -19,14 +19,14 @@ const isInvalid = (value, name, validation, required = false, pwMatch = false) =
     const minChars = /minDigits(\d*)/.exec(validation)[1]
     return (
       value.length < parseInt(minChars, 10) &&
-      `${name} must be contain ${minChars} digits`
+      `${label || name} must be contain ${minChars} digits`
     )
   }
   if (/minChars/.test(validation)) {
     const minChars = /minChars(\d*)/.exec(validation)[1]
     return (
       value.length < parseInt(minChars, 10) &&
-      `${name} must be contain ${minChars} characters`
+      `${label || name} must be contain ${minChars} characters`
     )
   }
   return false

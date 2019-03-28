@@ -445,6 +445,7 @@ export const goToStep = ({ currentStep, nextStep, history }) => (dispatch, getSt
         validation.validation,
         true,
         values.password,
+        validation.label,
       ),
     }))
 
