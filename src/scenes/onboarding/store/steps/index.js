@@ -210,6 +210,7 @@ export const reducers = {
     ...state,
     loadingNextStep: false,
     loadingNextStepValue: false,
+    error: payload.error,
     errorFields: payload.errorFields,
   }),
   [GO_TO_STEP_CLEAR_ERROR]: state => ({

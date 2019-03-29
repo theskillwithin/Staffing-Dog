@@ -9,12 +9,7 @@ import {
 } from '@sdog/store/user'
 import { useHtmlClass, useDocumentTitle } from '@sdog/utils/document'
 
-import {
-  findError,
-  findErrorFields,
-  findLoading,
-  clearError as clearErrorAction,
-} from './store/steps'
+import { findError, findLoading, clearError as clearErrorAction } from './store/steps'
 import RootScene from './scenes/Root'
 import TypeScene from './scenes/Type'
 import StepScene from './scenes/Step'
@@ -29,7 +24,6 @@ const Onboarding = ({
   clearError,
   registerError,
   error,
-  fieldError,
   loading,
 }) => {
   useHtmlClass('html-onboarding')
@@ -47,11 +41,8 @@ const Onboarding = ({
     [location.pathname],
   )
 
-  const getErrorsFromFieldError =
-    fieldError && fieldError.length && fieldError.map(err => err.error)
-
   return (
-    <Layout error={getErrorsFromFieldError || registerError || error} loading={loading}>
+    <Layout error={registerError || error} loading={loading}>
       <Switch>
         <Route exact path={match.url} component={RootScene} />
 
@@ -87,7 +78,6 @@ Onboarding.propTypes = {
   clearRegisterUserError: func.isRequired,
   registerError: oneOfType([bool, string, array]),
   error: oneOfType([bool, string, array]),
-  fieldError: oneOfType([bool, string, array]),
   loading: bool.isRequired,
 }
 
@@ -99,7 +89,6 @@ Onboarding.defaultProps = {
 export const mapStateToProps = state => ({
   registerError: findRegisterError(state),
   error: findError(state),
-  fieldError: findErrorFields(state),
   loading: findLoading(state),
 })
 export const mapActionsToProps = {
