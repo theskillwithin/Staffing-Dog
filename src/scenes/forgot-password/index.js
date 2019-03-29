@@ -3,7 +3,6 @@ import { bool, func, string, array, oneOfType, shape } from 'prop-types'
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { useDocumentTitle, useHtmlClass } from '@sdog/utils/document'
-import Contact from '@sdog/components/contact'
 import Toaster from '@sdog/components/toaster'
 import Logo from '@sdog/components/logo'
 import Input from '@sdog/components/input'
@@ -32,10 +31,6 @@ const ForgotPassword = ({ history, submit, isLoading, error }) => {
   return (
     <div className={appTheme.pageContent}>
       <Toaster>{error}</Toaster>
-
-      <header className={theme.header}>
-        <Contact />
-      </header>
 
       <div className={theme.forgotContainer}>
         <div className={theme.logo}>
