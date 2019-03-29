@@ -162,16 +162,6 @@ export const blurInvalid = (error, errorField) => dispatch => {
 export const reducers = {
   [BLUR_INVALID]: (state, payload) => ({
     ...state,
-    error: payload.error
-      ? Array.isArray(state.error)
-        ? state.error.includes(payload.error)
-          ? state.error
-          : [...state.error, payload.error]
-        : [payload.error]
-      : filter(state.error, x => {
-          const findFields = find(state.errorFields, { field: payload.errorField })
-          return x !== findFields.error
-        }),
     errorFields: payload.error
       ? state.errorFields
         ? state.errorFields.includes(payload.errorField)
@@ -221,7 +211,6 @@ export const reducers = {
     ...state,
     loadingNextStep: false,
     loadingNextStepValue: false,
-    error: payload.error,
     errorFields: payload.errorFields,
   }),
   [GO_TO_STEP_CLEAR_ERROR]: state => ({
