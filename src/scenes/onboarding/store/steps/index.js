@@ -24,6 +24,7 @@ export const SET_VALUE = `${BASE}_SET_VALUE`
 export const SET_STEP = `${BASE}_SET_STEP`
 export const SET_TYPE = `${BASE}_SET_TYPE`
 export const BLUR_INVALID = `${BASE}_BLUR_INVALID`
+export const BLUR_VALID = `${BASE}_BLUR_VALID`
 export const GO_TO_STEP = `${BASE}_GO_TO_STEP`
 export const GO_TO_STEP_SUCCESS = `${GO_TO_STEP}_SUCCESS`
 export const GO_TO_STEP_FAILED = `${GO_TO_STEP}_FAILED`
@@ -155,6 +156,7 @@ const updateStepValuesFromRegister = (state, { data }) => ({
 // Validation on blur
 
 export const blurInvalid = (error, errorField) => dispatch => {
+  if (!error) return Promise.resolve(dispatch(actions.blurValid(errorField)))
   return Promise.resolve(dispatch(actions.blurInvalid(error, errorField)))
 }
 
@@ -169,6 +171,10 @@ export const reducers = {
           : [...state.errorFields, { error: payload.error, field: payload.errorField }]
         : [{ error: payload.error, field: payload.errorField }]
       : filter(state.errorFields, x => x.field !== payload.errorField),
+  }),
+  [BLUR_VALID]: (state, payload) => ({
+    ...state,
+    errorFields: filter(state.errorFields, x => x.field !== payload.errorField),
   }),
   [SET_VALUE]: (state, payload) => ({
     ...state,
@@ -268,6 +274,10 @@ export const actions = {
   blurInvalid: (error, errorField) => ({
     type: BLUR_INVALID,
     payload: { error, errorField },
+  }),
+  blurValid: errorField => ({
+    type: BLUR_VALID,
+    payload: { errorField },
   }),
   setValue: (name, value) => ({
     type: SET_VALUE,
