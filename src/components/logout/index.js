@@ -15,7 +15,7 @@ const Logout = ({ userId, first, last }) => {
       <Link to="/logout">
         <Button>
           <span className={theme.user}>
-            First Last <Arrow small color="white" />
+            {first} {last} <Arrow small color="white" />
           </span>
           <span className={theme.hover}>Sign Out</span>
         </Button>
