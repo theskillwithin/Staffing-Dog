@@ -1,7 +1,6 @@
 import React from 'react'
 import { useDocumentTitle, useHtmlClass } from '@sdog/utils/document'
 import clsx from 'clsx'
-import Contact from '@sdog/components/contact'
 import Logo from '@sdog/components/logo'
 import StarTitle from '@sdog/components/star_title'
 import SVGCertification from '@sdog/components/svg/files/certification.svg'
@@ -18,10 +17,6 @@ const Landing = () => {
 
   return (
     <div className={appTheme.pageContent}>
-      <header className={theme.header}>
-        <Contact />
-      </header>
-
       <div className={theme.landingContainer}>
         <div className={theme.logo}>
           <Logo width="63px" largeTxt />

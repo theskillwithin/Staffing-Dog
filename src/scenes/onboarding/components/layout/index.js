@@ -3,8 +3,8 @@ import clsx from 'clsx'
 import { node, bool, string, array, oneOfType } from 'prop-types'
 import Logo from '@sdog/components/logo'
 import LoadingBar from '@sdog/components/loading_bar'
-import Contact from '@sdog/components/contact'
 import Toaster from '@sdog/components/toaster'
+import Logout from '@sdog/components/logout'
 
 import '../../styles.css'
 import styles from '../../theme.css'
@@ -32,8 +32,8 @@ export const Top = ({ children, loading, error }) => (
       <LoadingBar />
     </div>
 
-    <div className={styles.contactUs}>
-      <Contact />
+    <div className={styles.logout}>
+      <Logout />
     </div>
 
     <Toaster>{error}</Toaster>
