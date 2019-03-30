@@ -4,7 +4,7 @@ import clsx from 'clsx'
 import find from 'lodash/find'
 import map from 'lodash/map'
 import includes from 'lodash/includes'
-import isInvalid from 'utils/validation'
+import isInvalid from '@sdog/utils/validation'
 
 import Input from '../../../../components/input'
 import Dropdown from '../../../../components/dropdown'

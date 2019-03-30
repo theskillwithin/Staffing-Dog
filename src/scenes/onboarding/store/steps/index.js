@@ -3,7 +3,7 @@ import get from 'lodash/get'
 import isEmpty from 'lodash/isEmpty'
 import reduce from 'lodash/reduce'
 import filter from 'lodash/filter'
-import isInvalid from 'utils/validation'
+import isInvalid from '@sdog/utils/validation'
 import build from '@sdog/store/build'
 import {
   registerUser,
