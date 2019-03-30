@@ -96,10 +96,15 @@
 
     @media (--sd-preBreakTablet) {
       grid-template-columns: 1fr;
-      grid-template-rows: 394px 394px;
+      grid-template-rows: 550px 550px;
       align-content: center;
       justify-items: center;
       margin-top: 3em;
+      margin-bottom: 5em;
+    }
+
+    @media (--sd-mobile) {
+      grid-template-rows: 394px 394px;
     }
   }
 }
