@@ -43,7 +43,7 @@ export const INITIAL_STATE = {
   },
   type: 'professional',
   values: {},
-  error: [],
+  error: false,
   errorFields: [],
 }
 
