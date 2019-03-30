@@ -9,7 +9,7 @@ import { INITIAL_STATE as USER_INITIAL_STATE } from '@sdog/store/user'
 import { getToken, getFingerprint, setFingerprint, getUserId } from '@sdog/store/storage'
 import Footer from '@sdog/components/footer'
 import changeFavicon from 'utils/local-favicon'
-import { IS_DEV } from 'utils/env'
+import { IS_DEV } from '@sdog/utils/env'
 
 import createFingerprint from './utils/fingerprint'
 import Spinner from './components/spinner'
