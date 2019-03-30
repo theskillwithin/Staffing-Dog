@@ -3,7 +3,6 @@ import { bool, func, string, array, oneOfType, shape } from 'prop-types'
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { useHtmlClass, useDocumentTitle } from '@sdog/utils/document'
-import Contact from '@sdog/components/contact'
 import Toaster from '@sdog/components/toaster'
 import Spinner from '@sdog/components/spinner'
 import Logo from '@sdog/components/logo'
@@ -48,10 +47,6 @@ const ResetPassword = ({
   return (
     <div className={appTheme.pageContent}>
       <Toaster>{error}</Toaster>
-
-      <header className={theme.header}>
-        <Contact />
-      </header>
 
       <div className={theme.resetContainer}>
         <div className={theme.logo}>

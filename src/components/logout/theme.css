@@ -1,0 +1,42 @@
+.logout {
+  button {
+    width: 181px;
+    position: relative;
+  }
+
+  .user {
+    display: block;
+    width: 148px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    word-break: break-all;
+    white-space: nowrap;
+    padding-left: 2em;
+    margin-left: -3em;
+    span {
+      display: block;
+      position: absolute;
+      top: 49%;
+      right: 0.5em;
+      transform: translateY(-50%);
+    }
+  }
+
+  .hover {
+    display: none;
+  }
+
+  &:hover {
+    .hover {
+      display: inline;
+    }
+
+    .user {
+      display: none;
+    }
+  }
+
+  @media (--sd-preBreakTablet) {
+    display: none;
+  }
+}

@@ -3,7 +3,6 @@ import { bool, func, string, array, oneOfType, shape } from 'prop-types'
 import { Link, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { useDocumentTitle, useHtmlClass } from '@sdog/utils/document'
-import Contact from '@sdog/components/contact'
 import Toaster from '@sdog/components/toaster'
 import Logo from '@sdog/components/logo'
 import Input from '@sdog/components/input'
@@ -58,10 +57,6 @@ const Login = ({
     <div className={appTheme.pageContent}>
       <Toaster>{error}</Toaster>
       {!error && <Toaster type="success">{success}</Toaster>}
-
-      <header className={theme.header}>
-        <Contact />
-      </header>
 
       <div className={theme.signinContainer}>
         <div className={theme.logo}>
