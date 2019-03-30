@@ -3,6 +3,7 @@ import get from 'lodash/get'
 import isEmpty from 'lodash/isEmpty'
 import reduce from 'lodash/reduce'
 import filter from 'lodash/filter'
+import isInvalid from '@sdog/utils/validation'
 import build from '@sdog/store/build'
 import {
   registerUser,
@@ -22,6 +23,7 @@ export const BASE = '@SD/OB/STEPS'
 export const SET_VALUE = `${BASE}_SET_VALUE`
 export const SET_STEP = `${BASE}_SET_STEP`
 export const SET_TYPE = `${BASE}_SET_TYPE`
+export const BLUR_INVALID = `${BASE}_BLUR_INVALID`
 export const GO_TO_STEP = `${BASE}_GO_TO_STEP`
 export const GO_TO_STEP_SUCCESS = `${GO_TO_STEP}_SUCCESS`
 export const GO_TO_STEP_FAILED = `${GO_TO_STEP}_FAILED`
@@ -42,7 +44,7 @@ export const INITIAL_STATE = {
   type: 'professional',
   values: {},
   error: false,
-  errorFields: false,
+  errorFields: [],
 }
 
 // take data from api and format for the onboarding redux store
@@ -146,8 +148,23 @@ const updateStepValuesFromRegister = (state, { data }) => ({
   },
 })
 
+// Validation on blur
+
+export const blurInvalid = (error, errorField) => dispatch => {
+  return Promise.resolve(dispatch(actions.blurInvalid(error, errorField)))
+}
+
 // Reducer Methods
 export const reducers = {
+  [BLUR_INVALID]: (state, payload) => ({
+    ...state,
+    errorFields: payload.error
+      ? [
+          ...filter(state.errorFields, x => x.field !== payload.errorField),
+          { error: payload.error, field: payload.errorField },
+        ]
+      : filter(state.errorFields, x => x.field !== payload.errorField),
+  }),
   [SET_VALUE]: (state, payload) => ({
     ...state,
     values: {
@@ -249,6 +266,10 @@ export const reducers = {
 
 // Actions Creators
 export const actions = {
+  blurInvalid: (error, errorField) => ({
+    type: BLUR_INVALID,
+    payload: { error, errorField },
+  }),
   setValue: (name, value) => ({
     type: SET_VALUE,
     payload: { name, value },
@@ -407,62 +428,20 @@ export const goToStep = ({ currentStep, nextStep, history }) => (dispatch, getSt
 
   if (step && nextStep === step.nextStep) {
     // check validation
-    // check required validation
-    const requireds = filter(getSteps(step), { required: true })
-    const isRequired = requireds
-      .map(
-        required =>
-          !(values[required.name] && values[required.name].length > 0) && required.name,
-      )
-      .filter(Boolean)
-
-    if (isRequired && isRequired.length) {
-      return Promise.resolve(
-        dispatch(
-          actions.goToStepFailed({
-            error: 'You must complete the required fields.',
-            errorFields: isRequired,
-            nextStep,
-          }),
-        ),
-      )
-    }
-
-    // check validation types
-
-    const isInvalid = (name, validation) => {
-      if (validation === 'email') {
-        return !/@/.test(values[name]) && 'Not a valid email.'
-      }
-      if (validation === 'passwordMatch') {
-        return (
-          !(values[name] === values.password) &&
-          'Password and Verify Password must match.'
-        )
-      }
-      if (/minDigits/.test(validation)) {
-        const minChars = /minDigits(\d*)/.exec(validation)[1]
-        return (
-          values[name].length < parseInt(minChars, 10) &&
-          `${name} must be contain ${minChars} digits`
-        )
-      }
-      if (/minChars/.test(validation)) {
-        const minChars = /minChars(\d*)/.exec(validation)[1]
-        return (
-          values[name].length < parseInt(minChars, 10) &&
-          `${name} must be contain ${minChars} characters`
-        )
-      }
-      return false
-    }
 
     const validations = filter(
       getSteps(step),
-      s => s.validation && s.validation.length,
+      s => (s.validation && s.validation.length) || s.required,
     ).map(validation => ({
       name: validation.name,
-      invalid: isInvalid(validation.name, validation.validation),
+      invalid: isInvalid(
+        values[validation.name],
+        validation.name,
+        validation.validation,
+        true, // will have to add logic if any fields become not required
+        values.password,
+        validation.label,
+      ),
     }))
 
     const invalids = filter(validations, validation => validation.invalid)
@@ -472,7 +451,10 @@ export const goToStep = ({ currentStep, nextStep, history }) => (dispatch, getSt
         dispatch(
           actions.goToStepFailed({
             error: invalids.map(invalid => invalid.invalid),
-            errorFields: invalids.map(invalid => invalid.name),
+            errorFields: invalids.map(invalid => ({
+              error: invalid.invalid,
+              field: invalid.name,
+            })),
             nextStep,
           }),
         ),

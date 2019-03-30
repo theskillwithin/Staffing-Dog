@@ -4,6 +4,7 @@ import clsx from 'clsx'
 import find from 'lodash/find'
 import map from 'lodash/map'
 import includes from 'lodash/includes'
+import isInvalid from '@sdog/utils/validation'
 
 import Input from '../../../../components/input'
 import Dropdown from '../../../../components/dropdown'
@@ -20,6 +21,7 @@ const Steps = ({
   steps,
   history,
   goToStep,
+  blurInvalid,
 }) => {
   const currentStep = find(steps, s => s.step === step)
   const isComplete = 'complete' === currentStep.step
@@ -66,8 +68,21 @@ const Steps = ({
             type={field.formType || 'text'}
             label={field.label}
             onChange={v => onChange(field.name, v)}
-            invalid={errorFields && includes(errorFields, field.name)}
+            invalid={
+              errorFields && includes(errorFields.map(fields => fields.field), field.name)
+            }
             subLabel={field.subLabel}
+            onBlur={e => {
+              const check = isInvalid(
+                e.target.value,
+                field.name,
+                field.validation,
+                field.required,
+                false,
+                field.label,
+              )
+              blurInvalid(check, field.name)
+            }}
             {...fieldProps}
           />
         )
@@ -150,6 +165,7 @@ Steps.propTypes = {
   setStep: func.isRequired,
   goToStep: func.isRequired,
   errorFields: oneOfType([array, bool]),
+  blurInvalid: func.isRequired,
 }
 
 export default Steps
