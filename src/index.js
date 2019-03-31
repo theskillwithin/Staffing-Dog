@@ -10,6 +10,7 @@ import { getToken, getFingerprint, setFingerprint, getUserId } from '@sdog/store
 import Footer from '@sdog/components/footer'
 import changeFavicon from 'utils/local-favicon'
 import { IS_DEV } from '@sdog/utils/env'
+import { RouteTracker } from '@sdog/components/GoogleAnalytics'
 
 import createFingerprint from './utils/fingerprint'
 import Spinner from './components/spinner'
@@ -58,6 +59,8 @@ const store = createStore(storeData, reducers)
 render(
   <Provider store={store}>
     <Router>
+      <RouteTracker />
+
       <ErrorBoundry hideFallback>
         <React.Suspense fallback={<Spinner />}>
           <Switch>
