@@ -40,7 +40,6 @@
     'appContent';
 
   @media (--sd-tablet) {
-    margin-bottom: 100px;
     grid-template-rows:
       4px auto minmax(50px, 80px) minmax(auto, min-content)
       auto;
