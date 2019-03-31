@@ -1,5 +1,5 @@
-import get from 'lodash/get'
 import { API_ROOT } from '@sdog/utils/api'
+import { useErrorFromResponse } from '@sdog/definitions/errors'
 
 import { findUserId } from '../user'
 import { getUserId } from '../storage'
@@ -51,10 +51,10 @@ reducers = {
     loading: true,
     error: false,
   }),
-  [getUserJobsTypes.ERROR]: (state, { error = 'error' }) => ({
+  [getUserJobsTypes.ERROR]: (state, { error }) => ({
     ...state,
     loading: false,
-    error,
+    error: useErrorFromResponse(error),
   }),
   [getUserJobsTypes.SUCCESS]: (state, { data }) => ({
     ...state,
@@ -110,11 +110,11 @@ reducers = {
       results: data,
     },
   }),
-  [getSingleJobTypes.ERROR]: (state, payload) => ({
+  [getSingleJobTypes.ERROR]: (state, { error }) => ({
     ...state,
     singleJob: {
       loading: false,
-      error: get(payload, 'data.message', payload.error),
+      error: useErrorFromResponse(error),
     },
   }),
 }
