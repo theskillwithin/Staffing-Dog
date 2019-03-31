@@ -8,9 +8,9 @@
     "yarn": ">=1.13.0"
   },
   "scripts": {
-    "start": "cross-env ENV=local webpack-dev-server --mode development",
-    "build": "cross-env ENV=stage BUILD_STAGE=1 webpack --mode production",
-    "build:prod": "cross-env ENV=prod webpack --mode production",
+    "start": "cross-env NODE_ENV=development ENV=local webpack-dev-server --mode development",
+    "build": "cross-env NODE_ENV=production ENV=stage BUILD_STAGE=1 webpack --mode production",
+    "build:prod": "cross-env NODE_ENV=production ENV=prod webpack --mode production",
     "clear-build-files": "rm -r ./dist",
     "eslint-check": "eslint --print-config .eslintrc.js | eslint-config-prettier-check",
     "cy:run": "cypress run",
