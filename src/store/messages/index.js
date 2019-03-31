@@ -1,5 +1,6 @@
 import find from 'lodash/find'
 import { API_ROOT } from '@sdog/utils/api'
+import { useErrorFromResponse } from '@sdog/definitions/errors'
 
 import { findUserId } from '../user'
 import { getUserId } from '../storage'
@@ -98,7 +99,7 @@ reducers = {
     threads: state.threads.map(thread => ({
       ...thread,
       loading: thread.id === threadId ? false : thread.loading,
-      error: thread.id === threadId ? error : thread.error,
+      error: thread.id === threadId ? useErrorFromResponse(error) : thread.error,
     })),
   }),
 }
@@ -140,6 +141,7 @@ reducers = {
     threads: state.threads.map(thread => ({
       ...thread,
       sending: thread.id === threadId ? true : thread.sending || false,
+      error: thread.id === threadId ? false : thread.error || false,
     })),
   }),
   [sendUserMessageTypes.SUCCESS]: (
@@ -148,11 +150,19 @@ reducers = {
   ) => ({
     ...state,
     threads: state.threads.map(thread => ({
-      sending: false,
+      sending: thread.id === threadId ? false : thread.sending || false,
+      error: thread.id === threadId ? false : thread.error || false,
       recent:
         thread.id === threadId
           ? [...thread.recent, { message, sent_by: userId }]
           : [...thread.recent],
+    })),
+  }),
+  [sendUserMessageTypes.ERROR]: (state, { error, threadId }) => ({
+    ...state,
+    threads: state.threads.map(thread => ({
+      sending: thread.id === threadId ? false : thread.sending || false,
+      error: thread.id === threadId ? useErrorFromResponse(error) : thread.error || false,
     })),
   }),
 }
@@ -193,7 +203,7 @@ reducers = {
   [getMessageFriendListTypes.ERROR]: (state, { error }) => ({
     ...state,
     friendListLoading: false,
-    friendListError: error,
+    friendListError: useErrorFromResponse(error),
   }),
 }
 

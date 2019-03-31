@@ -3,6 +3,7 @@ import get from 'lodash/get'
 import omit from 'lodash/omit'
 import { API_ROOT } from '@sdog/utils/api'
 import createFingerprint from '@sdog/utils/fingerprint'
+import { useErrorFromResponse } from '@sdog/definitions/errors'
 
 import { createActionTypes, reduxRegister, buildStore } from '../tools'
 import {
@@ -208,14 +209,7 @@ reducers = {
     ...spreadLastUpdated(),
     auth: {
       ...state.auth,
-      ...spreadLoadingError(
-        false,
-        get(
-          error,
-          'response.data.error',
-          'There was an issue attempting to login. Please try again or contact support.',
-        ),
-      ),
+      ...spreadLoadingError(false, useErrorFromResponse(error)),
     },
   }),
   [userLoginTypes.SUCCESS]: (state, { data }) => ({
@@ -320,14 +314,7 @@ reducers = {
     ...spreadLastUpdated(),
     register: {
       ...state.register,
-      ...spreadLoadingError(
-        false,
-        get(
-          error,
-          'response.data.error',
-          'There was an unkown api error attempting to save this step. Please try again or contact support',
-        ),
-      ),
+      ...spreadLoadingError(false, useErrorFromResponse(error)),
     },
   }),
 }
@@ -375,14 +362,7 @@ reducers = {
     ...spreadLastUpdated(),
     register: {
       ...state.register,
-      ...spreadLoadingError(
-        false,
-        get(
-          error,
-          'response.data.error',
-          'There was an error attempting to save your data. Please try again or contact support.',
-        ),
-      ),
+      ...spreadLoadingError(false, useErrorFromResponse(error)),
     },
   }),
 }
@@ -445,14 +425,7 @@ reducers = {
     ...spreadLastUpdated(),
     profile: {
       ...state.profile,
-      ...spreadLoadingError(
-        false,
-        get(
-          error,
-          'response.data.error',
-          'There was an error attemtping to get your profile data. Please contact support if this error continues.',
-        ),
-      ),
+      ...spreadLoadingError(false, useErrorFromResponse(error)),
     },
   }),
 }
@@ -580,7 +553,7 @@ reducers = {
     },
     lastUpdated: new Date().getTime(),
   }),
-  [autoSaveUserProfileTypes.ERROR]: (state, payload) => ({
+  [autoSaveUserProfileTypes.ERROR]: (state, { error }) => ({
     ...state,
     ...spreadLastUpdated(),
     profile: {
@@ -591,7 +564,7 @@ reducers = {
             state.profile.previousProfileUpdate.value,
           )
         : state.profile),
-      ...spreadLoadingError(false, payload.error || 'error'),
+      ...spreadLoadingError(false, useErrorFromResponse(error)),
     },
     lastUpdated: new Date().getTime(),
   }),
@@ -631,12 +604,12 @@ reducers = {
       ...spreadLoadingError(false, false),
     },
   }),
-  [saveUserProfileTypes.ERROR]: (state, payload) => ({
+  [saveUserProfileTypes.ERROR]: (state, { error }) => ({
     ...state,
     ...spreadLastUpdated(),
     profile: {
       ...state.profile,
-      ...spreadLoadingError(false, payload.error || 'error'),
+      ...spreadLoadingError(false, useErrorFromResponse(error)),
     },
   }),
 }
@@ -683,11 +656,11 @@ reducers = {
       },
     },
   }),
-  [uploadUserPhotoTypes.ERROR]: state => ({
+  [uploadUserPhotoTypes.ERROR]: (state, { error }) => ({
     ...state,
     ...spreadLastUpdated(),
     loadingUserProfile: false,
-    loadingUserProfileError: true,
+    loadingUserProfileError: useErrorFromResponse(error),
   }),
 }
 
@@ -751,12 +724,12 @@ reducers = {
       success: false,
     },
   }),
-  [userForgotPasswordTypes.ERROR]: state => ({
+  [userForgotPasswordTypes.ERROR]: (state, { error }) => ({
     ...state,
     ...spreadLastUpdated(),
     forgot: {
       ...state.forgot,
-      ...spreadLoadingError(false, 'Unknown API Error'),
+      ...spreadLoadingError(false, useErrorFromResponse(error)),
       success: false,
     },
   }),
@@ -838,7 +811,7 @@ reducers = {
       ...state.reset,
       validate: {
         ...state.reset.validate,
-        ...spreadLoadingError(false, get(error, 'message', 'Unknown API Error')),
+        ...spreadLoadingError(false, useErrorFromResponse(error)),
         success: false,
       },
     },
@@ -869,7 +842,7 @@ reducers = {
     ...spreadLastUpdated(),
     reset: {
       ...state.reset,
-      ...spreadLoadingError(false, get(error, 'message', 'Unknown API Error')),
+      ...spreadLoadingError(false, useErrorFromResponse(error)),
       success: false,
     },
   }),
