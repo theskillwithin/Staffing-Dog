@@ -4,7 +4,7 @@ const tryAgain = 'Please try again or contact support.'
 const withTryAgain = (message, elseTryAgain = tryAgain) => `${message} ${elseTryAgain}`
 
 export const codes = {
-  '400_1': 'general changeset/request param/validation error',
+  // '400_1': 'general changeset/request param/validation error',
   '400_11': withTryAgain('Unkown user.'),
   '400_12': withTryAgain('Job posting was not found.'),
   '400_131': 'No valid relationship between user/profile and application',
@@ -37,4 +37,5 @@ export const useErrorByCode = (code, elseError = defaultElseError) =>
   codes[code] || elseError
 
 export const useErrorFromResponse = (res, elseError = defaultElseError) =>
-  codes[get(res, 'response.data.error_code')] || elseError
+  codes[get(res, 'response.data.error_code')] ||
+  get(res, 'response.data.message', elseError)
