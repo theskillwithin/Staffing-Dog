@@ -59,6 +59,7 @@ const ResetPassword = ({ submit, isLoading, error }) => {
                 value={msg}
                 onChange={setMsg}
                 textarea
+                maxLength={5000}
               />
 
               <Button
