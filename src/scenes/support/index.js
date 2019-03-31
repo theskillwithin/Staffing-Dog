@@ -9,32 +9,32 @@ import Input from '@sdog/components/input'
 import Button from '@sdog/components/button'
 
 import {
-  findResetLoading,
-  findResetError,
-  findResetValidateError,
-  submitResetPasswordEmail,
-  validateResetPasswordEmail,
-} from '../../store/user'
+  findContactLoading,
+  findContactError,
+  findContactSuccess,
+  sendContactForm,
+} from '../../store/contact'
 import appTheme from '../app/theme.css'
 
 import theme from './theme.css'
 
-const ResetPassword = ({ submit, isLoading, error }) => {
+const ResetPassword = ({ submit, isLoading, error, success }) => {
   const [email, setEmail] = useState('')
-  const [msg, setMsg] = useState('')
+  const [message, setMessage] = useState('')
 
   useHtmlClass('html-support')
   useDocumentTitle('Support')
 
   const onSubmit = e => {
     e.preventDefault()
-    const data = { email, msg }
+    const data = { email, message }
     submit(data)
   }
 
   return (
     <div className={appTheme.pageContent}>
       <Toaster>{error}</Toaster>
+      {success && <Toaster type="succes">Your message has been sent</Toaster>}
 
       <div className={theme.supportContainer}>
         <div className={theme.logo}>
@@ -56,8 +56,8 @@ const ResetPassword = ({ submit, isLoading, error }) => {
               <Input
                 className={theme.input}
                 label="Message"
-                value={msg}
-                onChange={setMsg}
+                value={message}
+                onChange={setMessage}
                 textarea
                 maxLength={5000}
               />
@@ -84,17 +84,19 @@ const ResetPassword = ({ submit, isLoading, error }) => {
 ResetPassword.propTypes = {
   submit: func.isRequired,
   isLoading: bool,
+  success: bool,
   error: oneOfType([string, array, bool]).isRequired,
 }
 
 const mapStateToProps = state => ({
-  isLoading: findResetLoading(state),
-  error: findResetValidateError(state) || findResetError(state),
+  isLoading: findContactLoading(state),
+  error: findContactError(state),
+  success: findContactSuccess(state),
 })
 
 export default withRouter(
   connect(
     mapStateToProps,
-    { submit: submitResetPasswordEmail, validate: validateResetPasswordEmail },
+    { submit: sendContactForm },
   )(ResetPassword),
 )
