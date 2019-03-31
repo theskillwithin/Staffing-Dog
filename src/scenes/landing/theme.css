@@ -117,6 +117,7 @@
     font-size: 18px;
     border-radius: 0 0 8px 8px;
     padding: 1em 6em;
+    z-index: 1;
 
     @media (--sd-preBreakTablet) {
       height: auto;
