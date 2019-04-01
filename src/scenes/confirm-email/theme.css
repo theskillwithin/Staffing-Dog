@@ -1,22 +1,16 @@
 @import '../../styles/config.css';
 
-:global(.html-reset-password) {
+:global(.html-email-confirmation) {
   @media (--sd-mobile) {
     background-color: var(--sd-white);
   }
 }
 
 :root {
-  --resetMaxWidth: 480px;
+  --emailConfirmationMaxWidth: 480px;
 }
 
-.header {
-  position: absolute;
-  top: 2em;
-  right: 2em;
-}
-
-.resetContainer {
+.emailConfirmationContainer {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -24,11 +18,11 @@
   min-height: 80vh;
 }
 
-.reset {
+.emailConfirmation {
   position: relative;
   padding: 32px 32px 45px 32px;
   margin: 2em;
-  max-width: var(--resetMaxWidth);
+  max-width: var(--emailConfirmationMaxWidth);
   width: 100%;
   border-radius: 8px;
   background-color: var(--sd-white);
@@ -37,6 +31,7 @@
   h2 {
     text-align: center;
     font-weight: var(--sd-fontWeightLight);
+    color: var(--blackTxt);
   }
 
   @media (--sd-mobile) {
@@ -44,22 +39,21 @@
   }
 }
 
-.form {
-  display: flex;
-  justify-content: space-between;
-  flex-direction: column;
-  margin: 0.55em 0;
-  width: 100%;
+.success {
+  text-align: center;
 
-  .input {
-    margin-top: 22px;
-  }
+  button {
+    margin-top: 1em;
+    min-width: 150px;
 
-  .button {
-    margin-top: 30px;
+    span {
+      position: absolute;
+      margin-right: -1em;
+      margin-left: 1em;
+    }
   }
 }
 
 .loading {
-  min-height: 218px;
+  min-height: 118px;
 }

@@ -29,6 +29,7 @@ const LoginScene = React.lazy(() => import('@sdog/scenes/login'))
 const LogoutScene = React.lazy(() => import('@sdog/scenes/logout'))
 const ForgotPWScene = React.lazy(() => import('@sdog/scenes/forgot-password'))
 const ResetPWScene = React.lazy(() => import('@sdog/scenes/reset-password'))
+const EmailConfirmationScene = React.lazy(() => import('@sdog/scenes/confirm-email'))
 const LandingScene = React.lazy(() => import('@sdog/scenes/landing'))
 
 const fingerprint = getFingerprint() || createFingerprint()
@@ -73,6 +74,10 @@ render(
             <Route path="/landing" component={LandingScene} />
             <Route path="/forgot-password" component={ForgotPWScene} />
             <Route path="/reset-password/:anchor/:token" component={ResetPWScene} />
+            <Route
+              path="/confirm-email/:anchor/:token"
+              component={EmailConfirmationScene}
+            />
             <AuthRoute path="/" component={App} to="/login" />
           </Switch>
         </React.Suspense>

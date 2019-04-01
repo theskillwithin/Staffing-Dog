@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { bool, func, string, array, oneOfType, shape } from 'prop-types'
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
@@ -6,42 +6,44 @@ import { useHtmlClass, useDocumentTitle } from '@sdog/utils/document'
 import Toaster from '@sdog/components/toaster'
 import Spinner from '@sdog/components/spinner'
 import Logo from '@sdog/components/logo'
-import Input from '@sdog/components/input'
 import Button from '@sdog/components/button'
+import Alert from '@sdog/components/Alert'
+import Arrow from '@sdog/components/svg/Arrow'
 
 import {
-  findResetLoading,
-  findResetError,
-  findResetValidateError,
-  submitResetPasswordEmail,
+  findValidateEmailLoading,
+  findValidateEmailError,
+  findValidateEmailSuccess,
+  validateEmail,
 } from '../../store/user'
 import appTheme from '../app/theme.css'
 
 import theme from './theme.css'
 
-const ResetPassword = ({
-  history,
+const EmailConfirmation = ({
   submit,
   isLoading,
   error,
-  match: { anchor, token },
   success,
+  match: {
+    params: { anchor, token },
+  },
 }) => {
   useHtmlClass('html-email-confirmation')
-  useDocumentTitle('Reset Password')
+  useDocumentTitle('Email Confirmation')
 
-  useEffect(() => void submit({ anchor, token, history }), [])
+  useEffect(() => void submit({ anchor, token }), [])
 
   return (
     <div className={appTheme.pageContent}>
       <Toaster>{error}</Toaster>
 
-      <div className={theme.resetContainer}>
+      <div className={theme.emailConfirmationContainer}>
         <div className={theme.logo}>
           <Logo width="63px" largeTxt />
         </div>
 
-        <div className={theme.reset}>
+        <div className={theme.emailConfirmation}>
           <h2>Email Confirmation</h2>
 
           {isLoading ? (
@@ -50,7 +52,17 @@ const ResetPassword = ({
             </div>
           ) : (
             <div>
-              {success ? (<h3>Email has been verified...</h3>)}
+              {success && (
+                <div className={theme.success}>
+                  <Alert success>Email has been verified!</Alert>
+                  <Button to="/login" size="medium">
+                    Login{' '}
+                    <span>
+                      <Arrow small color="white" />
+                    </span>
+                  </Button>
+                </div>
+              )}
             </div>
           )}
         </div>
@@ -59,22 +71,23 @@ const ResetPassword = ({
   )
 }
 
-ResetPassword.propTypes = {
+EmailConfirmation.propTypes = {
   submit: func.isRequired,
-  history: shape({ push: func.isRequired }).isRequired,
   match: shape({ params: shape({ anchor: string, token: string }) }).isRequired,
   isLoading: bool,
   error: oneOfType([string, array, bool]).isRequired,
+  success: oneOfType([string, array, bool]).isRequired,
 }
 
 const mapStateToProps = state => ({
-  isLoading: findResetLoading(state),
-  error: findResetValidateError(state) || findResetError(state),
+  isLoading: findValidateEmailLoading(state),
+  error: findValidateEmailError(state),
+  success: findValidateEmailSuccess(state),
 })
 
 export default withRouter(
   connect(
     mapStateToProps,
-    { submit: submitResetPasswordEmail  },
-  )(ResetPassword),
+    { submit: validateEmail },
+  )(EmailConfirmation),
 )
