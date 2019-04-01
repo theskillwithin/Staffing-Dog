@@ -31,6 +31,7 @@ const LogoutScene = React.lazy(() => import('@sdog/scenes/logout'))
 const ForgotPWScene = React.lazy(() => import('@sdog/scenes/forgot-password'))
 const ResetPWScene = React.lazy(() => import('@sdog/scenes/reset-password'))
 const LandingScene = React.lazy(() => import('@sdog/scenes/landing'))
+const SupportScene = React.lazy(() => import('@sdog/scenes/support'))
 
 const fingerprint = getFingerprint() || createFingerprint()
 setFingerprint(fingerprint)
@@ -76,12 +77,13 @@ render(
             <Route path="/landing" component={LandingScene} />
             <Route path="/forgot-password" component={ForgotPWScene} />
             <Route path="/reset-password/:anchor/:token" component={ResetPWScene} />
+            <Route path="/support" component={SupportScene} />
             <AuthRoute path="/" component={App} to="/login" />
           </Switch>
         </React.Suspense>
+        <Footer />
       </ErrorBoundry>
     </Router>
-    <Footer />
   </Provider>,
   document.getElementById('app'),
 )
