@@ -9,7 +9,8 @@ import { INITIAL_STATE as USER_INITIAL_STATE } from '@sdog/store/user'
 import { getToken, getFingerprint, setFingerprint, getUserId } from '@sdog/store/storage'
 import Footer from '@sdog/components/footer'
 import changeFavicon from 'utils/local-favicon'
-import { IS_DEV } from '@sdog/utils/env'
+import { IS_DEV, IS_PROD } from '@sdog/utils/env'
+import { RouteTracker } from '@sdog/components/GoogleAnalytics'
 
 import createFingerprint from './utils/fingerprint'
 import Spinner from './components/spinner'
@@ -31,6 +32,7 @@ const ForgotPWScene = React.lazy(() => import('@sdog/scenes/forgot-password'))
 const ResetPWScene = React.lazy(() => import('@sdog/scenes/reset-password'))
 const EmailConfirmationScene = React.lazy(() => import('@sdog/scenes/confirm-email'))
 const LandingScene = React.lazy(() => import('@sdog/scenes/landing'))
+const SupportScene = React.lazy(() => import('@sdog/scenes/support'))
 
 const fingerprint = getFingerprint() || createFingerprint()
 setFingerprint(fingerprint)
@@ -59,6 +61,8 @@ const store = createStore(storeData, reducers)
 render(
   <Provider store={store}>
     <Router>
+      <RouteTracker enable={IS_PROD} code="UA-98231042-2" />
+
       <ErrorBoundry hideFallback>
         <React.Suspense fallback={<Spinner />}>
           <Switch>
@@ -78,12 +82,13 @@ render(
               path="/confirm-email/:anchor/:token"
               component={EmailConfirmationScene}
             />
+            <Route path="/support" component={SupportScene} />
             <AuthRoute path="/" component={App} to="/login" />
           </Switch>
         </React.Suspense>
+        <Footer />
       </ErrorBoundry>
     </Router>
-    <Footer />
   </Provider>,
   document.getElementById('app'),
 )
