@@ -36,7 +36,11 @@ const Onboarding = ({
   useHtmlClass('html-onboarding')
   useDocumentTitle('Onboarding')
 
-  useEffect(() => void userProfile.id && getUserProfile(), [])
+  useEffect(() => {
+    if (userProfile.id) {
+      getUserProfile()
+    }
+  }, [])
 
   useEffect(
     () => {
