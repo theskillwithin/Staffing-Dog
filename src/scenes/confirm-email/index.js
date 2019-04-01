@@ -7,7 +7,7 @@ import Toaster from '@sdog/components/toaster'
 import Spinner from '@sdog/components/spinner'
 import Logo from '@sdog/components/logo'
 import Button from '@sdog/components/button'
-import Alert from '@sdog/components/Alert'
+import Alert from '@sdog/components/alert'
 import Arrow from '@sdog/components/svg/Arrow'
 
 import {
