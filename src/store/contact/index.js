@@ -1,4 +1,5 @@
 import { API_ROOT } from '@sdog/utils/api'
+import get from 'lodash/get'
 
 import { findUserId } from '../user'
 import { getUserId } from '../storage'
@@ -51,7 +52,7 @@ reducers = {
     ...state,
     loading: false,
     success: false,
-    error,
+    error: get(error, 'response.data.message', 'Unkown error has occured'),
   }),
 }
 
