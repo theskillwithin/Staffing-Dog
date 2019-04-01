@@ -866,6 +866,118 @@ reducers = {
 }
 
 /**
+ * USER VALIDATE EMAIL
+ */
+export const USER_VALIDATE_EMAIL = 'USER_VALIDATE_EMAIL'
+export const USER_VALIDATE_REQUEST = 'USER_VALIDATE_REQUEST'
+export const USER_VALIDATE_EMAIL_CLEAR_SUCCESS = 'USER_VALIDATE_EMAIL_CLEAR_SUCCESS'
+export const userValidateEmail = createActionTypes(USER_VALIDATE_EMAIL)
+export const userValidateRequestEmail = createActionTypes(USER_VALIDATE_REQUEST)
+
+export const requestValidateEmail = () => (dispatch, getState) => {
+  const userId = findUserId(getState()) || getUserId()
+  dispatch({
+    type: USER_VALIDATE_REQUEST,
+    api: {
+      url: `${API_ROOT}/profiles/email_confirmation`,
+      method: 'POST',
+      data: { user_id: userId },
+    },
+  })
+}
+
+export const validateEmail = ({ anchor, token, history }) => ({
+  type: USER_VALIDATE_EMAIL,
+  api: {
+    url: `${API_ROOT}/login/validate_email`,
+    method: 'POST',
+    data: { anchor, token },
+    callbacks: {
+      success: () => {
+        if (history) {
+          history.push('/login')
+        }
+      },
+    },
+  },
+})
+
+reducers = {
+  ...reducers,
+  [userValidateRequestEmail.LOADING]: state => ({
+    ...state,
+    ...spreadLastUpdated(),
+    reset: {
+      ...state.reset,
+      validate: {
+        ...state.reset.validate,
+        ...spreadLoadingError(true, false),
+        success: false,
+      },
+    },
+  }),
+  [userValidateRequestEmail.ERROR]: (state, { error }) => ({
+    ...state,
+    ...spreadLastUpdated(),
+    reset: {
+      ...state.reset,
+      validate: {
+        ...state.reset.validate,
+        ...spreadLoadingError(false, useErrorFromResponse(error)),
+        success: false,
+      },
+    },
+  }),
+  [userValidateRequestEmail.SUCCESS]: (state, { data }) => ({
+    ...state,
+    ...spreadLastUpdated(),
+    reset: {
+      ...state.reset,
+      validate: {
+        ...state.reset.validate,
+        ...spreadLoadingError(false, false),
+        success: get(data, 'message', true),
+      },
+    },
+  }),
+  [userValidateEmail.LOADING]: state => ({
+    ...state,
+    ...spreadLastUpdated(),
+    reset: {
+      ...state.reset,
+      ...spreadLoadingError(true, false),
+      success: false,
+    },
+  }),
+  [userValidateEmail.ERROR]: (state, { error }) => ({
+    ...state,
+    ...spreadLastUpdated(),
+    reset: {
+      ...state.reset,
+      ...spreadLoadingError(false, useErrorFromResponse(error)),
+      success: false,
+    },
+  }),
+  [userValidateEmail.SUCCESS]: (state, { data }) => ({
+    ...state,
+    ...spreadLastUpdated(),
+    reset: {
+      ...state.reset,
+      ...spreadLoadingError(false, false),
+      success: get(data, 'message', true),
+    },
+  }),
+  [USER_RESET_PASSWORD_CLEAR_SUCCESS]: state => ({
+    ...state,
+    ...spreadLastUpdated(),
+    reset: {
+      ...state.reset,
+      success: false,
+    },
+  }),
+}
+
+/**
  * Create Store
  */
 export const reducer = buildStore(reducers, INITIAL_STATE)
