@@ -93,6 +93,16 @@ export const INITIAL_STATE = {
       success: false,
     },
   },
+  validateEmail: {
+    loading: false,
+    error: false,
+    success: false,
+  },
+  requestValidateEmail: {
+    loading: false,
+    error: false,
+    success: false,
+  },
 }
 
 const getLastUpdated = () => new Date().getTime()
@@ -866,6 +876,94 @@ reducers = {
 }
 
 /**
+ * USER VALIDATE EMAIL
+ */
+export const USER_VALIDATE_EMAIL = 'USER_VALIDATE_EMAIL'
+export const USER_VALIDATE_REQUEST = 'USER_VALIDATE_REQUEST'
+export const USER_VALIDATE_EMAIL_CLEAR_SUCCESS = 'USER_VALIDATE_EMAIL_CLEAR_SUCCESS'
+export const userValidateEmail = createActionTypes(USER_VALIDATE_EMAIL)
+export const userValidateRequestEmail = createActionTypes(USER_VALIDATE_REQUEST)
+
+export const requestValidateEmail = () => (dispatch, getState) => {
+  const userId = findUserId(getState()) || getUserId()
+  dispatch({
+    type: USER_VALIDATE_REQUEST,
+    api: {
+      url: `${API_ROOT}/profiles/email_confirmation`,
+      method: 'POST',
+      data: { user_id: userId },
+    },
+  })
+}
+
+export const validateEmail = ({ anchor, token }) => ({
+  type: USER_VALIDATE_EMAIL,
+  api: {
+    url: `${API_ROOT}/login/validate_email`,
+    method: 'POST',
+    data: { anchor, token },
+  },
+})
+
+reducers = {
+  ...reducers,
+  [userValidateRequestEmail.LOADING]: state => ({
+    ...state,
+    ...spreadLastUpdated(),
+    requestValidateEmail: {
+      ...state.requestValidateEmail,
+      ...spreadLoadingError(true, false),
+      success: false,
+    },
+  }),
+  [userValidateRequestEmail.ERROR]: (state, { error }) => ({
+    ...state,
+    ...spreadLastUpdated(),
+    requestValidateEmail: {
+      ...state.requestValidateEmail,
+      ...spreadLoadingError(false, useErrorFromResponse(error)),
+      success: false,
+    },
+  }),
+  [userValidateRequestEmail.SUCCESS]: (state, { data }) => ({
+    ...state,
+    ...spreadLastUpdated(),
+    requestValidateEmail: {
+      ...state.requestValidateEmail,
+      ...spreadLoadingError(false, false),
+      success: get(data, 'message', true),
+    },
+  }),
+  [userValidateEmail.LOADING]: state => ({
+    ...state,
+    ...spreadLastUpdated(),
+    validateEmail: {
+      ...state.validateEmail,
+      ...spreadLoadingError(true, false),
+      success: false,
+    },
+  }),
+  [userValidateEmail.ERROR]: (state, { error }) => ({
+    ...state,
+    ...spreadLastUpdated(),
+    validateEmail: {
+      ...state.validateEmail,
+      ...spreadLoadingError(false, useErrorFromResponse(error)),
+      success: false,
+    },
+  }),
+  [userValidateEmail.SUCCESS]: (state, { data }) => ({
+    ...state,
+    ...spreadLastUpdated(),
+    validateEmail: {
+      ...state.validateEmail,
+      ...spreadLoadingError(false, false),
+      success: get(data, 'message', true),
+    },
+  }),
+}
+
+/**
  * Create Store
  */
 export const reducer = buildStore(reducers, INITIAL_STATE)
@@ -886,6 +984,7 @@ export const findSchedule = state => findState(state).schedule
 export const findRegister = state => findState(state).register
 export const findForgot = state => findState(state).forgot
 export const findReset = state => findState(state).reset
+export const findValidateEmail = state => findState(state).validateEmail
 export const findResetValidate = state => findReset(state).validate
 export const findUserProfile = state => findState(state).profile
 export const findUserMeta = state => findUserProfile(state).meta
@@ -899,6 +998,10 @@ export const findScheduleError = state => findSchedule(state).error
 export const findForgotLoading = state => findForgot(state).loading
 export const findForgotError = state => findForgot(state).error
 export const findForgotSuccess = state => findForgot(state).success
+
+export const findValidateEmailLoading = state => findValidateEmail(state).loading
+export const findValidateEmailError = state => findValidateEmail(state).error
+export const findValidateEmailSuccess = state => findValidateEmail(state).success
 
 export const findResetValidateLoading = state => findResetValidate(state).loading
 export const findResetValidateError = state => findResetValidate(state).error
