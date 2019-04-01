@@ -1,8 +1,6 @@
 import { API_ROOT } from '@sdog/utils/api'
 import get from 'lodash/get'
 
-import { findUserId } from '../user'
-import { getUserId } from '../storage'
 import { createActionTypes, reduxRegister, buildStore } from '../tools'
 
 export const INITIAL_STATE = {
@@ -20,16 +18,15 @@ let reducers = {}
 export const SEND_CONTACT_FORM = 'SEND_CONTACT_FORM'
 export const getUserContactTypes = createActionTypes(SEND_CONTACT_FORM)
 
-export const sendContactForm = ({ email, message }) => (dispatch, getState) => {
-  const userId = findUserId(getState()) || getUserId()
-  const source = 'sd_web_app'
+export const sendContactForm = ({ email, message }) => dispatch => {
+  const source = '7364617070'
 
   dispatch({
     type: SEND_CONTACT_FORM,
     api: {
-      url: `${API_ROOT}/contact`,
+      url: `${API_ROOT}/tmp/contact_us`,
       method: 'POST',
-      params: { user_id: userId, email, message, source },
+      params: { email, message, source },
     },
   })
 }

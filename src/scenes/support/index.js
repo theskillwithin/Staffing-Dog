@@ -34,7 +34,7 @@ const ResetPassword = ({ submit, isLoading, error, success }) => {
   return (
     <div className={appTheme.pageContent}>
       <Toaster>{error}</Toaster>
-      {success && <Toaster type="succes">Your message has been sent</Toaster>}
+      {success && <Toaster type="success">Your message has been sent</Toaster>}
 
       <div className={theme.supportContainer}>
         <div className={theme.logo}>
