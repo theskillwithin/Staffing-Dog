@@ -29,17 +29,17 @@ GoogleAnalytics.propTypes = {
   }).isRequired,
 }
 
-export const initGA = (enable = true) => {
+export const initGA = (enable = true, code) => {
   if (enable && !gaIsInitialized) {
     gaIsInitialized = true
-    reactGa.initialize('GA-CODE-HERE')
+    reactGa.initialize(code)
   }
 
   return enable
 }
 
-export const RouteTracker = ({ enable, ...props }) =>
-  initGA(enable) && <Route component={GoogleAnalytics} {...props} />
+export const RouteTracker = ({ enable, code, ...props }) =>
+  initGA(enable, code) && <Route component={GoogleAnalytics} {...props} />
 
-RouteTracker.propTypes = { enable: bool }
-RouteTracker.defaultProps = { enable: true }
+RouteTracker.propTypes = { enable: bool, code: string }
+RouteTracker.defaultProps = { enable: true, code: '' }
