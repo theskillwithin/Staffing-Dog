@@ -4,6 +4,7 @@ import isEmpty from 'lodash/isEmpty'
 import reduce from 'lodash/reduce'
 import filter from 'lodash/filter'
 import isInvalid from '@sdog/utils/validation'
+import { useErrorFromResponse } from '@sdog/definitions/errors'
 import build from '@sdog/store/build'
 import {
   registerUser,
@@ -306,19 +307,19 @@ export const actions = {
   }),
   saveStepFailed: ({ step, error }) => ({
     type: SAVE_STEP_FAILED,
-    payload: { step, error },
+    payload: { step, error: useErrorFromResponse({ response: error }) },
   }),
   setType: type => ({
     type: SET_TYPE,
     payload: { type },
   }),
-  saveStepAPIFailed: (nextStep, res) => ({
+  saveStepAPIFailed: (nextStep, { error }) => ({
     type: SAVE_STEP_FAILED,
     payload: {
-      error:
-        res && res.data && res.data.message
-          ? res.data.message
-          : 'There was an error attempting to save the step.',
+      error: useErrorFromResponse(
+        { response: error },
+        'There was an error attempting to save the step.',
+      ),
       nextStep,
     },
   }),
@@ -346,14 +347,14 @@ export const saveStep = ({ step, onSuccess = false, onError = false }) => (
   dispatch(actions.saveStep(step))
 
   const onApiSuccess = res => {
-    if (get(res, 'data.error', false)) {
+    if (get(res, 'data.error_code', false)) {
       dispatch(
         actions.saveStepFailed({
-          error: get(res.data.error),
+          error: res,
         }),
       )
 
-      if (onError) onError(res.data.error)
+      if (onError) onError(res)
     }
 
     dispatch(

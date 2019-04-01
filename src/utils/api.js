@@ -36,8 +36,7 @@ export const unauthorizedUser = () => {
 export const onErrorByStatus = res => {
   if (
     res.status === 401 ||
-    (res.status === 400 &&
-      get(res, 'data.error', false) === 'fingerprint collision detected')
+    (res.status === 400 && get(res, 'data.error_code', false) === '401_22')
   ) {
     unauthorizedUser()
   }
