@@ -1,4 +1,3 @@
-/* eslint jsx-a11y/anchor-is-valid: 0 */
 import React from 'react'
 import { useHtmlClass, useDocumentTitle } from '@sdog/utils/document'
 import Logo from '@sdog/components/logo'
@@ -154,7 +153,7 @@ const PrivacyPolicy = () => {
             Practices may also have the opportunity to create an organization Profile. If
             in any case, you believe that an unauthorized profile has been created about
             you, you can request for it to be removed by contacting us at{' '}
-            <a href="">support@Staffing.Dog</a>
+            <a href="mailto:support@staffing.dog">support@Staffing.Dog</a>
           </p>
           <p>
             When you post in our public support forums, the information contained in your
@@ -162,7 +161,8 @@ const PrivacyPolicy = () => {
           </p>
           <p>
             To request removal of your personal information from our blog or community
-            forum, contact us at <a href="">support@Staffing.Dog</a> . &nbsp;In some
+            forum, contact us at{' '}
+            <a href="mailto:support@staffing.dog">support@Staffing.Dog</a> . &nbsp;In some
             cases, we may not be able to remove your personal information, in which case
             we will let you know if we are unable to do so and why.
           </p>
@@ -171,7 +171,7 @@ const PrivacyPolicy = () => {
             displayed on our site in addition to other endorsements. With your consent we
             may post your testimonial along with your name. If you wish to delete or
             update your testimonial, you can contact us at{' '}
-            <a href="">support@Staffing.Dog</a>
+            <a href="mailto:support@staffing.dog">support@Staffing.Dog</a>
           </p>
           <p>
             &ldquo;Work Listings&rdquo; As a Practice, request of Professional service
@@ -277,15 +277,15 @@ const PrivacyPolicy = () => {
             When we delete account information, it will be deleted from the active
             database, but may remain in our archives. You may request deletion of your
             account information by us by sending an email to{' '}
-            <a href="">support@Staffing.Dog</a>, but please note that we may be required
-            (by law or otherwise) to keep this information and not delete it (or to keep
-            this information for a certain time, in which case we will comply with your
-            deletion request only after we have fulfilled such requirements). Regardless
-            of any choices you make regarding your Personal Data, Staffing Dog may
-            disclose Personal Data if it believes in good faith that such disclosure is
-            necessary to (a) comply with relevant laws or to respond to subpoenas or
-            warrants served on Staffing Dog; or (b) protect or defend the rights or
-            property of Staffing Dog or users of our Services.
+            <a href="mailto:support@staffing.dog">support@Staffing.Dog</a>, but please
+            note that we may be required (by law or otherwise) to keep this information
+            and not delete it (or to keep this information for a certain time, in which
+            case we will comply with your deletion request only after we have fulfilled
+            such requirements). Regardless of any choices you make regarding your Personal
+            Data, Staffing Dog may disclose Personal Data if it believes in good faith
+            that such disclosure is necessary to (a) comply with relevant laws or to
+            respond to subpoenas or warrants served on Staffing Dog; or (b) protect or
+            defend the rights or property of Staffing Dog or users of our Services.
           </p>
           <p>
             We will use commercially reasonable efforts to honor your request; however,
@@ -337,7 +337,7 @@ const PrivacyPolicy = () => {
             third parties with which we shared information in the immediately preceding
             calendar year. If you are a California resident and would like to make such a
             request, please submit your request in writing to{' '}
-            <a href="">support@Staffing.Dog</a>
+            <a href="mailto:support@staffing.dog">support@Staffing.Dog</a>
           </p>
           <h4>CHANGES TO THIS POLICY</h4>
           <p>
