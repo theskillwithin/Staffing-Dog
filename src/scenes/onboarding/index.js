@@ -9,8 +9,10 @@ import {
   findUserProfile,
   findRegisterError,
   clearRegisterUserError as clearRegisterUserErrorAction,
+  findToken,
 } from '@sdog/store/user'
 import { useHtmlClass, useDocumentTitle } from '@sdog/utils/document'
+import Spinner from '@sdog/components/spinner'
 
 import { findError, findLoading, clearError as clearErrorAction } from './store/steps'
 import RootScene from './scenes/Root'
@@ -30,8 +32,21 @@ const Onboarding = ({
   registerError,
   error,
   loading,
+  token,
 }) => {
   const userOnboardingStatus = get(userProfile, 'user.onboarding_status', false)
+  const userType = get(userProfile, 'user.type', false)
+  const routeIsRoot = location.pathname === match.url
+
+  if (routeIsRoot && token && userType) {
+    history.replace(`${match.url}/${userType}/step/2`)
+  }
+
+  const regexForType = get(location.pathname.split('/'), '[2]', false)
+
+  if (regexForType && userType && regexForType !== userType) {
+    history.replace(location.pathname.replace(regexForType, userType))
+  }
 
   useHtmlClass('html-onboarding')
   useDocumentTitle('Onboarding')
@@ -62,6 +77,14 @@ const Onboarding = ({
     },
     [userOnboardingStatus],
   )
+
+  if ((routeIsRoot && token) || (userProfile.loading && !userOnboardingStatus)) {
+    return (
+      <Layout>
+        <Spinner />
+      </Layout>
+    )
+  }
 
   return (
     <Layout error={registerError || error} loading={loading}>
@@ -103,6 +126,7 @@ Onboarding.propTypes = {
   error: oneOfType([bool, string, array]),
   loading: bool.isRequired,
   userProfile: object,
+  token: string.isRequired,
 }
 
 Onboarding.defaultProps = {
@@ -116,6 +140,7 @@ export const mapStateToProps = state => ({
   error: findError(state),
   loading: findLoading(state),
   userProfile: findUserProfile(state),
+  token: findToken(state),
 })
 export const mapActionsToProps = {
   getUserProfile: getUserProfileAction,
