@@ -107,6 +107,7 @@
     "react-testing-library": "^6.0.3",
     "react-textarea-autosize": "^7.1.0",
     "redux": "^4.0.1",
+    "redux-sentry-middleware": "^0.0.15",
     "redux-thunk": "^2.3.0"
   }
 }

@@ -1,9 +1,16 @@
 import { combineReducers, createStore, compose, applyMiddleware } from 'redux'
 import thunkMiddleware from 'redux-thunk'
+import * as Sentry from '@sentry/browser'
+import createSentryMiddleware from 'redux-sentry-middleware'
 import { IS_DEV, IS_STAGE } from '@sdog/utils/env'
 
 import { reduxRegister } from './tools'
 import apiActionMiddleware from './apiActionMiddleware'
+
+Sentry.init({
+  dsn: 'https://e7a4ea4c993e4619afcfc16dd9fe6b06@sentry.io/200333',
+  environment: process.env.ENV,
+})
 
 const isBrowser = typeof window !== 'undefined'
 
@@ -37,7 +44,13 @@ export default (storeData = {}, reducers = {}) => {
   const store = createStore(
     reduxCombine(reducers, storeData),
     storeData,
-    composeEnhancers(applyMiddleware(thunkMiddleware, apiActionMiddleware)),
+    composeEnhancers(
+      applyMiddleware(
+        thunkMiddleware,
+        apiActionMiddleware,
+        createSentryMiddleware(Sentry),
+      ),
+    ),
   )
 
   // replace redux store based on newely updated list of reducers
