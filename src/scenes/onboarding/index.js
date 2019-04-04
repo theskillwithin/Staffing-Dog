@@ -9,8 +9,10 @@ import {
   findUserProfile,
   findRegisterError,
   clearRegisterUserError as clearRegisterUserErrorAction,
+  findToken,
 } from '@sdog/store/user'
 import { useHtmlClass, useDocumentTitle } from '@sdog/utils/document'
+import Spinner from '@sdog/components/spinner'
 
 import { findError, findLoading, clearError as clearErrorAction } from './store/steps'
 import RootScene from './scenes/Root'
@@ -30,11 +32,11 @@ const Onboarding = ({
   registerError,
   error,
   loading,
+  token,
 }) => {
+  const routeIsRoot = location.pathname === match.url
   const userOnboardingStatus = get(userProfile, 'user.onboarding_status', false)
-
-  useHtmlClass('html-onboarding')
-  useDocumentTitle('Onboarding')
+  const userType = get(userProfile, 'user.type', false)
 
   useEffect(() => {
     if (userProfile.id) {
@@ -42,13 +44,18 @@ const Onboarding = ({
     }
   }, [])
 
-  useEffect(
-    () => {
-      clearError()
-      clearRegisterUserError()
-    },
-    [location.pathname],
-  )
+  // Redirect user to correct path based on userType
+  useEffect(() => {
+    if (userType) {
+      const regexForType = get(location.pathname.split('/'), '[2]', false)
+
+      if (routeIsRoot && token) {
+        history.replace(`${match.url}/${userType}/step/2`)
+      } else if (regexForType && userType && regexForType !== userType) {
+        history.replace(location.pathname.replace(regexForType, userType))
+      }
+    }
+  })
 
   // If user has alrady completed the onboarding process, send them to the app
   useEffect(
@@ -62,6 +69,25 @@ const Onboarding = ({
     },
     [userOnboardingStatus],
   )
+
+  useHtmlClass('html-onboarding')
+  useDocumentTitle('Onboarding')
+
+  useEffect(
+    () => {
+      clearError()
+      clearRegisterUserError()
+    },
+    [location.pathname],
+  )
+
+  if ((routeIsRoot && token) || (userProfile.loading && !userOnboardingStatus)) {
+    return (
+      <Layout>
+        <Spinner />
+      </Layout>
+    )
+  }
 
   return (
     <Layout error={registerError || error} loading={loading}>
@@ -103,6 +129,7 @@ Onboarding.propTypes = {
   error: oneOfType([bool, string, array]),
   loading: bool.isRequired,
   userProfile: object,
+  token: oneOfType([bool, string]).isRequired,
 }
 
 Onboarding.defaultProps = {
@@ -116,6 +143,7 @@ export const mapStateToProps = state => ({
   error: findError(state),
   loading: findLoading(state),
   userProfile: findUserProfile(state),
+  token: findToken(state),
 })
 export const mapActionsToProps = {
   getUserProfile: getUserProfileAction,

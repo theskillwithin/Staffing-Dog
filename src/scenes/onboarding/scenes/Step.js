@@ -22,7 +22,7 @@ const OnboardingStepScene = ({
   token,
   setType,
 }) => {
-  useEffect(() => void setType(type), type)
+  useEffect(() => void setType(type), [type])
 
   useEffect(
     () => {
