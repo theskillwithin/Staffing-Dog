@@ -234,10 +234,9 @@ export const professional = [
         label: 'Availability',
         type: 'dropdown',
         options: [
-          { value: 'All' },
-          { value: 'Temporary' },
-          { value: 'Full Time' },
-          { value: 'Part Time' },
+          { label: 'Full Time', value: 'full_time' },
+          { label: 'Part Time', value: 'part_time' },
+          { label: 'Day Hire', value: 'day_hire' },
         ],
       },
     ],
