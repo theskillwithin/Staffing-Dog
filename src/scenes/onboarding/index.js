@@ -34,22 +34,9 @@ const Onboarding = ({
   loading,
   token,
 }) => {
+  const routeIsRoot = location.pathname === match.url
   const userOnboardingStatus = get(userProfile, 'user.onboarding_status', false)
   const userType = get(userProfile, 'user.type', false)
-  const routeIsRoot = location.pathname === match.url
-
-  if (routeIsRoot && token && userType) {
-    history.replace(`${match.url}/${userType}/step/2`)
-  }
-
-  const regexForType = get(location.pathname.split('/'), '[2]', false)
-
-  if (regexForType && userType && regexForType !== userType) {
-    history.replace(location.pathname.replace(regexForType, userType))
-  }
-
-  useHtmlClass('html-onboarding')
-  useDocumentTitle('Onboarding')
 
   useEffect(() => {
     if (userProfile.id) {
@@ -57,13 +44,18 @@ const Onboarding = ({
     }
   }, [])
 
-  useEffect(
-    () => {
-      clearError()
-      clearRegisterUserError()
-    },
-    [location.pathname],
-  )
+  // Redirect user to correct path based on userType
+  useEffect(() => {
+    if (userType) {
+      const regexForType = get(location.pathname.split('/'), '[2]', false)
+
+      if (routeIsRoot && token) {
+        history.replace(`${match.url}/${userType}/step/2`)
+      } else if (regexForType && userType && regexForType !== userType) {
+        history.replace(location.pathname.replace(regexForType, userType))
+      }
+    }
+  })
 
   // If user has alrady completed the onboarding process, send them to the app
   useEffect(
@@ -76,6 +68,17 @@ const Onboarding = ({
       }
     },
     [userOnboardingStatus],
+  )
+
+  useHtmlClass('html-onboarding')
+  useDocumentTitle('Onboarding')
+
+  useEffect(
+    () => {
+      clearError()
+      clearRegisterUserError()
+    },
+    [location.pathname],
   )
 
   if ((routeIsRoot && token) || (userProfile.loading && !userOnboardingStatus)) {
@@ -126,7 +129,7 @@ Onboarding.propTypes = {
   error: oneOfType([bool, string, array]),
   loading: bool.isRequired,
   userProfile: object,
-  token: string.isRequired,
+  token: oneOfType([bool, string]).isRequired,
 }
 
 Onboarding.defaultProps = {
