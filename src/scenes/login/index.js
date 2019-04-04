@@ -2,32 +2,51 @@ import React, { useState, useEffect } from 'react'
 import { bool, func, string, array, oneOfType, shape } from 'prop-types'
 import { Link, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { setTitle, setHtmlClass, removeHtmlClass } from '@sdog/utils/document'
-import Contact from '@sdog/components/contact'
-import TopError from '@sdog/components/top_error'
+import { useDocumentTitle, useHtmlClass } from '@sdog/utils/document'
+import Toaster from '@sdog/components/toaster'
 import Logo from '@sdog/components/logo'
-import Tabs from '@sdog/components/tab_bar'
 import Input from '@sdog/components/input'
 import Button from '@sdog/components/button'
 import Arrow from '@sdog/components/svg/Arrow'
 import { IS_DEV, IS_STAGE } from '@sdog/utils/env'
 
-import { login as loginAction, findUserAuth } from '../../store/user'
+import {
+  login as loginAction,
+  findUserAuth,
+  findForgotSuccess,
+  displayedForgotPasswordClearSuccess,
+  findResetSuccess,
+  displayedResetPasswordClearSuccess,
+  findToken,
+} from '../../store/user'
 import appTheme from '../app/theme.css'
 
 import theme from './theme.css'
 
-const Login = ({ history, login, isLoading, error }) => {
-  const [tabIndex, setTabIndex] = useState(0)
+const Login = ({
+  history,
+  login,
+  isLoading,
+  error,
+  success,
+  clearPWSuccess,
+  clearResetSuccess,
+  token,
+}) => {
   const [email, setEmail] = useState(IS_DEV || IS_STAGE ? 'romelu@lukaku.com' : '')
   const [password, setPassword] = useState(IS_DEV || IS_STAGE ? 'Password1234$' : '')
 
-  useEffect(() => {
-    setTitle('Login')
-    setHtmlClass('html-login')
+  useDocumentTitle('Login')
+  useHtmlClass('html-login')
 
-    return () => removeHtmlClass('html-login')
-  }, [])
+  if (token) {
+    history.push('/')
+  }
+
+  useEffect(() => () => {
+    clearPWSuccess()
+    clearResetSuccess()
+  })
 
   const onSubmit = e => {
     e.preventDefault()
@@ -36,11 +55,8 @@ const Login = ({ history, login, isLoading, error }) => {
 
   return (
     <div className={appTheme.pageContent}>
-      <TopError>{error}</TopError>
-
-      <header className={theme.header}>
-        <Contact />
-      </header>
+      <Toaster>{error}</Toaster>
+      {!error && <Toaster type="success">{success}</Toaster>}
 
       <div className={theme.signinContainer}>
         <div className={theme.logo}>
@@ -51,11 +67,6 @@ const Login = ({ history, login, isLoading, error }) => {
           <h2>Sign In</h2>
 
           <div>
-            <Tabs activeTabIndex={tabIndex} onSelect={setTabIndex}>
-              <div>Dental Professional</div>
-              <div>Dental Provider</div>
-            </Tabs>
-
             <form className={theme.form} onSubmit={onSubmit}>
               <Input
                 className={theme.input}
@@ -109,17 +120,27 @@ const Login = ({ history, login, isLoading, error }) => {
 
 Login.propTypes = {
   login: func.isRequired,
+  clearPWSuccess: func.isRequired,
+  clearResetSuccess: func.isRequired,
   history: shape({ push: func.isRequired }).isRequired,
   isLoading: bool,
   error: oneOfType([string, array, bool]).isRequired,
+  success: oneOfType([string, array, bool]).isRequired,
+  token: oneOfType([bool, string]).isRequired,
 }
 
 const mapStateToProps = state => ({
   isLoading: findUserAuth(state).loading,
   error: findUserAuth(state).error,
+  success: findForgotSuccess(state) || findResetSuccess(state),
+  token: findToken(state),
 })
 
-const mapActionsToProps = { login: loginAction }
+const mapActionsToProps = {
+  login: loginAction,
+  clearPWSuccess: displayedForgotPasswordClearSuccess,
+  clearResetSuccess: displayedResetPasswordClearSuccess,
+}
 
 export default withRouter(
   connect(

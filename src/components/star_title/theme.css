@@ -21,6 +21,11 @@
   color: var(--sd-blackTxt);
   font-weight: var(--sd-fontWeightNormal);
   letter-spacing: -0.4px;
+  min-width: 280px;
+
+  @media (--sd-mobile) {
+    min-width: calc(100vw - 20px);
+  }
 
   .star,
   .circle {

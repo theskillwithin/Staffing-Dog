@@ -3,6 +3,8 @@ import get from 'lodash/get'
 import isEmpty from 'lodash/isEmpty'
 import reduce from 'lodash/reduce'
 import filter from 'lodash/filter'
+import isInvalid from '@sdog/utils/validation'
+import { useErrorFromResponse } from '@sdog/definitions/errors'
 import build from '@sdog/store/build'
 import {
   registerUser,
@@ -22,6 +24,7 @@ export const BASE = '@SD/OB/STEPS'
 export const SET_VALUE = `${BASE}_SET_VALUE`
 export const SET_STEP = `${BASE}_SET_STEP`
 export const SET_TYPE = `${BASE}_SET_TYPE`
+export const BLUR_INVALID = `${BASE}_BLUR_INVALID`
 export const GO_TO_STEP = `${BASE}_GO_TO_STEP`
 export const GO_TO_STEP_SUCCESS = `${GO_TO_STEP}_SUCCESS`
 export const GO_TO_STEP_FAILED = `${GO_TO_STEP}_FAILED`
@@ -42,12 +45,12 @@ export const INITIAL_STATE = {
   type: 'professional',
   values: {},
   error: false,
-  errorFields: false,
+  errorFields: [],
 }
 
 // take data from api and format for the onboarding redux store
 export const formatDataFromApi = (apiData, values, type = INITIAL_STATE.type) => ({
-  street: get(apiData, 'addresses.street', values.street),
+  street: get(apiData, 'addresses.line_1', values.street),
   state: get(apiData, 'addresses.state', values.state),
   city: get(apiData, 'addresses.city', values.city),
   zip: get(apiData, 'addresses.zip', values.zip),
@@ -62,19 +65,15 @@ export const formatDataFromApi = (apiData, values, type = INITIAL_STATE.type) =>
         practice_type: get(apiData, 'meta.summary.practice_type', values.practice_type),
         practice_first_name: get(
           apiData,
-          'meta.summary.practice_first_name',
+          'meta.summary.contact_first_name',
           values.practice_first_name,
         ),
         practice_last_name: get(
           apiData,
-          'meta.summary.practice_last_name',
+          'meta.summary.contact_last_name',
           values.practice_last_name,
         ),
-        practice_email: get(
-          apiData,
-          'meta.summary.practice_email',
-          values.practice_email,
-        ),
+        practice_email: get(apiData, 'meta.summary.contact_email', values.practice_email),
       }),
 })
 
@@ -101,6 +100,10 @@ export const formatDataFromOnboarding = (values, profile, type = INITIAL_STATE.t
   },
   meta: {
     ...(profile.meta || {}),
+    capacity: {
+      ...get(profile, 'meta.summary.capacity', {}),
+      ...(values.availability ? { availability: values.availability } : {}),
+    },
     summary: {
       ...get(profile, 'meta.summary', {}),
       ...('professional' === type
@@ -110,21 +113,17 @@ export const formatDataFromOnboarding = (values, profile, type = INITIAL_STATE.t
               ...(values.profession ? { type: values.profession } : {}),
               ...(values.specialty ? { specialty: values.specialty } : {}),
             },
-            capacity: {
-              ...get(profile, 'meta.summary.capacity', {}),
-              ...(values.availability ? { availability: values.availability } : {}),
-            },
           }
         : {
             ...(values.practice_name ? { practice_name: values.practice_name } : {}),
             ...(values.practice_type ? { practice_type: values.practice_type } : {}),
-            ...(values.practice_first_name
+            ...(values.contact_first_name
               ? { contact_first_name: values.practice_first_name }
               : {}),
-            ...(values.practice_last_name
+            ...(values.contact_last_name
               ? { contact_last_name: values.practice_last_name }
               : {}),
-            ...(values.practice_email ? { contact_email: values.practice_email } : {}),
+            ...(values.contact_email ? { contact_email: values.practice_email } : {}),
           }),
     },
   },
@@ -150,8 +149,23 @@ const updateStepValuesFromRegister = (state, { data }) => ({
   },
 })
 
+// Validation on blur
+
+export const blurInvalid = (error, errorField) => dispatch => {
+  return Promise.resolve(dispatch(actions.blurInvalid(error, errorField)))
+}
+
 // Reducer Methods
 export const reducers = {
+  [BLUR_INVALID]: (state, payload) => ({
+    ...state,
+    errorFields: payload.error
+      ? [
+          ...filter(state.errorFields, x => x.field !== payload.errorField),
+          { error: payload.error, field: payload.errorField },
+        ]
+      : filter(state.errorFields, x => x.field !== payload.errorField),
+  }),
   [SET_VALUE]: (state, payload) => ({
     ...state,
     values: {
@@ -222,32 +236,41 @@ export const reducers = {
   // When Updating the user, we want to make sure to update the steps data as well
   [userRegisterTypes.SUCCESS]: updateStepValuesFromRegister,
   [userRegisterUpdateTypes.SUCCESS]: updateStepValuesFromRegister,
-  [userGetProfileTypes.SUCCESS]: (state, { data }) => ({
-    ...state,
-    values: {
+  [userGetProfileTypes.SUCCESS]: (state, { data }) => {
+    const values = {
       ...state.values,
       ...formatDataFromApi(data, state.values, state.type),
       first_name: get(data, 'user.first_name', state.values.first_name),
       last_name: get(data, 'user.last_name', state.values.last_name),
       email: get(data, 'user.email', state.values.email),
-    },
-    steps: {
-      ...state.steps,
-      [state.type]: state.steps[state.type].map(step => ({
-        ...step,
-        ...(step.step === '1' // Allows us to skip step 1 since we have already created the user
-          ? {
-              needsComplete: false,
-              complete: true,
-            }
-          : {}),
-      })),
-    },
-  }),
+    }
+
+    return {
+      ...state,
+      values,
+      steps: {
+        ...state.steps,
+        [state.type]: state.steps[state.type].map(step => ({
+          ...step,
+          complete: areStepsComplete(step, values),
+          ...(step.step === '1' // Allows us to skip step 1 since we have already created the user
+            ? {
+                needsComplete: false,
+                complete: true,
+              }
+            : {}),
+        })),
+      },
+    }
+  },
 }
 
 // Actions Creators
 export const actions = {
+  blurInvalid: (error, errorField) => ({
+    type: BLUR_INVALID,
+    payload: { error, errorField },
+  }),
   setValue: (name, value) => ({
     type: SET_VALUE,
     payload: { name, value },
@@ -284,19 +307,19 @@ export const actions = {
   }),
   saveStepFailed: ({ step, error }) => ({
     type: SAVE_STEP_FAILED,
-    payload: { step, error },
+    payload: { step, error: useErrorFromResponse({ response: error }) },
   }),
   setType: type => ({
     type: SET_TYPE,
     payload: { type },
   }),
-  saveStepAPIFailed: (nextStep, res) => ({
+  saveStepAPIFailed: (nextStep, { error }) => ({
     type: SAVE_STEP_FAILED,
     payload: {
-      error:
-        res && res.data && res.data.message
-          ? res.data.message
-          : 'There was an error attempting to save the step.',
+      error: useErrorFromResponse(
+        { response: error },
+        'There was an error attempting to save the step.',
+      ),
       nextStep,
     },
   }),
@@ -324,14 +347,14 @@ export const saveStep = ({ step, onSuccess = false, onError = false }) => (
   dispatch(actions.saveStep(step))
 
   const onApiSuccess = res => {
-    if (get(res, 'data.error', false)) {
+    if (get(res, 'data.error_code', false)) {
       dispatch(
         actions.saveStepFailed({
-          error: get(res.data.error),
+          error: res,
         }),
       )
 
-      if (onError) onError(res.data.error)
+      if (onError) onError(res)
     }
 
     dispatch(
@@ -406,62 +429,20 @@ export const goToStep = ({ currentStep, nextStep, history }) => (dispatch, getSt
 
   if (step && nextStep === step.nextStep) {
     // check validation
-    // check required validation
-    const requireds = filter(getSteps(step), { required: true })
-    const isRequired = requireds
-      .map(
-        required =>
-          !(values[required.name] && values[required.name].length > 0) && required.name,
-      )
-      .filter(Boolean)
-
-    if (isRequired && isRequired.length) {
-      return Promise.resolve(
-        dispatch(
-          actions.goToStepFailed({
-            error: 'You must complete the required fields.',
-            errorFields: isRequired,
-            nextStep,
-          }),
-        ),
-      )
-    }
-
-    // check validation types
-
-    const isInvalid = (name, validation) => {
-      if (validation === 'email') {
-        return !/@/.test(values[name]) && 'Not a valid email.'
-      }
-      if (validation === 'passwordMatch') {
-        return (
-          !(values[name] === values.password) &&
-          'Password and Verify Password must match.'
-        )
-      }
-      if (/minDigits/.test(validation)) {
-        const minChars = /minDigits(\d*)/.exec(validation)[1]
-        return (
-          values[name].length < parseInt(minChars, 10) &&
-          `${name} must be contain ${minChars} digits`
-        )
-      }
-      if (/minChars/.test(validation)) {
-        const minChars = /minChars(\d*)/.exec(validation)[1]
-        return (
-          values[name].length < parseInt(minChars, 10) &&
-          `${name} must be contain ${minChars} characters`
-        )
-      }
-      return false
-    }
 
     const validations = filter(
       getSteps(step),
-      s => s.validation && s.validation.length,
+      s => (s.validation && s.validation.length) || s.required,
     ).map(validation => ({
       name: validation.name,
-      invalid: isInvalid(validation.name, validation.validation),
+      invalid: isInvalid(
+        values[validation.name],
+        validation.name,
+        validation.validation,
+        true, // will have to add logic if any fields become not required
+        values.password,
+        validation.label,
+      ),
     }))
 
     const invalids = filter(validations, validation => validation.invalid)
@@ -471,7 +452,10 @@ export const goToStep = ({ currentStep, nextStep, history }) => (dispatch, getSt
         dispatch(
           actions.goToStepFailed({
             error: invalids.map(invalid => invalid.invalid),
-            errorFields: invalids.map(invalid => invalid.name),
+            errorFields: invalids.map(invalid => ({
+              error: invalid.invalid,
+              field: invalid.name,
+            })),
             nextStep,
           }),
         ),

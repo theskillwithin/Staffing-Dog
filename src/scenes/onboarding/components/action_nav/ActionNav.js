@@ -1,5 +1,5 @@
 import React from 'react'
-import { object, bool, func, array, string, shape } from 'prop-types'
+import { object, bool, func, array, string, shape, oneOfType } from 'prop-types'
 import find from 'lodash/find'
 import clsx from 'clsx'
 import Arrow from '@sdog/components/svg/Arrow'
@@ -9,14 +9,24 @@ import Button from '../../../../components/button'
 
 import theme from './theme.css'
 
-const ActionNav = ({ match, history, steps, goToStep, savingStep, loadingNextStep }) => {
+const ActionNav = ({
+  match,
+  history,
+  steps,
+  goToStep,
+  savingStep,
+  loadingNextStep,
+  token,
+}) => {
   const { step } = match.params
   const currentStep = find(steps, s => s.step === step)
   const previousStep = find(steps, s => s.nextStep === currentStep.step)
 
+  const hidePreviousStep = previousStep && parseInt(previousStep.step, 10) === 1 && token
+
   return (
     <div className={theme.actionNav}>
-      {previousStep && previousStep.step && (
+      {!hidePreviousStep && previousStep && previousStep.step && (
         <div className={clsx(theme.step, theme.previousStep)}>
           <Button
             onClick={() =>
@@ -90,6 +100,7 @@ ActionNav.propTypes = {
   savingStep: bool,
   loadingNextStep: bool,
   goToStep: func.isRequired,
+  token: oneOfType([bool, string]),
 }
 
 export default ActionNav

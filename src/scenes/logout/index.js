@@ -3,9 +3,11 @@ import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { logout as logoutAction } from '@sdog/store/user'
 
-const LogoutScene = ({ logout, history }) => {
+const LogoutScene = ({ logout }) => {
   useEffect(() => {
-    logout(() => history.push('/login'))
+    logout(() => {
+      window.location = '/login'
+    })
   }, [])
 
   return null

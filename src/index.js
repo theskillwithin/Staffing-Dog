@@ -6,8 +6,11 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import createStore from '@sdog/store'
 import reducers from '@sdog/store/reducers'
 import { INITIAL_STATE as USER_INITIAL_STATE } from '@sdog/store/user'
-import { getToken, getFingerprint, setFingerprint } from '@sdog/store/storage'
+import { getToken, getFingerprint, setFingerprint, getUserId } from '@sdog/store/storage'
 import Footer from '@sdog/components/footer'
+import changeFavicon from 'utils/local-favicon'
+import { IS_DEV, IS_PROD } from '@sdog/utils/env'
+import { RouteTracker } from '@sdog/components/GoogleAnalytics'
 
 import createFingerprint from './utils/fingerprint'
 import Spinner from './components/spinner'
@@ -25,13 +28,27 @@ const OnboardingScene = React.lazy(() => import('@sdog/scenes/onboarding'))
 const App = React.lazy(() => import('@sdog/scenes/app'))
 const LoginScene = React.lazy(() => import('@sdog/scenes/login'))
 const LogoutScene = React.lazy(() => import('@sdog/scenes/logout'))
+const ForgotPWScene = React.lazy(() => import('@sdog/scenes/forgot-password'))
+const ResetPWScene = React.lazy(() => import('@sdog/scenes/reset-password'))
+const EmailConfirmationScene = React.lazy(() => import('@sdog/scenes/confirm-email'))
+const LandingScene = React.lazy(() => import('@sdog/scenes/landing'))
+const SupportScene = React.lazy(() => import('@sdog/scenes/support'))
+const PrivacyScene = React.lazy(() => import('@sdog/scenes/privacy'))
 
 const fingerprint = getFingerprint() || createFingerprint()
 setFingerprint(fingerprint)
 
+if (IS_DEV) {
+  changeFavicon()
+}
+
 const storeData = {
   user: {
     ...USER_INITIAL_STATE,
+    profile: {
+      ...USER_INITIAL_STATE.profile,
+      id: getUserId(),
+    },
     auth: {
       ...USER_INITIAL_STATE.auth,
       token: getToken(),
@@ -45,18 +62,35 @@ const store = createStore(storeData, reducers)
 render(
   <Provider store={store}>
     <Router>
+      <RouteTracker enable={IS_PROD} code="UA-98231042-2" />
+
       <ErrorBoundry hideFallback>
         <React.Suspense fallback={<Spinner />}>
           <Switch>
             <Route path="/logout" component={LogoutScene} />
+            {/* --- TMP OVERRIDE --- */}
+            <Route
+              path="/onboarding/:type(professional|practice)/step/complete"
+              component={LandingScene}
+            />
+            {/* --- end TMP OVERRIDE --- */}
             <Route path="/onboarding" component={OnboardingScene} />
             <Route path="/login" component={LoginScene} />
+            <Route path="/landing" component={LandingScene} />
+            <Route path="/privacy" component={PrivacyScene} />
+            <Route path="/forgot-password" component={ForgotPWScene} />
+            <Route path="/reset-password/:anchor/:token" component={ResetPWScene} />
+            <Route
+              path="/confirm-email/:anchor/:token"
+              component={EmailConfirmationScene}
+            />
+            <Route path="/support" component={SupportScene} />
             <AuthRoute path="/" component={App} to="/login" />
           </Switch>
         </React.Suspense>
+        <Footer />
       </ErrorBoundry>
     </Router>
-    <Footer />
   </Provider>,
   document.getElementById('app'),
 )

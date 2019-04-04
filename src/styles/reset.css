@@ -23,6 +23,15 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+:global(.html-app body) {
+  min-height: 100vh;
+}
+
+:global(#app) {
+  min-height: 100vh;
+  position: relative;
+}
+
 :global {
   b,
   strong {

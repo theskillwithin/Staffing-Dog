@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 import theme from './theme.css'
 
@@ -7,8 +8,8 @@ const Footer = () => (
     <nav>
       <a href="/blog">Blog</a>
       <a href="/terms">Terms</a>
-      <a href="/privacy">Privacy</a>
-      <a href="/support">Support</a>
+      <Link to="/privacy">Privacy</Link>
+      <Link to="/support">Support</Link>
     </nav>
   </footer>
 )

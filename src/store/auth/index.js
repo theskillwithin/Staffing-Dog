@@ -1,3 +1,5 @@
+import { useErrorFromResponse } from '@sdog/definitions/errors'
+
 import { buildStore } from '../tools'
 
 export const BASE = '@SD/AUTH'
@@ -16,9 +18,9 @@ const reducers = {
     token: payload.token,
     error: false,
   }),
-  [SET_ERROR]: (state, payload) => ({
+  [SET_ERROR]: (state, { error }) => ({
     ...state,
-    error: payload.error,
+    error: useErrorFromResponse(error),
   }),
   [REFRESH_TOKEN]: state => ({
     ...state,

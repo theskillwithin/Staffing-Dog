@@ -1,6 +1,7 @@
 @import '../../../../styles/config.css';
 
 .photo {
+  position: relative;
   display: flex;
   align-items: center;
   margin: 2.5em 0;
@@ -115,4 +116,15 @@
   width: 100%;
   height: 48px;
   margin-top: 1em;
+}
+
+.loading {
+  position: relative;
+  height: 400px;
+}
+
+.photoLoading {
+  position: absolute;
+  top: 50%;
+  left: 3.9em;
 }

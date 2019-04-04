@@ -1,0 +1,61 @@
+@import '../../styles/config.css';
+
+:global(.html-forgot-password) {
+  @media (--sd-mobile) {
+    background-color: var(--sd-white);
+  }
+}
+
+:root {
+  --forgotMaxWidth: 480px;
+}
+
+.header {
+  position: absolute;
+  top: 2em;
+  right: 2em;
+}
+
+.forgotContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 80vh;
+}
+
+.forgot {
+  position: relative;
+  padding: 32px 32px 45px 32px;
+  margin: 2em;
+  max-width: var(--forgotMaxWidth);
+  width: 100%;
+  border-radius: 8px;
+  background-color: var(--sd-white);
+  box-shadow: 0 3px 6px 0 var(--sd-shadowColor);
+
+  h2 {
+    text-align: center;
+    font-weight: var(--sd-fontWeightLight);
+  }
+
+  @media (--sd-mobile) {
+    box-shadow: unset;
+  }
+}
+
+.form {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  margin: 0.55em 0;
+  width: 100%;
+
+  .input {
+    margin-top: 22px;
+  }
+
+  .button {
+    margin-top: 30px;
+  }
+}

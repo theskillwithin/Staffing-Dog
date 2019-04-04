@@ -12,9 +12,7 @@ import AboutMe from './components/about_me'
 const Settings = () => {
   const [activeTabIndex, setActiveTabIndex] = useState(0)
 
-  useEffect(() => {
-    setTitle('Settings')
-  }, false)
+  useEffect(() => void setTitle('Settings'), [])
 
   return (
     <div className={clsx(appTheme.pageContent)}>

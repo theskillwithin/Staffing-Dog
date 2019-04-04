@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { func, string, object } from 'prop-types'
+import { func, string, object, bool } from 'prop-types'
 import clsx from 'clsx'
 import Arrow from '@sdog/components/svg/Arrow'
 import Button from '@sdog/components/button'
@@ -11,10 +11,8 @@ import StarTitle from '@sdog/components/star_title'
 
 import theme from './theme.css'
 
-const GetStarted = ({ type, setStep, goToStep, setType, history }) => {
-  useEffect(() => {
-    setStep(false)
-  }, [])
+const GetStarted = ({ chooseType, type, setStep, goToStep, setType, history }) => {
+  useEffect(() => void setStep(false), [])
 
   const renderSVG = (SVGComponent, isType = 'professional') => {
     if (type === isType) {
@@ -24,11 +22,12 @@ const GetStarted = ({ type, setStep, goToStep, setType, history }) => {
     return null
   }
 
-  if (!type) {
+  if (chooseType) {
     return (
       <div className={clsx(theme.gettingStarted, theme.gettingStartedSplit)}>
         <div className={theme.left}>
-          <div>
+          <StarTitle title="Professional" />
+          <div className={theme.people}>
             <Person className={clsx(theme.group, theme.person, theme.man)} name="man" />
             <Person
               className={clsx(theme.group, theme.person, theme.woman2)}
@@ -58,7 +57,8 @@ const GetStarted = ({ type, setStep, goToStep, setType, history }) => {
           </Button>
         </div>
         <div className={theme.right}>
-          <div>
+          <StarTitle title="Practice" />
+          <div className={theme.people}>
             <Person
               className={clsx(theme.group, theme.person, theme.woman)}
               name="woman"
@@ -86,9 +86,12 @@ const GetStarted = ({ type, setStep, goToStep, setType, history }) => {
       </div>
     )
   }
+
+  const title = 'practice' === type ? 'Hire Smart' : 'Power to the Professional'
+
   return (
     <div className={theme.gettingStarted}>
-      <StarTitle title="Power to the Professional" />
+      <StarTitle title={title} />
 
       <div className={theme.svgScene}>
         <span className={clsx(theme.group, theme.groupPlant)}>
@@ -159,6 +162,9 @@ GetStarted.propTypes = {
   history: object.isRequired,
   goToStep: func.isRequired,
   setType: func.isRequired,
+  chooseType: bool,
 }
+
+GetStarted.defaultProps = { chooseType: false }
 
 export default GetStarted

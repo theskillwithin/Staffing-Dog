@@ -1,0 +1,59 @@
+@import '../../styles/config.css';
+
+:global(.html-email-confirmation) {
+  @media (--sd-mobile) {
+    background-color: var(--sd-white);
+  }
+}
+
+:root {
+  --emailConfirmationMaxWidth: 480px;
+}
+
+.emailConfirmationContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 80vh;
+}
+
+.emailConfirmation {
+  position: relative;
+  padding: 32px 32px 45px 32px;
+  margin: 2em;
+  max-width: var(--emailConfirmationMaxWidth);
+  width: 100%;
+  border-radius: 8px;
+  background-color: var(--sd-white);
+  box-shadow: 0 3px 6px 0 var(--sd-shadowColor);
+
+  h2 {
+    text-align: center;
+    font-weight: var(--sd-fontWeightLight);
+    color: var(--blackTxt);
+  }
+
+  @media (--sd-mobile) {
+    box-shadow: unset;
+  }
+}
+
+.success {
+  text-align: center;
+
+  button {
+    margin-top: 1em;
+    min-width: 150px;
+
+    span {
+      position: absolute;
+      margin-right: -1em;
+      margin-left: 1em;
+    }
+  }
+}
+
+.loading {
+  min-height: 118px;
+}

@@ -30,6 +30,7 @@ export const professional = [
     forceAllow: true,
     step: '1',
     nextStep: '2',
+    previousStep: 0,
     complete: false,
     needsComplete: true,
     needsCompleteIfToken: false,
@@ -88,6 +89,7 @@ export const professional = [
   {
     step: '2',
     nextStep: '3',
+    previousStep: '1',
     complete: false,
     needsComplete: true,
     needsCompleteIfToken: true,
@@ -185,6 +187,7 @@ export const professional = [
   {
     step: '3',
     nextStep: 'complete',
+    previousStep: '2',
     complete: false,
     needsComplete: true,
     needsCompleteIfToken: true,
@@ -231,16 +234,16 @@ export const professional = [
         label: 'Availability',
         type: 'dropdown',
         options: [
-          { value: 'All' },
-          { value: 'Temporary' },
-          { value: 'Full Time' },
-          { value: 'Part Time' },
+          { label: 'Full Time', value: 'full_time' },
+          { label: 'Part Time', value: 'part_time' },
+          { label: 'Day Hire', value: 'day_hire' },
         ],
       },
     ],
   },
   {
     step: 'complete',
+    previousStep: '3',
     complete: false,
     needsComplete: false,
     needsCompleteIfToken: false,
@@ -253,6 +256,7 @@ export const practice = [
     forceAllow: true,
     step: '1',
     nextStep: '2',
+    previousStep: 0,
     complete: false,
     needsComplete: true,
     needsCompleteIfToken: false,
@@ -311,12 +315,13 @@ export const practice = [
   {
     step: '2',
     nextStep: '3',
+    previousStep: '2',
     complete: false,
     needsComplete: true,
     needsCompleteIfToken: true,
     title: 'Practice Address',
     sidebar: {
-      title: 'DayHire &tm;',
+      title: 'DayHire &trade;',
       description:
         'Never depend on an early morning phone call again. DayHire  is a location based, on-demand hiring alternative to calling a temp agency.',
       svg: 'mobile',
@@ -396,7 +401,7 @@ export const practice = [
         ],
       },
       {
-        name: 'postal_code',
+        name: 'zip',
         label: 'Postal Code',
         type: 'input',
         formType: 'number',
@@ -408,6 +413,7 @@ export const practice = [
   {
     step: '3',
     nextStep: 'complete',
+    previousStep: '2',
     complete: false,
     needsComplete: true,
     needsCompleteIfToken: true,
@@ -466,6 +472,7 @@ export const practice = [
   },
   {
     step: 'complete',
+    previousStep: '3',
     complete: false,
     needsComplete: false,
     needsCompleteIfToken: false,

@@ -29,15 +29,14 @@ const axiosInstance = axios.create({
 export const unauthorizedUser = () => {
   if (get(lastUsedRequest, 'url', false) !== `${API_ROOT}/login`) {
     removeAllAuth()
-    window.location.assign('/login')
+    window.location = '/logout'
   }
 }
 
 export const onErrorByStatus = res => {
   if (
     res.status === 401 ||
-    (res.status === 400 &&
-      get(res, 'data.error', false) === 'fingerprint collision detected')
+    (res.status === 400 && get(res, 'data.error_code', false) === '401_22')
   ) {
     unauthorizedUser()
   }

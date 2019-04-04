@@ -3,6 +3,7 @@ import get from 'lodash/get'
 import omit from 'lodash/omit'
 import { API_ROOT } from '@sdog/utils/api'
 import createFingerprint from '@sdog/utils/fingerprint'
+import { useErrorFromResponse } from '@sdog/definitions/errors'
 
 import { createActionTypes, reduxRegister, buildStore } from '../tools'
 import {
@@ -14,6 +15,7 @@ import {
 } from '../storage'
 
 export const INITIAL_STATE = {
+  lastUpdated: false,
   auth: {
     loading: false,
     error: false,
@@ -76,7 +78,35 @@ export const INITIAL_STATE = {
     loading: false,
     error: false,
   },
+  forgot: {
+    loading: false,
+    error: false,
+    success: false,
+  },
+  reset: {
+    loading: false,
+    error: false,
+    success: false,
+    validate: {
+      loading: true,
+      error: false,
+      success: false,
+    },
+  },
+  validateEmail: {
+    loading: false,
+    error: false,
+    success: false,
+  },
+  requestValidateEmail: {
+    loading: false,
+    error: false,
+    success: false,
+  },
 }
+
+const getLastUpdated = () => new Date().getTime()
+const spreadLastUpdated = () => ({ lastUpdated: getLastUpdated() })
 
 const spreadLoadingError = (loading = false, error = false) => ({ loading, error })
 
@@ -125,6 +155,7 @@ reducers = {
   ...reducers,
   [USER_SET_FINGERPRINT]: (state, { fingerprint }) => ({
     ...state,
+    ...spreadLastUpdated(),
     auth: {
       ...state.auth,
       fingerprint,
@@ -180,24 +211,20 @@ reducers = {
   ...reducers,
   [userLoginTypes.LOADING]: state => ({
     ...state,
+    ...spreadLastUpdated(),
     auth: { ...state.auth, ...spreadLoadingError(true, false) },
   }),
   [userLoginTypes.ERROR]: (state, { error }) => ({
     ...state,
+    ...spreadLastUpdated(),
     auth: {
       ...state.auth,
-      ...spreadLoadingError(
-        false,
-        get(
-          error,
-          'response.data.error',
-          'There was an issue attempting to login. Please try again or contact support.',
-        ),
-      ),
+      ...spreadLoadingError(false, useErrorFromResponse(error)),
     },
   }),
   [userLoginTypes.SUCCESS]: (state, { data }) => ({
     ...state,
+    ...spreadLastUpdated(),
     auth: { ...state.auth, ...spreadLoadingError(false, false) },
     profile: {
       ...state.profile,
@@ -224,23 +251,30 @@ const onLogoutCallback = cb => {
   if (cb) cb()
 }
 
-export const logout = (cb = false) => (dispatch, getState) =>
-  dispatch({
-    type: USER_LOGOUT,
-    api: {
-      url: `${API_ROOT}/logout`,
-      method: 'POST',
-      data: { user_id: findUserId(getState()) },
-      callbacks: {
-        success: () => onLogoutCallback(cb),
-        error: () => onLogoutCallback(cb),
+export const logout = (cb = false) => (dispatch, getState) => {
+  const userId = findUserId(getState())
+
+  if (userId) {
+    dispatch({
+      type: USER_LOGOUT,
+      api: {
+        url: `${API_ROOT}/logout`,
+        method: 'POST',
+        data: { user_id: userId },
+        callbacks: {
+          success: () => onLogoutCallback(cb),
+          error: () => onLogoutCallback(cb),
+        },
+        dispatches: {
+          success: onLogoutDispatches,
+          error: onLogoutDispatches,
+        },
       },
-      dispatches: {
-        success: onLogoutDispatches,
-        error: onLogoutDispatches,
-      },
-    },
-  })
+    })
+  } else {
+    onLogoutCallback(cb)
+  }
+}
 
 /**
  * REGISTER USER
@@ -274,6 +308,7 @@ reducers = {
   ...reducers,
   [userRegisterTypes.LOADING]: state => ({
     ...state,
+    ...spreadLastUpdated(),
     register: {
       ...state.register,
       ...spreadLoadingError(true, false),
@@ -281,20 +316,15 @@ reducers = {
   }),
   [userRegisterTypes.SUCCESS]: (state, { data }) => ({
     ...state,
+    ...spreadLastUpdated(),
     profile: formatProfileData(state.profile, data),
   }),
   [userRegisterTypes.ERROR]: (state, { error }) => ({
     ...state,
+    ...spreadLastUpdated(),
     register: {
       ...state.register,
-      ...spreadLoadingError(
-        false,
-        get(
-          error,
-          'response.data.error',
-          'There was an unkown api error attempting to save this step. Please try again or contact support',
-        ),
-      ),
+      ...spreadLoadingError(false, useErrorFromResponse(error)),
     },
   }),
 }
@@ -322,6 +352,7 @@ reducers = {
   ...reducers,
   [userRegisterUpdateTypes.LOADING]: state => ({
     ...state,
+    ...spreadLastUpdated(),
     register: {
       ...state.register,
       ...spreadLoadingError(true, false),
@@ -329,6 +360,7 @@ reducers = {
   }),
   [userRegisterUpdateTypes.SUCCESS]: (state, { data }) => ({
     ...state,
+    ...spreadLastUpdated(),
     register: {
       ...state.register,
       ...spreadLoadingError(false, false),
@@ -337,16 +369,10 @@ reducers = {
   }),
   [userRegisterUpdateTypes.ERROR]: (state, { error }) => ({
     ...state,
+    ...spreadLastUpdated(),
     register: {
       ...state.register,
-      ...spreadLoadingError(
-        false,
-        get(
-          error,
-          'response.data.error',
-          'There was an error attempting to save your data. Please try again or contact support.',
-        ),
-      ),
+      ...spreadLoadingError(false, useErrorFromResponse(error)),
     },
   }),
 }
@@ -389,6 +415,7 @@ reducers = {
   ...reducers,
   [userGetProfileTypes.LOADING]: state => ({
     ...state,
+    ...spreadLastUpdated(),
     profile: {
       ...state.profile,
       ...spreadLoadingError(true, false),
@@ -396,6 +423,7 @@ reducers = {
   }),
   [userGetProfileTypes.SUCCESS]: (state, { data }) => ({
     ...state,
+    ...spreadLastUpdated(),
     profile: {
       ...state.profile,
       ...data,
@@ -404,16 +432,10 @@ reducers = {
   }),
   [userGetProfileTypes.ERROR]: (state, { error }) => ({
     ...state,
+    ...spreadLastUpdated(),
     profile: {
       ...state.profile,
-      ...spreadLoadingError(
-        false,
-        get(
-          error,
-          'response.data.error',
-          'There was an error attemtping to get your profile data. Please contact support if this error continues.',
-        ),
-      ),
+      ...spreadLoadingError(false, useErrorFromResponse(error)),
     },
   }),
 }
@@ -437,6 +459,7 @@ reducers = {
   ...reducers,
   [userGetScheduleTypes.LOADING]: state => ({
     ...state,
+    ...spreadLastUpdated(),
     schedule: {
       ...state.schedule,
       ...spreadLoadingError(true, false),
@@ -444,6 +467,7 @@ reducers = {
   }),
   [userGetScheduleTypes.ERROR]: state => ({
     ...state,
+    ...spreadLastUpdated(),
     schedule: {
       ...state.schedule,
       ...spreadLoadingError(false, true),
@@ -451,6 +475,7 @@ reducers = {
   }),
   [userGetScheduleTypes.SUCCESS]: state => ({
     ...state,
+    ...spreadLastUpdated(),
     schedule: {
       ...state.schedule,
       ...spreadLoadingError(false, false),
@@ -515,11 +540,13 @@ reducers = {
   ...reducers,
   [AUTH_SAVE_USER_PROFILE_ONLY_REDUX]: (state, { name, value }) => ({
     ...state,
+    ...spreadLastUpdated(),
     profile: set({ ...state.profile }, name, value),
     lastUpdated: new Date().getTime(),
   }),
   [autoSaveUserProfileTypes.LOADING]: (state, { name, value }) => ({
     ...state,
+    ...spreadLastUpdated(),
     profile: set({ ...state.profile }, name, value),
     previousProfileUpdate: {
       name,
@@ -529,14 +556,16 @@ reducers = {
   }),
   [autoSaveUserProfileTypes.SUCCESS]: (state, { data }) => ({
     ...state,
+    ...spreadLastUpdated(),
     profile: {
       ...state.profile,
       ...data,
     },
     lastUpdated: new Date().getTime(),
   }),
-  [autoSaveUserProfileTypes.ERROR]: (state, payload) => ({
+  [autoSaveUserProfileTypes.ERROR]: (state, { error }) => ({
     ...state,
+    ...spreadLastUpdated(),
     profile: {
       ...(state.profile.previousProfileUpdate
         ? set(
@@ -545,9 +574,53 @@ reducers = {
             state.profile.previousProfileUpdate.value,
           )
         : state.profile),
-      ...spreadLoadingError(false, payload.error || 'error'),
+      ...spreadLoadingError(false, useErrorFromResponse(error)),
     },
     lastUpdated: new Date().getTime(),
+  }),
+}
+
+/**
+ * Save User Profile Data
+ */
+export const SAVE_USER_PROFILE = 'SAVE_USER_PROFILE'
+export const saveUserProfileTypes = createActionTypes(SAVE_USER_PROFILE)
+
+export const saveUserProfile = form => (dispatch, getState) => {
+  dispatch({
+    type: SAVE_USER_PROFILE,
+    api: {
+      url: `${API_ROOT}/profiles`,
+      method: 'PUT',
+      data: { data: form.profile, id: findUserId(getState()) || getUserId() },
+    },
+    payload: form.profile,
+  })
+}
+
+reducers = {
+  ...reducers,
+  [saveUserProfileTypes.LOADING]: state => ({
+    ...state,
+    ...spreadLastUpdated(),
+    profile: { ...state.profile, ...spreadLoadingError(true, false) },
+  }),
+  [saveUserProfileTypes.SUCCESS]: (state, { data }) => ({
+    ...state,
+    ...spreadLastUpdated(),
+    profile: {
+      ...state.profile,
+      ...data,
+      ...spreadLoadingError(false, false),
+    },
+  }),
+  [saveUserProfileTypes.ERROR]: (state, { error }) => ({
+    ...state,
+    ...spreadLastUpdated(),
+    profile: {
+      ...state.profile,
+      ...spreadLoadingError(false, useErrorFromResponse(error)),
+    },
   }),
 }
 
@@ -563,7 +636,7 @@ export const uploadUserPhoto = file => (dispatch, getState) => {
   data.append('user_id', findUserId(getState()) || getUserId())
 
   dispatch({
-    type: USER_GET_SCHEDULE,
+    type: UPLOAD_USER_PHOTO,
     api: {
       url: `${API_ROOT}/profile/uploads`,
       method: 'POST',
@@ -576,25 +649,28 @@ reducers = {
   ...reducers,
   [uploadUserPhotoTypes.LOADING]: state => ({
     ...state,
+    ...spreadLastUpdated(),
     loadingUserProfile: true,
     loadingUserProfileError: false,
   }),
   [uploadUserPhotoTypes.SUCCESS]: (state, { data }) => ({
     ...state,
+    ...spreadLastUpdated(),
     loadingUserProfile: false,
     loadingUserProfileError: false,
     profile: {
       ...state.profile,
       preferences: {
         ...state.profile.preferences,
-        profile_img_url: data.profile_img_url,
+        profile_image_url: data.profile_img_url,
       },
     },
   }),
-  [uploadUserPhotoTypes.ERROR]: state => ({
+  [uploadUserPhotoTypes.ERROR]: (state, { error }) => ({
     ...state,
+    ...spreadLastUpdated(),
     loadingUserProfile: false,
-    loadingUserProfileError: true,
+    loadingUserProfileError: useErrorFromResponse(error),
   }),
 }
 
@@ -612,9 +688,277 @@ reducers = {
   ...reducers,
   [USER_REGISTER_CLEAR_ERROR]: state => ({
     ...state,
+    ...spreadLastUpdated(),
     register: {
       ...state.register,
       error: null,
+    },
+  }),
+}
+
+/**
+ * FORGOT PASSWORD
+ */
+export const USER_FORGOT_PASSWORD = 'USER_FORGOT_PASSWORD'
+export const USER_FORGOT_PASSWORD_CLEAR_SUCCESS = 'USER_FORGOT_PASSWORD_CLEAR_SUCCESS'
+export const userForgotPasswordTypes = createActionTypes(USER_FORGOT_PASSWORD)
+
+export const displayedForgotPasswordClearSuccess = () => ({
+  type: USER_FORGOT_PASSWORD_CLEAR_SUCCESS,
+})
+
+export const submitForgotPasswordEmail = ({ email, history }) => ({
+  type: USER_FORGOT_PASSWORD,
+  api: {
+    url: `${API_ROOT}/login/forgot-password`,
+    method: 'POST',
+    data: { email },
+    callbacks: {
+      success: () => {
+        if (history) {
+          history.push('/login')
+        }
+      },
+    },
+  },
+})
+
+reducers = {
+  ...reducers,
+  [userForgotPasswordTypes.LOADING]: state => ({
+    ...state,
+    ...spreadLastUpdated(),
+    forgot: {
+      ...state.forgot,
+      ...spreadLoadingError(true, false),
+      success: false,
+    },
+  }),
+  [userForgotPasswordTypes.ERROR]: (state, { error }) => ({
+    ...state,
+    ...spreadLastUpdated(),
+    forgot: {
+      ...state.forgot,
+      ...spreadLoadingError(false, useErrorFromResponse(error)),
+      success: false,
+    },
+  }),
+  [userForgotPasswordTypes.SUCCESS]: (state, { data }) => ({
+    ...state,
+    ...spreadLastUpdated(),
+    forgot: {
+      ...state.forgot,
+      ...spreadLoadingError(false, false),
+      success: get(data, 'message', true),
+    },
+  }),
+  [USER_FORGOT_PASSWORD_CLEAR_SUCCESS]: state => ({
+    ...state,
+    ...spreadLastUpdated(),
+    forgot: {
+      ...state.forgot,
+      success: false,
+    },
+  }),
+}
+
+/**
+ * RESET PASSWORD
+ */
+export const USER_RESET_PASSWORD = 'USER_RESET_PASSWORD'
+export const USER_VALIDATE_PASSWORD = 'USER_VALIDATE_PASSWORD'
+export const USER_RESET_PASSWORD_CLEAR_SUCCESS = 'USER_RESET_PASSWORD_CLEAR_SUCCESS'
+export const userResetPasswordTypes = createActionTypes(USER_RESET_PASSWORD)
+export const userValidatePasswordTypes = createActionTypes(USER_VALIDATE_PASSWORD)
+
+export const displayedResetPasswordClearSuccess = () => ({
+  type: USER_RESET_PASSWORD_CLEAR_SUCCESS,
+})
+
+export const validateResetPasswordEmail = ({ anchor, token }) => ({
+  type: USER_VALIDATE_PASSWORD,
+  api: {
+    url: `${API_ROOT}/login/validate-reset`,
+    method: 'POST',
+    data: { anchor, token },
+  },
+})
+
+export const submitResetPasswordEmail = ({ anchor, token, data, history }) => ({
+  type: USER_RESET_PASSWORD,
+  api: {
+    url: `${API_ROOT}/login/reset-password`,
+    method: 'POST',
+    data: { anchor, token, data },
+    callbacks: {
+      success: () => {
+        if (history) {
+          history.push('/login')
+        }
+      },
+    },
+  },
+})
+
+reducers = {
+  ...reducers,
+  [userValidatePasswordTypes.LOADING]: state => ({
+    ...state,
+    ...spreadLastUpdated(),
+    reset: {
+      ...state.reset,
+      validate: {
+        ...state.reset.validate,
+        ...spreadLoadingError(true, false),
+        success: false,
+      },
+    },
+  }),
+  [userValidatePasswordTypes.ERROR]: (state, { error }) => ({
+    ...state,
+    ...spreadLastUpdated(),
+    reset: {
+      ...state.reset,
+      validate: {
+        ...state.reset.validate,
+        ...spreadLoadingError(false, useErrorFromResponse(error)),
+        success: false,
+      },
+    },
+  }),
+  [userValidatePasswordTypes.SUCCESS]: (state, { data }) => ({
+    ...state,
+    ...spreadLastUpdated(),
+    reset: {
+      ...state.reset,
+      validate: {
+        ...state.reset.validate,
+        ...spreadLoadingError(false, false),
+        success: get(data, 'message', true),
+      },
+    },
+  }),
+  [userResetPasswordTypes.LOADING]: state => ({
+    ...state,
+    ...spreadLastUpdated(),
+    reset: {
+      ...state.reset,
+      ...spreadLoadingError(true, false),
+      success: false,
+    },
+  }),
+  [userResetPasswordTypes.ERROR]: (state, { error }) => ({
+    ...state,
+    ...spreadLastUpdated(),
+    reset: {
+      ...state.reset,
+      ...spreadLoadingError(false, useErrorFromResponse(error)),
+      success: false,
+    },
+  }),
+  [userResetPasswordTypes.SUCCESS]: (state, { data }) => ({
+    ...state,
+    ...spreadLastUpdated(),
+    reset: {
+      ...state.reset,
+      ...spreadLoadingError(false, false),
+      success: get(data, 'message', true),
+    },
+  }),
+  [USER_RESET_PASSWORD_CLEAR_SUCCESS]: state => ({
+    ...state,
+    ...spreadLastUpdated(),
+    reset: {
+      ...state.reset,
+      success: false,
+    },
+  }),
+}
+
+/**
+ * USER VALIDATE EMAIL
+ */
+export const USER_VALIDATE_EMAIL = 'USER_VALIDATE_EMAIL'
+export const USER_VALIDATE_REQUEST = 'USER_VALIDATE_REQUEST'
+export const USER_VALIDATE_EMAIL_CLEAR_SUCCESS = 'USER_VALIDATE_EMAIL_CLEAR_SUCCESS'
+export const userValidateEmail = createActionTypes(USER_VALIDATE_EMAIL)
+export const userValidateRequestEmail = createActionTypes(USER_VALIDATE_REQUEST)
+
+export const requestValidateEmail = () => (dispatch, getState) => {
+  const userId = findUserId(getState()) || getUserId()
+  dispatch({
+    type: USER_VALIDATE_REQUEST,
+    api: {
+      url: `${API_ROOT}/profiles/email_confirmation`,
+      method: 'POST',
+      data: { user_id: userId },
+    },
+  })
+}
+
+export const validateEmail = ({ anchor, token }) => ({
+  type: USER_VALIDATE_EMAIL,
+  api: {
+    url: `${API_ROOT}/login/validate_email`,
+    method: 'POST',
+    data: { anchor, token },
+  },
+})
+
+reducers = {
+  ...reducers,
+  [userValidateRequestEmail.LOADING]: state => ({
+    ...state,
+    ...spreadLastUpdated(),
+    requestValidateEmail: {
+      ...state.requestValidateEmail,
+      ...spreadLoadingError(true, false),
+      success: false,
+    },
+  }),
+  [userValidateRequestEmail.ERROR]: (state, { error }) => ({
+    ...state,
+    ...spreadLastUpdated(),
+    requestValidateEmail: {
+      ...state.requestValidateEmail,
+      ...spreadLoadingError(false, useErrorFromResponse(error)),
+      success: false,
+    },
+  }),
+  [userValidateRequestEmail.SUCCESS]: (state, { data }) => ({
+    ...state,
+    ...spreadLastUpdated(),
+    requestValidateEmail: {
+      ...state.requestValidateEmail,
+      ...spreadLoadingError(false, false),
+      success: get(data, 'message', true),
+    },
+  }),
+  [userValidateEmail.LOADING]: state => ({
+    ...state,
+    ...spreadLastUpdated(),
+    validateEmail: {
+      ...state.validateEmail,
+      ...spreadLoadingError(true, false),
+      success: false,
+    },
+  }),
+  [userValidateEmail.ERROR]: (state, { error }) => ({
+    ...state,
+    ...spreadLastUpdated(),
+    validateEmail: {
+      ...state.validateEmail,
+      ...spreadLoadingError(false, useErrorFromResponse(error)),
+      success: false,
+    },
+  }),
+  [userValidateEmail.SUCCESS]: (state, { data }) => ({
+    ...state,
+    ...spreadLastUpdated(),
+    validateEmail: {
+      ...state.validateEmail,
+      ...spreadLoadingError(false, false),
+      success: get(data, 'message', true),
     },
   }),
 }
@@ -631,9 +975,17 @@ reduxRegister.register('user', reducer)
  */
 
 export const findState = state => state.user
+
+export const loadingUserProfile = state => findState(state).loadingUserProfile
+export const loadingUserProfileError = state => findState(state).loadingUserProfileError
+
 export const findUserAuth = state => findState(state).auth
 export const findSchedule = state => findState(state).schedule
 export const findRegister = state => findState(state).register
+export const findForgot = state => findState(state).forgot
+export const findReset = state => findState(state).reset
+export const findValidateEmail = state => findState(state).validateEmail
+export const findResetValidate = state => findReset(state).validate
 export const findUserProfile = state => findState(state).profile
 export const findUserMeta = state => findUserProfile(state).meta
 export const findUserInfo = state => findUserProfile(state).user
@@ -642,6 +994,22 @@ export const findUserPreferences = state => findUserProfile(state).preferences
 export const findScheduleEvents = state => findSchedule(state).events
 export const findScheduleLoading = state => findSchedule(state).loading
 export const findScheduleError = state => findSchedule(state).error
+
+export const findForgotLoading = state => findForgot(state).loading
+export const findForgotError = state => findForgot(state).error
+export const findForgotSuccess = state => findForgot(state).success
+
+export const findValidateEmailLoading = state => findValidateEmail(state).loading
+export const findValidateEmailError = state => findValidateEmail(state).error
+export const findValidateEmailSuccess = state => findValidateEmail(state).success
+
+export const findResetValidateLoading = state => findResetValidate(state).loading
+export const findResetValidateError = state => findResetValidate(state).error
+export const findResetValidateSuccess = state => findResetValidate(state).success
+
+export const findResetLoading = state => findReset(state).loading
+export const findResetError = state => findReset(state).error
+export const findResetSuccess = state => findReset(state).success
 
 export const findRegisterError = state => findRegister(state).error
 

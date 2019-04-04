@@ -52,22 +52,34 @@
 
     .left,
     .right {
-      height: 394px;
+      height: 540px;
       width: 439px;
-      margin-top: -10em;
       background: white;
       border: 1px solid var(--sd-borderColor);
       border-radius: 8px;
       box-shadow: 0 3px 6px 0 var(--sd-shadowColor);
-      padding: 3em 1em 1em 1em;
+      padding: 1.28em 1em 1em;
+      overflow-x: hidden;
+      white-space: nowrap;
+
+      .people {
+        margin-top: 1.8em;
+      }
+
+      .chair {
+        margin-right: -80px;
+      }
 
       @media (--sd-mobile) {
         box-shadow: none;
         border: none;
         width: 100vw;
         border-radius: 0;
-        overflow-x: hidden;
-        white-space: nowrap;
+        background: transparent;
+        margin-top: 15em;
+        padding-left: 0;
+        padding-right: 0;
+        width: 100%;
 
         .chair {
           margin-right: -40px;
@@ -78,15 +90,21 @@
     .left {
       @media (--sd-mobile) {
         border-bottom: solid 1px rgb(187, 193, 209, 0.5);
+        margin-bottom: 15em;
       }
     }
 
     @media (--sd-preBreakTablet) {
       grid-template-columns: 1fr;
-      grid-template-rows: 394px 394px;
+      grid-template-rows: 550px 550px;
       align-content: center;
       justify-items: center;
       margin-top: 3em;
+      margin-bottom: 5em;
+    }
+
+    @media (--sd-mobile) {
+      grid-template-rows: 394px 394px;
     }
   }
 }
@@ -104,8 +122,12 @@
 
   span {
     position: absolute;
-    top: 50%;
+    top: 49%;
     right: 5px;
     transform: translateY(-50%);
+  }
+
+  svg {
+    width: 23px;
   }
 }

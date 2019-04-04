@@ -1,0 +1,61 @@
+@import '../../styles/config.css';
+
+:global(.html-privacy-policy) {
+  @media (--sd-mobile) {
+    background-color: var(--sd-white);
+  }
+}
+
+:root {
+  --privacyMaxWidth: 1000px;
+}
+
+.header {
+  position: absolute;
+  top: 2em;
+  right: 2em;
+}
+
+.privacyContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 80vh;
+}
+
+.privacy {
+  position: relative;
+  padding: 32px 32px 45px 32px;
+  margin: 2em;
+  max-width: var(--privacyMaxWidth);
+  width: calc(100% - 4em);
+  border-radius: 8px;
+  background-color: var(--sd-white);
+  box-shadow: 0 3px 6px 0 var(--sd-shadowColor);
+
+  h2 {
+    text-align: center;
+    font-weight: var(--sd-fontWeightLight);
+  }
+
+  h3 {
+    font-size: 20px;
+    text-align: center;
+  }
+
+  h4 {
+    margin-top: 2.5em;
+    line-height: 1.5;
+  }
+
+  p {
+    line-height: 1.5;
+  }
+
+  @media (--sd-mobile) {
+    box-shadow: unset;
+    padding: 0;
+    margin: 1em;
+  }
+}

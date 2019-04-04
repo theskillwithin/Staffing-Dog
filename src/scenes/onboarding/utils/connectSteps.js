@@ -1,5 +1,6 @@
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
+import { findToken } from '@sdog/store/user'
 
 import {
   findSteps,
@@ -15,6 +16,7 @@ import {
   setValue,
   goToStep,
   setStep,
+  blurInvalid,
 } from '../store/steps'
 
 export default Component =>
@@ -31,7 +33,8 @@ export default Component =>
         loading: findLoading(state),
         stepValues: findStepValues(state),
         type: findType(state),
+        token: findToken(state),
       }),
-      { setValue, goToStep, setStep },
+      { setValue, goToStep, setStep, blurInvalid },
     )(Component),
   )
