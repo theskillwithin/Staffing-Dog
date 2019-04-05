@@ -58,7 +58,7 @@ const Nav = ({ steps, goToStep, exclude, history, className, match: { params } }
               onClick={e => {
                 e.preventDefault()
 
-                if (isStepDisabled(step)) {
+                if (isStepDisabled(step.step)) {
                   return false
                 }
 
