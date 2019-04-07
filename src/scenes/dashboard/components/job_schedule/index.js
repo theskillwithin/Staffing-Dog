@@ -67,7 +67,7 @@ const JobSchedule = ({
 
   const schedule = defaultSchedule.map(currentDay => {
     const matchingDay = find(
-      meta.capacity.default_hours || [],
+      (meta && meta.capacity && meta.capacity.default_hours) || [],
       ({ day }) => day === currentDay.day,
     )
 

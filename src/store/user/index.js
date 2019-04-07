@@ -1016,6 +1016,8 @@ export const findRegisterError = state => findRegister(state).error
 export const findToken = state => findUserAuth(state).token
 export const findFingerprint = state => findUserAuth(state).fingerprint
 
+export const findUserType = state => findUserInfo(state).type
+
 export const findUserId = state => findUserProfile(state).id
 
 export default reducer
