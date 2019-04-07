@@ -61,9 +61,8 @@ const App = ({ getUserProfile, location, history, userProfile }) => {
           <Route path="/" component={DashboardScene} exact />
           <Route path="/settings" component={SettingsScene} />
           <Route path="/search" component={SearchScene} />
-          <Route path="/job-postings" component={JobPostingsScene}>
-            <Route path="/job-postings/new" component={JobPostingsSceneNew} />
-          </Route>
+          <Route path="/job-postings/new" component={JobPostingsSceneNew} />
+          <Route exact path="/job-postings" component={JobPostingsScene} />
         </React.Suspense>
       </div>
     </div>
