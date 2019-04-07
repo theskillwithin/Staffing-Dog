@@ -42,7 +42,9 @@ const Steps = ({
         className={clsx(
           theme.formRow,
           field.fields && theme.hasMany,
-          !field.fields && 'dropdown' === field.type && theme.hasDropdown,
+          !field.fields &&
+            ('dropdown' === field.type || 'multi-select' === field.type) &&
+            theme.hasDropdown,
         )}
       >
         {field.fields
@@ -88,6 +90,7 @@ const Steps = ({
           />
         )
       case 'dropdown':
+      case 'multi-select':
         if (field.optionsByValue) {
           const value = field.optionsByValue.name && getValue(field.optionsByValue.name)
 
@@ -105,10 +108,18 @@ const Steps = ({
         return (
           <Dropdown
             invalid={errorFields && includes(errorFields, field.name)}
-            onChange={v => onChange(field.name, v.value)}
+            onChange={v =>
+              onChange(field.name, field.type === 'multi-select' ? v : v.value)
+            }
             placeholder={field.label}
             {...fieldProps}
-            value={find(fieldProps.options, option => option.value === fieldProps.value)}
+            isMulti={field.type === 'multi-select'}
+            isClearable={field.isClearable || false}
+            value={
+              field.type === 'multi-select'
+                ? fieldProps.value
+                : find(fieldProps.options, option => option.value === fieldProps.value)
+            }
           />
         )
     }

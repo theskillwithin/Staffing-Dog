@@ -232,12 +232,19 @@ export const professional = [
       {
         name: 'availability',
         label: 'Availability',
-        type: 'dropdown',
+        type: 'multi-select',
         options: [
-          { label: 'Full Time', value: 'full_time' },
-          { label: 'Part Time', value: 'part_time' },
-          { label: 'Day Hire', value: 'day_hire' },
+          { label: 'Full Time (Permanent)', value: 'full_time' },
+          { label: 'Part Time (Permanent)', value: 'part_time' },
+          { label: 'Temp', value: 'temp' },
         ],
+        required: true,
+      },
+      {
+        name: 'hourly_wage',
+        label: 'Hourly Wage',
+        type: 'input',
+        required: true,
       },
     ],
   },

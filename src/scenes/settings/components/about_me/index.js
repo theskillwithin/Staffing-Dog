@@ -85,9 +85,9 @@ const states = [
 ].map(state => ({ label: state, value: state }))
 
 const availability = [
-  { label: 'Full Time', value: 'full_time' },
-  { label: 'Part Time', value: 'part_time' },
-  { label: 'Temporary', value: 'temporary' },
+  { label: 'Full Time (Permanent)', value: 'full_time' },
+  { label: 'Part Time (permanent)', value: 'part_time' },
+  { label: 'Temp', value: 'temp' },
 ]
 
 const specialties = [
