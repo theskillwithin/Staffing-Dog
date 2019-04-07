@@ -51,6 +51,7 @@ const JobPostings = ({ jobs, loading }) => {
                 >
                   {get(job, 'criteria.title', 'Job')}
                 </Link>
+                <div className={clsx(theme.status, theme[job.status])}>{job.status}</div>
                 <div className={theme.location}>
                   <strong>{get(job, 'criteria.practice_details.name', 'Office')}</strong>
                   <span>
@@ -99,6 +100,7 @@ JobPostings.defaultProps = {
     {
       id: 112358,
       applicantsNumber: 2,
+      status: 'open',
       criteria: {
         title: 'Temporary Hygienist Needed for Maternity Leave',
         experience_preferred: '4- 7 Years',
