@@ -100,6 +100,7 @@
   dd {
     font-size: 14px;
     margin-right: 2em;
+    margin-left: 1em;
     color: var(--sd-blackTxt);
     font-weight: var(--sd-fontWeightMedium);
   }
