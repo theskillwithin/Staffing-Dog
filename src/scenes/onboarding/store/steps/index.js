@@ -58,7 +58,16 @@ export const formatDataFromApi = (apiData, values, type = INITIAL_STATE.type) =>
     ? {
         profession: get(apiData, 'meta.summary.profession.type', values.profession),
         specialty: get(apiData, 'meta.summary.profession.specialty', values.specialty),
-        availability: get(apiData, 'meta.summary.capacity', values.availability),
+        availability: get(
+          apiData,
+          'meta.summary.capacity.availability',
+          values.availability,
+        ),
+        hourly_wage: get(
+          apiData,
+          'meta.summary.capacity.hourly_wage',
+          values.hourly_wage,
+        ),
       }
     : {
         practice_name: get(apiData, 'meta.summary.practice_name', values.practice_name),
@@ -103,6 +112,7 @@ export const formatDataFromOnboarding = (values, profile, type = INITIAL_STATE.t
     capacity: {
       ...get(profile, 'meta.summary.capacity', {}),
       ...(values.availability ? { availability: values.availability } : {}),
+      ...(values.hourly_wage ? { hourly_wage: values.hourly_wage } : {}),
     },
     summary: {
       ...get(profile, 'meta.summary', {}),
