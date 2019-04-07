@@ -180,8 +180,8 @@
 
 .status {
   position: absolute;
-  top: 2em;
-  right: 2em;
+  top: 2.9em;
+  right: 44px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -197,4 +197,14 @@
   &.open {
     background: var(--sd-green);
   }
+}
+
+.edit {
+  position: absolute;
+  right: 44px;
+  bottom: 76px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-width: 265px;
 }

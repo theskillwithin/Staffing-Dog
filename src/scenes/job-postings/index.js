@@ -66,6 +66,12 @@ const JobPostings = ({ jobs, loading }) => {
                     <dd>{get(job, 'criteria.experience_preferred')}</dd>
                   </dl>
                 </div>
+                <div className={theme.edit}>
+                  <Button red>Delete Post</Button>
+                  <Link to={`/job-postings/edit/${job.id}`}>
+                    <Button secondary>Edit Post</Button>
+                  </Link>
+                </div>
                 <div className={theme.actions}>
                   <div className={theme.info}>
                     <div>{defineJob('type', get(job, 'criteria.employment_type'))}</div>
