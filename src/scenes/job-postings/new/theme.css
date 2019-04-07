@@ -1,0 +1,71 @@
+@import '../../../styles/config.css';
+
+:root {
+  --sd-containerWidth: 840px;
+}
+
+.container {
+  max-width: var(--sd-containerWidth);
+}
+
+.new {
+  h1 {
+    color: var(--sd-blackTxt);
+    font-size: 30px;
+    font-weight: var(--sd-fontWeightLight);
+    margin-bottom: 55px;
+  }
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  margin: 10px -10px;
+
+  > * {
+    flex: 1;
+    margin: 0 10px;
+  }
+}
+
+.halfRow {
+  width: 50%;
+  padding-right: 10px;
+  margin: 10px 0;
+}
+
+.startDate,
+.endDate {
+  max-width: 166px;
+
+  input {
+    width: 166px;
+  }
+}
+
+.shortDescription {
+  min-height: 119px;
+
+  textarea {
+    min-height: 119px;
+  }
+}
+
+.fullDescription {
+  min-height: 211px;
+
+  textarea {
+    min-height: 211px;
+  }
+}
+
+.submitBtn {
+  margin: 3em auto 1em auto;
+  width: 420px;
+  line-height: 40px;
+}
