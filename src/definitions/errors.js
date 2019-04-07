@@ -13,8 +13,7 @@ export const codes = {
   '400_16': 'Invalid Address',
   '400_171':
     'There was a problem with the password reset link. Check your email or try reseting your password again.',
-  '400_172':
-    'There was a problem with the password reset link. Check your email or try reseting your password again.',
+  '400_172': 'Bad email confirmation link.  Try requesting email confirmation again.',
   '400_2': withTryAgain('There was an unkown error.'),
   '400_21': 'user has to at least complete initial registration to do this',
   '400_3': 'general stripe error',
