@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { bool, array } from 'prop-types'
 import clsx from 'clsx'
 import { setTitle } from '@sdog/utils/document'
+import SVG from '@sdog/components/svg'
 import Card from '@sdog/components/card'
 import Button from '@sdog/components/button'
 import Dropdown from '@sdog/components/dropdown'
@@ -25,6 +26,8 @@ const JobPostings = ({ loading, officeLocationOptions }) => {
     salary_type: '',
     rate: '',
   })
+
+  const [type, setType] = useState(false)
 
   const handleChange = (name, value) => {
     setForm({ ...form, [name]: value })
@@ -58,6 +61,40 @@ const JobPostings = ({ loading, officeLocationOptions }) => {
   const submit = e => {
     e.preventDefault()
     console.log('Submit')
+  }
+
+  if (!type) {
+    console.log('wtf')
+    return (
+      <div className={clsx(appTheme.pageContent, theme.container, theme.choose)}>
+        <Card>
+          <SVG name="mobile" className={theme.mobileSVG} />
+          <h1>
+            DayHire <sup>&trade;</sup>
+          </h1>
+          <h4>Choose for immediate results</h4>
+          <p>
+            DayHire&trade; automatically matches you with professionals in your area,
+            ready to work in minutes. A lifesaver when you need a temp.
+          </p>
+          <Button onClick={() => setType('dayHire')} size="medium">
+            I want this option
+          </Button>
+        </Card>
+        <Card>
+          <SVG name="desktop_search" className={theme.desktopSearchSVG} />
+          <h1>Job Board</h1>
+          <h4>Choose for long range planning</h4>
+          <p>
+            Advanced job board brings highly qualified professionals together with smart
+            match technology, making your hiring decisions easy.
+          </p>
+          <Button onClick={() => setType('dayHire')} size="medium">
+            I want this option
+          </Button>
+        </Card>
+      </div>
+    )
   }
 
   return (

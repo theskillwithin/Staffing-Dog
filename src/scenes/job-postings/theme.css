@@ -1,11 +1,11 @@
 @import '../../styles/config.css';
 
 :root {
-  --sd-containerWidth: 840px;
+  --sd-postingContainerWidth: 840px;
 }
 
 .container {
-  max-width: var(--sd-containerWidth);
+  max-width: var(--sd-postingContainerWidth);
 }
 
 .pageActions {
