@@ -18,8 +18,6 @@ const DashboardScene = React.lazy(() => import('@sdog/scenes/dashboard'))
 const SearchScene = React.lazy(() => import('@sdog/scenes/search'))
 const SettingsScene = React.lazy(() => import('@sdog/scenes/settings'))
 const JobPostingsScene = React.lazy(() => import('@sdog/scenes/job-postings'))
-const JobPostingsSceneNew = React.lazy(() => import('@sdog/scenes/job-postings/new'))
-const JobPostingsSceneView = React.lazy(() => import('@sdog/scenes/job-postings/view'))
 
 const App = ({ getUserProfile, location, history, userProfile }) => {
   if (IS_PROD) {
@@ -62,9 +60,7 @@ const App = ({ getUserProfile, location, history, userProfile }) => {
           <Route path="/" component={DashboardScene} exact />
           <Route path="/settings" component={SettingsScene} />
           <Route path="/search" component={SearchScene} />
-          <Route path="/job-postings/new" component={JobPostingsSceneNew} />
-          <Route path="/job-postings/:id" component={JobPostingsSceneView} />
-          <Route exact path="/job-postings" component={JobPostingsScene} />
+          <Route path="/job-postings" component={JobPostingsScene} />
         </React.Suspense>
       </div>
     </div>
