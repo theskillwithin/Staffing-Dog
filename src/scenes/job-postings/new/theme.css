@@ -1,11 +1,11 @@
 @import '../../../styles/config.css';
 
 :root {
-  --sd-containerWidth: 840px;
+  --sd-postingContainerWidth: 840px;
 }
 
 .container {
-  max-width: var(--sd-containerWidth);
+  max-width: var(--sd-postingContainerWidth);
 }
 
 .new {
@@ -68,4 +68,80 @@
   margin: 3em auto 1em auto;
   width: 420px;
   line-height: 40px;
+}
+
+.choose {
+  display: flex;
+  justify-content: center;
+
+  > div {
+    margin: 0 23px 23px;
+
+    > section {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 590px;
+      width: 310px;
+      padding: 65px 35px 35px;
+    }
+  }
+
+  h1 {
+    font-size: 25px;
+    font-weight: var(--sd-fontWeightMedium);
+    line-height: 1.2;
+    text-align: center;
+    color: var(--sd-blackTxt);
+    margin-top: 1.5em;
+
+    sup {
+      margin-left: -10px;
+    }
+
+    &:after {
+      content: '';
+      display: block;
+      height: 2px;
+      width: 30px;
+      background: var(--sd-primary);
+      margin: 1em auto 0 auto;
+    }
+  }
+
+  h4 {
+    font-size: 14px;
+    font-weight: var(--sd-fontWeightMedium);
+    line-height: 1.21;
+    text-align: center;
+    color: var(--sd-blackTxt);
+  }
+
+  p {
+    font-size: 16px;
+    font-weight: var(--sd-fontWeightLight);
+    line-height: 1.25;
+    text-align: center;
+    color: var(--sd-blackTxt);
+    flex: 1;
+  }
+
+  .mobileSVG {
+    text-align: center;
+    svg {
+      max-width: 120px;
+    }
+  }
+
+  .desktopSearchSVG {
+    text-align: center;
+    margin-bottom: 1em;
+    svg {
+      max-width: 129px;
+    }
+  }
+
+  button {
+    margin: auto 0 0 0;
+  }
 }
