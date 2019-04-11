@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { array, bool } from 'prop-types'
 import { Link } from 'react-router-dom'
+import { useDocumentTitle } from '@sdog/utils/document'
 import get from 'lodash/get'
 import clsx from 'clsx'
-import { setTitle } from '@sdog/utils/document'
 import Card from '@sdog/components/card'
 import Filter from '@sdog/components/filter'
 import Button from '@sdog/components/button'
@@ -16,7 +16,7 @@ import appTheme from '../../app/theme.css'
 import theme from './theme.css'
 
 const JobPostings = ({ jobs, loading }) => {
-  useEffect(() => void setTitle('Job Postings'), [])
+  useDocumentTitle('Job Postings')
   const [filter, setFilter] = useState({ label: 'Active', value: 'Active' })
 
   const filterOptions = [
