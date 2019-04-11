@@ -80,7 +80,7 @@ const JobPostings = ({ jobs, loading }) => {
                     <div>{get(job, 'criteria.hourly_rate')} hr</div>
                   </div>
                   <div className={theme.applicants}>
-                    <Link to={`/job-postings/${job.id}`}>
+                    <Link to={`/job-postings/view/${job.id}`}>
                       <span className={theme.blue}>{job.applicantsNumber || 0}</span>{' '}
                       Applicants
                       <span className={theme.chevron}>

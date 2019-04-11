@@ -63,7 +63,7 @@ const App = ({ getUserProfile, location, history, userProfile }) => {
           <Route path="/settings" component={SettingsScene} />
           <Route path="/search" component={SearchScene} />
           <Route path="/job-postings/new" component={JobPostingsSceneNew} />
-          <Route path="/job-postings/:id" component={JobPostingsSceneView} />
+          <Route path="/job-postings/view/:id" component={JobPostingsSceneView} />
           <Route exact path="/job-postings" component={JobPostingsScene} />
         </React.Suspense>
       </div>
