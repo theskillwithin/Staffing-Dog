@@ -64,7 +64,6 @@ const JobPostings = ({ loading, officeLocationOptions }) => {
   }
 
   if (!type) {
-    console.log('wtf')
     return (
       <div className={clsx(appTheme.pageContent, theme.container, theme.choose)}>
         <Card>
