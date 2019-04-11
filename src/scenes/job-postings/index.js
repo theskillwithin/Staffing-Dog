@@ -1,17 +1,22 @@
 import React from 'react'
-import { Route, Switch } from 'react-router-dom'
+import { Route, Switch, withRouter } from 'react-router-dom'
+import { shape, string } from 'prop-types'
 
 const JobPostingsSceneNew = React.lazy(() => import('./new'))
 const JobPostingsSceneView = React.lazy(() => import('./view'))
 const JobPostingsList = React.lazy(() => import('./list'))
 
-const JobPostingsScene = () => (
+const JobPostingsScene = ({ match }) => (
   <Switch>
-    <Route path="/job-postings/create" component={JobPostingsSceneNew} />
-    <Route path="/job-postings/:id" component={JobPostingsSceneView} />
-    <Route path="/job-postings/:id/edit" component={JobPostingsSceneNew} />
-    <Route exact path="/job-postings" component={JobPostingsList} />
+    <Route path={`${match.url}/create`} component={JobPostingsSceneNew} />
+    <Route path={`${match.url}/:id"`} component={JobPostingsSceneView} />
+    <Route path={`${match.url}/:id/edit`} component={JobPostingsSceneNew} />
+    <Route exact path={match.url} component={JobPostingsList} />
   </Switch>
 )
 
-export default JobPostingsScene
+JobPostingsScene.propTypes = {
+  match: shape({ url: string }).isRequired,
+}
+
+export default withRouter(JobPostingsScene)
