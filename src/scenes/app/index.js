@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { Route, withRouter, Switch } from 'react-router-dom'
+import { Route, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { object, func, shape } from 'prop-types'
 import { IS_PROD } from '@sdog/utils/env'
@@ -18,8 +18,6 @@ const DashboardScene = React.lazy(() => import('@sdog/scenes/dashboard'))
 const SearchScene = React.lazy(() => import('@sdog/scenes/search'))
 const SettingsScene = React.lazy(() => import('@sdog/scenes/settings'))
 const JobPostingsScene = React.lazy(() => import('@sdog/scenes/job-postings'))
-const JobPostingsSceneNew = React.lazy(() => import('@sdog/scenes/job-postings/new'))
-const JobPostingsSceneView = React.lazy(() => import('@sdog/scenes/job-postings/view'))
 
 const App = ({ getUserProfile, location, history, userProfile }) => {
   if (IS_PROD) {
@@ -59,15 +57,10 @@ const App = ({ getUserProfile, location, history, userProfile }) => {
 
       <div className={theme.appContent}>
         <React.Suspense fallback={<Spinner />}>
-          <Switch>
-            <Route path="/" component={DashboardScene} exact />
-            <Route path="/settings" component={SettingsScene} />
-            <Route path="/search" component={SearchScene} />
-            <Route path="/job-postings/create" component={JobPostingsSceneNew} />
-            <Route path="/job-postings/:id" component={JobPostingsSceneView} />
-            <Route path="/job-postings/:id/edit" component={JobPostingsSceneNew} />
-            <Route exact path="/job-postings" component={JobPostingsScene} />
-          </Switch>
+          <Route path="/" component={DashboardScene} exact />
+          <Route path="/settings" component={SettingsScene} />
+          <Route path="/search" component={SearchScene} />
+          <Route path="/job-postings" component={JobPostingsScene} />
         </React.Suspense>
       </div>
     </div>
