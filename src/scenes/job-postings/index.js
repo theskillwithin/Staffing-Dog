@@ -32,7 +32,7 @@ const JobPostings = ({ jobs, loading }) => {
           value={filter}
           options={filterOptions}
         />
-        <Link to="/job-postings/new">
+        <Link to="/job-postings/create">
           <Button>Post New Job</Button>
         </Link>
       </header>

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { Route, withRouter } from 'react-router-dom'
+import { Route, withRouter, Switch } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { object, func, shape } from 'prop-types'
 import { IS_PROD } from '@sdog/utils/env'
@@ -59,12 +59,15 @@ const App = ({ getUserProfile, location, history, userProfile }) => {
 
       <div className={theme.appContent}>
         <React.Suspense fallback={<Spinner />}>
-          <Route path="/" component={DashboardScene} exact />
-          <Route path="/settings" component={SettingsScene} />
-          <Route path="/search" component={SearchScene} />
-          <Route path="/job-postings/new" component={JobPostingsSceneNew} />
-          <Route path="/job-postings/view/:id" component={JobPostingsSceneView} />
-          <Route exact path="/job-postings" component={JobPostingsScene} />
+          <Switch>
+            <Route path="/" component={DashboardScene} exact />
+            <Route path="/settings" component={SettingsScene} />
+            <Route path="/search" component={SearchScene} />
+            <Route path="/job-postings/create" component={JobPostingsSceneNew} />
+            <Route path="/job-postings/:id" component={JobPostingsSceneView} />
+            <Route path="/job-postings/:id/edit" component={JobPostingsSceneNew} />
+            <Route exact path="/job-postings" component={JobPostingsScene} />
+          </Switch>
         </React.Suspense>
       </div>
     </div>
