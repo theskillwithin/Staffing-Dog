@@ -67,7 +67,6 @@ const JobPostings = ({ jobs, loading }) => {
                   </dl>
                 </div>
                 <div className={theme.edit}>
-                  <Button red>Delete Post</Button>
                   <Link to={`/job-postings/edit/${job.id}`}>
                     <Button secondary>Edit Post</Button>
                   </Link>
@@ -81,7 +80,7 @@ const JobPostings = ({ jobs, loading }) => {
                     <div>{get(job, 'criteria.hourly_rate')} hr</div>
                   </div>
                   <div className={theme.applicants}>
-                    <Link to="/">
+                    <Link to={`/job-postings/${job.id}`}>
                       <span className={theme.blue}>{job.applicantsNumber || 0}</span>{' '}
                       Applicants
                       <span className={theme.chevron}>

@@ -1,4 +1,4 @@
-@import '../../styles/config.css';
+@import '../../../styles/config.css';
 
 :root {
   --sd-postingContainerWidth: 840px;
@@ -8,23 +8,7 @@
   max-width: var(--sd-postingContainerWidth);
 }
 
-.pageActions {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 60px;
-
-  > * {
-    height: 40px;
-    min-width: 142px;
-  }
-
-  button {
-    line-height: 40px;
-    width: 193px;
-  }
-}
-
-.jobs {
+.job {
   > * {
     position: relative;
     margin-bottom: 1.8em;
@@ -157,28 +141,6 @@
   padding: 0 5px;
 }
 
-.applicants {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-
-  a {
-    display: block;
-    text-decoration: none;
-    color: var(--blackTxt);
-    font-size: 12px;
-  }
-
-  .blue {
-    color: var(--sd-primary);
-    margin-right: 5px;
-  }
-
-  .chevron {
-    margin-left: 1em;
-  }
-}
-
 .status {
   position: absolute;
   top: 2.9em;
@@ -205,7 +167,7 @@
   right: 44px;
   bottom: 76px;
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   align-items: center;
   min-width: 265px;
 }
