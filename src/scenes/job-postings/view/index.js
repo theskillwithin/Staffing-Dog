@@ -65,6 +65,7 @@ const JobPostingsView = ({ job, applicants, loading }) => {
               </div>
             </Card>
           </div>
+          <h1>applicants go here</h1>
           <div className={theme.applicants}>
             {applicants.map(applicant => (
               <ProfessionalCard
