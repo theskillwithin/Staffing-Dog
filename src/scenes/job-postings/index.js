@@ -9,7 +9,7 @@ const JobPostingsList = React.lazy(() => import('./list'))
 const JobPostingsScene = ({ match }) => (
   <Switch>
     <Route path={`${match.url}/create`} component={JobPostingsSceneNew} />
-    <Route path={`${match.url}/:id"`} component={JobPostingsSceneView} />
+    <Route path={`${match.url}/:id`} component={JobPostingsSceneView} />
     <Route path={`${match.url}/:id/edit`} component={JobPostingsSceneNew} />
     <Route exact path={match.url} component={JobPostingsList} />
   </Switch>
