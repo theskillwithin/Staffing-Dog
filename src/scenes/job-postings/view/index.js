@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import get from 'lodash/get'
 import clsx from 'clsx'
 import { setTitle } from '@sdog/utils/document'
+import ProfessionalCard from '@sdog/components/professional_card'
 import Card from '@sdog/components/card'
 import Button from '@sdog/components/button'
 import Spinner from '@sdog/components/spinner'
@@ -13,7 +14,7 @@ import appTheme from '../../app/theme.css'
 
 import theme from './theme.css'
 
-const JobPostingsView = ({ job, loading }) => {
+const JobPostingsView = ({ job, applicants, loading }) => {
   useEffect(() => void setTitle('Job Postings'), [])
 
   return (
@@ -23,45 +24,64 @@ const JobPostingsView = ({ job, loading }) => {
           <Spinner />
         </div>
       ) : (
-        <div className={theme.jobs}>
-          <Card key={`job-posting-${job.id}`} type="large">
-            <Link
-              to={`/search/job/${job.slug}`}
-              className={clsx(theme.title, job.new && theme.new)}
-            >
-              {get(job, 'criteria.title', 'Job')}
-            </Link>
-            <div className={clsx(theme.status, theme[job.status])}>{job.status}</div>
-            <div className={theme.location}>
-              <strong>{get(job, 'criteria.practice_details.name', 'Office')}</strong>
-              <span>
-                {get(job, 'criteria.practice_details.address.city', 'city')},{' '}
-                {get(job, 'criteria.practice_details.address.state', 'state')}
-              </span>
-            </div>
-            <div className={theme.short}>{get(job, 'criteria.description')}</div>
-            <div className={theme.details}>
-              <dl>
-                <dt>Experience</dt>
-                <dd>{get(job, 'criteria.experience_preferred')}</dd>
-              </dl>
-            </div>
-            <div className={theme.edit}>
-              <Button red>Delete Post</Button>
-              <Link to={`/job-postings/edit/${job.id}`}>
-                <Button secondary>Edit Post</Button>
+        <div>
+          <div className={theme.job}>
+            <Card key={`job-posting-${job.id}`} type="large">
+              <Link
+                to={`/search/job/${job.slug}`}
+                className={clsx(theme.title, job.new && theme.new)}
+              >
+                {get(job, 'criteria.title', 'Job')}
               </Link>
-            </div>
-            <div className={theme.actions}>
-              <div className={theme.info}>
-                <div>{defineJob('type', get(job, 'criteria.employment_type'))}</div>
-                <div>-</div>
-                <div>{defineJob('position', get(job, 'criteria.position'))}</div>
-                <div className={theme.at}>@</div>
-                <div>{get(job, 'criteria.hourly_rate')} hr</div>
+              <div className={clsx(theme.status, theme[job.status])}>{job.status}</div>
+              <div className={theme.location}>
+                <strong>{get(job, 'criteria.practice_details.name', 'Office')}</strong>
+                <span>
+                  {get(job, 'criteria.practice_details.address.city', 'city')},{' '}
+                  {get(job, 'criteria.practice_details.address.state', 'state')}
+                </span>
               </div>
-            </div>
-          </Card>
+              <div className={theme.short}>{get(job, 'criteria.description')}</div>
+              <div className={theme.details}>
+                <dl>
+                  <dt>Experience</dt>
+                  <dd>{get(job, 'criteria.experience_preferred')}</dd>
+                </dl>
+              </div>
+              <div className={theme.edit}>
+                <Button red>Delete Post</Button>
+                <Link to={`/job-postings/edit/${job.id}`}>
+                  <Button secondary>Edit Post</Button>
+                </Link>
+              </div>
+              <div className={theme.actions}>
+                <div className={theme.info}>
+                  <div>{defineJob('type', get(job, 'criteria.employment_type'))}</div>
+                  <div>-</div>
+                  <div>{defineJob('position', get(job, 'criteria.position'))}</div>
+                  <div className={theme.at}>@</div>
+                  <div>{get(job, 'criteria.hourly_rate')} hr</div>
+                </div>
+              </div>
+            </Card>
+          </div>
+          <div className={theme.applicants}>
+            {applicants.map(applicant => (
+              <ProfessionalCard
+                key={applicant.id}
+                id={applicant.id}
+                name={applicant.name}
+                city={applicant.address.city}
+                state={applicant.address.state}
+                distance={applicant.miles}
+                description={applicant.description}
+                position={applicant.position}
+                type={applicant.employment_type}
+                hourlyRate={applicant.hourly_rate}
+                img={applicant.img}
+              />
+            ))}
+          </div>
         </div>
       )}
     </div>
@@ -104,6 +124,22 @@ JobPostingsView.defaultProps = {
       employment_type: 'Temporary',
       position: 'Dental Hygienist',
       hourly_rate: '$15',
+      img: 'http://fillmurray.com/146/182',
+    },
+    {
+      id: 1123581321,
+      name: 'Debbie',
+      address: {
+        city: 'Salt Lake City',
+        state: 'UT',
+      },
+      miles: 7,
+      description:
+        '22 years practicing Dental Hygiene all in the Salt Lake City area. I am certified in Nitrous Oxide, Dental Laser, Sealants, Yoga, Walking …',
+      employment_type: 'Temporary',
+      position: 'Dental Hygienist',
+      hourly_rate: '$15',
+      img: 'http://placecage.com/146/182',
     },
   ],
   loading: false,
