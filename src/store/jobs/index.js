@@ -120,6 +120,49 @@ reducers = {
 }
 
 /**
+ * Post New Job
+ */
+export const POST_NEW_JOB = 'POST_NEW_JOB'
+export const postNewJobTypes = createActionTypes(POST_NEW_JOB)
+
+export const postNewJob = data => ({
+  type: POST_NEW_JOB,
+  api: {
+    url: `${API_ROOT}/job`,
+    method: 'POST',
+    data,
+  },
+})
+
+reducers = {
+  ...reducers,
+  [postNewJobTypes.LOADING]: state => ({
+    ...state,
+    create: {
+      ...state.create,
+      loading: true,
+      error: false,
+    },
+  }),
+  [postNewJobTypes.SUCCESS]: state => ({
+    ...state,
+    create: {
+      ...state.create,
+      loading: false,
+      error: false,
+    },
+  }),
+  [postNewJobTypes.ERROR]: (state, { error }) => ({
+    ...state,
+    create: {
+      ...state.create,
+      loading: false,
+      error: error.message,
+    },
+  }),
+}
+
+/**
  * Create Store
  */
 export const reducer = buildStore(reducers, INITIAL_STATE)
