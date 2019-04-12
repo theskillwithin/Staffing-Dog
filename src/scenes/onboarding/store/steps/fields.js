@@ -455,13 +455,13 @@ export const practice = [
       {
         fields: [
           {
-            name: 'practice_first_name',
+            name: 'contact_first_name',
             label: 'First Name',
             type: 'input',
             required: true,
           },
           {
-            name: 'practice_last_name',
+            name: 'contact_last_name',
             label: 'Last Name',
             type: 'input',
             required: true,
@@ -469,7 +469,7 @@ export const practice = [
         ],
       },
       {
-        name: 'practice_email',
+        name: 'contact_email',
         label: 'Email Address',
         type: 'input',
         formType: 'email',
