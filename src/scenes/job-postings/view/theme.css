@@ -9,6 +9,8 @@
 }
 
 .job {
+  margin-bottom: 4em;
+
   > * {
     position: relative;
     margin-bottom: 1.8em;
