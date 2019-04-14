@@ -8,6 +8,7 @@ import { createActionTypes, reduxRegister, buildStore } from '../tools'
 export const INITIAL_STATE = {
   loading: true,
   error: false,
+  lastUpdated: false,
   results: {
     scheduled: [],
     applied: [],
@@ -20,7 +21,17 @@ export const INITIAL_STATE = {
     error: false,
     results: false,
   },
+  create: {
+    loading: false,
+    error: false,
+    results: false,
+  },
 }
+
+const getLastUpdated = () => new Date().getTime()
+const spreadLastUpdated = () => ({ lastUpdated: getLastUpdated() })
+
+const spreadLoadingError = (loading = false, error = false) => ({ loading, error })
 
 let reducers = {}
 
@@ -58,6 +69,7 @@ reducers = {
   }),
   [getUserJobsTypes.SUCCESS]: (state, { data }) => ({
     ...state,
+    ...spreadLastUpdated(),
     loading: false,
     error: false,
     results: {
@@ -128,9 +140,12 @@ export const postNewJobTypes = createActionTypes(POST_NEW_JOB)
 export const postNewJob = data => ({
   type: POST_NEW_JOB,
   api: {
-    url: `${API_ROOT}/job`,
+    url: `${API_ROOT}/jobs`,
     method: 'POST',
-    data,
+    data: {
+      status: 'draft',
+      ...data,
+    },
   },
 })
 
@@ -140,24 +155,22 @@ reducers = {
     ...state,
     create: {
       ...state.create,
-      loading: true,
-      error: false,
+      ...spreadLoadingError(true, false),
     },
   }),
   [postNewJobTypes.SUCCESS]: state => ({
     ...state,
+    ...spreadLastUpdated(),
     create: {
       ...state.create,
-      loading: false,
-      error: false,
+      ...spreadLoadingError(false, false),
     },
   }),
   [postNewJobTypes.ERROR]: (state, { error }) => ({
     ...state,
     create: {
       ...state.create,
-      loading: false,
-      error: error.message,
+      ...spreadLoadingError(false, useErrorFromResponse(error)),
     },
   }),
 }
@@ -181,5 +194,7 @@ export const findSingleJobState = state => findState(state).singleJob
 export const findSingleJob = state => findSingleJobState(state).results
 export const findSingleJobLoading = state => findSingleJobState(state).loading
 export const findSingleJobError = state => findSingleJobState(state).error
+
+export const findCreateJob = state => findState(state).create
 
 export default reducer
