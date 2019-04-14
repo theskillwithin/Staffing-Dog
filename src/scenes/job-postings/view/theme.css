@@ -179,3 +179,25 @@
     margin-bottom: 1em;
   }
 }
+
+.filters {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1em;
+
+  .jobType {
+    width: 191px;
+  }
+
+  .jobSpecialty {
+    width: 162px;
+  }
+
+  .specialtyTypes {
+    width: 198px;
+  }
+
+  .distance {
+    width: 175px;
+  }
+}

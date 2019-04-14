@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { object, array, bool } from 'prop-types'
 import { Link } from 'react-router-dom'
 import get from 'lodash/get'
@@ -8,6 +8,7 @@ import ProfessionalCard from '@sdog/components/professional_card'
 import Card from '@sdog/components/card'
 import Button from '@sdog/components/button'
 import Spinner from '@sdog/components/spinner'
+import Filter from '@sdog/components/filter'
 import { defineJob } from '@sdog/definitions/jobs'
 
 import appTheme from '../../app/theme.css'
@@ -16,6 +17,42 @@ import theme from './theme.css'
 
 const JobPostingsView = ({ job, applicants, loading }) => {
   useEffect(() => void setTitle('Job Postings'), [])
+
+  const [filters, setFilters] = useState({
+    jobType: null,
+    jobSpecialty: null,
+    specialtyTypes: null,
+    radius: null,
+  })
+
+  const options = [
+    { label: 'Within 5 miles', value: '5' },
+    { label: 'Within 10 miles', value: '10' },
+    { label: 'Within 25 miles', value: '25' },
+    { label: 'Within 50 miles', value: '50' },
+    { label: 'Within 100 miles', value: '100' },
+    { label: 'Any Distance', value: '0' },
+  ]
+
+  const jobTypes = [
+    { label: 'dental_hygienist', value: 'dental_hygienist' },
+    { label: 'Dentist', value: 'Dentist' },
+  ]
+
+  const specialtyTypes = [
+    { label: 'dental_hygienist', value: 'dental_hygienist' },
+    { label: 'Dentist', value: 'Dentist' },
+  ]
+
+  const jobPositions = [
+    { label: 'Full Time', value: 'full_time' },
+    { label: 'Part Time', value: 'part_time' },
+    { label: 'Temp', value: 'temporary' },
+  ]
+
+  const handleFilterChange = (field, value) => {
+    setFilters({ ...filters, [field]: value })
+  }
 
   return (
     <div className={clsx(appTheme.pageContent, theme.container)}>
@@ -64,6 +101,36 @@ const JobPostingsView = ({ job, applicants, loading }) => {
                 </div>
               </div>
             </Card>
+          </div>
+          <div className={theme.filters}>
+            <Filter
+              onChange={value => handleFilterChange('jobType', value)}
+              value={filters.jobType}
+              options={jobPositions}
+              placeholder="All Position Types"
+              className={theme.jobType}
+            />
+            <Filter
+              onChange={value => handleFilterChange('jobSpecialty', value)}
+              value={filters.jobSpecialty}
+              options={jobTypes}
+              placeholder="All Job Types"
+              className={theme.jobSpecialty}
+            />
+            <Filter
+              onChange={value => handleFilterChange('specialtyTypes', value)}
+              value={filters.specialtyTypes}
+              options={specialtyTypes}
+              placeholder="All Speciality Types"
+              className={theme.specialtyTypes}
+            />
+            <Filter
+              onChange={value => handleFilterChange('radius', value)}
+              value={filters.radius}
+              options={options}
+              placeholder="Distance"
+              className={theme.distance}
+            />
           </div>
           <div className={theme.applicants}>
             {applicants.map(applicant => (
