@@ -19,7 +19,7 @@ import {
   findPracticeOffices,
 } from '@sdog/store/user'
 import { postNewJob as postNewJobAction, findCreateJob } from '@sdog/store/jobs'
-import { positions } from '@sdog/definitions/jobs'
+import { positions, getPositionTypesByPosition } from '@sdog/definitions/jobs'
 
 import appTheme from '../../app/theme.css'
 
@@ -36,7 +36,7 @@ const getInitialState = date => ({
     job_category: '',
     hourly_rate: '',
     experience_min: 1,
-    experience_preferred: 10,
+    experience_preferred: 3,
     applicant_selection: [],
     duration: {
       start_date: date,
@@ -71,10 +71,6 @@ const JobPostings = ({ getPracticeOffices, offices, create, postNewJob }) => {
     setForm(state)
   }
 
-  const jobTypeOptions = [
-    { label: 'Dentist', value: 'dentist ' },
-    { label: 'Dental hygienist', value: 'Dental hygienist ' },
-  ]
   const salaryTypeOptions = [
     { label: 'Hourly', value: 'hourly ' },
     { label: 'Salary', value: 'salary ' },
@@ -196,11 +192,16 @@ const JobPostings = ({ getPracticeOffices, offices, create, postNewJob }) => {
               placeholder="Provider Type"
               options={positions}
             />
+
             <Dropdown
-              value={find(jobTypeOptions, jobType => jobType.value === form.job_type)}
+              value={find(
+                getPositionTypesByPosition(form.provider_type),
+                jobType => jobType.value === form.job_type,
+              )}
+              disabled={!form.provider_type}
               onChange={value => handleChange('criteria.job_type', value.value)}
               placeholder="Job Type"
-              options={jobTypeOptions}
+              options={getPositionTypesByPosition(form.provider_type)}
             />
           </div>
 
