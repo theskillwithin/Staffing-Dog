@@ -72,17 +72,17 @@ export const formatDataFromApi = (apiData, values, type = INITIAL_STATE.type) =>
     : {
         practice_name: get(apiData, 'meta.summary.practice_name', values.practice_name),
         practice_type: get(apiData, 'meta.summary.practice_type', values.practice_type),
-        practice_first_name: get(
+        contact_first_name: get(
           apiData,
           'meta.summary.contact_first_name',
-          values.practice_first_name,
+          values.contact_first_name,
         ),
-        practice_last_name: get(
+        contact_last_name: get(
           apiData,
           'meta.summary.contact_last_name',
-          values.practice_last_name,
+          values.contact_last_name,
         ),
-        practice_email: get(apiData, 'meta.summary.contact_email', values.practice_email),
+        contact_email: get(apiData, 'meta.summary.contact_email', values.contact_email),
       }),
 })
 
@@ -128,12 +128,12 @@ export const formatDataFromOnboarding = (values, profile, type = INITIAL_STATE.t
             ...(values.practice_name ? { practice_name: values.practice_name } : {}),
             ...(values.practice_type ? { practice_type: values.practice_type } : {}),
             ...(values.contact_first_name
-              ? { contact_first_name: values.practice_first_name }
+              ? { contact_first_name: values.contact_first_name }
               : {}),
             ...(values.contact_last_name
-              ? { contact_last_name: values.practice_last_name }
+              ? { contact_last_name: values.contact_last_name }
               : {}),
-            ...(values.contact_email ? { contact_email: values.practice_email } : {}),
+            ...(values.contact_email ? { contact_email: values.contact_email } : {}),
           }),
     },
   },
