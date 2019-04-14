@@ -9,6 +9,8 @@
 }
 
 .job {
+  margin-bottom: 4em;
+
   > * {
     position: relative;
     margin-bottom: 1.8em;
@@ -170,4 +172,32 @@
   justify-content: space-between;
   align-items: center;
   min-width: 265px;
+}
+
+.applicants {
+  > * {
+    margin-bottom: 1em;
+  }
+}
+
+.filters {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1em;
+
+  .jobType {
+    width: 191px;
+  }
+
+  .jobSpecialty {
+    width: 162px;
+  }
+
+  .specialtyTypes {
+    width: 198px;
+  }
+
+  .distance {
+    width: 175px;
+  }
 }
