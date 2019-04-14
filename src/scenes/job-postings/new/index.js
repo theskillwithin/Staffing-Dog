@@ -7,6 +7,7 @@ import get from '@sdog/utils/get'
 import set from 'lodash/set'
 import find from 'lodash/find'
 import { setTitle } from '@sdog/utils/document'
+import SVG from '@sdog/components/svg'
 import Card from '@sdog/components/card'
 import Button from '@sdog/components/button'
 import Dropdown from '@sdog/components/dropdown'
@@ -61,6 +62,8 @@ const JobPostings = ({ getPracticeOffices, offices, create, postNewJob }) => {
   )
   const [form, setForm] = useState(getInitialState(date.current))
 
+  const [type, setType] = useState(false)
+
   const handleChange = (name, value) => {
     const state = { ...form }
 
@@ -93,6 +96,39 @@ const JobPostings = ({ getPracticeOffices, offices, create, postNewJob }) => {
     label: get(office, 'meta.summary.office_name', 'Office'),
     value: office.id,
   }))
+
+  if (!type) {
+    return (
+      <div className={clsx(appTheme.pageContent, theme.container, theme.choose)}>
+        <Card>
+          <SVG name="mobile" className={theme.mobileSVG} />
+          <h1>
+            DayHire <sup>&trade;</sup>
+          </h1>
+          <h4>Choose for immediate results</h4>
+          <p>
+            DayHire&trade; automatically matches you with professionals in your area,
+            ready to work in minutes. A lifesaver when you need a temp.
+          </p>
+          <Button onClick={() => setType('dayHire')} size="medium">
+            I want this option
+          </Button>
+        </Card>
+        <Card>
+          <SVG name="desktop_search" className={theme.desktopSearchSVG} />
+          <h1>Job Board</h1>
+          <h4>Choose for long range planning</h4>
+          <p>
+            Advanced job board brings highly qualified professionals together with smart
+            match technology, making your hiring decisions easy.
+          </p>
+          <Button onClick={() => setType('dayHire')} size="medium">
+            I want this option
+          </Button>
+        </Card>
+      </div>
+    )
+  }
 
   return (
     <div className={clsx(appTheme.pageContent, theme.container, theme.new)}>

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { func, string, array, object, shape, oneOfType, bool } from 'prop-types'
 import { connect } from 'react-redux'
+import get from 'lodash/get'
 import clsx from 'clsx'
 import includes from 'lodash/includes'
 import find from 'lodash/find'
@@ -67,7 +68,7 @@ const JobSchedule = ({
 
   const schedule = defaultSchedule.map(currentDay => {
     const matchingDay = find(
-      (meta && meta.capacity && meta.capacity.default_hours) || [],
+      get(meta, 'capacity.default_hours', []) || [],
       ({ day }) => day === currentDay.day,
     )
 
