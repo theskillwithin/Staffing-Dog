@@ -39,11 +39,10 @@ const Login = ({
   useDocumentTitle('Login')
   useHtmlClass('html-login')
 
-  if (token) {
-    history.push('/')
-  }
-
   useEffect(() => () => {
+    if (token) {
+      history.push('/')
+    }
     clearPWSuccess()
     clearResetSuccess()
   })
