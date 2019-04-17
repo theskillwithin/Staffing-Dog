@@ -1,6 +1,7 @@
 import React from 'react'
 import { func, shape, object, string } from 'prop-types'
 import { connect } from 'react-redux'
+import get from 'lodash/get'
 import clsx from 'clsx'
 import find from 'lodash/find'
 import includes from 'lodash/includes'
@@ -134,18 +135,18 @@ const SettingsAboutMe = ({
           availability: availability.reduce(
             (values, avail) => [
               ...values,
-              ...(includes(profile.meta.capacity.availability || [], avail.value)
+              ...(includes(get(profile, 'meta.capacity.availability', []), avail.value)
                 ? [avail]
                 : []),
             ],
             [],
           ),
-          hourly_wage: profile.meta.capacity.hourly_wage,
+          hourly_wage: get(profile, 'meta.capacity.hourly_wage', ''),
         },
         summary: {
           profession: {
-            type: profile.meta.summary.profession.type,
-            specialty: profile.meta.summary.profession.specialty,
+            type: get(profile, 'meta.summary.profession.type', ''),
+            specialty: get(profile, 'meta.summary.profession.specialty', ''),
           },
         },
       },

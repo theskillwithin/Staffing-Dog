@@ -1,0 +1,55 @@
+@import '../../styles/config.css';
+
+:root {
+  --sd-professionalsContainerWidth: 840px;
+}
+
+.container {
+  max-width: var(--sd-professionalsContainerWidth);
+}
+
+.professionals {
+  > * {
+    margin-bottom: 1em;
+  }
+}
+
+.professionalResultsMeta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  margin-top: 12px;
+  margin-bottom: 10px;
+
+  svg {
+    color: var(--sd-blue);
+    margin-right: 8px;
+    margin-top: -3px;
+  }
+}
+
+.cityMeta {
+  font-weight: var(--sd-fontWeightMedium);
+}
+
+.filters {
+  display: flex;
+  justify-content: space-between;
+  margin: 0 1em 2em 1em;
+
+  .jobType {
+    width: 191px;
+  }
+
+  .jobSpecialty {
+    width: 162px;
+  }
+
+  .specialtyTypes {
+    width: 198px;
+  }
+
+  .distance {
+    width: 175px;
+  }
+}
