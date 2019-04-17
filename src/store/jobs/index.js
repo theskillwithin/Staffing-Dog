@@ -1,3 +1,4 @@
+import get from '@sdog/utils/get'
 import { API_ROOT } from '@sdog/utils/api'
 import { useErrorFromResponse } from '@sdog/definitions/errors'
 
@@ -74,16 +75,18 @@ reducers = {
     error: false,
     results: {
       ...state.results,
-      ...['applied', 'scheduled', 'recommended', 'preferred', 'posts'].reduce(
-        (listOfPosts, postType) => ({
-          ...listOfPosts,
-          [postType]:
-            typeof data[postType] === 'undefined'
-              ? [...state.results[postType]] || []
-              : data[postType],
-        }),
-        {},
-      ),
+      ...(!get(data, 'applied', false)
+        ? { posts: data }
+        : ['applied', 'scheduled', 'recommended', 'preferred', 'posts'].reduce(
+            (listOfPosts, postType) => ({
+              ...listOfPosts,
+              [postType]:
+                typeof data[postType] === 'undefined'
+                  ? [...state.results[postType]] || []
+                  : data[postType],
+            }),
+            {},
+          )),
     },
   }),
 }
@@ -137,17 +140,24 @@ reducers = {
 export const POST_NEW_JOB = 'POST_NEW_JOB'
 export const postNewJobTypes = createActionTypes(POST_NEW_JOB)
 
-export const postNewJob = data => ({
-  type: POST_NEW_JOB,
-  api: {
-    url: `${API_ROOT}/jobs`,
-    method: 'POST',
-    data: {
-      status: 'draft',
-      ...data,
+export const postNewJob = (data, cb = {}) => (dispatch, getState) =>
+  dispatch({
+    type: POST_NEW_JOB,
+    api: {
+      url: `${API_ROOT}/jobs`,
+      method: 'POST',
+      data: {
+        user_id: findUserId(getState()) || getUserId(),
+        data: {
+          status: 'draft',
+          ...data,
+        },
+      },
+      callbacks: {
+        ...cb,
+      },
     },
-  },
-})
+  })
 
 reducers = {
   ...reducers,

@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react'
 import { func, bool, string, arrayOf, oneOfType, shape } from 'prop-types'
 import { connect } from 'react-redux'
+import { withRouter } from 'react-router-dom'
 import clsx from 'clsx'
 import moment from 'moment'
 import get from '@sdog/utils/get'
@@ -27,17 +28,17 @@ import theme from './theme.css'
 
 const getInitialState = date => ({
   available_date: '',
-  office_id: '',
+  office_id: null,
   criteria: {
     title: '',
     description: '',
     employment_type: null,
     position: '',
-    job_category: '',
-    hourly_rate: '',
+    specialty: '',
+    hourly_rate: 0.0,
     experience_min: 1,
     experience_preferred: 3,
-    applicant_selection: [],
+    applicant_selection: ['closed'],
     duration: {
       start_date: date,
       end_date: date,
@@ -53,7 +54,7 @@ const getInitialState = date => ({
 
 let stickyFormData = null
 
-const JobPostings = ({ getPracticeOffices, offices, create, postNewJob }) => {
+const JobPostings = ({ history, getPracticeOffices, offices, create, postNewJob }) => {
   useEffect(() => void setTitle('Job Postings'), [])
   useEffect(() => void getPracticeOffices(), [])
 
@@ -68,6 +69,24 @@ const JobPostings = ({ getPracticeOffices, offices, create, postNewJob }) => {
     stickyFormData = form
   })
 
+  const dropdownOffices = offices.results.map(office => ({
+    label: get(
+      office,
+      'meta.summary.office_name',
+      `${get(office, 'addresses.line_1')} ${get(office, 'addresses.city')}`,
+    ),
+    value: office.id,
+  }))
+
+  useEffect(
+    () => {
+      if (!form.office_id) {
+        setForm({ ...form, office_id: get(dropdownOffices, '[0].value', null) })
+      }
+    },
+    [offices],
+  )
+
   const handleChange = (name, value) => {
     const state = { ...form }
 
@@ -76,18 +95,32 @@ const JobPostings = ({ getPracticeOffices, offices, create, postNewJob }) => {
   }
 
   const salaryTypeOptions = [
-    { label: 'Hourly', value: 'hourly ' },
-    { label: 'Salary', value: 'salary ' },
+    { label: 'Hourly', value: 'hourly' },
+    { label: 'Salary', value: 'salary' },
   ]
 
   const submit = e => {
     e.preventDefault()
 
-    postNewJob(form, {
-      success: () => {
-        setForm(getInitialState(date.current))
+    postNewJob(
+      {
+        ...form,
+        available_date: form.criteria.duration.start_date,
+        criteria: {
+          ...form.criteria,
+          hourly_rate:
+            'salary' === form.meta.salary_type
+              ? parseInt(form.criteria.hourly_rate, 10) / 52 / 40
+              : form.criteria.hourly_rate,
+        },
       },
-    })
+      {
+        success: () => {
+          setForm(getInitialState(date.current))
+          history.push(`/job-postings`)
+        },
+      },
+    )
   }
 
   const setType = type => {
@@ -99,11 +132,6 @@ const JobPostings = ({ getPracticeOffices, offices, create, postNewJob }) => {
       },
     })
   }
-
-  const dropdownOffices = offices.results.map(office => ({
-    label: get(office, 'meta.summary.office_name', 'Office'),
-    value: office.id,
-  }))
 
   if (!form.criteria.employment_type) {
     return (
@@ -120,7 +148,7 @@ const JobPostings = ({ getPracticeOffices, offices, create, postNewJob }) => {
             ready to work in minutes. A lifesaver when you need a temp.
           </p>
 
-          <Button onClick={() => setType('dayHire')} size="medium">
+          <Button onClick={() => setType('temporary')} size="medium">
             I want this option
           </Button>
         </Card>
@@ -135,7 +163,7 @@ const JobPostings = ({ getPracticeOffices, offices, create, postNewJob }) => {
             match technology, making your hiring decisions easy.
           </p>
 
-          <Button onClick={() => setType('dayHire')} size="medium">
+          <Button onClick={() => setType('full_time')} size="medium">
             I want this option
           </Button>
         </Card>
@@ -223,10 +251,10 @@ const JobPostings = ({ getPracticeOffices, offices, create, postNewJob }) => {
             <Dropdown
               value={find(
                 getPositionTypesByPosition(form.criteria.position),
-                jobType => jobType.value === form.criteria.job_type,
+                jobType => jobType.value === form.criteria.specialty,
               )}
               disabled={!form.criteria.position}
-              onChange={value => handleChange('criteria.job_type', value.value)}
+              onChange={value => handleChange('criteria.specialty', value.value)}
               placeholder="Job Type"
               options={getPositionTypesByPosition(form.criteria.position)}
             />
@@ -236,16 +264,21 @@ const JobPostings = ({ getPracticeOffices, offices, create, postNewJob }) => {
             <Dropdown
               value={find(
                 salaryTypeOptions,
-                salaryType => salaryType.value === form.salary_type,
+                salaryType => salaryType.value === form.meta.salary_type,
               )}
-              onChange={value => handleChange('salary_type', value.value)}
+              onChange={value => handleChange('meta.salary_type', value.value)}
               placeholder="Salary Type"
               options={salaryTypeOptions}
             />
 
             <Input
-              value={form.criteria.rate}
-              onChange={value => handleChange('criteria.rate', value)}
+              value={form.criteria.hourly_rate}
+              onChange={value =>
+                handleChange(
+                  'criteria.hourly_rate',
+                  parseFloat(value.replace(/[^\d.-]/g, '')),
+                )
+              }
               placeholder={
                 get(form, 'criteria.salary_type', false) === 'salary'
                   ? 'Salary Rate'
@@ -293,6 +326,7 @@ JobPostings.propTypes = {
     error: oneOfType([bool, string]),
   }).isRequired,
   postNewJob: func.isRequired,
+  history: shape({ push: func.isRequired }).isRequired,
 }
 
 export const mapStateToProps = state => ({
@@ -304,7 +338,9 @@ export const mapActionsToProps = {
   postNewJob: postNewJobAction,
 }
 
-export default connect(
-  mapStateToProps,
-  mapActionsToProps,
-)(JobPostings)
+export default withRouter(
+  connect(
+    mapStateToProps,
+    mapActionsToProps,
+  )(JobPostings),
+)

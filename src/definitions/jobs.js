@@ -18,7 +18,7 @@ export const positions = [
 export const positionTypes = [
   { label: 'Family & General Dentistry', value: 'family_general_dentist' },
   { label: 'Anesthesiology', value: 'anesthesiology' },
-  { label: 'Endodontics', value: 'end0dontics' },
+  { label: 'Endodontics', value: 'endodontics' },
   { label: 'Oral & Maxillofacial Surgery', value: 'oral_maxillofacial_surgery' },
   { label: 'Orthodontics', value: 'orthodontics' },
   { label: 'Pedodontics', value: 'pedodontics' },
