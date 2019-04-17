@@ -1,5 +1,5 @@
 import React from 'react'
-import { bool, node, oneOfType } from 'prop-types'
+import { bool, node } from 'prop-types'
 import clsx from 'clsx'
 
 import theme from './theme.css'
@@ -81,7 +81,7 @@ Alert.propTypes = {
   error: bool,
   success: bool,
   inline: bool,
-  children: oneOfType([null, node]),
+  children: node,
 }
 
 export default Alert
