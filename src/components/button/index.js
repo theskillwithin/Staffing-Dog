@@ -6,6 +6,7 @@ import Spinner from '@sdog/components/spinner'
 import theme from './theme.css'
 
 const Button = ({
+  clear,
   primary,
   secondary,
   secondaryDark,
@@ -28,10 +29,14 @@ const Button = ({
       theme.button,
       round && theme.round,
       short && theme.short,
-      primary && theme.primary,
-      secondary && theme.secondary,
-      secondaryDark && theme.secondary,
-      secondaryDark && theme.secondaryDark,
+      clear
+        ? theme.clear
+        : [
+            primary && theme.primary,
+            secondary && theme.secondary,
+            secondaryDark && theme.secondary,
+            secondaryDark && theme.secondaryDark,
+          ],
       red && theme.red,
       className && className,
       size && theme[size],
@@ -67,6 +72,7 @@ Button.defaultProps = {
   size: 'mediumSmall',
   width: null,
   red: false,
+  clear: false,
 }
 
 Button.propTypes = {
@@ -84,6 +90,7 @@ Button.propTypes = {
   size: oneOf(['small', 'mediumSmall', 'medium', 'large']),
   width: string,
   red: bool,
+  clear: bool,
 }
 
 export default Button

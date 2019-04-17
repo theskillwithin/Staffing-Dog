@@ -27,6 +27,11 @@ export const INITIAL_STATE = {
     loading: false,
     error: false,
   },
+  offices: {
+    loading: false,
+    error: false,
+    results: [],
+  },
   profile: {
     loading: false,
     error: false,
@@ -435,6 +440,51 @@ reducers = {
     ...spreadLastUpdated(),
     profile: {
       ...state.profile,
+      ...spreadLoadingError(false, useErrorFromResponse(error)),
+    },
+  }),
+}
+
+/**
+ * GET PRACTICE OFFICES
+ */
+export const USER_GET_PRACTICE_OFFICES = 'USER_GET_PRACTICE_OFFICES'
+export const userGetPracticeOfficesTypes = createActionTypes(USER_GET_PRACTICE_OFFICES)
+
+export const getPracticeOffices = userId => (dispatch, getState) =>
+  dispatch({
+    type: USER_GET_PRACTICE_OFFICES,
+    api: {
+      url: `${API_ROOT}/profiles/practices/offices`,
+      method: 'GET',
+      params: { user_id: userId || findUserId(getState()) || getUserId() },
+    },
+  })
+
+reducers = {
+  ...reducers,
+  [userGetPracticeOfficesTypes.LOADING]: state => ({
+    ...state,
+    ...spreadLastUpdated(),
+    offices: {
+      ...state.offices,
+      ...spreadLoadingError(true, false),
+    },
+  }),
+  [userGetPracticeOfficesTypes.SUCCESS]: (state, { data }) => ({
+    ...state,
+    ...spreadLastUpdated(),
+    offices: {
+      ...state.offices,
+      ...spreadLoadingError(false, false),
+      results: data,
+    },
+  }),
+  [userGetPracticeOfficesTypes.ERROR]: (state, { error }) => ({
+    ...state,
+    ...spreadLastUpdated(),
+    offices: {
+      ...state.offices,
       ...spreadLoadingError(false, useErrorFromResponse(error)),
     },
   }),
@@ -1010,6 +1060,8 @@ export const findResetValidateSuccess = state => findResetValidate(state).succes
 export const findResetLoading = state => findReset(state).loading
 export const findResetError = state => findReset(state).error
 export const findResetSuccess = state => findReset(state).success
+
+export const findPracticeOffices = state => findState(state).offices
 
 export const findRegisterError = state => findRegister(state).error
 

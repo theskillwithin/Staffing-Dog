@@ -78,10 +78,17 @@ const UserMenu = ({ type, first, last, office }) => {
 }
 
 UserMenu.propTypes = {
-  type: string.isRequired,
-  first: string.isRequired,
-  last: string.isRequired,
+  type: string,
+  first: string,
+  last: string,
   office: string,
+}
+
+UserMenu.defaultProps = {
+  type: '',
+  first: '',
+  last: '',
+  office: '',
 }
 
 const mapState = state => ({

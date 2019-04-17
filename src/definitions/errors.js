@@ -10,6 +10,7 @@ export const codes = {
   '400_131': 'No valid relationship between user/profile and application',
   '400_132': 'No valid relationship between user/profile and job posting',
   '400_14': 'Email has already been used.',
+  '400_152': 'The password you chose is very unsecure. Please use a differnt password.',
   '400_16': 'Invalid Address',
   '400_171':
     'There was a problem with the password reset link. Check your email or try reseting your password again.',

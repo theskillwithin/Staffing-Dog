@@ -1,29 +1,4 @@
-const professionSpecialty = {
-  default: [
-    'Family & General Dentistry',
-    'Anesthesiology',
-    'Endodontics',
-    'Oral & Maxillofacial Surgery',
-    'Orthodontics',
-    'Pedodontics',
-    'Periodontics',
-    'Prosthodontics',
-    'Radiology',
-    'Other',
-  ],
-  dentist: [
-    'Family & General Dentist',
-    'Anesthesiologist',
-    'Endodontist',
-    'Oral & Maxillofacial Surgeon',
-    'Orthodontist',
-    'Pedodontist',
-    'Periodontist',
-    'Prosthodontist',
-    'Radiologist',
-    'Other',
-  ],
-}
+import { positions, getPositionTypesByPosition } from '@sdog/definitions/jobs'
 
 export const professional = [
   {
@@ -206,13 +181,7 @@ export const professional = [
         label: 'Profession',
         type: 'dropdown',
         required: true,
-        options: [
-          'Dental Hygienist',
-          'Dental Assistant',
-          'Dentist',
-          'Front Office',
-          'Other',
-        ],
+        options: [...positions],
       },
       {
         name: 'specialty',
@@ -220,13 +189,13 @@ export const professional = [
         type: 'dropdown',
         optionsByValue: {
           name: 'profession',
-          options: {
-            'Dental Hygienist': professionSpecialty.default,
-            'Dental Assistant': professionSpecialty.default,
-            Dentist: professionSpecialty.dentist,
-            'Front Office': professionSpecialty.default,
-            Other: professionSpecialty.default,
-          },
+          options: positions.reduce(
+            (listOfPositionTypeOptions, positionType) => ({
+              ...listOfPositionTypeOptions,
+              [positionType.value]: getPositionTypesByPosition(positionType.value),
+            }),
+            {},
+          ),
         },
       },
       {

@@ -27,6 +27,12 @@
   }
 }
 
+.clear {
+  border: 0;
+  background: transparent none;
+  box-shadow: none;
+}
+
 .secondary {
   background: var(--sd-gray);
   color: white;

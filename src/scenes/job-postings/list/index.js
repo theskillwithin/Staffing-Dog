@@ -1,5 +1,6 @@
-import React, { useState } from 'react'
-import { array, bool } from 'prop-types'
+import React, { useState, useEffect } from 'react'
+import { func, bool, string, oneOfType, shape, array } from 'prop-types'
+import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { useDocumentTitle } from '@sdog/utils/document'
 import get from 'lodash/get'
@@ -10,14 +11,22 @@ import Button from '@sdog/components/button'
 import Spinner from '@sdog/components/spinner'
 import Chevron from '@sdog/components/svg/Chevron'
 import { defineJob } from '@sdog/definitions/jobs'
+import {
+  findJobs,
+  findJobsError,
+  findJobsLoading,
+  getUserJobs as getUserJobsAction,
+} from '@sdog/store/jobs'
 
 import appTheme from '../../app/theme.css'
 
 import theme from './theme.css'
 
-const JobPostings = ({ jobs, loading }) => {
+const JobPostings = ({ getUserJobs, jobs, loading }) => {
   useDocumentTitle('Job Postings')
   const [filter, setFilter] = useState({ label: 'Active', value: 'Active' })
+
+  useEffect(() => void getUserJobs(), [])
 
   const filterOptions = [
     { label: 'Active', value: 'Active' },
@@ -42,8 +51,8 @@ const JobPostings = ({ jobs, loading }) => {
         </div>
       ) : (
         <div className={theme.jobs}>
-          {jobs && jobs.length ? (
-            jobs.map(job => (
+          {jobs && jobs.posts && jobs.posts.length ? (
+            jobs.posts.map(job => (
               <Card key={`job-posting-${job.id}`} type="large">
                 <Link
                   to={`/search/job/${job.slug}`}
@@ -63,7 +72,10 @@ const JobPostings = ({ jobs, loading }) => {
                 <div className={theme.details}>
                   <dl>
                     <dt>Experience</dt>
-                    <dd>{get(job, 'criteria.experience_preferred')}</dd>
+                    <dd>
+                      {get(job, 'criteria.experience_min', 0)}-
+                      {get(job, 'criteria.experience_preferred', 0)} years
+                    </dd>
                   </dl>
                 </div>
                 <div className={theme.edit}>
@@ -77,7 +89,10 @@ const JobPostings = ({ jobs, loading }) => {
                     <div>-</div>
                     <div>{defineJob('position', get(job, 'criteria.position'))}</div>
                     <div className={theme.at}>@</div>
-                    <div>{get(job, 'criteria.hourly_rate')} hr</div>
+                    <div>
+                      {get(job, 'criteria.hourly_rate')}{' '}
+                      {'salary' === get(job, 'meta.salary_type', false) ? 'yearly' : 'hr'}
+                    </div>
                   </div>
                   <div className={theme.applicants}>
                     <Link to={`/job-postings/view/${job.id}`}>
@@ -92,7 +107,9 @@ const JobPostings = ({ jobs, loading }) => {
               </Card>
             ))
           ) : (
-            <h4>No job postings</h4>
+            <h4>
+              No job postings. <Link to="/job-postings/create">Create one now!</Link>
+            </h4>
           )}
         </div>
       )}
@@ -100,36 +117,22 @@ const JobPostings = ({ jobs, loading }) => {
   )
 }
 
-JobPostings.defaultProps = {
-  jobs: [
-    {
-      id: 112358,
-      applicantsNumber: 2,
-      status: 'open',
-      criteria: {
-        title: 'Temporary Hygienist Needed for Maternity Leave',
-        experience_preferred: '4- 7 Years',
-        hourly_rate: '$15',
-        employment_type: 'Temporary',
-        position: 'Dental Hygienist',
-        description:
-          'We are in need of a RDH for the months of December, January and February for maternity leave. Possibly turning into a part-time permanet position. Dentrix knowlege is preferred',
-        practice_details: {
-          name: 'APEX Dental',
-          address: {
-            city: 'Salt Lake City',
-            state: 'UT',
-          },
-        },
-      },
-    },
-  ],
-  loading: false,
-}
-
 JobPostings.propTypes = {
-  jobs: array,
-  loading: bool,
+  jobs: shape({ posts: array }).isRequired,
+  loading: bool.isRequired,
+  error: oneOfType([bool, string]),
+  getUserJobs: func.isRequired,
 }
 
-export default JobPostings
+export const mapStateToProps = state => ({
+  jobs: findJobs(state),
+  loading: findJobsLoading(state),
+  error: findJobsError(state),
+})
+
+export const mapActionsToProps = { getUserJobs: getUserJobsAction }
+
+export default connect(
+  mapStateToProps,
+  mapActionsToProps,
+)(JobPostings)
