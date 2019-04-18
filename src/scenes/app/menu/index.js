@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { findUserType } from '@sdog/store/user'
 import { Link } from 'react-router-dom'
-import { object, string } from 'prop-types'
+import { oneOfType, bool, object, string } from 'prop-types'
 import clsx from 'clsx'
 
 import theme from './theme.css'
@@ -11,6 +11,10 @@ const MainMenu = ({ location, type }) => {
   const isActive = page => {
     const { pathname } = location
     return page.test(pathname)
+  }
+
+  if (!type) {
+    return null
   }
 
   if (type === 'practice') {
@@ -83,8 +87,10 @@ const MainMenu = ({ location, type }) => {
 
 MainMenu.propTypes = {
   location: object.isRequired,
-  type: string.isRequired,
+  type: oneOfType([bool, string]),
 }
+
+MainMenu.defaultProps = { type: false }
 
 const mapState = state => ({
   type: findUserType(state),

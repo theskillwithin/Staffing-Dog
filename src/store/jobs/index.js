@@ -20,12 +20,17 @@ export const INITIAL_STATE = {
   singleJob: {
     loading: true,
     error: false,
-    results: false,
+    results: {},
   },
   create: {
     loading: false,
     error: false,
-    results: false,
+    results: {},
+  },
+  update: {
+    loading: false,
+    error: false,
+    jobId: false,
   },
 }
 
@@ -97,14 +102,15 @@ reducers = {
 export const GET_SINGLE_JOB = 'GET_SINGLE_JOB'
 export const getSingleJobTypes = createActionTypes(GET_SINGLE_JOB)
 
-export const getSingleJob = id => ({
-  type: GET_SINGLE_JOB,
-  api: {
-    url: `${API_ROOT}/jobs`,
-    method: 'GET',
-    params: { id },
-  },
-})
+export const getSingleJob = id => (dispatch, getState) =>
+  dispatch({
+    type: GET_SINGLE_JOB,
+    api: {
+      url: `${API_ROOT}/jobs`,
+      method: 'GET',
+      params: { id, user_id: findUserId(getState()) || getUserId() },
+    },
+  })
 
 reducers = {
   ...reducers,
@@ -186,6 +192,59 @@ reducers = {
 }
 
 /**
+ * Update Job Post
+ */
+export const UPDATE_JOB_POST = 'UPDATE_JOB_POST'
+export const updateJobPostTypes = createActionTypes(UPDATE_JOB_POST)
+
+export const updateJobPost = (data, cb = {}) => (dispatch, getState) =>
+  dispatch({
+    type: UPDATE_JOB_POST,
+    api: {
+      url: `${API_ROOT}/jobs`,
+      method: 'PUT',
+      data: {
+        user_id: findUserId(getState()) || getUserId(),
+        data,
+      },
+      callbacks: {
+        ...cb,
+      },
+    },
+    payload: {
+      jobId: data.id,
+    },
+  })
+
+reducers = {
+  ...reducers,
+  [updateJobPostTypes.LOADING]: (state, { jobId }) => ({
+    ...state,
+    update: {
+      ...state.update,
+      ...spreadLoadingError(true, false),
+      jobId,
+    },
+  }),
+  [updateJobPostTypes.SUCCESS]: state => ({
+    ...state,
+    ...spreadLastUpdated(),
+    update: {
+      ...state.update,
+      ...spreadLoadingError(false, false),
+      jobId: false,
+    },
+  }),
+  [updateJobPostTypes.ERROR]: (state, { error }) => ({
+    ...state,
+    update: {
+      ...state.update,
+      ...spreadLoadingError(false, useErrorFromResponse(error)),
+    },
+  }),
+}
+
+/**
  * Create Store
  */
 export const reducer = buildStore(reducers, INITIAL_STATE)
@@ -206,5 +265,7 @@ export const findSingleJobLoading = state => findSingleJobState(state).loading
 export const findSingleJobError = state => findSingleJobState(state).error
 
 export const findCreateJob = state => findState(state).create
+
+export const findUpdateJob = state => findState(state).update
 
 export default reducer

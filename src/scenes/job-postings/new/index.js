@@ -1,137 +1,57 @@
-import React, { useEffect, useState, useRef } from 'react'
+import React, { useEffect } from 'react'
 import { func, bool, string, arrayOf, oneOfType, shape } from 'prop-types'
 import { connect } from 'react-redux'
-import { withRouter } from 'react-router-dom'
 import clsx from 'clsx'
-import moment from 'moment'
 import get from '@sdog/utils/get'
-import set from 'lodash/set'
-import find from 'lodash/find'
-import { setTitle } from '@sdog/utils/document'
+import { useDocumentTitle } from '@sdog/utils/document'
 import SVG from '@sdog/components/svg'
 import Card from '@sdog/components/card'
 import Button from '@sdog/components/button'
-import Dropdown from '@sdog/components/dropdown'
-import Input from '@sdog/components/input'
-import DatePicker from '@sdog/components/date_picker'
-import Spinner from '@sdog/components/spinner'
 import Alert from '@sdog/components/alert'
 import {
   getPracticeOffices as getPracticeOfficesAction,
   findPracticeOffices,
 } from '@sdog/store/user'
 import { postNewJob as postNewJobAction, findCreateJob } from '@sdog/store/jobs'
-import { positions, getPositionTypesByPosition } from '@sdog/definitions/jobs'
 
+import { useJobPostForm } from '../useJobPostForm'
 import appTheme from '../../app/theme.css'
+import JobPostForm from '../edit/Form'
 
 import theme from './theme.css'
 
-const getInitialState = date => ({
-  available_date: '',
-  office_id: null,
-  criteria: {
-    title: '',
-    description: '',
-    employment_type: null,
-    position: '',
-    specialty: '',
-    hourly_rate: 0.0,
-    experience_min: 1,
-    experience_preferred: 3,
-    applicant_selection: ['closed'],
-    duration: {
-      start_date: date,
-      end_date: date,
-    },
-  },
-  meta: {
-    full_description: '',
-  },
-  misc: {
-    applicant_list: [],
-  },
-})
-
-let stickyFormData = null
-
 const JobPostings = ({ history, getPracticeOffices, offices, create, postNewJob }) => {
-  useEffect(() => void setTitle('Job Postings'), [])
+  useDocumentTitle('Job Postings')
   useEffect(() => void getPracticeOffices(), [])
 
-  const date = useRef(
-    moment()
-      .add(1, 'days')
-      .format(),
-  )
-  const [form, setForm] = useState(stickyFormData || getInitialState(date.current))
-
-  useEffect(() => {
-    stickyFormData = form
-  })
-
-  const dropdownOffices = offices.results.map(office => ({
-    label: get(
-      office,
-      'meta.summary.office_name',
-      `${get(office, 'addresses.line_1')} ${get(office, 'addresses.city')}`,
-    ),
-    value: office.id,
-  }))
-
-  useEffect(
-    () => {
-      if (!form.office_id) {
-        setForm({ ...form, office_id: get(dropdownOffices, '[0].value', null) })
-      }
-    },
-    [offices],
+  const { form, setFormValue, clearCache, getFormProps, date } = useJobPostForm(
+    null,
+    offices.results,
   )
 
-  const handleChange = (name, value) => {
-    const state = { ...form }
-
-    set(state, name, value)
-    setForm(state)
-  }
-
-  const salaryTypeOptions = [
-    { label: 'Hourly', value: 'hourly' },
-    { label: 'Salary', value: 'salary' },
-  ]
-
-  const submit = e => {
+  const onSubmit = (e, status = 'draft') => {
     e.preventDefault()
 
     postNewJob(
       {
         ...form,
-        available_date: form.criteria.duration.start_date,
+        status,
+        available_date: get(form, 'criteria.duration.start_date', date),
         criteria: {
           ...form.criteria,
           hourly_rate:
-            'salary' === form.meta.salary_type
-              ? parseInt(form.criteria.hourly_rate, 10) / 52 / 40
-              : form.criteria.hourly_rate,
+            'salary' === get(form, 'meta.salary_type', false)
+              ? parseInt(get(form, 'criteria.hourly_rate', 0), 10) / 52 / 40
+              : get(form, 'criteria.hourly_rate', 0),
         },
       },
       {
         success: () => {
-          setForm(getInitialState(date.current))
+          clearCache()
           history.push(`/job-postings`)
         },
       },
     )
-  }
-
-  const setType = type => {
-    setForm({
-      ...form,
-      criteria: {
-        ...form.criteria,
-        employment_type: type,
-      },
-    })
   }
 
   if (!form.criteria.employment_type) {
@@ -149,7 +69,10 @@ const JobPostings = ({ history, getPracticeOffices, offices, create, postNewJob 
             ready to work in minutes. A lifesaver when you need a temp.
           </p>
 
-          <Button onClick={() => setType('temporary')} size="medium">
+          <Button
+            onClick={() => setFormValue('criteria.employment_type', 'temporary')}
+            size="medium"
+          >
             I want this option
           </Button>
         </Card>
@@ -164,7 +87,10 @@ const JobPostings = ({ history, getPracticeOffices, offices, create, postNewJob 
             match technology, making your hiring decisions easy.
           </p>
 
-          <Button onClick={() => setType('full_time')} size="medium">
+          <Button
+            onClick={() => setFormValue('criteria.employment_type', 'full_time')}
+            size="medium"
+          >
             I want this option
           </Button>
         </Card>
@@ -175,141 +101,13 @@ const JobPostings = ({ history, getPracticeOffices, offices, create, postNewJob 
   return (
     <div className={clsx(appTheme.pageContent, theme.container, theme.new)}>
       <Card type="large">
-        <form className={theme.form} onSubmit={submit}>
-          <h2>New Job Posting</h2>
-          <p>
-            <Button clear type="button" onClick={() => setType(null)}>
-              Change job posting type.
-            </Button>
-          </p>
+        <JobPostForm onSubmit={onSubmit} {...getFormProps()} />
 
-          <div className={theme.row}>
-            <Dropdown
-              value={find(
-                dropdownOffices,
-                office => office.office_id === form.criteria.office_id,
-              )}
-              options={dropdownOffices}
-              onChange={value => handleChange('office_id', value.value)}
-              label="Office Location"
-              placeholder="Office Location"
-            />
-
-            <DatePicker
-              value={form.criteria.duration.start_date}
-              onChange={value => handleChange('criteria.duration.start_date', value)}
-              label="Start Date"
-              className={theme.startDate}
-            />
-
-            <DatePicker
-              value={form.criteria.duration.end_date}
-              onChange={value => handleChange('criteria.duration.end_date', value)}
-              label="End Date"
-              className={theme.endDate}
-            />
-          </div>
-
-          <div className={theme.row}>
-            <Input
-              value={form.criteria.title}
-              onChange={value => handleChange('criteria.title', value)}
-              label="Job Title"
-            />
-          </div>
-
-          <div className={theme.row}>
-            <Input
-              value={form.criteria.description}
-              onChange={value => handleChange('criteria.description', value)}
-              label="Short Description. ( max char ? )"
-              textarea
-              className={theme.shortDescription}
-            />
-          </div>
-
-          <div className={theme.row}>
-            <Input
-              value={form.meta.full_description}
-              onChange={value => handleChange('meta.full_description', value)}
-              label="Full Description"
-              textarea
-              className={theme.fullDescription}
-            />
-          </div>
-
-          <div className={theme.row}>
-            <Dropdown
-              value={find(
-                positions,
-                position => position.value === form.criteria.position,
-              )}
-              onChange={value => handleChange('criteria.position', value.value)}
-              placeholder="Provider Type"
-              options={positions}
-            />
-
-            <Dropdown
-              value={find(
-                getPositionTypesByPosition(form.criteria.position),
-                jobType => jobType.value === form.criteria.specialty,
-              )}
-              disabled={!form.criteria.position}
-              onChange={value => handleChange('criteria.specialty', value.value)}
-              placeholder="Job Type"
-              options={getPositionTypesByPosition(form.criteria.position)}
-            />
-          </div>
-
-          <div className={theme.row}>
-            <Dropdown
-              value={find(
-                salaryTypeOptions,
-                salaryType => salaryType.value === form.meta.salary_type,
-              )}
-              onChange={value => handleChange('meta.salary_type', value.value)}
-              placeholder="Salary Type"
-              options={salaryTypeOptions}
-            />
-
-            <Input
-              value={form.criteria.hourly_rate}
-              onChange={value =>
-                handleChange(
-                  'criteria.hourly_rate',
-                  parseFloat(value.replace(/[^\d.-]/g, '')),
-                )
-              }
-              placeholder={
-                get(form, 'criteria.salary_type', false) === 'salary'
-                  ? 'Salary Rate'
-                  : 'Hourly Rate'
-              }
-            />
-          </div>
-
-          <div className={theme.row}>
-            <Input
-              value={form.criteria.experience_min}
-              onChange={value => handleChange('criteria.experience_min', value)}
-              label="Minimum Experience"
-              type="number"
-            />
-
-            <Input
-              value={form.criteria.experience_preferred}
-              onChange={value => handleChange('criteria.experience_preferred', value)}
-              label="Preferred Experience"
-              type="number"
-            />
-          </div>
-
-          <Button type="submit" className={theme.submitBtn}>
-            Create Job Posting {create.loading && <Spinner />}
-          </Button>
-
-          {create.error && <Alert error>{create.error}</Alert>}
-        </form>
+        {create.error && (
+          <Alert inline error={create.error}>
+            {create.error}
+          </Alert>
+        )}
       </Card>
     </div>
   )
@@ -339,9 +137,7 @@ export const mapActionsToProps = {
   postNewJob: postNewJobAction,
 }
 
-export default withRouter(
-  connect(
-    mapStateToProps,
-    mapActionsToProps,
-  )(JobPostings),
-)
+export default connect(
+  mapStateToProps,
+  mapActionsToProps,
+)(JobPostings)

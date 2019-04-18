@@ -79,7 +79,7 @@ const JobPostings = ({ getUserJobs, jobs, loading }) => {
                   </dl>
                 </div>
                 <div className={theme.edit}>
-                  <Link to={`/job-postings/edit/${job.id}`}>
+                  <Link to={`/job-postings/${job.id}/edit`}>
                     <Button secondary>Edit Post</Button>
                   </Link>
                 </div>
