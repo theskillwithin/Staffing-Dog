@@ -79,7 +79,7 @@ const JobPostings = ({ getUserJobs, jobs, loading }) => {
                   </dl>
                 </div>
                 <div className={theme.edit}>
-                  <Link to={`/job-postings/edit/${job.id}`}>
+                  <Link to={`/job-postings/${job.id}/edit`}>
                     <Button secondary>Edit Post</Button>
                   </Link>
                 </div>
@@ -95,7 +95,7 @@ const JobPostings = ({ getUserJobs, jobs, loading }) => {
                     </div>
                   </div>
                   <div className={theme.applicants}>
-                    <Link to={`/job-postings/view/${job.id}`}>
+                    <Link to={`/job-postings/${job.id}`}>
                       <span className={theme.blue}>{job.applicantsNumber || 0}</span>{' '}
                       Applicants
                       <span className={theme.chevron}>
