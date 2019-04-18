@@ -1,3 +1,5 @@
+@import '../../styles/config.css';
+
 .logout {
   button {
     width: 181px;
