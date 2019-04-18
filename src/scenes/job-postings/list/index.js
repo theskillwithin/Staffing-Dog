@@ -95,7 +95,7 @@ const JobPostings = ({ getUserJobs, jobs, loading }) => {
                     </div>
                   </div>
                   <div className={theme.applicants}>
-                    <Link to={`/job-postings/view/${job.id}`}>
+                    <Link to={`/job-postings/${job.id}`}>
                       <span className={theme.blue}>{job.applicantsNumber || 0}</span>{' '}
                       Applicants
                       <span className={theme.chevron}>
