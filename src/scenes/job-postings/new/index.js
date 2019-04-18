@@ -15,6 +15,7 @@ import Dropdown from '@sdog/components/dropdown'
 import Input from '@sdog/components/input'
 import DatePicker from '@sdog/components/date_picker'
 import Spinner from '@sdog/components/spinner'
+import Alert from '@sdog/components/alert'
 import {
   getPracticeOffices as getPracticeOfficesAction,
   findPracticeOffices,
@@ -229,7 +230,7 @@ const JobPostings = ({ history, getPracticeOffices, offices, create, postNewJob 
 
           <div className={theme.row}>
             <Input
-              value={form.full_description}
+              value={form.meta.full_description}
               onChange={value => handleChange('meta.full_description', value)}
               label="Full Description"
               textarea
@@ -307,7 +308,7 @@ const JobPostings = ({ history, getPracticeOffices, offices, create, postNewJob 
             Create Job Posting {create.loading && <Spinner />}
           </Button>
 
-          {create.error && <p>{create.error}</p>}
+          {create.error && <Alert error>{create.error}</Alert>}
         </form>
       </Card>
     </div>
