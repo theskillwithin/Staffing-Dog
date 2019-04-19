@@ -1,6 +1,8 @@
 @import '../../../styles/config.css';
 
 .svg {
+  display: inline-block;
+
   :global {
     .cls-1,
     .cls-2 {

@@ -25,9 +25,9 @@ const ProfessionalsView = ({ history, location, professionals, getProfessionals 
   useEffect(() => void setTitle('Job Postings'), [])
 
   const [filters, setFilters] = useState({
-    job_type: null,
+    employment_type: null,
     specialty: null,
-    position: null,
+    job_type: null,
     radius: null,
     ...qs.parse((location.search || '').substr(1)),
   })
@@ -67,15 +67,15 @@ const ProfessionalsView = ({ history, location, professionals, getProfessionals 
     <div className={clsx(appTheme.pageContent, theme.container)}>
       <div className={theme.filters}>
         <Filter
-          onChange={value => handleFilterChange('job_type', value.value)}
-          value={find(jobTypes, ({ value }) => value === filters.job_type)}
+          onChange={value => handleFilterChange('employment_type', value.value)}
+          value={find(jobTypes, ({ value }) => value === filters.employment_type)}
           options={jobTypes}
           placeholder="All Job Types"
           className={theme.jobType}
         />
         <Filter
-          onChange={value => handleFilterChange('position', value.value)}
-          value={find(positions, ({ value }) => value === filters.position)}
+          onChange={value => handleFilterChange('job_type', value.value)}
+          value={find(positions, ({ value }) => value === filters.job_type)}
           options={positions}
           placeholder="All Job Positions"
           className={theme.jobPosition}
