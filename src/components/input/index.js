@@ -51,7 +51,9 @@ const Input = ({
           className={clsx(
             s.input,
             outlined && s.outlined,
-            value && (value.length || value.toString().length) > 0 && s.filled,
+            value === 0 || (value && (value.length || value.toString().length) > 0)
+              ? s.filled
+              : null,
           )}
           onChange={handleOnChange}
           value={value}
@@ -63,7 +65,9 @@ const Input = ({
           className={clsx(
             s.input,
             outlined && s.outlined,
-            value && (value.length || value.toString().length) > 0 && s.filled,
+            value === 0 || (value && (value.length || value.toString().length) > 0)
+              ? s.filled
+              : null,
           )}
           onChange={handleOnChange}
           type={type}
