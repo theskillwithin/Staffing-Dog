@@ -28,10 +28,10 @@ const Settings = () => {
           settingsTabs
           fw500
         >
-          <div>About Me</div>
-          <div>References</div>
+          {[<div key="tempkey">About Me</div>]}
+          {/* <div>References</div>
           <div>Notifications</div>
-          <div>Security</div>
+          <div>Security</div> */}
         </Tabs>
 
         {activeTabIndex === 0 && <AboutMe />}
