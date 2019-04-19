@@ -41,15 +41,15 @@
     width: 191px;
   }
 
-  .jobSpecialty {
-    width: 162px;
+  .jobPosition {
+    width: 182px;
   }
 
-  .specialtyTypes {
+  .jobSpecialty {
     width: 198px;
   }
 
-  .distance {
-    width: 175px;
+  .jobDistance {
+    width: 155px;
   }
 }

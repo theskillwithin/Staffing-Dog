@@ -7,6 +7,12 @@ export const definitions = {
   },
 }
 
+export const jobTypes = [
+  { label: 'Full Time', value: 'full_time' },
+  { label: 'Part Time', value: 'part_time' },
+  { label: 'Temp', value: 'temporary' },
+]
+
 export const positions = [
   { label: 'Dental Hygienist', value: 'dental_hygienist' },
   { label: 'Dental Assistant', value: 'dental_assistant' },

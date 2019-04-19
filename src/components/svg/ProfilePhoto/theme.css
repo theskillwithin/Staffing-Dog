@@ -1,5 +1,9 @@
 @import '../../../styles/config.css';
 
+.inline {
+  display: inline-block;
+}
+
 .svg {
   :global {
     .cls-1,
