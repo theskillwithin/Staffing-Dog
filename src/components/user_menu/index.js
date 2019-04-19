@@ -33,7 +33,7 @@ const UserMenu = ({ type, first, last, office }) => {
       <div className={theme.userMenuInner} ref={pRef}>
         <div className={theme.userMenuDesktop}>
           <div className={theme.photo}>
-            <ProfilePhotoSVG size={48} color="purple" />
+            <ProfilePhotoSVG color="purple" />
           </div>
           <div className={theme.user}>
             <div>{displayUserName}</div>

@@ -14,7 +14,7 @@ const ProfessionalCard = ({ applicant }) => (
     <div className={theme.proCard}>
       <div className={theme.img}>
         {!get(applicant, 'preferences.profile_image.url', false) ? (
-          <ProfilePhotoSVG size={100} color="purple" />
+          <ProfilePhotoSVG inline size={100} color="purple" />
         ) : (
           <img
             src={get(applicant, 'preferences.profile_image_url', '')}
