@@ -61,13 +61,13 @@ const UserMenu = ({ type, first, last, office }) => {
             {displayUserName} {type === 'practice' && office && office}
           </div>
           <Link to="/settings">Profile</Link>
-          {type === 'practice' && (
+          {/* {type === 'practice' && (
             <>
               <Link to="/settings">Billing</Link>
               <Link to="/settings">Users</Link>
             </>
-          )}
-          <Link to="/settings">Account</Link>
+          )} 
+          <Link to="/settings">Account</Link> */}
           <Link to="/logout" className={theme.logout}>
             Logout <Arrow />
           </Link>
