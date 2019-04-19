@@ -120,12 +120,16 @@ const ProfessionalsView = ({ history, location, professionals, getProfessionals 
               </Alert>
             )}
 
-            {professionals.results.map(applicant => (
-              <ProfessionalCard
-                key={`applicant-card-${applicant.id}`}
-                applicant={applicant}
-              />
-            ))}
+            {!professionals.results.length ? (
+              <p>No results were found. Try adjusting your filters above.</p>
+            ) : (
+              professionals.results.map(applicant => (
+                <ProfessionalCard
+                  key={`applicant-card-${applicant.id}`}
+                  applicant={applicant}
+                />
+              ))
+            )}
           </div>
         </>
       )}
