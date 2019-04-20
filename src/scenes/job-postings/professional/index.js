@@ -15,9 +15,11 @@ const ProfessionalCard = ({
   actionText,
   actionColor,
   shortCard,
-  cn,
+  className,
 }) => (
-  <div className={clsx(theme.proCard, shortCard && theme.shortCard, cn && cn)}>
+  <div
+    className={clsx(theme.proCard, shortCard && theme.shortCard, className && className)}
+  >
     <div className={theme.img}>
       {!get(applicant, 'preferences.profile_image_url', false) ? (
         <ProfilePhotoSVG inline size={100} color="purple" />
@@ -92,7 +94,7 @@ ProfessionalCard.defaultProps = {
   actionText: 'Quick Hire',
   actionColor: 'primary',
   shortCard: false,
-  cn: null,
+  className: null,
 }
 
 ProfessionalCard.propTypes = {
@@ -101,7 +103,7 @@ ProfessionalCard.propTypes = {
   actionText: string,
   actionColor: string,
   shortCard: bool,
-  cn: string,
+  className: string,
 }
 
 export default ProfessionalCard

@@ -115,7 +115,7 @@ const JobPostingsView = ({ job, applicants, loading }) => {
                 <SVG name="desktop_search" className={theme.desktopSearchSVG} />
 
                 <StarTitle title="Congradulations Day Hire Found" />
-                <ProfessionalCard applicant={applicants[0]} cn={theme.first} />
+                <ProfessionalCard applicant={applicants[0]} className={theme.first} />
               </div>
             </Card>
           </div>
@@ -144,7 +144,7 @@ const JobPostingsView = ({ job, applicants, loading }) => {
                       key={`applicant-selected-card-${applicant.id}`}
                       applicant={applicant}
                       shortCard
-                      cn={index === 0 && theme.first}
+                      className={index === 0 && theme.first}
                     />
                   ))}
                 </div>
@@ -156,7 +156,7 @@ const JobPostingsView = ({ job, applicants, loading }) => {
                       key={`applicant-applied-card-${applicant.id}`}
                       applicant={applicant}
                       shortCard
-                      cn={index === 0 && theme.first}
+                      className={index === 0 && theme.first}
                     />
                   ))}
                 </div>
