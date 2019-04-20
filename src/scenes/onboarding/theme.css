@@ -336,6 +336,11 @@
   position: absolute;
   top: 1.5em;
   right: 3em;
+  z-index: 2000;
+
+  @media (max-width: 930px) {
+    right: 1em;
+  }
 
   @media (--sd-mobile) {
     top: 1.5em;
