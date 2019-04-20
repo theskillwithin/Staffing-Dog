@@ -9,6 +9,7 @@ import Button from '@sdog/components/button'
 import Spinner from '@sdog/components/spinner'
 import Filter from '@sdog/components/filter'
 import Tabs from '@sdog/components/tab_bar'
+import SVG from '@sdog/components/svg'
 import { defineJob } from '@sdog/definitions/jobs'
 
 import ProfessionalCard from '../professional'
@@ -102,6 +103,18 @@ const JobPostingsView = ({ job, applicants, loading }) => {
                   <div className={theme.at}>@</div>
                   <div>{get(job, 'criteria.hourly_rate')} hr</div>
                 </div>
+              </div>
+            </Card>
+          </div>
+
+          <div className={theme.search}>
+            <Card type="large">
+              <div className={theme.searchInner}>
+                <h2>Searching for Day Hire...</h2>
+                <SVG name="desktop_search" className={theme.desktopSearchSVG} />
+
+                <h2>Congradulations Day Hire Found</h2>
+                <ProfessionalCard applicant={applicants[0]} cn={theme.first} />
               </div>
             </Card>
           </div>
@@ -205,7 +218,7 @@ const JobPostingsView = ({ job, applicants, loading }) => {
 
 JobPostingsView.defaultProps = {
   job: {
-    id: 112358,
+    id: '112358',
     applicantsNumber: 2,
     status: 'open',
     criteria: {
@@ -227,7 +240,7 @@ JobPostingsView.defaultProps = {
   },
   applicants: [
     {
-      id: 11235813,
+      id: '11235813',
       user: {
         first_name: 'Debbie',
         last_name: 'Debbie',

@@ -244,3 +244,23 @@
 .first {
   border-top: 0;
 }
+
+.search {
+  margin-bottom: 2em;
+}
+
+.searchInner {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+
+  h2 {
+    font-weight: var(--sd-fontWeightLight);
+  }
+}
+
+.desktopSearchSVG svg {
+  width: 200px;
+  margin-left: -2em;
+}
