@@ -19,6 +19,7 @@ import Card from '@sdog/components/card'
 import Filter from '@sdog/components/filter'
 import Button from '@sdog/components/button'
 import Alert from '@sdog/components/alert'
+import Spinner from '@sdog/components/spinner'
 // import Star from '@sdog/components/svg/FavStar'
 import LocationOnIcon from '@sdog/components/svg/Location'
 import {
@@ -110,7 +111,7 @@ const JobSearch = ({ location, history, jobs, loading, getUserJobs }) => {
 
       <div className={theme.searchResults}>
         {loading ? (
-          <p>Loading</p>
+          <Spinner />
         ) : (
           <>
             <div className={theme.searchResultsMeta}>
