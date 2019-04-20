@@ -458,10 +458,25 @@ export const goToStep = ({ currentStep, nextStep, history }) => (dispatch, getSt
     const invalids = filter(validations, validation => validation.invalid)
 
     if (invalids && invalids.length) {
+      const multipleRequiredFields = filter(invalids, invalid =>
+        invalid.invalid.includes('is a required field'),
+      )
+
+      const isMultipleRequiredFields = multipleRequiredFields.length > 1
+
+      const mapInvalidMsgs = invalids.map(invalid => invalid.invalid)
+
+      const mapInvalidMsgsFilterRequired = invalids
+        .map(invalid => invalid.invalid)
+        .filter(invalid => !invalid.includes('is a required field'))
+
+      console.log(multipleRequiredFields)
       return Promise.resolve(
         dispatch(
           actions.goToStepFailed({
-            error: invalids.map(invalid => invalid.invalid),
+            error: isMultipleRequiredFields
+              ? [...mapInvalidMsgsFilterRequired, 'Please fill out the required fields']
+              : mapInvalidMsgs,
             errorFields: invalids.map(invalid => ({
               error: invalid.invalid,
               field: invalid.name,
