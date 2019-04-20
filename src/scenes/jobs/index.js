@@ -11,7 +11,6 @@ import ViewJob from './components/ViewJob'
 const JobsScene = ({ userType, match: { path }, history }) => {
   useEffect(
     () => {
-      console.log('type', userType)
       if (userType && 'practice' === userType) {
         history.replace('/job-postings')
       }
