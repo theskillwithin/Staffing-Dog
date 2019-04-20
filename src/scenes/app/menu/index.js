@@ -66,8 +66,8 @@ const MainMenu = ({ location, type }) => {
         </li>
         <li className={theme.navItem}>
           <Link
-            className={clsx(theme.navItemLink, isActive(/search/) && theme.active)}
-            to="/search"
+            className={clsx(theme.navItemLink, isActive(/jobs/) && theme.active)}
+            to="/jobs"
           >
             Job&nbsp;Search
           </Link>

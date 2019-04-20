@@ -15,7 +15,7 @@ import theme from './theme.css'
 import './styles.css'
 
 const DashboardScene = React.lazy(() => import('@sdog/scenes/dashboard'))
-const SearchScene = React.lazy(() => import('@sdog/scenes/search'))
+const JobsScene = React.lazy(() => import('@sdog/scenes/jobs'))
 const SettingsScene = React.lazy(() => import('@sdog/scenes/settings'))
 const JobPostingsScene = React.lazy(() => import('@sdog/scenes/job-postings'))
 const ProfesionalsScene = React.lazy(() => import('@sdog/scenes/professionals'))
@@ -60,7 +60,7 @@ const App = ({ getUserProfile, location, history, userProfile }) => {
         <React.Suspense fallback={<Spinner />}>
           <Route path="/" component={DashboardScene} exact />
           <Route path="/settings" component={SettingsScene} />
-          <Route path="/search" component={SearchScene} />
+          <Route path="/jobs" component={JobsScene} />
           <Route path="/job-postings" component={JobPostingsScene} />
           <Route path="/professionals" component={ProfesionalsScene} />
         </React.Suspense>
