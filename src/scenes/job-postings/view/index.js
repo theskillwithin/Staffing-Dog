@@ -10,6 +10,7 @@ import Spinner from '@sdog/components/spinner'
 import Filter from '@sdog/components/filter'
 import Tabs from '@sdog/components/tab_bar'
 import SVG from '@sdog/components/svg'
+import StarTitle from '@sdog/components/star_title'
 import { defineJob } from '@sdog/definitions/jobs'
 
 import ProfessionalCard from '../professional'
@@ -113,7 +114,7 @@ const JobPostingsView = ({ job, applicants, loading }) => {
                 <h2>Searching for Day Hire...</h2>
                 <SVG name="desktop_search" className={theme.desktopSearchSVG} />
 
-                <h2>Congradulations Day Hire Found</h2>
+                <StarTitle title="Congradulations Day Hire Found" />
                 <ProfessionalCard applicant={applicants[0]} cn={theme.first} />
               </div>
             </Card>
