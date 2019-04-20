@@ -1,11 +1,11 @@
 @import '../../../styles/config.css';
 
 :root {
-  --sd-postingContainerWidth: 840px;
+  --sd-postingViewContainerWidth: 907px;
 }
 
 .container {
-  max-width: var(--sd-postingContainerWidth);
+  max-width: var(--sd-postingViewContainerWidth);
 }
 
 .job {
@@ -183,7 +183,7 @@
 .filters {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 1em;
+  margin: 1em 0;
 
   .jobType {
     width: 191px;
@@ -200,4 +200,67 @@
   .distance {
     width: 175px;
   }
+}
+
+.applicants {
+  > div {
+    padding-bottom: 50px;
+  }
+
+  h2 {
+    color: var(--blackTxt);
+    font-weight: var(--sd-fontWeightLight);
+    margin-top: 0.5em;
+    margin-bottom: 1.5em;
+    font-size: 30px;
+  }
+}
+
+.bottom {
+  position: absolute;
+  bottom: -50px;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  border-top: 1px solid var(--sd-borderColor);
+  height: 50px;
+  color: var(--sd-blackTxt);
+  font-weight: var(--sd-fontWeightMedium);
+
+  span {
+    color: var(--sd-primary);
+    font-weight: var(--sd-fontWeightBold);
+    margin-right: 3px;
+  }
+
+  > div {
+    margin-right: 2em;
+    font-size: 12px;
+  }
+}
+
+.first {
+  border-top: 0;
+}
+
+.search {
+  margin-bottom: 2em;
+}
+
+.searchInner {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+
+  h2 {
+    font-weight: var(--sd-fontWeightLight);
+  }
+}
+
+.desktopSearchSVG svg {
+  width: 200px;
+  margin-left: -2em;
 }

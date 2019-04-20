@@ -4,19 +4,24 @@ import { Link } from 'react-router-dom'
 import get from 'lodash/get'
 import clsx from 'clsx'
 import { setTitle } from '@sdog/utils/document'
-import ProfessionalCard from '@sdog/components/professional_card'
 import Card from '@sdog/components/card'
 import Button from '@sdog/components/button'
 import Spinner from '@sdog/components/spinner'
 import Filter from '@sdog/components/filter'
+import Tabs from '@sdog/components/tab_bar'
+import SVG from '@sdog/components/svg'
+import StarTitle from '@sdog/components/star_title'
 import { defineJob } from '@sdog/definitions/jobs'
 
+import ProfessionalCard from '../professional'
 import appTheme from '../../app/theme.css'
 
 import theme from './theme.css'
 
 const JobPostingsView = ({ job, applicants, loading }) => {
   useEffect(() => void setTitle('Job Postings'), [])
+
+  const [activeTabIndex, setActiveTabIndex] = useState(0)
 
   const [filters, setFilters] = useState({
     jobType: null,
@@ -102,43 +107,109 @@ const JobPostingsView = ({ job, applicants, loading }) => {
               </div>
             </Card>
           </div>
-          <div className={theme.filters}>
-            <Filter
-              onChange={value => handleFilterChange('jobType', value)}
-              value={filters.jobType}
-              options={jobPositions}
-              placeholder="All Position Types"
-              className={theme.jobType}
-            />
-            <Filter
-              onChange={value => handleFilterChange('jobSpecialty', value)}
-              value={filters.jobSpecialty}
-              options={jobTypes}
-              placeholder="All Job Types"
-              className={theme.jobSpecialty}
-            />
-            <Filter
-              onChange={value => handleFilterChange('specialtyTypes', value)}
-              value={filters.specialtyTypes}
-              options={specialtyTypes}
-              placeholder="All Speciality Types"
-              className={theme.specialtyTypes}
-            />
-            <Filter
-              onChange={value => handleFilterChange('radius', value)}
-              value={filters.radius}
-              options={options}
-              placeholder="Distance"
-              className={theme.distance}
-            />
+
+          <div className={theme.search}>
+            <Card type="large">
+              <div className={theme.searchInner}>
+                <h2>Searching for Day Hire...</h2>
+                <SVG name="desktop_search" className={theme.desktopSearchSVG} />
+
+                <StarTitle title="Congradulations Day Hire Found" />
+                <ProfessionalCard applicant={applicants[0]} className={theme.first} />
+              </div>
+            </Card>
           </div>
+
           <div className={theme.applicants}>
-            {applicants.map(applicant => (
-              <ProfessionalCard
-                key={`applicant-card-${applicant.id}`}
-                applicant={applicant}
-              />
-            ))}
+            <Card type="large">
+              <h2>Applicants</h2>
+              <Tabs
+                activeTabIndex={activeTabIndex}
+                onSelect={setActiveTabIndex}
+                underline
+                exactWidthTab
+                left
+                settingsTabs
+                fw500
+              >
+                <div>Selected</div>
+                <div>Applied</div>
+                <div>Search</div>
+              </Tabs>
+
+              {activeTabIndex === 0 && (
+                <div className={theme.applicantTab}>
+                  {applicants.map((applicant, index) => (
+                    <ProfessionalCard
+                      key={`applicant-selected-card-${applicant.id}`}
+                      applicant={applicant}
+                      shortCard
+                      className={index === 0 && theme.first}
+                    />
+                  ))}
+                </div>
+              )}
+              {activeTabIndex === 1 && (
+                <div className={theme.applicantTab}>
+                  {applicants.map((applicant, index) => (
+                    <ProfessionalCard
+                      key={`applicant-applied-card-${applicant.id}`}
+                      applicant={applicant}
+                      shortCard
+                      className={index === 0 && theme.first}
+                    />
+                  ))}
+                </div>
+              )}
+              {activeTabIndex === 2 && (
+                <div className={theme.applicantTab}>
+                  <div className={theme.filters}>
+                    <Filter
+                      onChange={value => handleFilterChange('jobType', value)}
+                      value={filters.jobType}
+                      options={jobPositions}
+                      placeholder="All Position Types"
+                      className={theme.jobType}
+                    />
+                    <Filter
+                      onChange={value => handleFilterChange('jobSpecialty', value)}
+                      value={filters.jobSpecialty}
+                      options={jobTypes}
+                      placeholder="All Job Types"
+                      className={theme.jobSpecialty}
+                    />
+                    <Filter
+                      onChange={value => handleFilterChange('specialtyTypes', value)}
+                      value={filters.specialtyTypes}
+                      options={specialtyTypes}
+                      placeholder="All Speciality Types"
+                      className={theme.specialtyTypes}
+                    />
+                    <Filter
+                      onChange={value => handleFilterChange('radius', value)}
+                      value={filters.radius}
+                      options={options}
+                      placeholder="Distance"
+                      className={theme.distance}
+                    />
+                  </div>
+                  {applicants.map(applicant => (
+                    <ProfessionalCard
+                      key={`applicant-search-card-${applicant.id}`}
+                      applicant={applicant}
+                    />
+                  ))}
+                </div>
+              )}
+              <div className={theme.bottom}>
+                <div>
+                  <span>4</span> Selected
+                </div>
+                <div>
+                  <span>124</span> Applied
+                </div>
+              </div>
+            </Card>
           </div>
         </div>
       )}
@@ -148,7 +219,7 @@ const JobPostingsView = ({ job, applicants, loading }) => {
 
 JobPostingsView.defaultProps = {
   job: {
-    id: 112358,
+    id: '112358',
     applicantsNumber: 2,
     status: 'open',
     criteria: {
@@ -170,34 +241,66 @@ JobPostingsView.defaultProps = {
   },
   applicants: [
     {
-      id: 11235813,
-      name: 'Debbie',
-      address: {
+      id: '11235813',
+      user: {
+        first_name: 'Debbie',
+        last_name: 'Debbie',
+      },
+      addresses: {
         city: 'Salt Lake City',
         state: 'UT',
       },
+      meta: {
+        summary: {
+          excerpt:
+            '22 years practicing Dental Hygiene all in the Salt Lake City area. I am certified in Nitrous Oxide, Dental Laser, Sealants, Yoga, Walking …',
+          employment_type: 'Temporary',
+          position: 'Dental Hygienist',
+          profession: {
+            type: 'Position',
+            specialty: 'Specialty',
+          },
+        },
+        capacity: {
+          hourly_wage: '$15',
+        },
+      },
       miles: 7,
-      description:
-        '22 years practicing Dental Hygiene all in the Salt Lake City area. I am certified in Nitrous Oxide, Dental Laser, Sealants, Yoga, Walking …',
-      employment_type: 'Temporary',
-      position: 'Dental Hygienist',
-      hourly_rate: '$15',
-      img: 'http://fillmurray.com/146/182',
+      experience: '4-7 Years',
+      preferences: {
+        profile_image_url: 'http://fillmurray.com/146/182',
+      },
     },
     {
-      id: 1123581321,
-      name: 'Debbie',
-      address: {
+      id: 1123581,
+      user: {
+        first_name: 'Debbie',
+        last_name: 'Debbie',
+      },
+      addresses: {
         city: 'Salt Lake City',
         state: 'UT',
       },
+      meta: {
+        summary: {
+          excerpt:
+            '22 years practicing Dental Hygiene all in the Salt Lake City area. I am certified in Nitrous Oxide, Dental Laser, Sealants, Yoga, Walking …',
+          employment_type: 'Temporary',
+          position: 'Dental Hygienist',
+          profession: {
+            type: 'Position',
+            specialty: 'Specialty',
+          },
+        },
+        capacity: {
+          hourly_wage: '$15',
+        },
+      },
       miles: 7,
-      description:
-        '22 years practicing Dental Hygiene all in the Salt Lake City area. I am certified in Nitrous Oxide, Dental Laser, Sealants, Yoga, Walking …',
-      employment_type: 'Temporary',
-      position: 'Dental Hygienist',
-      hourly_rate: '$15',
-      img: 'http://placecage.com/146/182',
+      experience: '4-7 Years',
+      preferences: {
+        profile_image_url: 'http://fillmurray.com/146/182',
+      },
     },
   ],
   loading: false,
