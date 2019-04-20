@@ -11,6 +11,7 @@ const Button = ({
   secondary,
   secondaryDark,
   red,
+  green,
   round,
   short,
   className,
@@ -38,6 +39,7 @@ const Button = ({
             secondaryDark && theme.secondaryDark,
           ],
       red && theme.red,
+      green && theme.green,
       className && className,
       size && theme[size],
       width && theme.width,
@@ -72,6 +74,7 @@ Button.defaultProps = {
   size: 'mediumSmall',
   width: null,
   red: false,
+  green: false,
   clear: false,
 }
 
@@ -90,6 +93,7 @@ Button.propTypes = {
   size: oneOf(['small', 'mediumSmall', 'medium', 'large']),
   width: string,
   red: bool,
+  green: bool,
   clear: bool,
 }
 

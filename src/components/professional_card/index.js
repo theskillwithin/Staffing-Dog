@@ -13,7 +13,7 @@ const ProfessionalCard = ({ applicant }) => (
   <Card type="large">
     <div className={theme.proCard}>
       <div className={theme.img}>
-        {!get(applicant, 'preferences.profile_image.url', false) ? (
+        {!get(applicant, 'preferences.profile_image_url', false) ? (
           <ProfilePhotoSVG inline size={100} color="purple" />
         ) : (
           <img
@@ -38,6 +38,7 @@ const ProfessionalCard = ({ applicant }) => (
             {get(applicant, 'addresses.city', 'City')},{' '}
             {get(applicant, 'addresses.state', 'State')}
           </span>
+          {/* <span>0 miles</span> */}
         </div>
 
         <div className={theme.short}>{get(applicant, 'meta.summary.excerpt', '')}</div>

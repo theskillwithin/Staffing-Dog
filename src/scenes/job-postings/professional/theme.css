@@ -1,19 +1,42 @@
-@import '../../styles/config.css';
+@import '../../../styles/config.css';
 
 .proCard {
+  position: relative;
   display: flex;
-  padding-bottom: 51px;
+  padding: 30px 0 20px 0;
+  border-top: 1px solid var(--sd-borderColor);
+  width: 817px;
 }
 
 .img {
   margin-right: 26px;
+
+  img {
+    border-radius: 50px;
+    width: 64px;
+    height: 64px;
+  }
+}
+
+.top {
+  display: flex;
+  justify-content: space-between;
+  height: 45px;
 }
 
 .content {
-  height: 182px;
   display: flex;
   justify-content: space-between;
   flex-direction: column;
+  min-width: 515px;
+}
+
+.wage {
+  display: flex;
+  align-items: flex-end;
+  font-size: 15px;
+  color: var(--blackTxt);
+  font-weight: var(--sd-fontWeightMedium);
 }
 
 .title {
@@ -25,7 +48,7 @@
 }
 
 .location {
-  margin-top: 0.75em;
+  margin-top: 0.27em;
   font-weight: var(--sd-fontWeightMedium);
 
   span {
@@ -54,16 +77,33 @@
 }
 
 .short {
-  flex: 1;
   color: var(--sd-blackTxt);
   font-size: 15px;
   margin: 1em 0;
   font-weight: normal;
-  max-width: 250px;
+  max-width: 533px;
+}
+
+.experience {
+  display: flex;
+}
+
+.experienceLabel,
+.experienceValue {
+  font-size: 14px;
+  font-weight: var(--sd-fontWeightMedium);
+  color: var(--sd-grayLighter);
+  margin-right: 18px;
+}
+
+.experienceValue {
+  color: var(--sd-blackTxt);
 }
 
 .details {
   display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .position,
@@ -78,33 +118,8 @@
   color: var(--sd-blackTxt);
 }
 
-.actions {
+.action {
   position: absolute;
-  bottom: 0;
-  left: 0;
+  top: 30px;
   right: 0;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-top: solid 1px var(--sd-borderColor);
-  padding: 0 2.8em;
-  height: 51px;
-  font-weight: var(--sd-fontWeightMedium);
-  font-size: 14px;
-
-  > * {
-    min-width: 122px;
-  }
-}
-
-.readMore {
-  font-size: 14px;
-  font-style: normal;
-  font-stretch: normal;
-  line-height: 3;
-  letter-spacing: normal;
-  text-align: left;
-  color: var(--sd-gray);
-  text-decoration: none;
-  text-align: center;
 }

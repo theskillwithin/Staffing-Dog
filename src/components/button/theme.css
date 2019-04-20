@@ -51,6 +51,15 @@
   }
 }
 
+.green {
+  background: var(--sd-green);
+  color: white;
+
+  &:hover {
+    background: var(--sd-greenDark);
+  }
+}
+
 .secondaryDark {
   color: black;
 }
