@@ -52,6 +52,15 @@ export const positionTypesByPostion = {
   dentist: [...positionTypesDentist],
 }
 
+export const distance = [
+  { label: 'Within 5 miles', value: '5' },
+  { label: 'Within 10 miles', value: '10' },
+  { label: 'Within 25 miles', value: '25' },
+  { label: 'Within 50 miles', value: '50' },
+  { label: 'Within 100 miles', value: '100' },
+  { label: 'Any Distance', value: '0' },
+]
+
 export const getPositionTypesByPosition = position =>
   positionTypesByPostion[position] || positionTypesByPostion.default
 

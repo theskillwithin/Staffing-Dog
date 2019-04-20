@@ -1,4 +1,3 @@
-import get from '@sdog/utils/get'
 import { API_ROOT } from '@sdog/utils/api'
 import { useErrorFromResponse } from '@sdog/definitions/errors'
 
@@ -80,7 +79,7 @@ reducers = {
     error: false,
     results: {
       ...state.results,
-      ...(!get(data, 'applied', false)
+      ...(typeof data !== 'object'
         ? { posts: data }
         : ['applied', 'scheduled', 'recommended', 'preferred', 'posts'].reduce(
             (listOfPosts, postType) => ({
