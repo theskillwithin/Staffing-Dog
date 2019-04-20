@@ -1,25 +1,66 @@
 import React, { useState, useEffect } from 'react'
-import { object, array, bool } from 'prop-types'
-import { Link } from 'react-router-dom'
+import { bool, shape, string, oneOfType, func, arrayOf, object } from 'prop-types'
+import { connect } from 'react-redux'
+import { Link, withRouter } from 'react-router-dom'
 import get from 'lodash/get'
+import find from 'lodash/find'
 import clsx from 'clsx'
-import { setTitle } from '@sdog/utils/document'
+import { useDocumentTitle } from '@sdog/utils/document'
 import Card from '@sdog/components/card'
 import Button from '@sdog/components/button'
 import Spinner from '@sdog/components/spinner'
 import Filter from '@sdog/components/filter'
 import Tabs from '@sdog/components/tab_bar'
 import SVG from '@sdog/components/svg'
+import Alert from '@sdog/components/alert'
 import StarTitle from '@sdog/components/star_title'
-import { defineJob } from '@sdog/definitions/jobs'
+import {
+  defineJob,
+  positions,
+  jobTypes,
+  getPositionTypesByPosition,
+  distance,
+} from '@sdog/definitions/jobs'
+import {
+  findSingleJob,
+  findSingleJobLoading,
+  findSingleJobError,
+  findUpdateJob,
+  getSingleJob as getSingleJobAction,
+  updateJobPost as updateJobPostAction,
+  findJobApplicants,
+  getJobApplicants as getJobApplicantsActions,
+} from '@sdog/store/jobs'
+import {
+  getPracticeOffices as getPracticeOfficesAction,
+  findPracticeOffices,
+} from '@sdog/store/user'
 
 import ProfessionalCard from '../professional'
 import appTheme from '../../app/theme.css'
 
 import theme from './theme.css'
 
-const JobPostingsView = ({ job, applicants, loading }) => {
-  useEffect(() => void setTitle('Job Postings'), [])
+const JobPostingsView = ({
+  match,
+  job,
+  jobLoading,
+  update,
+  getSingleJob,
+  updateJobPost,
+  getPracticeOffices,
+  jobApplicants,
+  getJobApplicants,
+}) => {
+  useDocumentTitle('View Job Posting')
+  useEffect(() => void getPracticeOffices(), [])
+  useEffect(
+    () => {
+      getSingleJob(match.params.id)
+      getJobApplicants(match.params.id)
+    },
+    [match.params.id],
+  )
 
   const [activeTabIndex, setActiveTabIndex] = useState(0)
 
@@ -30,38 +71,31 @@ const JobPostingsView = ({ job, applicants, loading }) => {
     radius: null,
   })
 
-  const options = [
-    { label: 'Within 5 miles', value: '5' },
-    { label: 'Within 10 miles', value: '10' },
-    { label: 'Within 25 miles', value: '25' },
-    { label: 'Within 50 miles', value: '50' },
-    { label: 'Within 100 miles', value: '100' },
-    { label: 'Any Distance', value: '0' },
-  ]
-
-  const jobTypes = [
-    { label: 'dental_hygienist', value: 'dental_hygienist' },
-    { label: 'Dentist', value: 'Dentist' },
-  ]
-
-  const specialtyTypes = [
-    { label: 'dental_hygienist', value: 'dental_hygienist' },
-    { label: 'Dentist', value: 'Dentist' },
-  ]
-
-  const jobPositions = [
-    { label: 'Full Time', value: 'full_time' },
-    { label: 'Part Time', value: 'part_time' },
-    { label: 'Temp', value: 'temporary' },
-  ]
-
   const handleFilterChange = (field, value) => {
     setFilters({ ...filters, [field]: value })
   }
 
+  const onClickDeleteJob = e => {
+    e.preventDefault()
+
+    updateJobPost({
+      ...job,
+      status: 'deleted',
+    })
+  }
+
+  const jobStatus = get(job, 'status', false)
+  const isOpen = 'open' === jobStatus
+  const isDraft = 'draft' === jobStatus
+
+  const applicants = get(jobApplicants, job.id, {})
+  const listOfApplicants = get(applicants, 'results', [])
+  const listOfApplicantsLoading = get(applicants, 'loading', false)
+  const listOfApplicantsError = get(applicants, 'error', false)
+
   return (
     <div className={clsx(appTheme.pageContent, theme.container)}>
-      {loading ? (
+      {jobLoading ? (
         <div>
           <Spinner />
         </div>
@@ -75,7 +109,9 @@ const JobPostingsView = ({ job, applicants, loading }) => {
               >
                 {get(job, 'criteria.title', 'Job')}
               </Link>
+
               <div className={clsx(theme.status, theme[job.status])}>{job.status}</div>
+
               <div className={theme.location}>
                 <strong>{get(job, 'criteria.practice_details.name', 'Office')}</strong>
                 <span>
@@ -83,18 +119,29 @@ const JobPostingsView = ({ job, applicants, loading }) => {
                   {get(job, 'criteria.practice_details.address.state', 'state')}
                 </span>
               </div>
+
               <div className={theme.short}>{get(job, 'criteria.description')}</div>
+
               <div className={theme.details}>
                 <dl>
                   <dt>Experience</dt>
                   <dd>{get(job, 'criteria.experience_preferred')}</dd>
                 </dl>
               </div>
+
               <div className={theme.edit}>
-                <Button red>Delete Post</Button>
-                <Link to={`/job-postings/edit/${job.id}`}>
-                  <Button secondary>Edit Post</Button>
-                </Link>
+                {(isDraft || isOpen) && (
+                  <Button red onClick={onClickDeleteJob}>
+                    Delete Post{' '}
+                    {update.loading && <Spinner inverted size={20} center={false} />}
+                  </Button>
+                )}
+
+                {isDraft && (
+                  <Link to={`/job-postings/edit/${job.id}`}>
+                    <Button secondary>Edit Post</Button>
+                  </Link>
+                )}
               </div>
               <div className={theme.actions}>
                 <div className={theme.info}>
@@ -114,8 +161,15 @@ const JobPostingsView = ({ job, applicants, loading }) => {
                 <h2>Searching for Day Hire...</h2>
                 <SVG name="desktop_search" className={theme.desktopSearchSVG} />
 
-                <StarTitle title="Congradulations Day Hire Found" />
-                <ProfessionalCard applicant={applicants[0]} className={theme.first} />
+                {get(listOfApplicants, '[0].id', false) && (
+                  <>
+                    <StarTitle title="Congradulations Day Hire Found" />
+                    <ProfessionalCard
+                      applicant={listOfApplicants[0]}
+                      className={theme.first}
+                    />
+                  </>
+                )}
               </div>
             </Card>
           </div>
@@ -123,6 +177,12 @@ const JobPostingsView = ({ job, applicants, loading }) => {
           <div className={theme.applicants}>
             <Card type="large">
               <h2>Applicants</h2>
+
+              {listOfApplicantsError && (
+                <Alert error inline>
+                  {listOfApplicantsError}
+                </Alert>
+              )}
               <Tabs
                 activeTabIndex={activeTabIndex}
                 onSelect={setActiveTabIndex}
@@ -139,66 +199,86 @@ const JobPostingsView = ({ job, applicants, loading }) => {
 
               {activeTabIndex === 0 && (
                 <div className={theme.applicantTab}>
-                  {applicants.map((applicant, index) => (
-                    <ProfessionalCard
-                      key={`applicant-selected-card-${applicant.id}`}
-                      applicant={applicant}
-                      shortCard
-                      className={index === 0 && theme.first}
-                    />
-                  ))}
+                  {listOfApplicantsLoading ? (
+                    <Spinner />
+                  ) : (
+                    listOfApplicants.map((applicant, index) => (
+                      <ProfessionalCard
+                        key={`applicant-selected-card-${applicant.id}`}
+                        applicant={applicant}
+                        shortCard
+                        className={index === 0 && theme.first}
+                      />
+                    ))
+                  )}
                 </div>
               )}
               {activeTabIndex === 1 && (
                 <div className={theme.applicantTab}>
-                  {applicants.map((applicant, index) => (
-                    <ProfessionalCard
-                      key={`applicant-applied-card-${applicant.id}`}
-                      applicant={applicant}
-                      shortCard
-                      className={index === 0 && theme.first}
-                    />
-                  ))}
+                  {listOfApplicantsLoading ? (
+                    <Spinner />
+                  ) : (
+                    listOfApplicants.map((applicant, index) => (
+                      <ProfessionalCard
+                        key={`applicant-applied-card-${applicant.id}`}
+                        applicant={applicant}
+                        shortCard
+                        className={index === 0 && theme.first}
+                      />
+                    ))
+                  )}
                 </div>
               )}
               {activeTabIndex === 2 && (
                 <div className={theme.applicantTab}>
                   <div className={theme.filters}>
                     <Filter
-                      onChange={value => handleFilterChange('jobType', value)}
-                      value={filters.jobType}
-                      options={jobPositions}
-                      placeholder="All Position Types"
+                      onChange={value =>
+                        handleFilterChange('employment_type', value.value)
+                      }
+                      value={find(
+                        jobTypes,
+                        ({ value }) => value === filters.employment_type,
+                      )}
+                      options={jobTypes}
+                      placeholder="All Job Types"
                       className={theme.jobType}
                     />
                     <Filter
-                      onChange={value => handleFilterChange('jobSpecialty', value)}
-                      value={filters.jobSpecialty}
-                      options={jobTypes}
-                      placeholder="All Job Types"
+                      onChange={value => handleFilterChange('job_type', value.value)}
+                      value={find(positions, ({ value }) => value === filters.job_type)}
+                      options={positions}
+                      placeholder="All Job Positions"
+                      className={theme.jobPosition}
+                    />
+                    <Filter
+                      onChange={value => handleFilterChange('specialty', value.value)}
+                      value={find(
+                        getPositionTypesByPosition(filters.position),
+                        ({ value }) => value === filters.specialty,
+                      )}
+                      options={getPositionTypesByPosition(filters.position)}
+                      placeholder="All Speciality Types"
                       className={theme.jobSpecialty}
                     />
                     <Filter
-                      onChange={value => handleFilterChange('specialtyTypes', value)}
-                      value={filters.specialtyTypes}
-                      options={specialtyTypes}
-                      placeholder="All Speciality Types"
-                      className={theme.specialtyTypes}
-                    />
-                    <Filter
-                      onChange={value => handleFilterChange('radius', value)}
-                      value={filters.radius}
-                      options={options}
-                      placeholder="Distance"
-                      className={theme.distance}
+                      onChange={value => handleFilterChange('radius', value.value)}
+                      value={find(distance, ({ value }) => value === filters.radius)}
+                      options={distance}
+                      placeholder="Any Distance"
+                      className={theme.jobDistance}
                     />
                   </div>
-                  {applicants.map(applicant => (
-                    <ProfessionalCard
-                      key={`applicant-search-card-${applicant.id}`}
-                      applicant={applicant}
-                    />
-                  ))}
+                  {listOfApplicantsLoading ? (
+                    <Spinner />
+                  ) : (
+                    listOfApplicants.map(applicant => (
+                      <ProfessionalCard
+                        key={`applicant-search-card-${applicant.id}`}
+                        applicant={applicant}
+                      />
+                    ))
+                  )}
                 </div>
               )}
               <div className={theme.bottom}>
@@ -217,99 +297,60 @@ const JobPostingsView = ({ job, applicants, loading }) => {
   )
 }
 
-JobPostingsView.defaultProps = {
-  job: {
-    id: '112358',
-    applicantsNumber: 2,
-    status: 'open',
-    criteria: {
-      title: 'Temporary Hygienist Needed for Maternity Leave',
-      experience_preferred: '4- 7 Years',
-      hourly_rate: '$15',
-      employment_type: 'Temporary',
-      position: 'Dental Hygienist',
-      description:
-        'We are in need of a RDH for the months of December, January and February for maternity leave. Possibly turning into a part-time permanet position. Dentrix knowlege is preferred',
-      practice_details: {
-        name: 'APEX Dental',
-        address: {
-          city: 'Salt Lake City',
-          state: 'UT',
-        },
-      },
-    },
-  },
-  applicants: [
-    {
-      id: '11235813',
-      user: {
-        first_name: 'Debbie',
-        last_name: 'Debbie',
-      },
-      addresses: {
-        city: 'Salt Lake City',
-        state: 'UT',
-      },
-      meta: {
-        summary: {
-          excerpt:
-            '22 years practicing Dental Hygiene all in the Salt Lake City area. I am certified in Nitrous Oxide, Dental Laser, Sealants, Yoga, Walking …',
-          employment_type: 'Temporary',
-          position: 'Dental Hygienist',
-          profession: {
-            type: 'Position',
-            specialty: 'Specialty',
-          },
-        },
-        capacity: {
-          hourly_wage: '$15',
-        },
-      },
-      miles: 7,
-      experience: '4-7 Years',
-      preferences: {
-        profile_image_url: 'http://fillmurray.com/146/182',
-      },
-    },
-    {
-      id: 1123581,
-      user: {
-        first_name: 'Debbie',
-        last_name: 'Debbie',
-      },
-      addresses: {
-        city: 'Salt Lake City',
-        state: 'UT',
-      },
-      meta: {
-        summary: {
-          excerpt:
-            '22 years practicing Dental Hygiene all in the Salt Lake City area. I am certified in Nitrous Oxide, Dental Laser, Sealants, Yoga, Walking …',
-          employment_type: 'Temporary',
-          position: 'Dental Hygienist',
-          profession: {
-            type: 'Position',
-            specialty: 'Specialty',
-          },
-        },
-        capacity: {
-          hourly_wage: '$15',
-        },
-      },
-      miles: 7,
-      experience: '4-7 Years',
-      preferences: {
-        profile_image_url: 'http://fillmurray.com/146/182',
-      },
-    },
-  ],
-  loading: false,
-}
-
 JobPostingsView.propTypes = {
-  job: object,
-  applicants: array,
-  loading: bool,
+  match: shape({ params: shape({ id: string }) }),
+  job: shape({ id: string }).isRequired,
+  jobLoading: bool.isRequired,
+  jobError: oneOfType([bool, string]),
+  getPracticeOffices: func.isRequired,
+  getSingleJob: func.isRequired,
+  offices: shape({
+    loading: bool.isRequired,
+    error: oneOfType([bool, string]).isRequired,
+    results: arrayOf(shape({ id: string })),
+  }).isRequired,
+  updateJobPost: func.isRequired,
+  update: shape({
+    jobId: oneOfType([bool, string]).isRequired,
+    loading: bool.isRequired,
+    error: oneOfType([bool, string]),
+  }),
+  getJobApplicants: func.isRequired,
+  jobApplicants: object.isRequired,
+  // (
+  //   shape({
+  //     loading: bool,
+  //     error: oneOfType([bool, string]),
+  //     results: arrayOf(
+  //       shape({
+  //         applicant_details: shape({ id: string }),
+  //         id: string,
+  //         status: string,
+  //       }),
+  //     ),
+  //   }),
+  // ).isRequired,
 }
 
-export default JobPostingsView
+export const mapStateToProps = state => ({
+  job: findSingleJob(state),
+  jobLoading: findSingleJobLoading(state),
+  jobError: findSingleJobError(state),
+  offices: findPracticeOffices(state),
+  update: findUpdateJob(state),
+  jobApplicants: findJobApplicants(state),
+})
+
+export const mapActionsToProps = {
+  getPracticeOffices: getPracticeOfficesAction,
+  getSingleJob: getSingleJobAction,
+  updateJobPost: updateJobPostAction,
+  getJobApplicants: getJobApplicantsActions,
+}
+
+export default withRouter(
+  connect(
+    mapStateToProps,
+    mapActionsToProps,
+  )(JobPostingsView),
+)

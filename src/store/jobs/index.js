@@ -1,4 +1,6 @@
+import isArray from 'lodash/isArray'
 import { API_ROOT } from '@sdog/utils/api'
+import get from '@sdog/utils/get'
 import { useErrorFromResponse } from '@sdog/definitions/errors'
 
 import { findUserId } from '../user'
@@ -31,6 +33,7 @@ export const INITIAL_STATE = {
     error: false,
     jobId: false,
   },
+  applications: {},
 }
 
 const getLastUpdated = () => new Date().getTime()
@@ -79,8 +82,8 @@ reducers = {
     error: false,
     results: {
       ...state.results,
-      ...(typeof data !== 'object'
-        ? { posts: data }
+      ...(isArray(data)
+        ? { posts: [...data] }
         : ['applied', 'scheduled', 'recommended', 'preferred', 'posts'].reduce(
             (listOfPosts, postType) => ({
               ...listOfPosts,
@@ -135,6 +138,68 @@ reducers = {
     singleJob: {
       loading: false,
       error: useErrorFromResponse(error),
+    },
+  }),
+}
+
+/**
+ * GET JOB APPLICANTS
+ */
+export const GET_JOB_APPLICANTS = 'GET_JOB_APPLICANTS'
+export const getJobApplicantsTypes = createActionTypes(GET_JOB_APPLICANTS)
+
+export const getJobApplicants = jobId => (dispatch, getState) =>
+  dispatch({
+    type: GET_JOB_APPLICANTS,
+    api: {
+      url: `${API_ROOT}/jobs/applications`,
+      type: 'GET',
+      params: {
+        user_id: getUserId() || findUserId(getState()),
+        data: {
+          job_id: jobId,
+        },
+      },
+    },
+    payload: {
+      jobId,
+    },
+  })
+
+reducers = {
+  ...reducers,
+  [getJobApplicantsTypes.LOADING]: (state, { jobId }) => ({
+    ...state,
+    applications: {
+      ...state.applications,
+      [jobId]: {
+        id: jobId,
+        ...get(state, `applications[${jobId}]`, {}),
+        ...spreadLoadingError(true, false),
+      },
+    },
+  }),
+  [getJobApplicantsTypes.SUCCESS]: (state, { __payload: { jobId }, data }) => ({
+    ...state,
+    applications: {
+      ...state.applications,
+      [jobId]: {
+        id: jobId,
+        ...get(state, `applications[${jobId}]`, {}),
+        ...spreadLoadingError(false, false),
+        results: get(data, 'applicants', []),
+      },
+    },
+  }),
+  [getJobApplicantsTypes.ERROR]: (state, { error, jobId }) => ({
+    ...state,
+    applications: {
+      ...state.applications,
+      [jobId]: {
+        id: jobId,
+        ...get(state, `applications[${jobId}]`, {}),
+        ...spreadLoadingError(true, useErrorFromResponse(error)),
+      },
     },
   }),
 }
@@ -266,5 +331,7 @@ export const findSingleJobError = state => findSingleJobState(state).error
 export const findCreateJob = state => findState(state).create
 
 export const findUpdateJob = state => findState(state).update
+
+export const findJobApplicants = state => findState(state).applications
 
 export default reducer

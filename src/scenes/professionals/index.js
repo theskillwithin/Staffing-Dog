@@ -11,7 +11,12 @@ import Spinner from '@sdog/components/spinner'
 import Filter from '@sdog/components/filter'
 import Alert from '@sdog/components/alert'
 import LocationOnIcon from '@sdog/components/svg/Location'
-import { jobTypes, positions, getPositionTypesByPosition } from '@sdog/definitions/jobs'
+import {
+  jobTypes,
+  positions,
+  distance,
+  getPositionTypesByPosition,
+} from '@sdog/definitions/jobs'
 import {
   getProfessionals as getProfessionalsAction,
   findState,
@@ -31,15 +36,6 @@ const ProfessionalsView = ({ history, location, professionals, getProfessionals 
     radius: null,
     ...qs.parse((location.search || '').substr(1)),
   })
-
-  const distanceOptions = [
-    { label: 'Within 5 miles', value: '5' },
-    { label: 'Within 10 miles', value: '10' },
-    { label: 'Within 25 miles', value: '25' },
-    { label: 'Within 50 miles', value: '50' },
-    { label: 'Within 100 miles', value: '100' },
-    { label: 'Any Distance', value: '0' },
-  ]
 
   const handleFilterChange = (field, value) => {
     setFilters({ ...filters, [field]: value })
@@ -92,12 +88,13 @@ const ProfessionalsView = ({ history, location, professionals, getProfessionals 
         />
         <Filter
           onChange={value => handleFilterChange('radius', value.value)}
-          value={find(distanceOptions, ({ value }) => value === filters.radius)}
-          options={distanceOptions}
+          value={find(distance, ({ value }) => value === filters.radius)}
+          options={distance}
           placeholder="Any Distance"
           className={theme.jobDistance}
         />
       </div>
+
       {professionals.loading ? (
         <Spinner />
       ) : (
