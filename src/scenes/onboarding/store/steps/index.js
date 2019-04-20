@@ -470,7 +470,6 @@ export const goToStep = ({ currentStep, nextStep, history }) => (dispatch, getSt
         .map(invalid => invalid.invalid)
         .filter(invalid => !invalid.includes('is a required field'))
 
-      console.log(multipleRequiredFields)
       return Promise.resolve(
         dispatch(
           actions.goToStepFailed({
