@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react'
-import { shape, string, array, func, oneOfType, bool } from 'prop-types'
+import { shape, object, string, array, func, oneOfType, bool } from 'prop-types'
 import qs from 'qs'
 import find from 'lodash/find'
 import pickBy from 'lodash/pickBy'
 import includes from 'lodash/includes'
-import get from 'lodash/get'
+import get from '@sdog/utils/get'
 import { connect } from 'react-redux'
 import { withRouter, Link } from 'react-router-dom'
 import clsx from 'clsx'
@@ -122,9 +122,10 @@ const JobSearch = ({ location, history, jobs, loading, getUserJobs, userProfile 
             <div className={theme.searchResultsMeta}>
               <p className={theme.cityMeta}>
                 <LocationOnIcon />
-                {`${get(userProfile, 'address.city')}, ${get(
+                {`${get(userProfile, 'addresses.city', 'unkown')}, ${get(
                   userProfile,
-                  'address.state',
+                  'addresses.state',
+                  'N/A',
                 )}`}
               </p>
               <p>
