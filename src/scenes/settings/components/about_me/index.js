@@ -1,6 +1,7 @@
 import React from 'react'
 import { func, shape, object, string } from 'prop-types'
 import { connect } from 'react-redux'
+import { positions } from '@sdog/definitions/jobs'
 import get from 'lodash/get'
 import clsx from 'clsx'
 import find from 'lodash/find'
@@ -91,10 +92,10 @@ const availability = [
   { label: 'Temp', value: 'temp' },
 ]
 
-const specialties = [
-  { label: 'I can fly!', value: '1' },
-  { label: 'I run fast', value: '0' },
-]
+// const specialties = [
+//   { label: 'I can fly!', value: '1' },
+//   { label: 'I run fast', value: '0' },
+// ]
 
 const FormSpacer = () => <div className={theme.spacer} />
 
@@ -112,6 +113,8 @@ const SettingsAboutMe = ({
       </div>
     )
   }
+
+  const isNotPractice = get(profile, 'user.type', 'professional') !== 'practice'
 
   const [form, setForm] = React.useState({
     profile: {
@@ -145,7 +148,12 @@ const SettingsAboutMe = ({
         },
         summary: {
           profession: {
-            type: get(profile, 'meta.summary.profession.type', ''),
+            type: {
+              label: find(positions, {
+                value: get(profile, 'meta.summary.profession.type', ''),
+              }).label,
+              value: get(profile, 'meta.summary.profession.type', ''),
+            },
             specialty: get(profile, 'meta.summary.profession.specialty', ''),
           },
         },
@@ -172,8 +180,8 @@ const SettingsAboutMe = ({
             ...form.profile.meta.summary,
             profession: {
               ...form.profile.meta.summary.profession,
-              type: profile.meta.summary.profession.type.value,
-              specailty: profile.meta.summary.profession.type.value,
+              type: form.profile.meta.summary.profession.type.value,
+              specailty: form.profile.meta.summary.profession.specialty.value,
             },
           },
         },
@@ -407,9 +415,11 @@ const SettingsAboutMe = ({
           />
         </div>
         <div className={theme.inputRow}>
-          <Input
+          <Dropdown
             label="Profession"
+            placeholder="Profession"
             value={form.profile.meta.summary.profession.type}
+            options={positions}
             onChange={value =>
               setForm({
                 ...form,
@@ -468,20 +478,22 @@ const SettingsAboutMe = ({
         </div>
         <FormSpacer />
         <div className={theme.inputRow}>
-          <Input
-            label="Dental License Number"
-            value={form.profile.dentalLicenseNumber}
-            onChange={value =>
-              setForm({
-                ...form,
-                profile: {
-                  ...form.profile,
-                  dentalLicenseNumber: value,
-                },
-              })
-            }
-          />
-          <Dropdown
+          {isNotPractice && (
+            <Input
+              label="Dental License Number"
+              value={form.profile.dentalLicenseNumber}
+              onChange={value =>
+                setForm({
+                  ...form,
+                  profile: {
+                    ...form.profile,
+                    dentalLicenseNumber: value,
+                  },
+                })
+              }
+            />
+          )}
+          {/* <Dropdown
             label="Specialty"
             value={form.profile.meta.summary.profession.specialty}
             onChange={value =>
@@ -503,10 +515,10 @@ const SettingsAboutMe = ({
               })
             }
             options={specialties}
-          />
+          /> */}
         </div>
-        <div className={clsx(theme.inputRow, theme.withButton)}>
-          <Input
+        {/* <div className={clsx(theme.inputRow, theme.withButton)}>
+           <Input
             label="Insurance Expiration"
             value={form.profile.insuranceExpiration}
             onChange={value =>
@@ -522,7 +534,7 @@ const SettingsAboutMe = ({
           <Button primary round>
             Upload Insurance Declaration
           </Button>
-        </div>
+        </div> */}
         <hr />
         <Button type="submit" className={theme.submit}>
           Save
