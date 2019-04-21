@@ -35,6 +35,7 @@ export const INITIAL_STATE = {
   },
   applications: {},
   selectedApplications: {},
+  selectingUserForJob: {},
 }
 
 const getLastUpdated = () => new Date().getTime()
@@ -269,6 +270,86 @@ reducers = {
 }
 
 /**
+ * ADD USER TO JOB
+ */
+export const ADD_USER_TO_JOB = 'ADD_USER_TO_JOB'
+export const addUserToJobTypes = createActionTypes(ADD_USER_TO_JOB)
+
+export const addUserToJob = ({ jobId, userId }) => (dispatch, getState) =>
+  dispatch({
+    type: ADD_USER_TO_JOB,
+    api: {
+      url: `${API_ROOT}/jobs/preferred_applicants`,
+      method: 'PUT',
+      data: {
+        user_id: getUserId() || findUserId(getState()),
+        data: {
+          job_id: jobId,
+          applicant_id: userId,
+        },
+      },
+    },
+    payload: { jobId, userId },
+  })
+
+reducers = {
+  ...reducers,
+  [addUserToJobTypes.LOADING]: (state, { jobId, userId }) => ({
+    ...state,
+    selectingUserForJob: {
+      ...state.selectingUserForJob,
+      [jobId]: {
+        ...get(state, `selectingForUserJob[${jobId}]`, {}),
+        [userId]: {
+          ...get(state, `selectingForUserJob[${jobId}][${userId}]`, {}),
+          ...spreadLoadingError(true, false),
+        },
+      },
+    },
+  }),
+  [addUserToJobTypes.SUCCESS]: (state, { __payload: { jobId, userId }, data }) => ({
+    ...state,
+    selectingUserForJob: {
+      ...state.selectingUserForJob,
+      [jobId]: {
+        ...get(state, `selectingForUserJob[${jobId}]`, {}),
+        [userId]: {
+          ...get(state, `selectingForUserJob[${jobId}][${userId}]`, {}),
+          ...spreadLoadingError(false, false),
+        },
+      },
+    },
+    singleJob: {
+      ...state.singleJob,
+      results: {
+        ...(get(state, 'singleJob.results.id', false) === jobId
+          ? {
+              ...state.singleJob.results,
+              misc: {
+                ...state.singleJob.results.misc,
+                preferred_applicants: data.preferred_applicants,
+              },
+            }
+          : {}),
+      },
+    },
+  }),
+  [addUserToJobTypes.ERROR]: (state, { jobId, userId, error }) => ({
+    ...state,
+    selectingUserForJob: {
+      ...state.selectingUserForJob,
+      [jobId]: {
+        ...get(state, `selectingForUserJob[${jobId}]`, {}),
+        [userId]: {
+          ...get(state, `selectingForUserJob[${jobId}][${userId}]`, {}),
+          ...spreadLoadingError(false, useErrorFromResponse(error)),
+        },
+      },
+    },
+  }),
+}
+
+/**
  * Post New Job
  */
 export const POST_NEW_JOB = 'POST_NEW_JOB'
@@ -398,5 +479,7 @@ export const findUpdateJob = state => findState(state).update
 
 export const findJobApplicants = state => findState(state).applications
 export const findJobSelectedApplicants = state => findState(state).selectedApplications
+
+export const findSelectingUserForJob = state => findState(state).selectingUserForJob
 
 export default reducer

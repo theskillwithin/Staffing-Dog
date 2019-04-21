@@ -35,6 +35,8 @@ import {
   getJobApplicants as getJobApplicantsAction,
   findJobSelectedApplicants,
   getJobSelectedApplicants as getJobSelectedApplicantsAction,
+  findSelectingUserForJob,
+  addUserToJob as addUserToJobAction,
 } from '@sdog/store/jobs'
 import {
   getPracticeOffices as getPracticeOfficesAction,
@@ -66,6 +68,8 @@ const JobPostingsView = ({
   getJobSelectedApplicants,
   getProfessionals,
   professionals,
+  addUserToJob,
+  selectingUserForJob,
 }) => {
   useDocumentTitle('View Job Posting')
   useEffect(() => void getPracticeOffices(), [])
@@ -132,6 +136,26 @@ const JobPostingsView = ({
     e.preventDefault()
 
     updateJobPost({ ...job, status: 'deleted' })
+  }
+
+  const onClickAddUserToJob = userId => {
+    addUserToJob({ userId, jobId: job.id })
+  }
+
+  const getAddUserActionText = userId => {
+    if (get(selectingUserForJob, `[${job.id}][${userId}].loading`, false)) {
+      return 'Offering'
+    }
+
+    return 'Offer Job'
+  }
+
+  const getAddUserActionColor = userId => {
+    if (get(selectingUserForJob, `[${job.id}][${userId}].loading`, false)) {
+      return 'primary'
+    }
+
+    return 'primary'
   }
 
   const employmentType = get(job, 'criteria.employment_type', 'temporary')
@@ -363,6 +387,9 @@ const JobPostingsView = ({
                           <ProfessionalCard
                             key={`applicant-search-card-${applicant.id}`}
                             applicant={applicant}
+                            action={onClickAddUserToJob}
+                            actionText={getAddUserActionText(applicant.id)}
+                            actionColor={getAddUserActionColor(applicant.id)}
                           />
                         ))
                       )}
@@ -417,6 +444,8 @@ JobPostingsView.propTypes = {
   getProfessionals: func.isRequired,
   history: shape({ push: func.isRequired }).isRequired,
   location: shape({ pathname: string.isRequired, search: string.isRequired }),
+  selectingUserForJob: object.isRequired,
+  addUserToJob: func.isRequired,
 }
 
 export const mapStateToProps = state => ({
@@ -428,6 +457,7 @@ export const mapStateToProps = state => ({
   jobApplicants: findJobApplicants(state),
   jobSelectedApplicants: findJobSelectedApplicants(state),
   professionals: findProfessionalsState(state),
+  selectingUserForJob: findSelectingUserForJob(state),
 })
 
 export const mapActionsToProps = {
@@ -437,6 +467,7 @@ export const mapActionsToProps = {
   getJobApplicants: getJobApplicantsAction,
   getJobSelectedApplicants: getJobSelectedApplicantsAction,
   getProfessionals: getProfessionalsAction,
+  addUserToJob: addUserToJobAction,
 }
 
 export default withRouter(
