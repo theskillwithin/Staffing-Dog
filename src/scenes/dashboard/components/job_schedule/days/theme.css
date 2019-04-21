@@ -1,0 +1,25 @@
+@import '../../../../../styles/config';
+
+.day {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 1em 0;
+
+  .dropdowns {
+    opacity: 0.5;
+  }
+
+  &.active {
+    color: black;
+    .dropdowns {
+      opacity: 1;
+    }
+  }
+
+  .dayButton button {
+    @media (--sd-mobile) {
+      max-width: 60px;
+    }
+  }
+}

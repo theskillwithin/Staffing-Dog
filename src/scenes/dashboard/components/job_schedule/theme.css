@@ -16,7 +16,13 @@
 }
 
 .scheduler {
-  margin: 2em 0 2em 0;
+  display: flex;
+  flex-wrap: wrap;
+  margin: 2em 0;
+
+  > * {
+    margin-right: 2em;
+  }
 }
 
 .divider {
@@ -37,7 +43,7 @@
 
 .availability {
   .dropdown {
-    max-width: 50%;
+    max-width: 60%;
   }
 }
 
@@ -50,4 +56,30 @@
   width: calc(100% + 3em);
   margin-left: -1.5em;
   margin-top: -1em;
+}
+
+.job {
+  display: flex;
+
+  > * {
+    margin-right: 2em;
+    position: relative;
+
+    &:after {
+      position: absolute;
+      top: 50%;
+      right: -1em;
+      transform: translateY(-50%);
+      display: block;
+      content: '';
+      width: 5px;
+      height: 5px;
+      background: var(--sd-primary);
+      border-radius: 50%;
+    }
+
+    &:last-child:after {
+      display: none;
+    }
+  }
 }
