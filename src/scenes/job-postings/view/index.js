@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react'
-import { bool, shape, string, oneOfType, func, arrayOf, object } from 'prop-types'
+import { array, bool, shape, string, oneOfType, func, arrayOf, object } from 'prop-types'
 import { connect } from 'react-redux'
 import { Link, withRouter } from 'react-router-dom'
 import get from 'lodash/get'
 import find from 'lodash/find'
+import includes from 'lodash/includes'
+import pickBy from 'lodash/pickBy'
+import qs from 'qs'
 import clsx from 'clsx'
 import { useDocumentTitle } from '@sdog/utils/document'
 import Card from '@sdog/components/card'
@@ -29,12 +32,18 @@ import {
   getSingleJob as getSingleJobAction,
   updateJobPost as updateJobPostAction,
   findJobApplicants,
-  getJobApplicants as getJobApplicantsActions,
+  getJobApplicants as getJobApplicantsAction,
+  findJobSelectedApplicants,
+  getJobSelectedApplicants as getJobSelectedApplicantsAction,
 } from '@sdog/store/jobs'
 import {
   getPracticeOffices as getPracticeOfficesAction,
   findPracticeOffices,
 } from '@sdog/store/user'
+import {
+  getProfessionals as getProfessionalsAction,
+  findState as findProfessionalsState,
+} from '@sdog/store/professionals'
 
 import ProfessionalCard from '../professional'
 import appTheme from '../../app/theme.css'
@@ -43,6 +52,8 @@ import theme from './theme.css'
 
 const JobPostingsView = ({
   match,
+  location,
+  history,
   job,
   jobLoading,
   update,
@@ -51,25 +62,67 @@ const JobPostingsView = ({
   getPracticeOffices,
   jobApplicants,
   getJobApplicants,
+  jobSelectedApplicants,
+  getJobSelectedApplicants,
+  getProfessionals,
+  professionals,
 }) => {
   useDocumentTitle('View Job Posting')
   useEffect(() => void getPracticeOffices(), [])
   useEffect(
     () => {
-      getSingleJob(match.params.id)
-      getJobApplicants(match.params.id)
+      if (match.params.id) {
+        getSingleJob(match.params.id)
+        getJobApplicants(match.params.id)
+      }
     },
     [match.params.id],
   )
 
+  const preferredApplicants = get(job, 'misc.preferred_applicants', [])
+
+  useEffect(
+    () => {
+      if (job.id && preferredApplicants.length) {
+        getJobSelectedApplicants(preferredApplicants)
+      }
+    },
+    [job.id, preferredApplicants],
+  )
+
   const [activeTabIndex, setActiveTabIndex] = useState(0)
 
+  const searchParams = pickBy(
+    qs.parse((location.search || '').substr(1)),
+    (_value, key) =>
+      includes(key, ['employment_type', 'specialty', 'job_type', 'radius']),
+  )
+
   const [filters, setFilters] = useState({
-    jobType: null,
-    jobSpecialty: null,
-    specialtyTypes: null,
+    employment_type: null,
+    specialty: null,
+    job_type: null,
     radius: null,
+    ...searchParams,
   })
+
+  useEffect(() => {
+    const filteredFilters = Object.keys(filters).reduce(
+      (list, filter) => ({
+        ...list,
+        ...(filters[filter] ? { [filter]: filters[filter] } : {}),
+      }),
+      {},
+    )
+
+    if (Object.keys(filteredFilters).length) {
+      history.push(`${location.pathname}?${qs.stringify(filteredFilters)}`)
+    }
+
+    getProfessionals({
+      criteria: { ...filteredFilters },
+    })
+  }, Object.keys(filters).map(filter => filters[filter]))
 
   const handleFilterChange = (field, value) => {
     setFilters({ ...filters, [field]: value })
@@ -78,11 +131,11 @@ const JobPostingsView = ({
   const onClickDeleteJob = e => {
     e.preventDefault()
 
-    updateJobPost({
-      ...job,
-      status: 'deleted',
-    })
+    updateJobPost({ ...job, status: 'deleted' })
   }
+
+  const employmentType = get(job, 'criteria.employment_type', 'temporary')
+  const isDayHire = employmentType === 'temporary'
 
   const jobStatus = get(job, 'status', false)
   const isOpen = 'open' === jobStatus
@@ -92,6 +145,11 @@ const JobPostingsView = ({
   const listOfApplicants = get(applicants, 'results', [])
   const listOfApplicantsLoading = get(applicants, 'loading', false)
   const listOfApplicantsError = get(applicants, 'error', false)
+
+  const selectedApplicants = get(jobSelectedApplicants, job.id, {})
+  const listOfSelectedApplicants = get(selectedApplicants, 'results', [])
+  const listOfSelectedApplicantsLoading = get(selectedApplicants, 'loading', false)
+  const listOfSelectedApplicantsError = get(selectedApplicants, 'error', false)
 
   return (
     <div className={clsx(appTheme.pageContent, theme.container)}>
@@ -155,34 +213,31 @@ const JobPostingsView = ({
             </Card>
           </div>
 
-          <div className={theme.search}>
-            <Card type="large">
-              <div className={theme.searchInner}>
-                <h2>Searching for Day Hire...</h2>
-                <SVG name="desktop_search" className={theme.desktopSearchSVG} />
+          {isDayHire && (
+            <div className={theme.search}>
+              <Card type="large">
+                <div className={theme.searchInner}>
+                  <h2>Searching for Day Hire...</h2>
+                  <SVG name="desktop_search" className={theme.desktopSearchSVG} />
 
-                {get(listOfApplicants, '[0].id', false) && (
-                  <>
-                    <StarTitle title="Congradulations Day Hire Found" />
-                    <ProfessionalCard
-                      applicant={listOfApplicants[0]}
-                      className={theme.first}
-                    />
-                  </>
-                )}
-              </div>
-            </Card>
-          </div>
+                  {get(listOfApplicants, '[0].id', false) && (
+                    <>
+                      <StarTitle title="Congradulations Day Hire Found" />
+                      <ProfessionalCard
+                        applicant={listOfApplicants[0]}
+                        className={theme.first}
+                      />
+                    </>
+                  )}
+                </div>
+              </Card>
+            </div>
+          )}
 
           <div className={theme.applicants}>
             <Card type="large">
               <h2>Applicants</h2>
 
-              {listOfApplicantsError && (
-                <Alert error inline>
-                  {listOfApplicantsError}
-                </Alert>
-              )}
               <Tabs
                 activeTabIndex={activeTabIndex}
                 onSelect={setActiveTabIndex}
@@ -199,10 +254,16 @@ const JobPostingsView = ({
 
               {activeTabIndex === 0 && (
                 <div className={theme.applicantTab}>
-                  {listOfApplicantsLoading ? (
+                  {listOfSelectedApplicantsError && (
+                    <Alert error inline>
+                      {listOfSelectedApplicantsError}
+                    </Alert>
+                  )}
+
+                  {listOfSelectedApplicantsLoading ? (
                     <Spinner />
-                  ) : (
-                    listOfApplicants.map((applicant, index) => (
+                  ) : listOfSelectedApplicants.length ? (
+                    listOfSelectedApplicants.map((applicant, index) => (
                       <ProfessionalCard
                         key={`applicant-selected-card-${applicant.id}`}
                         applicant={applicant}
@@ -210,14 +271,23 @@ const JobPostingsView = ({
                         className={index === 0 && theme.first}
                       />
                     ))
+                  ) : (
+                    <p>No Selected Applicants.</p>
                   )}
                 </div>
               )}
+
               {activeTabIndex === 1 && (
                 <div className={theme.applicantTab}>
+                  {listOfApplicantsError && (
+                    <Alert error inline>
+                      {listOfApplicantsError}
+                    </Alert>
+                  )}
+
                   {listOfApplicantsLoading ? (
                     <Spinner />
-                  ) : (
+                  ) : listOfApplicants.length ? (
                     listOfApplicants.map((applicant, index) => (
                       <ProfessionalCard
                         key={`applicant-applied-card-${applicant.id}`}
@@ -226,9 +296,12 @@ const JobPostingsView = ({
                         className={index === 0 && theme.first}
                       />
                     ))
+                  ) : (
+                    <p>No Applicants have applied.</p>
                   )}
                 </div>
               )}
+
               {activeTabIndex === 2 && (
                 <div className={theme.applicantTab}>
                   <div className={theme.filters}>
@@ -244,6 +317,7 @@ const JobPostingsView = ({
                       placeholder="All Job Types"
                       className={theme.jobType}
                     />
+
                     <Filter
                       onChange={value => handleFilterChange('job_type', value.value)}
                       value={find(positions, ({ value }) => value === filters.job_type)}
@@ -251,6 +325,7 @@ const JobPostingsView = ({
                       placeholder="All Job Positions"
                       className={theme.jobPosition}
                     />
+
                     <Filter
                       onChange={value => handleFilterChange('specialty', value.value)}
                       value={find(
@@ -261,6 +336,7 @@ const JobPostingsView = ({
                       placeholder="All Speciality Types"
                       className={theme.jobSpecialty}
                     />
+
                     <Filter
                       onChange={value => handleFilterChange('radius', value.value)}
                       value={find(distance, ({ value }) => value === filters.radius)}
@@ -269,24 +345,38 @@ const JobPostingsView = ({
                       className={theme.jobDistance}
                     />
                   </div>
+
                   {listOfApplicantsLoading ? (
                     <Spinner />
                   ) : (
-                    listOfApplicants.map(applicant => (
-                      <ProfessionalCard
-                        key={`applicant-search-card-${applicant.id}`}
-                        applicant={applicant}
-                      />
-                    ))
+                    <>
+                      {professionals.error && (
+                        <Alert inline error>
+                          {professionals.error}
+                        </Alert>
+                      )}
+
+                      {!professionals.results.length ? (
+                        <p>No results were found. Try adjusting your filters above.</p>
+                      ) : (
+                        professionals.results.map(applicant => (
+                          <ProfessionalCard
+                            key={`applicant-search-card-${applicant.id}`}
+                            applicant={applicant}
+                          />
+                        ))
+                      )}
+                    </>
                   )}
                 </div>
               )}
+
               <div className={theme.bottom}>
                 <div>
-                  <span>4</span> Selected
+                  <span>{listOfSelectedApplicants.length || 0}</span> Selected
                 </div>
                 <div>
-                  <span>124</span> Applied
+                  <span>{listOfApplicants.length || 0}</span> Applied
                 </div>
               </div>
             </Card>
@@ -316,20 +406,17 @@ JobPostingsView.propTypes = {
     error: oneOfType([bool, string]),
   }),
   getJobApplicants: func.isRequired,
+  getJobSelectedApplicants: func.isRequired,
   jobApplicants: object.isRequired,
-  // (
-  //   shape({
-  //     loading: bool,
-  //     error: oneOfType([bool, string]),
-  //     results: arrayOf(
-  //       shape({
-  //         applicant_details: shape({ id: string }),
-  //         id: string,
-  //         status: string,
-  //       }),
-  //     ),
-  //   }),
-  // ).isRequired,
+  jobSelectedApplicants: object.isRequired,
+  professionals: shape({
+    loading: bool.isRequired,
+    error: oneOfType([bool, string]).isRequired,
+    results: array.isRequired,
+  }),
+  getProfessionals: func.isRequired,
+  history: shape({ push: func.isRequired }).isRequired,
+  location: shape({ pathname: string.isRequired, search: string.isRequired }),
 }
 
 export const mapStateToProps = state => ({
@@ -339,13 +426,17 @@ export const mapStateToProps = state => ({
   offices: findPracticeOffices(state),
   update: findUpdateJob(state),
   jobApplicants: findJobApplicants(state),
+  jobSelectedApplicants: findJobSelectedApplicants(state),
+  professionals: findProfessionalsState(state),
 })
 
 export const mapActionsToProps = {
   getPracticeOffices: getPracticeOfficesAction,
   getSingleJob: getSingleJobAction,
   updateJobPost: updateJobPostAction,
-  getJobApplicants: getJobApplicantsActions,
+  getJobApplicants: getJobApplicantsAction,
+  getJobSelectedApplicants: getJobSelectedApplicantsAction,
+  getProfessionals: getProfessionalsAction,
 }
 
 export default withRouter(

@@ -34,6 +34,7 @@ export const INITIAL_STATE = {
     jobId: false,
   },
   applications: {},
+  selectedApplications: {},
 }
 
 const getLastUpdated = () => new Date().getTime()
@@ -205,6 +206,69 @@ reducers = {
 }
 
 /**
+ * GET JOB SELECTED APPLICANTS
+ */
+export const GET_JOB_SELECTED_APPLICANTS = 'GET_JOB_SELECTED_APPLICANTS'
+export const getJobSelectedApplicantsTypes = createActionTypes(
+  GET_JOB_SELECTED_APPLICANTS,
+)
+
+export const getJobSelectedApplicants = (
+  ids = [],
+  { onSuccess = false, onError = false } = {},
+) => (dispatch, getState) =>
+  dispatch({
+    type: GET_JOB_SELECTED_APPLICANTS,
+    api: {
+      url: `${API_ROOT}/profiles`,
+      method: 'GET',
+      params: { user_id: findUserId(getState()) || getUserId(), ids },
+      callbacks: {
+        success: onSuccess,
+        error: onError,
+      },
+    },
+  })
+
+reducers = {
+  ...reducers,
+  [getJobSelectedApplicantsTypes.LOADING]: (state, { jobId }) => ({
+    ...state,
+    selectedApplications: {
+      ...state.selectedApplications,
+      [jobId]: {
+        id: jobId,
+        ...get(state, `selectedApplications[${jobId}]`, {}),
+        ...spreadLoadingError(true, false),
+      },
+    },
+  }),
+  [getJobSelectedApplicantsTypes.SUCCESS]: (state, { __payload: { jobId }, data }) => ({
+    ...state,
+    selectedApplications: {
+      ...state.selectedApplications,
+      [jobId]: {
+        id: jobId,
+        ...get(state, `selectedApplications[${jobId}]`, {}),
+        ...spreadLoadingError(false, false),
+        results: get(data, 'applicants', []),
+      },
+    },
+  }),
+  [getJobSelectedApplicantsTypes.ERROR]: (state, { error, jobId }) => ({
+    ...state,
+    selectedApplications: {
+      ...state.selectedApplications,
+      [jobId]: {
+        id: jobId,
+        ...get(state, `selectedApplications[${jobId}]`, {}),
+        ...spreadLoadingError(true, useErrorFromResponse(error)),
+      },
+    },
+  }),
+}
+
+/**
  * Post New Job
  */
 export const POST_NEW_JOB = 'POST_NEW_JOB'
@@ -333,5 +397,6 @@ export const findCreateJob = state => findState(state).create
 export const findUpdateJob = state => findState(state).update
 
 export const findJobApplicants = state => findState(state).applications
+export const findJobSelectedApplicants = state => findState(state).selectedApplications
 
 export default reducer
