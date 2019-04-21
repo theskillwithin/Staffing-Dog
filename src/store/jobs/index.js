@@ -1,4 +1,6 @@
+import isArray from 'lodash/isArray'
 import { API_ROOT } from '@sdog/utils/api'
+import get from '@sdog/utils/get'
 import { useErrorFromResponse } from '@sdog/definitions/errors'
 
 import { findUserId } from '../user'
@@ -31,6 +33,9 @@ export const INITIAL_STATE = {
     error: false,
     jobId: false,
   },
+  applications: {},
+  selectedApplications: {},
+  selectingUserForJob: {},
 }
 
 const getLastUpdated = () => new Date().getTime()
@@ -79,8 +84,8 @@ reducers = {
     error: false,
     results: {
       ...state.results,
-      ...(typeof data !== 'object'
-        ? { posts: data }
+      ...(isArray(data)
+        ? { posts: [...data] }
         : ['applied', 'scheduled', 'recommended', 'preferred', 'posts'].reduce(
             (listOfPosts, postType) => ({
               ...listOfPosts,
@@ -135,6 +140,211 @@ reducers = {
     singleJob: {
       loading: false,
       error: useErrorFromResponse(error),
+    },
+  }),
+}
+
+/**
+ * GET JOB APPLICANTS
+ */
+export const GET_JOB_APPLICANTS = 'GET_JOB_APPLICANTS'
+export const getJobApplicantsTypes = createActionTypes(GET_JOB_APPLICANTS)
+
+export const getJobApplicants = jobId => (dispatch, getState) =>
+  dispatch({
+    type: GET_JOB_APPLICANTS,
+    api: {
+      url: `${API_ROOT}/jobs/applications`,
+      type: 'GET',
+      params: {
+        user_id: getUserId() || findUserId(getState()),
+        data: {
+          job_id: jobId,
+        },
+      },
+    },
+    payload: {
+      jobId,
+    },
+  })
+
+reducers = {
+  ...reducers,
+  [getJobApplicantsTypes.LOADING]: (state, { jobId }) => ({
+    ...state,
+    applications: {
+      ...state.applications,
+      [jobId]: {
+        id: jobId,
+        ...get(state, `applications[${jobId}]`, {}),
+        ...spreadLoadingError(true, false),
+      },
+    },
+  }),
+  [getJobApplicantsTypes.SUCCESS]: (state, { __payload: { jobId }, data }) => ({
+    ...state,
+    applications: {
+      ...state.applications,
+      [jobId]: {
+        id: jobId,
+        ...get(state, `applications[${jobId}]`, {}),
+        ...spreadLoadingError(false, false),
+        results: get(data, 'applicants', []),
+      },
+    },
+  }),
+  [getJobApplicantsTypes.ERROR]: (state, { error, jobId }) => ({
+    ...state,
+    applications: {
+      ...state.applications,
+      [jobId]: {
+        id: jobId,
+        ...get(state, `applications[${jobId}]`, {}),
+        ...spreadLoadingError(true, useErrorFromResponse(error)),
+      },
+    },
+  }),
+}
+
+/**
+ * GET JOB SELECTED APPLICANTS
+ */
+export const GET_JOB_SELECTED_APPLICANTS = 'GET_JOB_SELECTED_APPLICANTS'
+export const getJobSelectedApplicantsTypes = createActionTypes(
+  GET_JOB_SELECTED_APPLICANTS,
+)
+
+export const getJobSelectedApplicants = (
+  ids = [],
+  { onSuccess = false, onError = false } = {},
+) => (dispatch, getState) =>
+  dispatch({
+    type: GET_JOB_SELECTED_APPLICANTS,
+    api: {
+      url: `${API_ROOT}/profiles`,
+      method: 'GET',
+      params: { user_id: findUserId(getState()) || getUserId(), ids },
+      callbacks: {
+        success: onSuccess,
+        error: onError,
+      },
+    },
+  })
+
+reducers = {
+  ...reducers,
+  [getJobSelectedApplicantsTypes.LOADING]: (state, { jobId }) => ({
+    ...state,
+    selectedApplications: {
+      ...state.selectedApplications,
+      [jobId]: {
+        id: jobId,
+        ...get(state, `selectedApplications[${jobId}]`, {}),
+        ...spreadLoadingError(true, false),
+      },
+    },
+  }),
+  [getJobSelectedApplicantsTypes.SUCCESS]: (state, { __payload: { jobId }, data }) => ({
+    ...state,
+    selectedApplications: {
+      ...state.selectedApplications,
+      [jobId]: {
+        id: jobId,
+        ...get(state, `selectedApplications[${jobId}]`, {}),
+        ...spreadLoadingError(false, false),
+        results: get(data, 'applicants', []),
+      },
+    },
+  }),
+  [getJobSelectedApplicantsTypes.ERROR]: (state, { error, jobId }) => ({
+    ...state,
+    selectedApplications: {
+      ...state.selectedApplications,
+      [jobId]: {
+        id: jobId,
+        ...get(state, `selectedApplications[${jobId}]`, {}),
+        ...spreadLoadingError(true, useErrorFromResponse(error)),
+      },
+    },
+  }),
+}
+
+/**
+ * ADD USER TO JOB
+ */
+export const ADD_USER_TO_JOB = 'ADD_USER_TO_JOB'
+export const addUserToJobTypes = createActionTypes(ADD_USER_TO_JOB)
+
+export const addUserToJob = ({ jobId, userId }) => (dispatch, getState) =>
+  dispatch({
+    type: ADD_USER_TO_JOB,
+    api: {
+      url: `${API_ROOT}/jobs/preferred_applicants`,
+      method: 'PUT',
+      data: {
+        user_id: getUserId() || findUserId(getState()),
+        data: {
+          job_id: jobId,
+          applicant_id: userId,
+        },
+      },
+    },
+    payload: { jobId, userId },
+  })
+
+reducers = {
+  ...reducers,
+  [addUserToJobTypes.LOADING]: (state, { jobId, userId }) => ({
+    ...state,
+    selectingUserForJob: {
+      ...state.selectingUserForJob,
+      [jobId]: {
+        ...get(state, `selectingForUserJob[${jobId}]`, {}),
+        [userId]: {
+          ...get(state, `selectingForUserJob[${jobId}][${userId}]`, {}),
+          ...spreadLoadingError(true, false),
+        },
+      },
+    },
+  }),
+  [addUserToJobTypes.SUCCESS]: (state, { __payload: { jobId, userId }, data }) => ({
+    ...state,
+    selectingUserForJob: {
+      ...state.selectingUserForJob,
+      [jobId]: {
+        ...get(state, `selectingForUserJob[${jobId}]`, {}),
+        [userId]: {
+          ...get(state, `selectingForUserJob[${jobId}][${userId}]`, {}),
+          ...spreadLoadingError(false, false),
+        },
+      },
+    },
+    singleJob: {
+      ...state.singleJob,
+      results: {
+        ...(get(state, 'singleJob.results.id', false) === jobId
+          ? {
+              ...state.singleJob.results,
+              misc: {
+                ...state.singleJob.results.misc,
+                preferred_applicants: data.preferred_applicants,
+              },
+            }
+          : {}),
+      },
+    },
+  }),
+  [addUserToJobTypes.ERROR]: (state, { jobId, userId, error }) => ({
+    ...state,
+    selectingUserForJob: {
+      ...state.selectingUserForJob,
+      [jobId]: {
+        ...get(state, `selectingForUserJob[${jobId}]`, {}),
+        [userId]: {
+          ...get(state, `selectingForUserJob[${jobId}][${userId}]`, {}),
+          ...spreadLoadingError(false, useErrorFromResponse(error)),
+        },
+      },
     },
   }),
 }
@@ -266,5 +476,10 @@ export const findSingleJobError = state => findSingleJobState(state).error
 export const findCreateJob = state => findState(state).create
 
 export const findUpdateJob = state => findState(state).update
+
+export const findJobApplicants = state => findState(state).applications
+export const findJobSelectedApplicants = state => findState(state).selectedApplications
+
+export const findSelectingUserForJob = state => findState(state).selectingUserForJob
 
 export default reducer

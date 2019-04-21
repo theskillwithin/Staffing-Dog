@@ -103,11 +103,15 @@ const JobPostings = ({ getUserJobs, jobs, loading, location, history }) => {
                     </dd>
                   </dl>
                 </div>
-                <div className={theme.edit}>
-                  <Link to={`/job-postings/${job.id}/edit`}>
-                    <Button secondary>Edit Post</Button>
-                  </Link>
-                </div>
+
+                {get(job, 'status', false) === 'draft' && (
+                  <div className={theme.edit}>
+                    <Link to={`/job-postings/${job.id}/edit`}>
+                      <Button secondary>Edit Post</Button>
+                    </Link>
+                  </div>
+                )}
+
                 <div className={theme.actions}>
                   <div className={theme.info}>
                     <div>{defineJob('type', get(job, 'criteria.employment_type'))}</div>
@@ -121,8 +125,15 @@ const JobPostings = ({ getUserJobs, jobs, loading, location, history }) => {
                   </div>
                   <div className={theme.applicants}>
                     <Link to={`/job-postings/${job.id}`}>
-                      <span className={theme.blue}>{job.applicantsNumber || 0}</span>{' '}
-                      Applicants
+                      <span className={theme.blue}>
+                        {parseInt(get(job, 'misc.preferred_applicants.length', 0), 10)}
+                      </span>{' '}
+                      {`Applicant${
+                        parseInt(get(job, 'misc.preferred_applicants.length', 0), 10) ===
+                        1
+                          ? ''
+                          : 's'
+                      }`}
                       <span className={theme.chevron}>
                         <Chevron />
                       </span>
