@@ -7,15 +7,29 @@
 
 .searchFilters {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   flex-wrap: wrap;
-  padding: 0 4em;
+  padding: 0;
   margin-top: 18px;
 
   > * {
-    width: 25%;
-    min-width: 200px;
     margin: 1em 0;
+  }
+
+  .jobType {
+    width: 181px;
+  }
+
+  .jobSpecialty {
+    width: 200px;
+  }
+
+  .specialtyTypes {
+    width: 220px;
+  }
+
+  .distance {
+    width: 160px;
   }
 }
 

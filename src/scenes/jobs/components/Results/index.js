@@ -85,12 +85,14 @@ const JobSearch = ({ location, history, jobs, loading, getUserJobs }) => {
           value={find(jobTypes, ({ value }) => value === filters.employment_type)}
           options={jobTypes}
           placeholder="All Job Types"
+          className={theme.jobType}
         />
         <Filter
           onChange={value => handleFilterChange('job_type', value.value)}
           value={find(positions, ({ value }) => value === filters.job_type)}
           options={positions}
           placeholder="All Job Positions"
+          className={theme.jobSpecialty}
         />
         <Filter
           onChange={value => handleFilterChange('specialty', value.value)}
@@ -100,12 +102,14 @@ const JobSearch = ({ location, history, jobs, loading, getUserJobs }) => {
           )}
           options={getPositionTypesByPosition(filters.position)}
           placeholder="All Speciality Types"
+          className={theme.specialtyTypes}
         />
         <Filter
           onChange={value => handleFilterChange('radius', value.value)}
           value={find(distance, ({ value }) => value === filters.radius)}
           options={distance}
           placeholder="Any Distance"
+          className={theme.distance}
         />
       </header>
 
@@ -125,9 +129,9 @@ const JobSearch = ({ location, history, jobs, loading, getUserJobs }) => {
               </p>
             </div>
 
-            <div className={theme.searchjobsList}>
+            <div>
               {getJobs().length ? (
-                <>
+                <div className={theme.searchResultsList}>
                   {showRecommended && (
                     <Alert>
                       We could not find any jobs that matched perfectly with your search
@@ -189,7 +193,7 @@ const JobSearch = ({ location, history, jobs, loading, getUserJobs }) => {
                       </div>
                     </Card>
                   ))}
-                </>
+                </div>
               ) : (
                 <div className={theme.empty}>
                   <h2>No Jobs were found. Please try changing your filters.</h2>
