@@ -14,6 +14,7 @@ import {
   findJobsLoading,
   findJobsError,
 } from '@sdog/store/jobs'
+import { findUserProfile } from '@sdog/store/user'
 import { useDocumentTitle } from '@sdog/utils/document'
 import Card from '@sdog/components/card'
 import Filter from '@sdog/components/filter'
@@ -34,7 +35,7 @@ import appTheme from '../../../app/theme.css'
 
 import theme from './theme.css'
 
-const JobSearch = ({ location, history, jobs, loading, getUserJobs }) => {
+const JobSearch = ({ location, history, jobs, loading, getUserJobs, userProfile }) => {
   useDocumentTitle('Job Search')
 
   const searchParams = pickBy(
@@ -54,9 +55,9 @@ const JobSearch = ({ location, history, jobs, loading, getUserJobs }) => {
   const handleFilterChange = (field, value) => setFilters({ ...filters, [field]: value })
 
   useEffect(() => {
-    const filteredFilters = pickBy(filters, value => value !== null)
+    const filteredFilters = pickBy(filters, value => value !== null && value !== '')
     if (Object.keys(filteredFilters).length) {
-      history.push(`${location.pathname}?${qs.stringify(filters)}`)
+      history.push(`${location.pathname}?${qs.stringify(filteredFilters)}`)
     }
 
     // call api
@@ -121,7 +122,10 @@ const JobSearch = ({ location, history, jobs, loading, getUserJobs }) => {
             <div className={theme.searchResultsMeta}>
               <p className={theme.cityMeta}>
                 <LocationOnIcon />
-                Salt Lake City, UT
+                {`${get(userProfile, 'address.city')}, ${get(
+                  userProfile,
+                  'address.state',
+                )}`}
               </p>
               <p>
                 <strong>{get(jobs, 'recommended.length', 0)}</strong>
@@ -225,12 +229,14 @@ JobSearch.propTypes = {
   getUserJobs: func.isRequired,
   loading: bool.isRequired,
   error: oneOfType([bool, string]).isRequired,
+  userProfile: object.isRequired,
 }
 
 export const mapStateToProps = state => ({
   jobs: findJobs(state),
   loading: findJobsLoading(state),
   error: findJobsError(state),
+  userProfile: findUserProfile(state),
 })
 
 export const mapActionsToProps = { getUserJobs: getUserJobsAction }
