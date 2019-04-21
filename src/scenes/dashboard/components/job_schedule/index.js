@@ -23,7 +23,8 @@ import CalendarIcon from '@sdog/components/svg/Calendar'
 import Calendar from '@sdog/components/calendar'
 
 import Exceptions from './exceptions'
-import WeekRow from './weeks'
+// import WeekRow from './weeks'
+import WeekRow from './days'
 import Event from './event'
 import theme from './theme.css'
 
@@ -42,12 +43,12 @@ const blackoutDates = [
   },
 ]
 
-const daysOut = [
-  { label: '30 Days', value: '30' },
-  { label: '60 Days', value: '60' },
-  { label: '90 Days', value: '90' },
-  { label: '120 Days', value: '120' },
-]
+// const daysOut = [
+//   { label: '30 Days', value: '30' },
+//   { label: '60 Days', value: '60' },
+//   { label: '90 Days', value: '90' },
+//   { label: '120 Days', value: '120' },
+// ]
 
 const availability = [
   { label: 'Full Time', value: 'full_time' },
@@ -59,7 +60,7 @@ const JobSchedule = ({
   getUserJobs,
   autoSaveUserProfile,
   jobs,
-  userProfile: { meta },
+  userProfile: { meta, user },
 }) => {
   const [activeTabIndex, setActiveTab] = useState(0)
   const [showSchedule, setShowSchedule] = useState(false)
@@ -85,11 +86,20 @@ const JobSchedule = ({
     )
   }
 
+  const customStyles = {
+    control: styles => ({
+      ...styles,
+      minHeight: 40,
+    }),
+  }
+
+  const isNotPractice = get(user, 'type', 'professional') !== 'practice'
+
   return (
     <Card
       icon={CalendarIcon}
       title="Job Schedule"
-      action={`${showSchedule ? 'Hide' : 'Show'} Schedule`}
+      action={isNotPractice && `${showSchedule ? 'Hide' : 'Show'} Schedule`}
       actionCb={() => setShowSchedule(!showSchedule)}
       actionProps={{ round: true, secondary: true, short: true }}
       overflowHidden
@@ -128,6 +138,7 @@ const JobSchedule = ({
                       ],
                       [],
                     )}
+                    styles={customStyles}
                     onChange={values =>
                       autoSaveUserProfile(
                         'meta.capacity.availability',
@@ -151,7 +162,7 @@ const JobSchedule = ({
                 </Switch>
               </div> */}
 
-              <div className={theme.inputRow}>
+              {/* <div className={theme.inputRow}>
                 <span>Days out I can be scheduled</span>
 
                 <div className={theme.dropdown}>
@@ -163,8 +174,8 @@ const JobSchedule = ({
                     options={daysOut}
                     width={120}
                   />
-                </div>
-              </div>
+                  </div> 
+              </div> */}
 
               <div className={theme.scheduler}>
                 {schedule.map(daySchedule => (
@@ -184,13 +195,30 @@ const JobSchedule = ({
         </>
       )}
 
-      <Calendar activeDates={[]} blackoutDates={blackoutDates} />
+      {isNotPractice && <Calendar activeDates={[]} blackoutDates={blackoutDates} />}
 
-      <div className={theme.events}>
-        {jobs.scheduled.map((event, eventIndex) => (
-          <Event key={event.id} event={event} open={eventIndex === 0} />
-        ))}
-      </div>
+      {!isNotPractice && (
+        <div className={theme.jobList}>
+          <div className={theme.job}>
+            <h4>Person</h4>
+            <h4>time</h4>
+            <h4>Office</h4>
+          </div>
+          <div className={theme.job}>
+            <h4>Person</h4>
+            <h4>time</h4>
+            <h4>Office</h4>
+          </div>
+        </div>
+      )}
+
+      {isNotPractice && (
+        <div className={theme.events}>
+          {jobs.scheduled.map((event, eventIndex) => (
+            <Event key={event.id} event={event} open={eventIndex === 0} />
+          ))}
+        </div>
+      )}
     </Card>
   )
 }

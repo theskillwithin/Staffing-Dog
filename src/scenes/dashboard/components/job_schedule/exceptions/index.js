@@ -1,16 +1,16 @@
 import React, { useReducer, useState } from 'react'
 import clsx from 'clsx'
 import DatePicker from '@sdog/components/date_picker'
-import Dropdown from '@sdog/components/dropdown'
+// import Dropdown from '@sdog/components/dropdown'
 import Switch from '@sdog/components/switch'
 import Button from '@sdog/components/button'
 import Arrow from '@sdog/components/svg/Arrow'
-import { timesOfDay, minBy15 } from '@sdog/utils/dates'
+// import { timesOfDay, minBy15 } from '@sdog/utils/dates'
 
 import theme from './theme.css'
 
-const time = timesOfDay(false, true).map(hour => ({ label: hour, value: hour }))
-const min = minBy15.map(hour => ({ label: hour, value: hour }))
+// const time = timesOfDay(false, true).map(hour => ({ label: hour, value: hour }))
+// const min = minBy15.map(hour => ({ label: hour, value: hour }))
 
 const listOfDefaultExceptions = [
   {
@@ -92,7 +92,7 @@ const Exceptions = () => {
 
       <div className={theme.exceptionRow}>
         <DatePicker label="Exception Start" />
-        <Dropdown
+        {/* <Dropdown
           value={startTime}
           onChange={setStartTime}
           options={time}
@@ -108,12 +108,12 @@ const Exceptions = () => {
           height={33}
           width={61}
           small
-        />
+        /> */}
       </div>
 
       <div className={theme.exceptionRow}>
         <DatePicker label="Exception End" />
-        <Dropdown
+        {/* <Dropdown
           value={endTime}
           onChange={setEndTime}
           options={time}
@@ -129,7 +129,7 @@ const Exceptions = () => {
           height={33}
           width={61}
           small
-        />
+        /> */}
       </div>
 
       <div className={theme.inputRow}>
