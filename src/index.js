@@ -3,6 +3,8 @@ import { render } from 'react-dom'
 import * as Sentry from '@sentry/browser'
 import { Provider } from 'react-redux'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import qs from 'qs'
+import Cookies from 'js-cookie'
 import createStore from '@sdog/store'
 import reducers from '@sdog/store/reducers'
 import { INITIAL_STATE as USER_INITIAL_STATE } from '@sdog/store/user'
@@ -23,6 +25,12 @@ Sentry.init({
   dsn: 'https://e7a4ea4c993e4619afcfc16dd9fe6b06@sentry.io/200333',
   environment: process.env.ENV,
 })
+
+const params = qs.parse((window.location.search || '').substr(1))
+
+if (!Cookies.get('sdPromo') && params.promo) {
+  Cookies.set('sdPromo', params.promo)
+}
 
 const OnboardingScene = React.lazy(() => import('@sdog/scenes/onboarding'))
 const App = React.lazy(() => import('@sdog/scenes/app'))

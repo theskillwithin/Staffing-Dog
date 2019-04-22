@@ -1,6 +1,7 @@
 import set from 'lodash/set'
 import get from 'lodash/get'
 import omit from 'lodash/omit'
+import Cookies from 'js-cookie'
 import { API_ROOT } from '@sdog/utils/api'
 import createFingerprint from '@sdog/utils/fingerprint'
 import { useErrorFromResponse } from '@sdog/definitions/errors'
@@ -16,6 +17,7 @@ import {
 
 export const INITIAL_STATE = {
   lastUpdated: false,
+  promoCode: false,
   auth: {
     loading: false,
     error: false,
@@ -292,7 +294,10 @@ export const registerUser = ({ onSuccess = false, onError = false, ...data }) =>
   api: {
     url: `${API_ROOT}/register`,
     method: 'POST',
-    data,
+    data: {
+      ...data,
+      promo_code: Cookies.get('sdPromo') || null,
+    },
     callbacks: {
       success: res => {
         setUserIdCookie(res.data.id)
