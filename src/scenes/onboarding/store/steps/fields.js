@@ -25,6 +25,7 @@ export const professional = [
             label: 'First Name',
             type: 'input',
             required: true,
+            autoFocus: true,
           },
           {
             name: 'last_name',
@@ -83,6 +84,7 @@ export const professional = [
         type: 'input',
         required: true,
         validation: 'minChars3',
+        autoFocus: true,
       },
       {
         name: 'city',
@@ -182,6 +184,7 @@ export const professional = [
         type: 'dropdown',
         required: true,
         options: [...positions],
+        autoFocus: true,
       },
       {
         name: 'specialty',
@@ -253,6 +256,7 @@ export const practice = [
             label: 'First Name',
             type: 'input',
             required: true,
+            autoFocus: true,
           },
           {
             name: 'last_name',
@@ -310,6 +314,7 @@ export const practice = [
         type: 'input',
         required: true,
         validation: 'minChars3',
+        autoFocus: true,
       },
       {
         name: 'city',
@@ -408,6 +413,7 @@ export const practice = [
         label: 'Practice Name',
         type: 'input',
         required: true,
+        autoFocus: true,
       },
       {
         name: 'practice_type',
@@ -468,6 +474,7 @@ export const practice = [
         label: 'Name on Card',
         type: 'input',
         required: true,
+        autoFocus: true,
       },
       {
         name: 'card_number',

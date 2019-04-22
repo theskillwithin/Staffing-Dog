@@ -49,11 +49,11 @@ const Steps = ({
       >
         {field.fields
           ? renderFields(field.fields, `${key}:${i + 1}`)
-          : renderField(field, i + 1)}
+          : renderField(field)}
       </div>
     ))
 
-  const renderField = (field, order) => {
+  const renderField = field => {
     const fieldProps = {
       value: getValue(field.name),
       theme: theme.element,
@@ -85,7 +85,7 @@ const Steps = ({
               )
               blurInvalid(check, field.name)
             }}
-            autoFocus={order === 1}
+            autoFocus={field.autoFocus}
             {...fieldProps}
           />
         )
