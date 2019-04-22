@@ -107,10 +107,13 @@ const Steps = ({
 
         return (
           <Dropdown
-            invalid={errorFields && includes(errorFields, field.name)}
+            invalid={
+              errorFields && includes(errorFields.map(fields => fields.field), field.name)
+            }
             onChange={v =>
               onChange(field.name, field.type === 'multi-select' ? v : v.value)
             }
+            autoFocus={field.autoFocus}
             placeholder={field.label}
             {...fieldProps}
             isMulti={field.type === 'multi-select'}
