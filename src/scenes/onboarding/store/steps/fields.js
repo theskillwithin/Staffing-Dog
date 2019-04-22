@@ -495,6 +495,7 @@ export const practice = [
             label: 'CVC',
             type: 'input',
             required: true,
+            cvc: true,
           },
         ],
       },

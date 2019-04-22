@@ -86,6 +86,7 @@ const Steps = ({
               blurInvalid(check, field.name)
             }}
             autoFocus={field.autoFocus}
+            cvc={field.cvc}
             {...fieldProps}
           />
         )

@@ -19,6 +19,7 @@ const Input = ({
   value,
   disabled,
   subLabel,
+  cvc,
   className,
   ...props
 }) => {
@@ -43,6 +44,7 @@ const Input = ({
         (textarea || type === 'textarea') && s.textarea,
         disabled && s.disabled,
         !invalid && !valid && thumbprint && s.password,
+        !invalid && !valid && cvc && s.cvc,
       )}
     >
       {textarea ? (
@@ -108,6 +110,7 @@ Input.defaultProps = {
   valid: false,
   disabled: false,
   thumbprint: false,
+  cvc: false,
   subLabel: false,
   className: '',
 }
@@ -124,6 +127,7 @@ Input.propTypes = {
   value: oneOfType([string, number]),
   disabled: bool,
   thumbprint: bool,
+  cvc: bool,
   subLabel: oneOfType([string, bool]),
   className: string,
 }
