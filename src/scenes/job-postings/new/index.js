@@ -32,6 +32,8 @@ const JobPostings = ({ history, getPracticeOffices, offices, create, postNewJob 
   const onSubmit = (e, status = 'draft') => {
     e.preventDefault()
 
+    console.log({ form })
+
     postNewJob(
       {
         ...form,

@@ -22,6 +22,15 @@
   flex-direction: column;
 }
 
+.submitBtns {
+  display: flex;
+  justify-content: space-around;
+
+  .submitBtn {
+    width: 45%;
+  }
+}
+
 .row {
   display: flex;
   justify-content: space-between;
@@ -143,5 +152,18 @@
 
   button {
     margin: auto 0 0 0;
+  }
+}
+
+.changePostingType {
+  button {
+    span {
+      margin-left: -1em;
+      margin-right: 0.5em;
+
+      svg {
+        margin-top: -5px;
+      }
+    }
   }
 }
