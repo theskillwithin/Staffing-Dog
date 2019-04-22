@@ -6,6 +6,15 @@
   align-items: center;
   margin: 2.5em 0;
 
+  @media (--sd-mobile) {
+    flex-direction: column;
+    justify-content: center;
+
+    ul {
+      display: none;
+    }
+  }
+
   .dropzone {
     display: flex;
     flex-direction: column;
@@ -14,6 +23,10 @@
     width: 123px;
     margin-right: 3em;
     cursor: pointer;
+
+    @media (--sd-mobile) {
+      margin-right: 0;
+    }
 
     h5 {
       margin: 0 0 0.4em 0;
@@ -93,22 +106,41 @@
 
   > * {
     flex: 1;
+
+    @media (--sd-mobile) {
+      margin-bottom: 1em;
+    }
   }
 
   > * + * {
     margin-left: 1.25em;
+
+    @media (--sd-mobile) {
+      margin-left: 0;
+    }
   }
 
   .verifyPhone {
     max-width: 154px;
     margin-left: 26px;
     border-radius: 50px;
+
+    @media (--sd-mobile) {
+      max-width: none;
+      width: 100%;
+      margin-left: 0;
+    }
   }
 
   &.withButton {
     button {
       max-width: 18em;
     }
+  }
+
+  @media (--sd-mobile) {
+    flex-direction: column;
+    margin-bottom: 0;
   }
 }
 

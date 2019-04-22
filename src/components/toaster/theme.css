@@ -19,7 +19,6 @@
 .toaster {
   max-width: 800px;
   background-color: var(--sd-gray);
-  width: 100%;
   color: white;
   transition: all ease-in-out 300ms;
   transform: translateX(-50%);
