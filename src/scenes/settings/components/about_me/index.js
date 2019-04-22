@@ -116,13 +116,13 @@ const SettingsAboutMe = ({
 
   const isNotPractice = get(profile, 'user.type', 'professional') !== 'practice'
 
-  const professionDropdownInit = find(positions, {
+  const findInitTypeDropdown = find(positions, {
     value: get(profile, 'meta.summary.profession.type', ''),
   })
 
-  const typeDropdownInit = professionDropdownInit
+  const typeDropdownInit = findInitTypeDropdown
     ? {
-        label: professionDropdownInit ? professionDropdownInit.label : {},
+        label: findInitTypeDropdown ? findInitTypeDropdown.label : {},
         value: get(profile, 'meta.summary.profession.type', ''),
       }
     : ''
