@@ -2,9 +2,8 @@ import React, { useState, useEffect } from 'react'
 import { shape, object, string, array, func, oneOfType, bool } from 'prop-types'
 import qs from 'qs'
 import find from 'lodash/find'
-import pickBy from 'lodash/pickBy'
-import includes from 'lodash/includes'
 import get from '@sdog/utils/get'
+import { useQueryParamsOnlyWith, useNonEmptyParams } from '@sdog/utils/queryParams'
 import { connect } from 'react-redux'
 import { withRouter, Link } from 'react-router-dom'
 import clsx from 'clsx'
@@ -13,6 +12,8 @@ import {
   findJobs,
   findJobsLoading,
   findJobsError,
+  findApplyingForJob,
+  applyForJob as applyForJobAction,
 } from '@sdog/store/jobs'
 import { findUserProfile } from '@sdog/store/user'
 import { useDocumentTitle } from '@sdog/utils/document'
@@ -35,14 +36,24 @@ import appTheme from '../../../app/theme.css'
 
 import theme from './theme.css'
 
-const JobSearch = ({ location, history, jobs, loading, getUserJobs, userProfile }) => {
+const JobSearch = ({
+  location,
+  history,
+  jobs,
+  loading,
+  getUserJobs,
+  userProfile,
+  applyingForJobs,
+  applyForJob,
+}) => {
   useDocumentTitle('Job Search')
 
-  const searchParams = pickBy(
-    qs.parse((location.search || '').substr(1)),
-    (_value, key) =>
-      includes(key, ['employment_type', 'specialty', 'job_type', 'radius']),
-  )
+  const searchParams = useQueryParamsOnlyWith(location.search, [
+    'employment_type',
+    'specialty',
+    'job_type',
+    'radius',
+  ])
 
   const [filters, setFilters] = useState({
     employment_type: null,
@@ -55,7 +66,7 @@ const JobSearch = ({ location, history, jobs, loading, getUserJobs, userProfile 
   const handleFilterChange = (field, value) => setFilters({ ...filters, [field]: value })
 
   useEffect(() => {
-    const filteredFilters = pickBy(filters, value => value !== null && value !== '')
+    const filteredFilters = useNonEmptyParams(filters)
     if (Object.keys(filteredFilters).length) {
       history.push(`${location.pathname}?${qs.stringify(filteredFilters)}`)
     }
@@ -63,6 +74,12 @@ const JobSearch = ({ location, history, jobs, loading, getUserJobs, userProfile 
     // call api
     getUserJobs({ search: filteredFilters })
   }, Object.keys(filters).map(filter => filters[filter]))
+
+  const onClickApplyForJob = (e, jobId) => {
+    e.preventDefault()
+
+    applyForJob(jobId)
+  }
 
   const showRecommended = Boolean(jobs.recommended.length)
 
@@ -129,8 +146,8 @@ const JobSearch = ({ location, history, jobs, loading, getUserJobs, userProfile 
                 )}`}
               </p>
               <p>
-                <strong>{get(jobs, 'recommended.length', 0)}</strong>
-                &nbsp; job posts in your area.
+                <strong>{getJobs().length}</strong>
+                {` job post${getJobs().length === 1 ? '' : 's'} in your area.`}
               </p>
             </div>
 
@@ -143,6 +160,7 @@ const JobSearch = ({ location, history, jobs, loading, getUserJobs, userProfile 
                       requirements. Below are some recommended jobs you might consider.
                     </Alert>
                   )}
+
                   {getJobs().map(job => (
                     <Card key={job.id} type="large">
                       <Link
@@ -184,16 +202,36 @@ const JobSearch = ({ location, history, jobs, loading, getUserJobs, userProfile 
                           </dd>
                         </dl>
                       </div>
+
                       <div className={theme.short}>
                         {get(job, 'criteria.description')}
                       </div>
+
                       <div className={theme.actions}>
                         <div>{get(job, 'criteria.hourly_rate')}/hr</div>
+
                         <Link to={`/search/job/${job.id}`} className={theme.readMore}>
                           Read More
                         </Link>
-                        <Button round secondary={job.applied} disabled={job.applied}>
-                          {job.applied ? 'Applied' : 'Quick Apply'}
+
+                        <Button
+                          round
+                          secondary={job.applied}
+                          disabled={
+                            job.applied ||
+                            get(applyingForJobs, `[${job.id}].loading`, false)
+                          }
+                          onClick={e => onClickApplyForJob(e, job.id)}
+                        >
+                          {get(applyingForJobs, `[${job.id}].loading`, false) ? (
+                            <span>
+                              Applying <Spinner inverted size={20} center={false} />
+                            </span>
+                          ) : get(job, 'applied', false) ? (
+                            'Applied'
+                          ) : (
+                            'Quick Apply'
+                          )}
                         </Button>
                       </div>
                     </Card>
@@ -231,6 +269,8 @@ JobSearch.propTypes = {
   loading: bool.isRequired,
   error: oneOfType([bool, string]).isRequired,
   userProfile: object.isRequired,
+  applyForJob: func.isRequired,
+  applyingForJobs: object.isRequired,
 }
 
 export const mapStateToProps = state => ({
@@ -238,9 +278,13 @@ export const mapStateToProps = state => ({
   loading: findJobsLoading(state),
   error: findJobsError(state),
   userProfile: findUserProfile(state),
+  applyingForJobs: findApplyingForJob(state),
 })
 
-export const mapActionsToProps = { getUserJobs: getUserJobsAction }
+export const mapActionsToProps = {
+  applyForJob: applyForJobAction,
+  getUserJobs: getUserJobsAction,
+}
 
 export default withRouter(
   connect(

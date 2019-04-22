@@ -36,6 +36,7 @@ export const INITIAL_STATE = {
   applications: {},
   selectedApplications: {},
   selectingUserForJob: {},
+  applyingForJob: {},
 }
 
 const getLastUpdated = () => new Date().getTime()
@@ -350,6 +351,69 @@ reducers = {
 }
 
 /**
+ * APPLY FOR JOB
+ */
+export const APPLY_FOR_JOB = 'APPLY_FOR_JOB'
+export const applyForJobTYPES = createActionTypes(APPLY_FOR_JOB)
+
+export const applyForJob = jobId => (dispatch, getState) =>
+  dispatch({
+    type: APPLY_FOR_JOB,
+    api: {
+      url: `${API_ROOT}/jobs/applications`,
+      method: 'POST',
+      data: {
+        user_id: getUserId() || findUserId(getState()),
+        data: {
+          job_id: jobId,
+        },
+      },
+    },
+    payload: { jobId },
+  })
+
+const updateJobsAppliedFor = (jobs, jobId) =>
+  jobs.map(job => ({
+    ...job,
+    applied: job.id === jobId,
+  }))
+
+reducers = {
+  ...reducers,
+  [applyForJobTYPES.LOADING]: (state, { jobId }) => ({
+    ...state,
+    applyingForJob: {
+      ...state.applyingForJob,
+      [jobId]: spreadLoadingError(true, false),
+    },
+  }),
+  [applyForJobTYPES.SUCCESS]: (state, { __payload: { jobId } }) => ({
+    ...state,
+    applyingForJob: {
+      ...state.applyingForJob,
+      [jobId]: spreadLoadingError(false, false),
+    },
+    results: {
+      ...state.results,
+      ...['scheduled', 'recommended', 'posts', 'preferred'].reduce(
+        (listOfJobLists, jobListKey) => ({
+          ...listOfJobLists,
+          [jobListKey]: updateJobsAppliedFor(state.results[jobListKey], jobId),
+        }),
+        {},
+      ),
+    },
+  }),
+  [applyForJobTYPES.ERROR]: (state, { jobId, error }) => ({
+    ...state,
+    applyingForJob: {
+      ...state.applyingForJob,
+      [jobId]: spreadLoadingError(false, useErrorFromResponse(error)),
+    },
+  }),
+}
+
+/**
  * Post New Job
  */
 export const POST_NEW_JOB = 'POST_NEW_JOB'
@@ -481,5 +545,7 @@ export const findJobApplicants = state => findState(state).applications
 export const findJobSelectedApplicants = state => findState(state).selectedApplications
 
 export const findSelectingUserForJob = state => findState(state).selectingUserForJob
+
+export const findApplyingForJob = state => findState(state).applyingForJob
 
 export default reducer
