@@ -1,6 +1,6 @@
 @import '../../../../../styles/config.css';
 
-.verify {
+.verify.verify {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -8,8 +8,8 @@
   font-weight: var(--sd-fontWeightBold);
   margin-top: 3px;
   height: 48px;
-  max-width:  154px;
-  margin-left: 26px !important;
+  max-width: 154px;
+  margin-left: 26px;
   border-radius: 50px;
   color: var(--sd-red);
   border: solid 1px var(--sd-red);
@@ -18,5 +18,11 @@
   &.verified {
     color: var(--sd-green);
     border: solid 1px var(--sd-green);
+  }
+
+  @media (--sd-mobile) {
+    max-width: none;
+    width: 100%;
+    margin-left: 0;
   }
 }

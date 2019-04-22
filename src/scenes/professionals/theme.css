@@ -52,4 +52,14 @@
   .jobDistance {
     width: 155px;
   }
+
+  @media (--sd-mobile) {
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    > * + * {
+      margin-top: 1em;
+    }
+  }
 }

@@ -116,6 +116,17 @@ const SettingsAboutMe = ({
 
   const isNotPractice = get(profile, 'user.type', 'professional') !== 'practice'
 
+  const findInitTypeDropdown = find(positions, {
+    value: get(profile, 'meta.summary.profession.type', ''),
+  })
+
+  const typeDropdownInit = findInitTypeDropdown
+    ? {
+        label: findInitTypeDropdown ? findInitTypeDropdown.label : {},
+        value: get(profile, 'meta.summary.profession.type', ''),
+      }
+    : ''
+
   const [form, setForm] = React.useState({
     profile: {
       description: profile.description,
@@ -148,12 +159,7 @@ const SettingsAboutMe = ({
         },
         summary: {
           profession: {
-            type: {
-              label: find(positions, {
-                value: get(profile, 'meta.summary.profession.type', ''),
-              }).label,
-              value: get(profile, 'meta.summary.profession.type', ''),
-            },
+            type: typeDropdownInit,
             specialty: get(profile, 'meta.summary.profession.specialty', ''),
           },
         },

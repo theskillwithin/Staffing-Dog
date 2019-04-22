@@ -31,6 +31,10 @@
   .distance {
     width: 160px;
   }
+
+  @media (--sd-mobile) {
+    justify-content: center;
+  }
 }
 
 .searchResultsMeta {

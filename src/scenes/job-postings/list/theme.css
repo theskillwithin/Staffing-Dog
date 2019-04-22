@@ -22,6 +22,18 @@
     line-height: 40px;
     width: 193px;
   }
+
+  @media (--sd-mobile) {
+    flex-direction: column;
+    align-items: center;
+
+    > * {
+      width: 193px;
+      + * {
+        margin-top: 1em;
+      }
+    }
+  }
 }
 
 .jobs {
@@ -130,6 +142,12 @@
   > * {
     min-width: 122px;
   }
+
+  @media (--sd-mobile) {
+    display: flex;
+    flex-wrap: wrap;
+    height: 85px;
+  }
 }
 
 .readMore {
@@ -149,6 +167,10 @@
 
   > * {
     margin-right: 5px;
+
+    @media (--sd-mobile) {
+      margin-bottom: 0.5em;
+    }
   }
 }
 
@@ -176,6 +198,11 @@
 
   .chevron {
     margin-left: 1em;
+  }
+
+  @media (--sd-mobile) {
+    width: 100%;
+    margin-top: -25px;
   }
 }
 
@@ -208,4 +235,8 @@
   justify-content: flex-end;
   align-items: center;
   min-width: 265px;
+
+  @media (--sd-mobile) {
+    bottom: 100px;
+  }
 }
