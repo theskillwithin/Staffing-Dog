@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { bool, func, string, object, array, number, oneOfType } from 'prop-types'
 import Select from 'react-select'
 
-const Dropdown = ({ onChange, value, ...props }) => {
+const Dropdown = ({ onChange, value, invalid, ...props }) => {
   const [isOpen, setOpen] = useState(false)
 
   const internalOnChange = dropdownValue => {
@@ -23,10 +23,13 @@ const Dropdown = ({ onChange, value, ...props }) => {
       minWidth: 'auto',
       minHeight: props.height ? props.height : 38,
       width: props.width ? props.width : 'auto',
-      border: '1px solid rgba(152, 160, 178, 0.54)',
+      border: invalid ? '1px solid #ed4f32' : '1px solid rgba(152, 160, 178, 0.54)',
       borderRadius: 3,
       boxShadow: 0,
       fontWeight: 500,
+      ':hover': {
+        border: invalid ? '1px solid #ed4f32' : styles.border,
+      },
     }),
     value: styles => ({ ...styles, background: '#0072FF', color: 'rgb(31, 39, 64)' }),
     selectContainer: styles => ({ ...styles, minWidth: 'auto' }),
@@ -38,11 +41,12 @@ const Dropdown = ({ onChange, value, ...props }) => {
     }),
     placeholder: styles => ({
       ...styles,
-      color: 'rgb(187, 193, 209)',
+      color: invalid ? '#ed4f32' : 'rgb(187, 193, 209)',
     }),
     dropdownIndicator: styles => ({
       ...styles,
       padding: props.small ? 4 : 8,
+      color: invalid ? '#ed4f32' : styles.color,
     }),
     indicatorSeparator: () => ({ display: 'none' }),
     singleValue: styles => ({
@@ -80,6 +84,7 @@ Dropdown.propTypes = {
   placeholder: string,
   label: string,
   disabled: bool,
+  invalid: bool,
 }
 
 Dropdown.defaultProps = {
@@ -92,6 +97,7 @@ Dropdown.defaultProps = {
   placeholder: '',
   label: 'Select...',
   disabled: false,
+  invalid: false,
 }
 
 export default Dropdown

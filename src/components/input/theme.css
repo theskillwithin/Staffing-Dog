@@ -59,7 +59,8 @@
 }
 
 .invalid {
-  input {
+  input,
+  textarea {
     border: solid 1px var(--sd-red);
   }
 
