@@ -23,12 +23,13 @@ const Dropdown = ({ onChange, value, invalid, ...props }) => {
       minWidth: 'auto',
       minHeight: props.height ? props.height : 38,
       width: props.width ? props.width : 'auto',
-      border: invalid
-        ? '1px solid #ed4f32 !important'
-        : '1px solid rgba(152, 160, 178, 0.54)',
+      border: invalid ? '1px solid #ed4f32' : '1px solid rgba(152, 160, 178, 0.54)',
       borderRadius: 3,
       boxShadow: 0,
       fontWeight: 500,
+      ':hover': {
+        border: invalid ? '1px solid #ed4f32' : styles.border,
+      },
     }),
     value: styles => ({ ...styles, background: '#0072FF', color: 'rgb(31, 39, 64)' }),
     selectContainer: styles => ({ ...styles, minWidth: 'auto' }),
