@@ -41,6 +41,10 @@
   &.hasDropdown {
     margin-top: 1em;
     margin-bottom: 0.7em;
+
+    > * {
+      width: 100%;
+    }
   }
 
   .element {

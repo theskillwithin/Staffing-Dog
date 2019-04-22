@@ -465,7 +465,7 @@ export const practice = [
     fields: [
       {
         name: 'name_on_card',
-        label: 'Name On Card',
+        label: 'Name on Card',
         type: 'input',
         required: true,
       },
@@ -494,8 +494,8 @@ export const practice = [
       {
         fields: [
           {
-            name: 'postal',
-            label: 'Postal Code',
+            name: 'billing_postal',
+            label: 'Billing Postal Code',
             type: 'input',
             required: true,
           },
