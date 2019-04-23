@@ -89,7 +89,10 @@
 
 .formRow + .formRow {
   margin-top: 22px;
-  height: 48px;
+
+  @media (--sd-notMobile) {
+    height: 48px;
+  }
 }
 
 .formRow .formRow {
