@@ -20,12 +20,12 @@ import {
   autoSaveUserProfile as autoSaveUserProfileAction,
 } from '@sdog/store/user'
 import CalendarIcon from '@sdog/components/svg/Calendar'
-import Calendar from '@sdog/components/calendar'
+import EventCalendar from '@sdog/components/EventCalendar'
 
 import Exceptions from './exceptions'
 // import WeekRow from './weeks'
 import WeekRow from './days'
-import Event from './event'
+import EventList from './event/List'
 import theme from './theme.css'
 
 const defaultSchedule = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'].map(day => ({
@@ -34,21 +34,6 @@ const defaultSchedule = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'].map(da
   from: '8:00',
   to: '17:00',
 }))
-
-const blackoutDates = [
-  {
-    startDate: '2018-11-29',
-    endDate: '2018-12-04',
-    blackout: true,
-  },
-]
-
-// const daysOut = [
-//   { label: '30 Days', value: '30' },
-//   { label: '60 Days', value: '60' },
-//   { label: '90 Days', value: '90' },
-//   { label: '120 Days', value: '120' },
-// ]
 
 const availability = [
   { label: 'Full Time', value: 'full_time' },
@@ -93,7 +78,8 @@ const JobSchedule = ({
     }),
   }
 
-  const isNotPractice = get(user, 'type', 'professional') !== 'practice'
+  const userType = get(user, 'type', 'professional')
+  const isNotPractice = userType !== 'practice'
 
   return (
     <Card
@@ -174,7 +160,7 @@ const JobSchedule = ({
                     options={daysOut}
                     width={120}
                   />
-                  </div> 
+                  </div>
               </div> */}
 
               <div className={theme.scheduler}>
@@ -189,34 +175,25 @@ const JobSchedule = ({
             </div>
           )}
 
-          {activeTabIndex === 1 && <Exceptions />}
+          {activeTabIndex === 1 && (
+            <Exceptions exceptions={get(meta, 'capacity.exceptions', [])} />
+          )}
 
           <hr className={theme.divider} />
         </>
       )}
 
-      {isNotPractice && <Calendar activeDates={[]} blackoutDates={blackoutDates} />}
-
-      {!isNotPractice && (
-        <div className={theme.jobList}>
-          <div className={theme.job}>
-            <h4>Person</h4>
-            <h4>time</h4>
-            <h4>Office</h4>
-          </div>
-          <div className={theme.job}>
-            <h4>Person</h4>
-            <h4>time</h4>
-            <h4>Office</h4>
-          </div>
-        </div>
+      {isNotPractice && (
+        <EventCalendar
+          userType={userType}
+          jobs={jobs}
+          exceptions={get(meta, 'capacity.exceptions', [])}
+        />
       )}
 
       {isNotPractice && (
         <div className={theme.events}>
-          {jobs.scheduled.map((event, eventIndex) => (
-            <Event key={event.id} event={event} open={eventIndex === 0} />
-          ))}
+          <EventList userType={userType} jobs={jobs} />
         </div>
       )}
     </Card>

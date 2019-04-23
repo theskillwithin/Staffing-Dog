@@ -1,4 +1,5 @@
 import React, { useReducer, useState } from 'react'
+import { array } from 'prop-types'
 import clsx from 'clsx'
 import DatePicker from '@sdog/components/date_picker'
 // import Dropdown from '@sdog/components/dropdown'
@@ -8,44 +9,6 @@ import Arrow from '@sdog/components/svg/Arrow'
 // import { timesOfDay, minBy15 } from '@sdog/utils/dates'
 
 import theme from './theme.css'
-
-// const time = timesOfDay(false, true).map(hour => ({ label: hour, value: hour }))
-// const min = minBy15.map(hour => ({ label: hour, value: hour }))
-
-const listOfDefaultExceptions = [
-  {
-    id: 1,
-    startDate: '7/4/2019',
-    startTime: '5:00 am',
-    endDate: '7/4/2019',
-    endTime: '7:15 pm',
-    type: 'blue',
-  },
-  {
-    id: 2,
-    startDate: '7/4/2019',
-    startTime: '5:00 am',
-    endDate: '7/4/2019',
-    endTime: '7:15 pm',
-    type: 'red',
-  },
-  {
-    id: 3,
-    startDate: '7/4/2019',
-    startTime: '5:00 am',
-    endDate: '7/4/2019',
-    endTime: '7:15 pm',
-    type: 'red',
-  },
-  {
-    id: 4,
-    startDate: '7/4/2019',
-    startTime: '5:00 am',
-    endDate: '7/4/2019',
-    endTime: '7:15 pm',
-    type: 'red',
-  },
-]
 
 const exceptionsReducer = (state, action) => {
   switch (action.type) {
@@ -58,14 +21,14 @@ const exceptionsReducer = (state, action) => {
   }
 }
 
-const Exceptions = () => {
+const Exceptions = ({ exceptions }) => {
   const [startTime, setStartTime] = useState('')
   const [startMin, setStartMin] = useState('')
   const [endTime, setEndTime] = useState('')
   const [endMin, setEndMin] = useState('')
   const [availability, setAvailability] = useState(true)
   const [deleteId, deleteException] = useState(false)
-  const [exceptions, dispatch] = useReducer(exceptionsReducer, listOfDefaultExceptions)
+  const [listOfExceptions, dispatch] = useReducer(exceptionsReducer, exceptions)
 
   const submitNewException = () => {
     dispatch({
@@ -139,50 +102,55 @@ const Exceptions = () => {
             {availability ? 'Yes' : 'No'}
           </Switch>
         </div>
+
         <Button primary onClick={submitNewException}>
           Add Exception
         </Button>
       </div>
 
-      {exceptions &&
-        exceptions.length &&
-        exceptions.map(exception => (
-          <div
-            key={exception.id}
-            className={clsx(theme.exception, exception.type && theme[exception.type])}
-          >
-            {deleteId === exception.id && (
-              <div className={theme.delete}>
-                <Button secondary onClick={() => deleteException(false)}>
-                  Cancel Delete
-                </Button>
-                <Button
-                  red
-                  onClick={() => {
-                    dispatch({ type: 'delete', id: deleteId })
-                    deleteException(false)
-                  }}
-                >
-                  Confirm Delete
-                </Button>
-              </div>
-            )}
-            <span className={theme.startDate}>{exception.startDate}</span>
-            <span className={theme.startTime}>{exception.startTime}</span>
-            <Arrow />
-            <span className={theme.endDate}>{exception.endDate}</span>
-            <span className={theme.endTime}>{exception.endTime}</span>
-            <button
-              className={theme.close}
-              type="button"
-              onClick={() => deleteException(exception.id)}
+      {listOfExceptions && listOfExceptions.length
+        ? listOfExceptions.map(exception => (
+            <div
+              key={exception.id}
+              className={clsx(theme.exception, exception.type && theme[exception.type])}
             >
-              &times;
-            </button>
-          </div>
-        ))}
+              {deleteId === exception.id && (
+                <div className={theme.delete}>
+                  <Button secondary onClick={() => deleteException(false)}>
+                    Cancel Delete
+                  </Button>
+                  <Button
+                    red
+                    onClick={() => {
+                      dispatch({ type: 'delete', id: deleteId })
+                      deleteException(false)
+                    }}
+                  >
+                    Confirm Delete
+                  </Button>
+                </div>
+              )}
+              <span className={theme.startDate}>{exception.startDate}</span>
+              <span className={theme.startTime}>{exception.startTime}</span>
+              <Arrow />
+              <span className={theme.endDate}>{exception.endDate}</span>
+              <span className={theme.endTime}>{exception.endTime}</span>
+              <button
+                className={theme.close}
+                type="button"
+                onClick={() => deleteException(exception.id)}
+              >
+                &times;
+              </button>
+            </div>
+          ))
+        : null}
     </div>
   )
+}
+
+Exceptions.propTypes = {
+  exceptions: array.isRequired,
 }
 
 export default Exceptions
