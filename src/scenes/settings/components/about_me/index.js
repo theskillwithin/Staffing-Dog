@@ -1,7 +1,7 @@
 import React from 'react'
 import { func, shape, object, string } from 'prop-types'
 import { connect } from 'react-redux'
-import { positions } from '@sdog/definitions/jobs'
+import { positions, positionTypes } from '@sdog/definitions/jobs'
 import get from 'lodash/get'
 import clsx from 'clsx'
 import find from 'lodash/find'
@@ -127,6 +127,17 @@ const SettingsAboutMe = ({
       }
     : ''
 
+  const findInitSpecialtyDropdown = find(positions, {
+    value: get(profile, 'meta.summary.profession.specialty', ''),
+  })
+
+  const specialtyDropdownInit = findInitSpecialtyDropdown
+    ? {
+        label: findInitSpecialtyDropdown ? findInitSpecialtyDropdown.label : {},
+        value: get(profile, 'meta.summary.profession.specialty', ''),
+      }
+    : ''
+
   const [form, setForm] = React.useState({
     profile: {
       description: profile.description,
@@ -160,7 +171,7 @@ const SettingsAboutMe = ({
         summary: {
           profession: {
             type: typeDropdownInit,
-            specialty: get(profile, 'meta.summary.profession.specialty', ''),
+            specialty: specialtyDropdownInit,
           },
         },
       },
@@ -325,164 +336,202 @@ const SettingsAboutMe = ({
             Verify Phone #
           </Button>
         </div>
-        <div className={theme.inputRow}>
-          <Input
-            label="Street Address"
-            value={form.profile.addresses.line_1}
-            onChange={value =>
-              setForm({
-                ...form,
-                profile: {
-                  ...form.profile,
-                  addresses: {
-                    ...form.profile.addresses,
-                    line_1: value,
-                  },
-                },
-              })
-            }
-          />
-        </div>
-        <div className={theme.inputRow}>
-          <Input
-            label="City"
-            value={form.profile.addresses.city}
-            onChange={value =>
-              setForm({
-                ...form,
-                profile: {
-                  ...form.profile,
-                  addresses: {
-                    ...form.profile.addresses,
-                    city: value,
-                  },
-                },
-              })
-            }
-          />
-          <Dropdown
-            label="State"
-            value={form.profile.addresses.state}
-            onChange={value =>
-              setForm({
-                ...form,
-                profile: {
-                  ...form.profile,
-                  addresses: {
-                    ...form.profile.addresses,
-                    state: value,
-                  },
-                },
-              })
-            }
-            options={states}
-          />
-          <Input
-            label="Postal Code"
-            value={form.profile.addresses.zip}
-            onChange={value =>
-              setForm({
-                ...form,
-                profile: {
-                  ...form.profile,
-                  addresses: {
-                    ...form.profile.addresses,
-                    zip: value,
-                  },
-                },
-              })
-            }
-          />
-        </div>
-        <FormSpacer />
-        <div className={theme.inputRow}>
-          <Dropdown
-            label="Availability"
-            placeholder="Availability"
-            isMulti
-            isClearable={false}
-            value={form.profile.meta.capacity.availability}
-            onChange={value =>
-              setForm({
-                ...form,
-                profile: {
-                  ...form.profile,
-                  meta: {
-                    ...form.profile.meta,
-                    capacity: {
-                      ...form.profile.meta.capacity,
-                      availability: value,
+        {isNotPractice && (
+          <div className={theme.inputRow}>
+            <Input
+              label="Street Address"
+              value={form.profile.addresses.line_1}
+              onChange={value =>
+                setForm({
+                  ...form,
+                  profile: {
+                    ...form.profile,
+                    addresses: {
+                      ...form.profile.addresses,
+                      line_1: value,
                     },
                   },
-                },
-              })
-            }
-            options={availability}
-          />
-        </div>
-        <div className={theme.inputRow}>
-          <Dropdown
-            label="Profession"
-            placeholder="Profession"
-            value={form.profile.meta.summary.profession.type}
-            options={positions}
-            onChange={value =>
-              setForm({
-                ...form,
-                profile: {
-                  ...form.profile,
-                  meta: {
-                    ...form.profile.meta,
-                    summary: {
-                      ...form.profile.meta.summary,
-                      profession: {
-                        ...form.profile.meta.summary.profession,
-                        type: value,
+                })
+              }
+            />
+          </div>
+        )}
+        {isNotPractice && (
+          <div className={theme.inputRow}>
+            <Input
+              label="City"
+              value={form.profile.addresses.city}
+              onChange={value =>
+                setForm({
+                  ...form,
+                  profile: {
+                    ...form.profile,
+                    addresses: {
+                      ...form.profile.addresses,
+                      city: value,
+                    },
+                  },
+                })
+              }
+            />
+            <Dropdown
+              label="State"
+              value={form.profile.addresses.state}
+              onChange={value =>
+                setForm({
+                  ...form,
+                  profile: {
+                    ...form.profile,
+                    addresses: {
+                      ...form.profile.addresses,
+                      state: value,
+                    },
+                  },
+                })
+              }
+              options={states}
+            />
+            <Input
+              label="Postal Code"
+              value={form.profile.addresses.zip}
+              onChange={value =>
+                setForm({
+                  ...form,
+                  profile: {
+                    ...form.profile,
+                    addresses: {
+                      ...form.profile.addresses,
+                      zip: value,
+                    },
+                  },
+                })
+              }
+            />
+          </div>
+        )}
+        {isNotPractice && <FormSpacer />}
+        {isNotPractice && (
+          <div className={theme.inputRow}>
+            <Dropdown
+              label="Availability"
+              placeholder="Availability"
+              isMulti
+              isClearable={false}
+              value={form.profile.meta.capacity.availability}
+              onChange={value =>
+                setForm({
+                  ...form,
+                  profile: {
+                    ...form.profile,
+                    meta: {
+                      ...form.profile.meta,
+                      capacity: {
+                        ...form.profile.meta.capacity,
+                        availability: value,
                       },
                     },
                   },
-                },
-              })
-            }
-          />
-          <Input
-            label="Hourly Wage"
-            value={form.profile.meta.capacity.hourly_wage}
-            onChange={value =>
-              setForm({
-                ...form,
-                profile: {
-                  ...form.profile,
-                  meta: {
-                    ...form.profile.meta,
-                    capacity: {
-                      ...form.profile.meta.capacity,
-                      hourly_wage: value,
+                })
+              }
+              options={availability}
+            />
+          </div>
+        )}
+        {isNotPractice && (
+          <div className={theme.inputRow}>
+            <Dropdown
+              label="Profession"
+              placeholder="Profession"
+              value={form.profile.meta.summary.profession.type}
+              options={positions}
+              onChange={value =>
+                setForm({
+                  ...form,
+                  profile: {
+                    ...form.profile,
+                    meta: {
+                      ...form.profile.meta,
+                      summary: {
+                        ...form.profile.meta.summary,
+                        profession: {
+                          ...form.profile.meta.summary.profession,
+                          type: value,
+                        },
+                      },
                     },
                   },
-                },
-              })
-            }
-          />
-        </div>
-        <FormSpacer />
-        <div className={theme.inputRow}>
-          <Input
-            label="Profile Description"
-            value={form.profile.description}
-            onChange={value =>
-              setForm({
-                ...form,
-                profile: {
-                  ...form.profile,
-                  description: value,
-                },
-              })
-            }
-            textarea
-          />
-        </div>
-        <FormSpacer />
+                })
+              }
+            />
+            <Input
+              label="Hourly Wage"
+              value={form.profile.meta.capacity.hourly_wage}
+              onChange={value =>
+                setForm({
+                  ...form,
+                  profile: {
+                    ...form.profile,
+                    meta: {
+                      ...form.profile.meta,
+                      capacity: {
+                        ...form.profile.meta.capacity,
+                        hourly_wage: value,
+                      },
+                    },
+                  },
+                })
+              }
+            />
+          </div>
+        )}
+        {isNotPractice && (
+          <div className={theme.inputRow}>
+            <Dropdown
+              label="Speciailty"
+              placeholder="Speciailty"
+              value={form.profile.meta.summary.profession.specialty}
+              options={positionTypes}
+              onChange={value =>
+                setForm({
+                  ...form,
+                  profile: {
+                    ...form.profile,
+                    meta: {
+                      ...form.profile.meta,
+                      summary: {
+                        ...form.profile.meta.summary,
+                        profession: {
+                          ...form.profile.meta.summary.profession,
+                          specialty: value,
+                        },
+                      },
+                    },
+                  },
+                })
+              }
+            />
+          </div>
+        )}
+        {isNotPractice && <FormSpacer />}
+        {isNotPractice && (
+          <div className={theme.inputRow}>
+            <Input
+              label="Profile Description"
+              value={form.profile.description}
+              onChange={value =>
+                setForm({
+                  ...form,
+                  profile: {
+                    ...form.profile,
+                    description: value,
+                  },
+                })
+              }
+              textarea
+            />
+          </div>
+        )}
+        {isNotPractice && <FormSpacer />}
         <div className={theme.inputRow}>
           {isNotPractice && (
             <Input
