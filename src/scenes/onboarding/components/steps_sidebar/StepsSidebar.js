@@ -31,6 +31,24 @@ const renderItem = (key, value) => {
           dangerouslySetInnerHTML={{ __html: value }}
         />
       )
+    case 'packages':
+      return (
+        <div className={theme.packages}>
+          <h2>Packages</h2>
+          <div className={theme.dayHirePackage}>
+            <h4>DayHire Limited Pass</h4>
+            <p>$34.95 per use</p>
+          </div>
+          <div className={theme.threeMonthPackage}>
+            <h4>3 Month Hiring Plan</h4>
+            <p>$728 billed in full</p>
+          </div>
+          <div className={theme.fullPackage}>
+            <h4>Full Access</h4>
+            <p>$1,488 billed annually</p>
+          </div>
+        </div>
+      )
   }
 
   return null

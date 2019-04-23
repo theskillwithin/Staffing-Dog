@@ -461,12 +461,8 @@ export const practice = [
     needsCompleteIfToken: true,
     title: 'Billing Information',
     sidebar: {
-      title: 'Packages',
-      titleSubLarge: 'Make What you Need',
-      description:
-        'Temping with StaffingDog is flexible and rewarding, helping dental professionals meet their career and financial goals.',
-      svg: 'desktop_search',
-      order: ['svg', 'title', 'subTitleLarge', 'description'],
+      packages: true,
+      order: ['packages'],
     },
     fields: [
       {

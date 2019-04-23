@@ -92,3 +92,69 @@
   margin: 2em 0 0;
   display: inline-block;
 }
+
+.packages {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  > * + * {
+    margin-bottom: 31px;
+  }
+
+  h2 {
+    color: var(--sd-blackTxt);
+    font-weight: var(--sd-fontWeightMedium);
+    font-size: 15px;
+    line-height: 1.2;
+    letter-spacing: -0.2px;
+    text-align: center;
+    margin: -10px 0 41px 0;
+  }
+}
+
+.dayHirePackage,
+.threeMonthPackage,
+.fullPackage {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 70px;
+  width: 190px;
+  border-radius: 8px;
+  text-align: center;
+  padding: 15px 0;
+
+  h4 {
+    font-size: 15px;
+    font-weight: var(--sd-fontWeightMedium);
+    letter-spacing: -0.2px;
+    color: var(--sd-blackTxt);
+    margin: 0 0 2px 0;
+  }
+
+  p {
+    font-size: 13px;
+    font-weight: var(--sd-fontWeightMedium);
+    line-height: 1.23;
+    letter-spacing: -0.1px;
+    color: var(--sd-blackTxt);
+    margin: 0;
+  }
+}
+
+.dayHirePackage {
+  background: var(--sd-grayLighterer);
+}
+
+.threeMonthPackage {
+  background: var(--sd-gray);
+}
+
+.fullPackage {
+  background: var(--sd-primary);
+
+  p,
+  h4 {
+    color: white;
+  }
+}
