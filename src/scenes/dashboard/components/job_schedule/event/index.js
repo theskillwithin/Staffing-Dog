@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useMemo } from 'react'
 import { object, bool, string } from 'prop-types'
 import moment from 'moment'
 import get from 'lodash/get'
@@ -18,27 +18,29 @@ const JobScheduleEvent = ({ open, event, userType }) => {
   const startDate = moment(get(event, 'criteria.duration.start_date')).utc()
   const geoLocation = get(practice, 'geocode', {})
 
+  const title = isPractice
+    ? 'Job Position'
+    : `${practice.name} @ ${startDate.format('M/D/YY')}`
+  const subTitle = isPractice ? 'UserName + JobType' : buildAddress(practice.address)
+
   return (
     <div>
       <button type="button" className={theme.event} onClick={() => setIsOpen(!isOpen)}>
         <h2 className={theme.red}>{startDate.format('D')}</h2>
 
         <div className={theme.eventDetails}>
-          <h5>
-            {isPractice ? 'user' : practice.name} @ {startDate.format('M/D/YY')}
-          </h5>
-          <h6>
-            {practice.address.line_1} {practice.address.city}, {practice.address.state}{' '}
-            {practice.address.zip}
-          </h6>
+          <h5>{title}</h5>
+          <h6>{subTitle}</h6>
         </div>
 
-        <NearMeIcon />
+        {!isPractice && <NearMeIcon />}
       </button>
 
-      <div className={clsx(theme.map, isOpen && theme.open)}>
-        <Map isMarkerShown position={geoLocation} defaultCenter={geoLocation} />
-      </div>
+      {!isPractice && (
+        <div className={clsx(theme.map, isOpen && theme.open)}>
+          <Map isMarkerShown position={geoLocation} defaultCenter={geoLocation} />
+        </div>
+      )}
     </div>
   )
 }
@@ -51,6 +53,13 @@ JobScheduleEvent.propTypes = {
 
 JobScheduleEvent.defaultProps = {
   open: false,
+}
+
+function buildAddress(address) {
+  return useMemo(
+    () => `${address.line_1} ${address.city}, ${address.state} ${address.zip}`,
+    [address],
+  )
 }
 
 export default JobScheduleEvent
