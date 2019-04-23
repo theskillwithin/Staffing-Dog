@@ -20,7 +20,7 @@ import {
   autoSaveUserProfile as autoSaveUserProfileAction,
 } from '@sdog/store/user'
 import CalendarIcon from '@sdog/components/svg/Calendar'
-import Calendar from '@sdog/components/calendar'
+import EventCalendar from '@sdog/components/EventCalendar'
 
 import Exceptions from './exceptions'
 // import WeekRow from './weeks'
@@ -175,13 +175,21 @@ const JobSchedule = ({
             </div>
           )}
 
-          {activeTabIndex === 1 && <Exceptions />}
+          {activeTabIndex === 1 && (
+            <Exceptions exceptions={get(meta, 'capacity.exceptions', [])} />
+          )}
 
           <hr className={theme.divider} />
         </>
       )}
 
-      {isNotPractice && <Calendar activeDates={[]} blackoutDates={[]} />}
+      {isNotPractice && (
+        <EventCalendar
+          userType={userType}
+          jobs={jobs}
+          exceptions={get(meta, 'capacity.exceptions', [])}
+        />
+      )}
 
       {isNotPractice && (
         <div className={theme.events}>
