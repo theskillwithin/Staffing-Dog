@@ -16,6 +16,15 @@ export const useQueryParamsOnlyWith = (queryString, onlyWith = []) =>
 export const useNonEmptyParams = params =>
   pickBy(params, value => value !== null && value !== '')
 
+/**
+ * Hook: userFilterQueryParams
+ *
+ * Provides state/setState to get/set filters
+ * Updates filters when ever the queryString chnages
+ * TODO: useMemo some of the calculations
+ * @param {string} queryString
+ * @param {array} filterNames
+ */
 export function useFilterQueryParams(
   queryString,
   filterNames = ['employment_type', 'specialty', 'job_type', 'radius'],

@@ -1,8 +1,8 @@
 import set from 'lodash/set'
-import get from 'lodash/get'
 import omit from 'lodash/omit'
 import Cookies from 'js-cookie'
 import { API_ROOT } from '@sdog/utils/api'
+import get from '@sdog/utils/get'
 import createFingerprint from '@sdog/utils/fingerprint'
 import { useErrorFromResponse } from '@sdog/definitions/errors'
 
@@ -1076,5 +1076,8 @@ export const findFingerprint = state => findUserAuth(state).fingerprint
 export const findUserType = state => findUserInfo(state).type
 
 export const findUserId = state => findUserProfile(state).id
+
+export const findUserPlanTier = state =>
+  get(findUserProfile(state), 'meta.summary.plan_tier', false)
 
 export default reducer
