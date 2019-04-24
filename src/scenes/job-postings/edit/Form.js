@@ -125,7 +125,7 @@ const JobPostForm = ({ loading, onSubmit, date, setFormValue, options, form, typ
           label="Short Description. ( max characters 580 )"
           textarea
           className={theme.shortDescription}
-          maxLength={580}
+          maxlength={580}
           invalid={isInvalid('criteria.description')}
         />
       </div>
