@@ -139,16 +139,6 @@ const SettingsAboutMe = ({
       ? getSpecialty.map(s => findInitSpecialtyDropdown(s))
       : []
 
-  console.log({ specialtyDropdownInit })
-
-  // const specialtyDropdownInit =
-  //   findInitSpecialtyDropdown && findInitSpecialtyDropdown.length
-  //     ? findInitSpecialtyDropdown.map(s => {
-  //         label: findInitSpecialtyDropdown ? findInitSpecialtyDropdown.label : {},
-  //         value: get(profile, 'meta.summary.profession.specialty', ''),
-  //       })
-  //     : []
-
   const [form, setForm] = React.useState({
     profile: {
       description: profile.description,
