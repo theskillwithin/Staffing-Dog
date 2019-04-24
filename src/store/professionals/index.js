@@ -26,7 +26,7 @@ let reducers = {}
  * GET PROFESSIONALS
  */
 export const GET_PROFESSIONALS = 'GET_PROFESSIONALS'
-export const getProfessionalsTypes = createActionTypes(GET_PROFESSIONALS)
+export const getProfessionalsTYPES = createActionTypes(GET_PROFESSIONALS)
 
 export const getProfessionals = data => (dispatch, getState) =>
   dispatch({
@@ -43,18 +43,19 @@ export const getProfessionals = data => (dispatch, getState) =>
 
 reducers = {
   ...reducers,
-  [getProfessionalsTypes.LOADING]: state => ({
+  [getProfessionalsTYPES.LOADING]: state => ({
     ...state,
     ...spreadLastUpdated(),
     ...spreadLoadingError(true, false),
+    results: [],
   }),
-  [getProfessionalsTypes.SUCCESS]: (state, { data }) => ({
+  [getProfessionalsTYPES.SUCCESS]: (state, { data }) => ({
     ...state,
     ...spreadLastUpdated(),
     ...spreadLoadingError(false, false),
     results: data,
   }),
-  [getProfessionalsTypes.ERROR]: (state, { error }) => ({
+  [getProfessionalsTYPES.ERROR]: (state, { error }) => ({
     ...state,
     ...spreadLastUpdated(),
     ...spreadLoadingError(false, useErrorFromResponse(error)),
