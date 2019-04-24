@@ -119,7 +119,9 @@ class Messages extends React.Component {
 
     const selectUserOptions = this.props.friendList.map(user => ({
       label: `${user.contact_first_name || user.first_name} ${user.contact_last_name ||
-        user.last_name} - ${user.practice_name}`,
+        user.last_name}${user.practice_name ? ' - ' : ''}${
+        user.practice_name ? user.practice_name : ''
+      }`,
       value: user.user_id,
     }))
 
