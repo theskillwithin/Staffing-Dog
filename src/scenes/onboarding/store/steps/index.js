@@ -128,7 +128,7 @@ export const formatDataFromOnboarding = (values, profile, type = INITIAL_STATE.t
             profession: {
               ...get(profile, 'meta.summary.profession', {}),
               ...(values.profession ? { type: values.profession } : {}),
-              ...(values.specialty ? { specialty: [values.specialty] } : {}),
+              ...(values.specialty ? { specialty: [values.specialty] } : []),
             },
           }
         : {
