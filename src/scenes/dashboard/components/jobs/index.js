@@ -9,7 +9,7 @@ import { findJobsLoading, findJobsError, findJobs } from 'store/jobs'
 
 import theme from './theme.css'
 
-const userJobsList = ({ loading, error, jobs }) => (
+const UserJobsList = ({ loading, error, jobs }) => (
   <Card title="Job List">
     <div className={theme.jobList}>
       {loading && <Spinner />}
@@ -40,12 +40,12 @@ const userJobsList = ({ loading, error, jobs }) => (
   </Card>
 )
 
-userJobsList.defaultProps = {
+UserJobsList.defaultProps = {
   loading: true,
   error: false,
 }
 
-userJobsList.propTypes = {
+UserJobsList.propTypes = {
   jobs: object.isRequired,
   loading: bool,
   error: bool,
@@ -57,4 +57,4 @@ const mapState = state => ({
   jobs: findJobs(state),
 })
 
-export default connect(mapState)(userJobsList)
+export default connect(mapState)(UserJobsList)
