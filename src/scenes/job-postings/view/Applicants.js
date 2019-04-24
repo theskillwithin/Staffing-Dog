@@ -127,175 +127,172 @@ const JobApplicantsView = ({
     return 'primary'
   }
 
-  return (
-    <>
-      {isDayHire && (
-        <div className={theme.search}>
-          <Card type="large">
-            {get(listOfApplicants, '[0].id', false) ? (
-              <div className={theme.searchInner}>
-                <StarTitle title="Congradulations Day Hire Found" />
-                <ProfessionalCard
-                  applicant={listOfApplicants[0]}
-                  className={theme.first}
-                />
-              </div>
-            ) : (
-              <div className={theme.searchInner}>
-                <h2>Searching for Day Hire...</h2>
-                <SVG name="desktop_search" className={theme.desktopSearchSVG} />
-              </div>
-            )}
-          </Card>
-        </div>
-      )}
-
-      <div className={theme.applicants}>
+  if (isDayHire) {
+    return (
+      <div className={theme.search}>
         <Card type="large">
-          <h2>Applicants</h2>
-
-          <Tabs
-            activeTabIndex={activeTabIndex}
-            onSelect={setActiveTabIndex}
-            underline
-            exactWidthTab
-            left
-            settingsTabs
-            fw500
-          >
-            <div>Selected</div>
-            <div>Applied</div>
-            <div>Search</div>
-          </Tabs>
-
-          {activeTabIndex === 0 && (
-            <div className={theme.applicantTab}>
-              {listOfSelectedApplicantsError && (
-                <Alert error inline>
-                  {listOfSelectedApplicantsError}
-                </Alert>
-              )}
-
-              {listOfSelectedApplicantsLoading ? (
-                <Spinner />
-              ) : listOfSelectedApplicants.length ? (
-                listOfSelectedApplicants.map((applicant, index) => (
-                  <ProfessionalCard
-                    key={`applicant-selected-card-${applicant.id}`}
-                    applicant={applicant}
-                    shortCard
-                    className={index === 0 && theme.first}
-                  />
-                ))
-              ) : (
-                <p>No Selected Applicants.</p>
-              )}
+          {get(listOfApplicants, '[0].id', false) ? (
+            <div className={theme.searchInner}>
+              <StarTitle title="Congradulations Day Hire Found" />
+              <ProfessionalCard applicant={listOfApplicants[0]} className={theme.first} />
+            </div>
+          ) : (
+            <div className={theme.searchInner}>
+              <h2>Searching for Day Hire...</h2>
+              <SVG name="desktop_search" className={theme.desktopSearchSVG} />
             </div>
           )}
-
-          {activeTabIndex === 1 && (
-            <div className={theme.applicantTab}>
-              {listOfApplicantsError && (
-                <Alert error inline>
-                  {listOfApplicantsError}
-                </Alert>
-              )}
-
-              {listOfApplicantsLoading ? (
-                <Spinner />
-              ) : listOfApplicants.length ? (
-                listOfApplicants.map((applicant, index) => (
-                  <ProfessionalCard
-                    key={`applicant-applied-card-${applicant.id}`}
-                    applicant={applicant}
-                    shortCard
-                    className={index === 0 && theme.first}
-                  />
-                ))
-              ) : (
-                <p>No Applicants have applied.</p>
-              )}
-            </div>
-          )}
-
-          {activeTabIndex === 2 && (
-            <div className={theme.applicantTab}>
-              <div className={theme.filters}>
-                <Filter
-                  onChange={value => handleFilterChange('employment_type', value.value)}
-                  value={find(jobTypes, ({ value }) => value === filters.employment_type)}
-                  options={jobTypes}
-                  placeholder="All Job Types"
-                  className={theme.jobType}
-                />
-
-                <Filter
-                  onChange={value => handleFilterChange('job_type', value.value)}
-                  value={find(positions, ({ value }) => value === filters.job_type)}
-                  options={positions}
-                  placeholder="All Job Positions"
-                  className={theme.jobPosition}
-                />
-
-                <Filter
-                  onChange={value => handleFilterChange('specialty', value.value)}
-                  value={find(
-                    getPositionTypesByPosition(filters.position),
-                    ({ value }) => value === filters.specialty,
-                  )}
-                  options={getPositionTypesByPosition(filters.position)}
-                  placeholder="All Speciality Types"
-                  className={theme.jobSpecialty}
-                />
-
-                <Filter
-                  onChange={value => handleFilterChange('radius', value.value)}
-                  value={find(distance, ({ value }) => value === filters.radius)}
-                  options={distance}
-                  placeholder="Any Distance"
-                  className={theme.jobDistance}
-                />
-              </div>
-
-              {listOfApplicantsLoading ? (
-                <Spinner />
-              ) : (
-                <>
-                  {professionals.error && (
-                    <Alert inline error>
-                      {professionals.error}
-                    </Alert>
-                  )}
-
-                  {!professionals.results.length ? (
-                    <p>No results were found. Try adjusting your filters above.</p>
-                  ) : (
-                    professionals.results.map(applicant => (
-                      <ProfessionalCard
-                        key={`applicant-search-card-${applicant.id}`}
-                        applicant={applicant}
-                        action={onClickAddUserToJob}
-                        actionText={getAddUserActionText(applicant.id)}
-                        actionColor={getAddUserActionColor(applicant.id)}
-                      />
-                    ))
-                  )}
-                </>
-              )}
-            </div>
-          )}
-
-          <div className={theme.bottom}>
-            <div>
-              <span>{listOfSelectedApplicants.length || 0}</span> Selected
-            </div>
-            <div>
-              <span>{listOfApplicants.length || 0}</span> Applied
-            </div>
-          </div>
         </Card>
       </div>
-    </>
+    )
+  }
+
+  return (
+    <div className={theme.applicants}>
+      <Card type="large">
+        <h2>Applicants</h2>
+
+        <Tabs
+          activeTabIndex={activeTabIndex}
+          onSelect={setActiveTabIndex}
+          underline
+          exactWidthTab
+          left
+          settingsTabs
+          fw500
+        >
+          <div>Selected</div>
+          <div>Applied</div>
+          <div>Search</div>
+        </Tabs>
+
+        {activeTabIndex === 0 && (
+          <div className={theme.applicantTab}>
+            {listOfSelectedApplicantsError && (
+              <Alert error inline>
+                {listOfSelectedApplicantsError}
+              </Alert>
+            )}
+
+            {listOfSelectedApplicantsLoading ? (
+              <Spinner />
+            ) : listOfSelectedApplicants.length ? (
+              listOfSelectedApplicants.map((applicant, index) => (
+                <ProfessionalCard
+                  key={`applicant-selected-card-${applicant.id}`}
+                  applicant={applicant}
+                  shortCard
+                  className={index === 0 && theme.first}
+                />
+              ))
+            ) : (
+              <p>No Selected Applicants.</p>
+            )}
+          </div>
+        )}
+
+        {activeTabIndex === 1 && (
+          <div className={theme.applicantTab}>
+            {listOfApplicantsError && (
+              <Alert error inline>
+                {listOfApplicantsError}
+              </Alert>
+            )}
+
+            {listOfApplicantsLoading ? (
+              <Spinner />
+            ) : listOfApplicants.length ? (
+              listOfApplicants.map((applicant, index) => (
+                <ProfessionalCard
+                  key={`applicant-applied-card-${applicant.id}`}
+                  applicant={applicant}
+                  shortCard
+                  className={index === 0 && theme.first}
+                />
+              ))
+            ) : (
+              <p>No Applicants have applied.</p>
+            )}
+          </div>
+        )}
+
+        {activeTabIndex === 2 && (
+          <div className={theme.applicantTab}>
+            <div className={theme.filters}>
+              <Filter
+                onChange={value => handleFilterChange('employment_type', value.value)}
+                value={find(jobTypes, ({ value }) => value === filters.employment_type)}
+                options={jobTypes}
+                placeholder="All Job Types"
+                className={theme.jobType}
+              />
+
+              <Filter
+                onChange={value => handleFilterChange('job_type', value.value)}
+                value={find(positions, ({ value }) => value === filters.job_type)}
+                options={positions}
+                placeholder="All Job Positions"
+                className={theme.jobPosition}
+              />
+
+              <Filter
+                onChange={value => handleFilterChange('specialty', value.value)}
+                value={find(
+                  getPositionTypesByPosition(filters.position),
+                  ({ value }) => value === filters.specialty,
+                )}
+                options={getPositionTypesByPosition(filters.position)}
+                placeholder="All Speciality Types"
+                className={theme.jobSpecialty}
+              />
+
+              <Filter
+                onChange={value => handleFilterChange('radius', value.value)}
+                value={find(distance, ({ value }) => value === filters.radius)}
+                options={distance}
+                placeholder="Any Distance"
+                className={theme.jobDistance}
+              />
+            </div>
+
+            {listOfApplicantsLoading ? (
+              <Spinner />
+            ) : (
+              <>
+                {professionals.error && (
+                  <Alert inline error>
+                    {professionals.error}
+                  </Alert>
+                )}
+
+                {!professionals.results.length ? (
+                  <p>No results were found. Try adjusting your filters above.</p>
+                ) : (
+                  professionals.results.map(applicant => (
+                    <ProfessionalCard
+                      key={`applicant-search-card-${applicant.id}`}
+                      applicant={applicant}
+                      action={onClickAddUserToJob}
+                      actionText={getAddUserActionText(applicant.id)}
+                      actionColor={getAddUserActionColor(applicant.id)}
+                    />
+                  ))
+                )}
+              </>
+            )}
+          </div>
+        )}
+
+        <div className={theme.bottom}>
+          <div>
+            <span>{listOfSelectedApplicants.length || 0}</span> Selected
+          </div>
+          <div>
+            <span>{listOfApplicants.length || 0}</span> Applied
+          </div>
+        </div>
+      </Card>
+    </div>
   )
 }
 

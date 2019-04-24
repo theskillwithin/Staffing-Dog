@@ -80,7 +80,7 @@ const JobPostingsView = ({
           <div className={theme.job}>
             <Card key={`job-posting-${job.id}`} type="large">
               <Link
-                to={`/search/job/${job.slug}`}
+                to={`${match.url}/view/${job.id}`}
                 className={clsx(theme.title, job.new && theme.new)}
               >
                 {get(job, 'criteria.title', 'Job')}
