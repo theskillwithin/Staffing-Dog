@@ -42,14 +42,17 @@ const JobPostingEdit = ({
   useEffect(() => void getPracticeOffices(), [])
   useEffect(() => void getSingleJob(match.params.id), [match.params.id])
 
-  const { form, getFormProps } = useJobPostForm(job, offices.results, 'edit', [
-    get(job, 'id', false),
-  ])
+  const { form, getFormProps, clearCache } = useJobPostForm(
+    job,
+    offices.results,
+    'edit',
+    [get(job, 'id', false)],
+  )
 
   const onSubmit = e => {
     e.preventDefault()
 
-    updateJobPost(form)
+    updateJobPost(form, { success: () => clearCache() })
   }
 
   return (
