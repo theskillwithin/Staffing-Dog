@@ -60,7 +60,10 @@ export function useJobPostForm(
   )
 
   // create state for form
-  const [state, setState] = useState(initialState || getInitialState(date.current))
+  const [state, setState] = useState({
+    ...getInitialState(date.current),
+    ...(initialState || {}),
+  })
   // create state for formating offices
   const [formatedOffices, setOffices] = useState(formatOffices(offices))
 
@@ -82,7 +85,7 @@ export function useJobPostForm(
       setOffices(officeOptions)
 
       if (!state.office_id) {
-        setFormValue('office_id', get(officeOptions, '[0]', null))
+        setFormValue('office_id', get(officeOptions, '[0].value', null))
       }
     },
     [offices],
