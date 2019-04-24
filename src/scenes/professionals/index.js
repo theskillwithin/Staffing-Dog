@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { shape, func, string, oneOfType, array, bool } from 'prop-types'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
@@ -6,6 +6,7 @@ import qs from 'qs'
 import clsx from 'clsx'
 import find from 'lodash/find'
 import { setTitle } from '@sdog/utils/document'
+import { useFilterQueryParams, useNonEmptyParams } from '@sdog/utils/queryParams'
 import ProfessionalCard from '@sdog/components/professional_card'
 import Spinner from '@sdog/components/spinner'
 import Filter from '@sdog/components/filter'
@@ -29,26 +30,11 @@ import theme from './theme.css'
 const ProfessionalsView = ({ history, location, professionals, getProfessionals }) => {
   useEffect(() => void setTitle('Job Postings'), [])
 
-  const [filters, setFilters] = useState({
-    employment_type: null,
-    specialty: null,
-    job_type: null,
-    radius: null,
-    ...qs.parse((location.search || '').substr(1)),
-  })
-
-  const handleFilterChange = (field, value) => {
-    setFilters({ ...filters, [field]: value })
-  }
+  const [filters, setFilters] = useFilterQueryParams(location.search)
+  const handleFilterChange = (field, value) => setFilters({ ...filters, [field]: value })
 
   useEffect(() => {
-    const filteredFilters = Object.keys(filters).reduce(
-      (list, filter) => ({
-        ...list,
-        ...(filters[filter] ? { [filter]: filters[filter] } : {}),
-      }),
-      {},
-    )
+    const filteredFilters = useNonEmptyParams(filters)
 
     if (Object.keys(filteredFilters).length) {
       history.push(`${location.pathname}?${qs.stringify(filteredFilters)}`)
