@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { shape, func, oneOfType, bool, string } from 'prop-types'
-import { Switch, Redirect, Route, withRouter } from 'react-router-dom'
+import { Switch, Route, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { findUserType } from '@sdog/store/user'
 import Spinner from '@sdog/components/spinner'
@@ -25,8 +25,7 @@ const JobsScene = ({ userType, match: { path }, history }) => {
   return (
     <Switch>
       <Route exact path={path} component={SearchJobs} />
-      <Redirect to={path} />
-      <Route path={`${path}/job/:id`} component={ViewJob} />
+      <Route path={`${path}/view/:id`} component={ViewJob} />
     </Switch>
   )
 }
