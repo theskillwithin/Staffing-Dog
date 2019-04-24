@@ -14,7 +14,7 @@ import Arrow from '@sdog/components/svg/Arrow'
 import SendIcon from '@sdog/components/svg/Send'
 import MessagesIcon from '@sdog/components/svg/Chat'
 import Button from '@sdog/components/button'
-import Select from '@sdog/components/select'
+import Dropdown from '@sdog/components/dropdown'
 import {
   getUserThreads,
   getMessageFriendList,
@@ -80,10 +80,11 @@ class Messages extends React.Component {
 
   submitMessage = () => {
     const {
-      active: threadId,
       message,
       selectedUser: { value: friendId = false },
     } = this.state
+
+    const threadId = this.state.active
 
     this.props.sendUserMessage({
       message,
@@ -101,6 +102,12 @@ class Messages extends React.Component {
     const activeThread = active ? find(threads, thread => thread.id === active) : {}
     const messages = (activeThread && activeThread.recent) || []
 
+    const selectUserOptions = this.props.friendList.map(user => ({
+      label: `${user.contact_first_name || user.first_name} ${user.contact_last_name ||
+        user.last_name} - ${user.practice_name}`,
+      value: user.user_id,
+    }))
+
     return (
       <ErrorBoundry>
         <Card
@@ -116,7 +123,7 @@ class Messages extends React.Component {
               {threads && threads.length ? (
                 map(threads, thread => (
                   <div
-                    key={thread.id}
+                    key={`threads-${thread.id}`}
                     className={clsx(
                       theme.threadContainer,
                       this.state.quickReply === thread.id && theme.quickReplyActive,
@@ -192,52 +199,52 @@ class Messages extends React.Component {
 
               {this.state.active === 'new' && this.props.friendList.length >= 1 && (
                 <div className={theme.users}>
-                  <Select
+                  <Dropdown
                     value={this.state.selectedUser}
                     placeholder="Select User..."
                     onChange={this.handleUsersChange}
-                    options={this.props.friendList.map(user => ({
-                      label: `${user.first_name} ${user.last_name}`,
-                      value: user.user_id,
-                    }))}
-                    searchable
+                    options={selectUserOptions}
                   />
                 </div>
               )}
 
-              {map(messages, message => (
-                <div
-                  key={message.id}
-                  className={clsx(theme.message, !message.read && theme.unread)}
-                >
-                  <div className={theme.avatar}>
-                    {message.avatar ? (
-                      <img src={message.avatar} alt="avatar" />
-                    ) : (
-                      <ProfilePhotoSVG />
-                    )}
-                  </div>
+              {messages && messages.length
+                ? map(messages, message => {
+                    return (
+                      <div
+                        key={`message-${message.sent_by}-${message.sent_at}`}
+                        className={clsx(theme.message, !message.read && theme.unread)}
+                      >
+                        <div className={theme.avatar}>
+                          {message.avatar ? (
+                            <img src={message.avatar} alt="avatar" />
+                          ) : (
+                            <ProfilePhotoSVG />
+                          )}
+                        </div>
 
-                  <div className={theme.middle}>
-                    <div className={theme.title}>
-                      <h6>{message.from}</h6>
-                      {message.location && <span>{message.location}</span>}
-                    </div>
+                        <div className={theme.middle}>
+                          <div className={theme.title}>
+                            <h6>{message.from}</h6>
+                            {message.location && <span>{message.location}</span>}
+                          </div>
 
-                    <div className={theme.short}>
-                      <p>{message.message && message.message}</p>
-                    </div>
-                  </div>
+                          <div className={theme.short}>
+                            <p>{message.message && message.message}</p>
+                          </div>
+                        </div>
 
-                  <div className={theme.right}>
-                    <div className={theme.date}>{message.date}</div>
+                        <div className={theme.right}>
+                          <div className={theme.date}>{message.date}</div>
 
-                    {message.threadCount && message.threadCount > 1 && (
-                      <div className={theme.threadCount}>{message.threadCount}</div>
-                    )}
-                  </div>
-                </div>
-              ))}
+                          {message.threadCount && message.threadCount > 1 && (
+                            <div className={theme.threadCount}>{message.threadCount}</div>
+                          )}
+                        </div>
+                      </div>
+                    )
+                  })
+                : null}
 
               {this.props.friendList.length ? (
                 <div className={theme.respond}>
