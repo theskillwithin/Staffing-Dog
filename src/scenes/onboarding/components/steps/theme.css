@@ -41,6 +41,10 @@
   &.hasDropdown {
     margin-top: 1em;
     margin-bottom: 0.7em;
+
+    > * {
+      width: 100%;
+    }
   }
 
   .element {
@@ -85,6 +89,10 @@
 
 .formRow + .formRow {
   margin-top: 22px;
+
+  @media (--sd-notMobile) {
+    height: 48px;
+  }
 }
 
 .formRow .formRow {

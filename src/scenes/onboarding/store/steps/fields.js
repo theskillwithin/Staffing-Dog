@@ -25,6 +25,7 @@ export const professional = [
             label: 'First Name',
             type: 'input',
             required: true,
+            autoFocus: true,
           },
           {
             name: 'last_name',
@@ -83,6 +84,7 @@ export const professional = [
         type: 'input',
         required: true,
         validation: 'minChars3',
+        autoFocus: true,
       },
       {
         name: 'city',
@@ -182,6 +184,7 @@ export const professional = [
         type: 'dropdown',
         required: true,
         options: [...positions],
+        autoFocus: true,
       },
       {
         name: 'specialty',
@@ -253,6 +256,7 @@ export const practice = [
             label: 'First Name',
             type: 'input',
             required: true,
+            autoFocus: true,
           },
           {
             name: 'last_name',
@@ -310,6 +314,7 @@ export const practice = [
         type: 'input',
         required: true,
         validation: 'minChars3',
+        autoFocus: true,
       },
       {
         name: 'city',
@@ -388,7 +393,7 @@ export const practice = [
   },
   {
     step: '3',
-    nextStep: 'complete',
+    nextStep: '4',
     previousStep: '2',
     complete: false,
     needsComplete: true,
@@ -408,6 +413,7 @@ export const practice = [
         label: 'Practice Name',
         type: 'input',
         required: true,
+        autoFocus: true,
       },
       {
         name: 'practice_type',
@@ -443,6 +449,72 @@ export const practice = [
         type: 'input',
         formType: 'email',
         required: true,
+      },
+    ],
+  },
+  {
+    step: '4',
+    nextStep: 'complete',
+    previousStep: '3',
+    complete: false,
+    needsComplete: true,
+    needsCompleteIfToken: true,
+    title: 'Billing Information',
+    sidebar: {
+      packages: true,
+      order: ['packages'],
+    },
+    fields: [
+      {
+        name: 'name_on_card',
+        label: 'Name on Card',
+        type: 'input',
+        required: true,
+        autoFocus: true,
+      },
+      {
+        name: 'card_number',
+        label: 'Card Number',
+        type: 'input',
+        required: true,
+      },
+      {
+        fields: [
+          {
+            name: 'expiration',
+            label: 'Expiration',
+            type: 'input',
+            required: true,
+          },
+          {
+            name: 'cvc',
+            label: 'CVC',
+            type: 'input',
+            required: true,
+            cvc: true,
+          },
+        ],
+      },
+      {
+        fields: [
+          {
+            name: 'billing_postal',
+            label: 'Billing Postal Code',
+            type: 'input',
+            required: true,
+          },
+          {
+            name: 'package',
+            label: 'Select Package',
+            type: 'dropdown',
+            required: true,
+            options: [
+              { label: 'Day Hire', value: 'day_hire' },
+              { label: 'Three Month', value: 'three_month' },
+              { label: 'Full', value: 'full' },
+            ],
+          },
+        ],
       },
     ],
   },

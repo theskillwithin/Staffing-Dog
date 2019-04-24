@@ -116,3 +116,15 @@
     width: 30px;
   }
 }
+
+.cvc {
+  &:after {
+    content: url('/images/cvc.svg');
+    display: block;
+    position: absolute;
+    right: 1em;
+    top: 55%;
+    transform: translateY(-50%);
+    width: 30px;
+  }
+}
