@@ -9,41 +9,36 @@ import { findJobsLoading, findJobsError, findJobs } from 'store/jobs'
 
 import theme from './theme.css'
 
-const userJobsList = ({ loading, error, jobs }) => {
-  console.log({ jobs })
-  return (
-    <Card title="Job List">
-      <div className={theme.jobList}>
-        {loading && <Spinner />}
-        {error && <Alert error>an error has occured</Alert>}
-        {!error && !loading && (
-          <>
-            {jobs && jobs.applied && jobs.applied.length ? (
-              <div className={theme.jobs}>
-                <h3>Applied Jobs</h3>
-                {jobs &&
-                  jobs.applied.map(app => (
-                    <div key={app.id}>
-                      <div>{app.criteria.practice_details.name}</div>
-                      <div>{app.criteria.position}</div>
-                      <div>${app.criteria.hourly_rate || app.criteria.salary}/hr</div>
-                      <div>{app.criteria.specialty}</div>
-                      <div>
-                        {moment(app.criteria.available_date).format('MM/DD/YYYY')}
-                      </div>
-                      <div>View Job Post</div>
-                    </div>
-                  ))}
-              </div>
-            ) : (
-              <div>no applied jobs</div>
-            )}
-          </>
-        )}
-      </div>
-    </Card>
-  )
-}
+const userJobsList = ({ loading, error, jobs }) => (
+  <Card title="Job List">
+    <div className={theme.jobList}>
+      {loading && <Spinner />}
+      {error && <Alert error>an error has occured</Alert>}
+      {!error && !loading && (
+        <>
+          {jobs && jobs.applied && jobs.applied.length ? (
+            <div className={theme.jobs}>
+              <h3>Applied Jobs</h3>
+              {jobs &&
+                jobs.applied.map(app => (
+                  <div key={app.id}>
+                    <div>{app.criteria.practice_details.name}</div>
+                    <div>{app.criteria.position}</div>
+                    <div>${app.criteria.hourly_rate || app.criteria.salary}/hr</div>
+                    <div>{app.criteria.specialty}</div>
+                    <div>{moment(app.criteria.available_date).format('MM/DD/YYYY')}</div>
+                    <div>View Job Post</div>
+                  </div>
+                ))}
+            </div>
+          ) : (
+            <div>no applied jobs</div>
+          )}
+        </>
+      )}
+    </div>
+  </Card>
+)
 
 userJobsList.defaultProps = {
   loading: true,
