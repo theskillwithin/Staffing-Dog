@@ -1,13 +1,13 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { findUserType } from '@sdog/store/user'
+import { findUserType, findUserPlanTier } from '@sdog/store/user'
 import { Link } from 'react-router-dom'
 import { oneOfType, bool, object, string } from 'prop-types'
 import clsx from 'clsx'
 
 import theme from './theme.css'
 
-const MainMenu = ({ location, type }) => {
+const MainMenu = ({ location, type, planTier }) => {
   const isActive = page => {
     const { pathname } = location
     return page.test(pathname)
@@ -29,17 +29,19 @@ const MainMenu = ({ location, type }) => {
               Dashboard
             </Link>
           </li>
-          <li className={theme.navItem}>
-            <Link
-              className={clsx(
-                theme.navItemLink,
-                isActive(/professionals/) && theme.active,
-              )}
-              to="/professionals"
-            >
-              Professionals
-            </Link>
-          </li>
+          {planTier && 'day_hire' !== planTier ? (
+            <li className={theme.navItem}>
+              <Link
+                className={clsx(
+                  theme.navItemLink,
+                  isActive(/professionals/) && theme.active,
+                )}
+                to="/professionals"
+              >
+                Professionals
+              </Link>
+            </li>
+          ) : null}
           <li className={theme.navItem}>
             <Link
               className={clsx(theme.navItemLink, isActive(/job-posting/) && theme.active)}
@@ -88,12 +90,14 @@ const MainMenu = ({ location, type }) => {
 MainMenu.propTypes = {
   location: object.isRequired,
   type: oneOfType([bool, string]),
+  planTier: oneOfType([bool, string]),
 }
 
-MainMenu.defaultProps = { type: false }
+MainMenu.defaultProps = { type: false, planTier: false }
 
 const mapState = state => ({
   type: findUserType(state),
+  planTier: findUserPlanTier(state),
 })
 
 export default connect(mapState)(MainMenu)

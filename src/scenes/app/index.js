@@ -40,6 +40,8 @@ const App = ({ getUserProfile, location, history, userProfile }) => {
     [userOnboardingStatus],
   )
 
+  const planTier = get(userProfile, 'meta.summary.plan_tier', false)
+
   return (
     <div className={theme.app}>
       <header className={theme.appHeader}>
@@ -62,7 +64,9 @@ const App = ({ getUserProfile, location, history, userProfile }) => {
           <Route path="/settings" component={SettingsScene} />
           <Route path="/jobs" component={JobsScene} />
           <Route path="/job-postings" component={JobPostingsScene} />
-          <Route path="/professionals" component={ProfesionalsScene} />
+          {planTier && planTier !== 'day_hire' ? (
+            <Route path="/professionals" component={ProfesionalsScene} />
+          ) : null}
         </React.Suspense>
       </div>
     </div>
