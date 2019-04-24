@@ -132,7 +132,9 @@ const JobSearch = ({
       </header>
 
       <div className={theme.searchResults}>
-        {loading ? (
+        {Boolean(getJobs().length) && loading && <Spinner />}
+
+        {!getJobs().length && loading ? (
           <Spinner />
         ) : (
           <>
