@@ -7,7 +7,7 @@ const Footer = () => (
   <footer className={theme.footer}>
     <nav>
       <a href="/blog">Blog</a>
-      <a href="/terms">Terms</a>
+      <Link to="/terms">Terms</Link>
       <Link to="/privacy">Privacy</Link>
       <Link to="/support">Support</Link>
     </nav>
