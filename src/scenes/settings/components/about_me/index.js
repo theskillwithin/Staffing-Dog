@@ -127,16 +127,17 @@ const SettingsAboutMe = ({
       }
     : ''
 
-  const findInitSpecialtyDropdown = find(positions, {
-    value: get(profile, 'meta.summary.profession.specialty', ''),
-  })
+  const getSpecialty = get(profile, 'meta.summary.profession.specialty', [])
 
-  const specialtyDropdownInit = findInitSpecialtyDropdown
-    ? {
-        label: findInitSpecialtyDropdown ? findInitSpecialtyDropdown.label : {},
-        value: get(profile, 'meta.summary.profession.specialty', ''),
-      }
-    : ''
+  const findInitSpecialtyDropdown = s =>
+    find(positionTypes, {
+      value: s,
+    })
+
+  const specialtyDropdownInit =
+    getSpecialty && getSpecialty.length
+      ? getSpecialty.map(s => findInitSpecialtyDropdown(s))
+      : []
 
   const [form, setForm] = React.useState({
     profile: {
@@ -198,7 +199,11 @@ const SettingsAboutMe = ({
             profession: {
               ...form.profile.meta.summary.profession,
               type: form.profile.meta.summary.profession.type.value,
-              specailty: form.profile.meta.summary.profession.specialty.value,
+              specialty:
+                form.profile.meta.summary.profession.specialty &&
+                form.profile.meta.summary.profession.specialty.length
+                  ? form.profile.meta.summary.profession.specialty.map(s => s.value)
+                  : [],
             },
           },
         },
@@ -491,6 +496,8 @@ const SettingsAboutMe = ({
               placeholder="Speciailty"
               value={form.profile.meta.summary.profession.specialty}
               options={positionTypes}
+              isMulti
+              height={120}
               onChange={value =>
                 setForm({
                   ...form,

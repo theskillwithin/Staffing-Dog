@@ -7,6 +7,7 @@ import theme from '../app/theme.css'
 import ToDoList from './components/to_do_list'
 import Messages from './components/messages'
 import JobSchedule from './components/job_schedule'
+import Jobs from './components/jobs'
 
 const Dashboard = () => {
   useDocumentTitle('Dashboard')
@@ -16,6 +17,7 @@ const Dashboard = () => {
     <div className={clsx(theme.pageContent, theme.columns)}>
       <div className={theme.columnA}>
         <ToDoList />
+        <Jobs />
         <Messages />
       </div>
 

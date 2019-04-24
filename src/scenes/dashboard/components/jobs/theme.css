@@ -1,0 +1,11 @@
+@import '../../../../styles/config';
+
+.jobList {
+  min-height: 200px;
+}
+
+.jobs {
+  > * {
+    margin-top: 1em;
+  }
+}

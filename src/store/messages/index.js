@@ -9,6 +9,7 @@ import { createActionTypes, reduxRegister, buildStore } from '../tools'
 export const INITIAL_STATE = {
   loading: true,
   error: false,
+  success: false,
   threads: [],
   friends: [],
 }
@@ -115,8 +116,11 @@ export const sendUserMessage = ({
   userId = false,
   friendId = false,
   threadId = false,
+  cbSuccess = false,
 }) => (dispatch, getState) => {
-  const isNewThread = !!threadId
+  const isNewThread = !threadId
+
+  const getFindUserId = userId || findUserId(getState()) || getUserId()
 
   dispatch({
     type: SEND_USER_MESSAGE,
@@ -124,13 +128,21 @@ export const sendUserMessage = ({
       url: `${API_ROOT}/messages${isNewThread ? '/threads' : ''}`,
       method: 'POST',
       data: {
-        user_id: userId || findUserId(getState()) || getUserId(),
+        user_id: getFindUserId,
         ...(friendId ? { participant_id: friendId } : {}),
         ...(threadId ? { thread_id: threadId } : {}),
         data: { message },
       },
+      callbacks: {
+        success: () => cbSuccess && cbSuccess(),
+      },
     },
-    payload: { userId, friendId, threadId, message },
+    payload: {
+      userId: getFindUserId,
+      friendId,
+      threadId,
+      message,
+    },
   })
 }
 
@@ -144,23 +156,19 @@ reducers = {
       error: thread.id === threadId ? false : thread.error || false,
     })),
   }),
-  [sendUserMessageTypes.SUCCESS]: (
-    state,
-    { __payload: { message, userId, threadId } },
-  ) => ({
+  [sendUserMessageTypes.SUCCESS]: (state, { __payload: { threadId }, data }) => ({
     ...state,
     threads: state.threads.map(thread => ({
+      ...thread,
       sending: thread.id === threadId ? false : thread.sending || false,
       error: thread.id === threadId ? false : thread.error || false,
-      recent:
-        thread.id === threadId
-          ? [...thread.recent, { message, sent_by: userId }]
-          : [...thread.recent],
+      recent: thread.id === threadId ? [...data.recent] : [...thread.recent],
     })),
   }),
   [sendUserMessageTypes.ERROR]: (state, { error, threadId }) => ({
     ...state,
     threads: state.threads.map(thread => ({
+      ...thread,
       sending: thread.id === threadId ? false : thread.sending || false,
       error: thread.id === threadId ? useErrorFromResponse(error) : thread.error || false,
     })),

@@ -100,6 +100,13 @@ export const formatDataFromOnboardingForRegister = (
 
 // format data from redux to use for api
 export const formatDataFromOnboarding = (values, profile, type = INITIAL_STATE.type) => ({
+  billing_data: {
+    plan_tier: values.plan_tier,
+    cc_number: values.cc_number,
+    cc_exp_month: values.expiration && values.expiration.split('/')[0],
+    cc_exp_year: values.expiration && values.expiration.split('/')[1],
+    cc_cvv: values.cc_cvv,
+  },
   addresses: {
     ...(profile.addresses || {}),
     ...(values.street ? { line_1: values.street } : {}),
@@ -121,7 +128,7 @@ export const formatDataFromOnboarding = (values, profile, type = INITIAL_STATE.t
             profession: {
               ...get(profile, 'meta.summary.profession', {}),
               ...(values.profession ? { type: values.profession } : {}),
-              ...(values.specialty ? { specialty: values.specialty } : {}),
+              ...(values.specialty ? { specialty: [values.specialty] } : []),
             },
           }
         : {

@@ -9,12 +9,13 @@ import clsx from 'clsx'
 import ErrorBoundry from '@sdog/components/error_boundry'
 import Card from '@sdog/components/card'
 import ProfilePhotoSVG from '@sdog/components/svg/ProfilePhoto'
-import ReplySVG from '@sdog/components/svg/Reply'
+import moment from 'moment'
+// import ReplySVG from '@sdog/components/svg/Reply'
 import Arrow from '@sdog/components/svg/Arrow'
 import SendIcon from '@sdog/components/svg/Send'
 import MessagesIcon from '@sdog/components/svg/Chat'
 import Button from '@sdog/components/button'
-import Select from '@sdog/components/select'
+import Dropdown from '@sdog/components/dropdown'
 import {
   getUserThreads,
   getMessageFriendList,
@@ -80,15 +81,30 @@ class Messages extends React.Component {
 
   submitMessage = () => {
     const {
-      active: threadId,
       message,
       selectedUser: { value: friendId = false },
     } = this.state
 
-    this.props.sendUserMessage({
-      message,
-      ...(threadId === 'new' ? { friendId } : { threadId }),
-    })
+    const threadId = this.state.active
+
+    const success = () => {
+      if (this.state.active === 'new') {
+        this.viewThread('')
+        // this.viewThread(this.props.threads)
+        setTimeout(() => {
+          this.props.getUserThreads()
+        }, 500)
+      }
+      this.setState({ message: '' })
+    }
+
+    this.props.sendUserMessage(
+      {
+        message,
+        ...(threadId === 'new' ? { friendId } : { threadId }),
+      },
+      success(),
+    )
   }
 
   handleChange = message => this.setState({ message })
@@ -100,6 +116,14 @@ class Messages extends React.Component {
     const { threads } = this.props
     const activeThread = active ? find(threads, thread => thread.id === active) : {}
     const messages = (activeThread && activeThread.recent) || []
+
+    const selectUserOptions = this.props.friendList.map(user => ({
+      label: `${user.contact_first_name || user.first_name} ${user.contact_last_name ||
+        user.last_name}${user.practice_name ? ' - ' : ''}${
+        user.practice_name ? user.practice_name : ''
+      }`,
+      value: user.user_id,
+    }))
 
     return (
       <ErrorBoundry>
@@ -114,70 +138,91 @@ class Messages extends React.Component {
           <div className={clsx(theme.threadsContainer, active && theme.active)}>
             <div className={theme.threads}>
               {threads && threads.length ? (
-                map(threads, thread => (
-                  <div
-                    key={thread.id}
-                    className={clsx(
-                      theme.threadContainer,
-                      this.state.quickReply === thread.id && theme.quickReplyActive,
-                    )}
-                  >
+                map(threads, thread => {
+                  const findOtherUserIsInitiator =
+                    activeThread &&
+                    activeThread.initiator &&
+                    activeThread.initiator.id === this.props.userId
+
+                  const findOtherUser = findOtherUserIsInitiator
+                    ? `${thread.initiator &&
+                        thread.initiator.first_name} ${thread.initiator &&
+                        thread.initiator.last_name}`
+                    : `${thread.participant &&
+                        thread.participant.first_name} ${thread.participant &&
+                        thread.participant.last_name}`
+
+                  return (
                     <div
-                      role="button"
-                      tabIndex={0}
-                      onClick={() => this.viewThread(thread.id)}
-                      className={clsx(theme.thread, !thread.read && theme.unread)}
+                      key={`threads-${thread.id}`}
+                      className={clsx(
+                        theme.threadContainer,
+                        this.state.quickReply === thread.id && theme.quickReplyActive,
+                      )}
                     >
-                      <div className={theme.avatar}>
-                        {thread.avatar ? (
-                          <img src={thread.avatar} alt="avatar" />
-                        ) : (
-                          <ProfilePhotoSVG />
-                        )}
+                      <div
+                        role="button"
+                        tabIndex={0}
+                        onClick={() => this.viewThread(thread.id)}
+                        className={clsx(theme.thread, !thread.read && theme.unread)}
+                      >
+                        <div className={theme.avatar}>
+                          {thread.avatar ? (
+                            <img src={thread.avatar} alt="avatar" />
+                          ) : (
+                            <ProfilePhotoSVG />
+                          )}
+                        </div>
+
+                        <div className={theme.middle}>
+                          <div className={theme.title}>
+                            <h6>{findOtherUser}</h6>
+                            {thread.location && <span>{thread.location}</span>}
+                          </div>
+                          <div className={theme.short}>
+                            <p>{get(thread.recent, '[0].message', '')}</p>
+                          </div>
+                        </div>
+
+                        <div className={theme.right}>
+                          <div className={theme.date}>
+                            {moment(thread.recent[0].sent_at).format('DD/MM/YYYY')}
+                          </div>
+                          {thread.recent &&
+                            thread.recent.length &&
+                            thread.recent.length > 1 && (
+                              <div className={theme.threadCount}>
+                                {thread.recent.length}
+                              </div>
+                            )}
+                          {/* <button
+                            type="button"
+                            className={theme.reply}
+                            onClick={e => this.quickReply(e, thread.id)}
+                          >
+                            <ReplySVG />
+                          </button> */}
+                        </div>
                       </div>
 
-                      <div className={theme.middle}>
-                        <div className={theme.title}>
-                          <h6>{thread.from}</h6>
-                          {thread.location && <span>{thread.location}</span>}
+                      {this.state.quickReply === thread.id && (
+                        <div className={theme.quickReply}>
+                          <div className={theme.respond}>
+                            <Textarea
+                              placeholder="Type message here"
+                              value={this.state.message}
+                              onChange={e => this.handleChange(e.target.value)}
+                            />
+                            <Button primary round onClick={this.submitMessage}>
+                              Send
+                              <SendIcon />
+                            </Button>
+                          </div>
                         </div>
-                        <div className={theme.short}>
-                          <p>{get(thread.recent, '[0].message', '')}</p>
-                        </div>
-                      </div>
-
-                      <div className={theme.right}>
-                        <div className={theme.date}>{thread.date}</div>
-                        {thread.threadCount && thread.threadCount > 1 && (
-                          <div className={theme.threadCount}>{thread.threadCount}</div>
-                        )}
-                        <button
-                          type="button"
-                          className={theme.reply}
-                          onClick={e => this.quickReply(e, thread.id)}
-                        >
-                          <ReplySVG />
-                        </button>
-                      </div>
+                      )}
                     </div>
-
-                    {this.state.quickReply === thread.id && (
-                      <div className={theme.quickReply}>
-                        <div className={theme.respond}>
-                          <Textarea
-                            placeholder="Type message here"
-                            value={this.state.message}
-                            onChange={e => this.handleChange(e.target.value)}
-                          />
-                          <Button primary round onClick={this.submitMessage}>
-                            Send
-                            <SendIcon />
-                          </Button>
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                ))
+                  )
+                })
               ) : (
                 <div className={theme.empty}>
                   <h4>No Messages</h4>
@@ -192,52 +237,77 @@ class Messages extends React.Component {
 
               {this.state.active === 'new' && this.props.friendList.length >= 1 && (
                 <div className={theme.users}>
-                  <Select
+                  <Dropdown
                     value={this.state.selectedUser}
                     placeholder="Select User..."
                     onChange={this.handleUsersChange}
-                    options={this.props.friendList.map(user => ({
-                      label: `${user.first_name} ${user.last_name}`,
-                      value: user.user_id,
-                    }))}
-                    searchable
+                    options={selectUserOptions}
                   />
                 </div>
               )}
 
-              {map(messages, message => (
-                <div
-                  key={message.id}
-                  className={clsx(theme.message, !message.read && theme.unread)}
-                >
-                  <div className={theme.avatar}>
-                    {message.avatar ? (
-                      <img src={message.avatar} alt="avatar" />
-                    ) : (
-                      <ProfilePhotoSVG />
-                    )}
-                  </div>
+              {messages && messages.length
+                ? map(messages, message => {
+                    const sentByInitiator =
+                      activeThread.initiator &&
+                      activeThread.initiator.id === message.sent_by
+                    // const sentByParticipant =
+                    //   activeThread.participant &&
+                    //   activeThread.participant.id === message.sent_by
 
-                  <div className={theme.middle}>
-                    <div className={theme.title}>
-                      <h6>{message.from}</h6>
-                      {message.location && <span>{message.location}</span>}
-                    </div>
+                    const sentByName = sentByInitiator
+                      ? `${activeThread.initiator.first_name} ${
+                          activeThread.initiator.last_name
+                        }`
+                      : `${activeThread.participant.first_name} ${
+                          activeThread.participant.last_name
+                        }`
 
-                    <div className={theme.short}>
-                      <p>{message.message && message.message}</p>
-                    </div>
-                  </div>
+                    // const sentByNameLocation = sentByInitiator
+                    // ? `${activeThread.initiator.first_name} ${
+                    //     activeThread.initiator.last_name
+                    //   }`
+                    // : `${activeThread.participant.first_name} ${
+                    //     activeThread.participant.last_name
+                    //   }`
 
-                  <div className={theme.right}>
-                    <div className={theme.date}>{message.date}</div>
+                    return (
+                      <div
+                        key={`message-${message.sent_by}-${message.sent_at}`}
+                        className={clsx(theme.message, !message.read && theme.unread)}
+                      >
+                        <div className={theme.avatar}>
+                          {message.avatar ? (
+                            <img src={message.avatar} alt="avatar" />
+                          ) : (
+                            <ProfilePhotoSVG />
+                          )}
+                        </div>
 
-                    {message.threadCount && message.threadCount > 1 && (
-                      <div className={theme.threadCount}>{message.threadCount}</div>
-                    )}
-                  </div>
-                </div>
-              ))}
+                        <div className={theme.middle}>
+                          <div className={theme.title}>
+                            <h6>{sentByName}</h6>
+                            {message.location && <span>{message.location}</span>}
+                          </div>
+
+                          <div className={theme.short}>
+                            <p>{message.message && message.message}</p>
+                          </div>
+                        </div>
+
+                        <div className={theme.right}>
+                          <div className={theme.date}>
+                            {moment(message.sent_at).format('DD/MM/YYYY')}
+                          </div>
+
+                          {message.threadCount && message.threadCount > 1 && (
+                            <div className={theme.threadCount}>{message.threadCount}</div>
+                          )}
+                        </div>
+                      </div>
+                    )
+                  })
+                : null}
 
               {this.props.friendList.length ? (
                 <div className={theme.respond}>

@@ -473,7 +473,7 @@ export const practice = [
         autoFocus: true,
       },
       {
-        name: 'card_number',
+        name: 'cc_number',
         label: 'Card Number',
         type: 'input',
         required: true,
@@ -482,12 +482,13 @@ export const practice = [
         fields: [
           {
             name: 'expiration',
-            label: 'Expiration',
+            label: 'MM/YYYY',
+            placeholder: 'MM/YYYY',
             type: 'input',
             required: true,
           },
           {
-            name: 'cvc',
+            name: 'cc_cvv',
             label: 'CVC',
             type: 'input',
             required: true,
@@ -504,14 +505,14 @@ export const practice = [
             required: true,
           },
           {
-            name: 'package',
+            name: 'plan_tier',
             label: 'Select Package',
             type: 'dropdown',
             required: true,
             options: [
               { label: 'Day Hire', value: 'day_hire' },
-              { label: 'Three Month', value: 'three_month' },
-              { label: 'Full', value: 'full' },
+              { label: 'Three Month', value: '3_month' },
+              { label: 'Full', value: 'annual' },
             ],
           },
         ],
