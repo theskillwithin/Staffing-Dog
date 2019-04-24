@@ -421,10 +421,10 @@ export const practice = [
         type: 'dropdown',
         required: true,
         options: [
-          { value: 'Single Practice' },
-          { value: 'Multi Practice' },
-          { value: 'School' },
-          { value: 'Other' },
+          { label: 'Single Practice', value: 'single_practice' },
+          { label: 'Multi Practice', value: 'multi_practice' },
+          { label: 'School', value: 'school' },
+          { label: 'Other', value: 'other' },
         ],
       },
       {
