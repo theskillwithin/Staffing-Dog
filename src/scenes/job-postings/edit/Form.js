@@ -58,9 +58,7 @@ const JobPostForm = ({ loading, onSubmit, date, setFormValue, options, form, typ
     }
   }
 
-  const isInvalid = field => {
-    return inValidFields.includes(field)
-  }
+  const isInvalid = field => inValidFields.includes(field)
 
   return (
     <form className={theme.form}>
@@ -89,10 +87,10 @@ const JobPostForm = ({ loading, onSubmit, date, setFormValue, options, form, typ
             office => office.value === get(form, 'office_id', false),
           )}
           options={options.offices}
-          onChange={value => handleSetFormValue('office_id', value.value)}
+          onChange={({ value }) => handleSetFormValue('office_id', value)}
           label="Office Location"
           placeholder="Office Location"
-          disabled={'edit' === type && form.id && Boolean(form.office_id)}
+          disabled={'edit' === type && form.id && Boolean(get(form, 'office_id', false))}
           invalid={isInvalid('options.offices')}
         />
 
@@ -237,15 +235,32 @@ const JobPostForm = ({ loading, onSubmit, date, setFormValue, options, form, typ
           </Button>
         </div>
       ) : (
-        <Button
-          disabled={loading}
-          type="button"
-          className={theme.submitBtn}
-          onClick={submit}
-        >
-          Update Job Posting {loading && <Spinner inverted size={20} center={false} />}
-        </Button>
+        <div className={theme.submitBtns}>
+          {'draft' === form.status && (
+            <Button
+              type="button"
+              primary
+              className={theme.submitBtn}
+              onClick={e => submit(e, 'open')}
+              disabled={loading}
+            >
+              Update &amp; Publish Job Live{' '}
+              {loading && <Spinner inverted size={20} center={false} />}
+            </Button>
+          )}
+
+          <Button
+            type="button"
+            secondary
+            className={theme.submitBtn}
+            onClick={e => submit(e, form.status)}
+            disabled={loading}
+          >
+            Update Job {loading && <Spinner inverted size={20} center={false} />}
+          </Button>
+        </div>
       )}
+
       {inValidFields.length ? (
         <Alert error>Please fill out the required fields</Alert>
       ) : null}
@@ -264,7 +279,6 @@ JobPostForm.propTypes = {
     positions: array.isRequired,
     positionTypes: array.isRequired,
   }).isRequired,
-  clearCache: func.isRequired,
   onSubmit: func.isRequired,
   loading: bool,
 }

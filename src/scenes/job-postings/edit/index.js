@@ -46,10 +46,13 @@ const JobPostingEdit = ({
     get(job, 'id', false),
   ])
 
-  const onSubmit = e => {
+  const onSubmit = (e, status) => {
     e.preventDefault()
 
-    updateJobPost(form)
+    updateJobPost({
+      ...form,
+      status: status || form.status,
+    })
   }
 
   return (
