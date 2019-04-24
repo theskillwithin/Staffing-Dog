@@ -24,10 +24,7 @@ const JobPostings = ({ history, getPracticeOffices, offices, create, postNewJob 
   useDocumentTitle('Job Postings')
   useEffect(() => void getPracticeOffices(), [])
 
-  const { form, setFormValue, clearCache, getFormProps, date } = useJobPostForm(
-    null,
-    offices.results,
-  )
+  const { form, setFormValue, getFormProps, date } = useJobPostForm(null, offices.results)
 
   const onSubmit = (e, status = 'draft') => {
     e.preventDefault()
@@ -45,12 +42,7 @@ const JobPostings = ({ history, getPracticeOffices, offices, create, postNewJob 
               : get(form, 'criteria.hourly_rate', 0),
         },
       },
-      {
-        success: () => {
-          clearCache()
-          history.push(`/job-postings`)
-        },
-      },
+      { success: () => history.push(`/job-postings`) },
     )
   }
 

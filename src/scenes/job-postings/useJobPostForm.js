@@ -4,8 +4,6 @@ import get from '@sdog/utils/get'
 import set from 'lodash/set'
 import { positions, getPositionTypesByPosition } from '@sdog/definitions/jobs'
 
-let jobPostFormCache = null
-
 export const formatOffices = offices =>
   offices.map(office => ({
     label: get(
@@ -62,11 +60,10 @@ export function useJobPostForm(
   )
 
   // create state for form
-  const valueForInitialState =
-    'new' === type ? jobPostFormCache || initialState : initialState
-  const [state, setState] = useState(
-    valueForInitialState || getInitialState(date.current),
-  )
+  const [state, setState] = useState({
+    ...getInitialState(date.current),
+    ...(initialState || {}),
+  })
   // create state for formating offices
   const [formatedOffices, setOffices] = useState(formatOffices(offices))
 
@@ -88,18 +85,11 @@ export function useJobPostForm(
       setOffices(officeOptions)
 
       if (!state.office_id) {
-        setFormValue('office_id', get(officeOptions, '[0]', null))
+        setFormValue('office_id', get(officeOptions, '[0].value', null))
       }
     },
     [offices],
   )
-
-  // update cache
-  useEffect(() => {
-    if ('new' === type) {
-      jobPostFormCache = state
-    }
-  })
 
   // return values to be used
   const props = {
@@ -115,9 +105,6 @@ export function useJobPostForm(
       positionTypes: getPositionTypesByPosition(
         get(state, 'criteria.position', 'default'),
       ),
-    },
-    clearCache: () => {
-      jobPostFormCache = null
     },
   }
 
