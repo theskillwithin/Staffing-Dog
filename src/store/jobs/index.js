@@ -50,7 +50,7 @@ let reducers = {}
  * Get Jobs
  */
 export const GET_USER_JOBS = 'GET_USER_JOBS'
-export const getUserJobsTypes = createActionTypes(GET_USER_JOBS)
+export const getUserJobsTYPES = createActionTypes(GET_USER_JOBS)
 
 export const getUserJobs = (params = {}) => (dispatch, getState) => {
   dispatch({
@@ -68,17 +68,17 @@ export const getUserJobs = (params = {}) => (dispatch, getState) => {
 
 reducers = {
   ...reducers,
-  [getUserJobsTypes.LOADING]: state => ({
+  [getUserJobsTYPES.LOADING]: state => ({
     ...state,
     loading: true,
     error: false,
   }),
-  [getUserJobsTypes.ERROR]: (state, { error }) => ({
+  [getUserJobsTYPES.ERROR]: (state, { error }) => ({
     ...state,
     loading: false,
     error: useErrorFromResponse(error),
   }),
-  [getUserJobsTypes.SUCCESS]: (state, { data }) => ({
+  [getUserJobsTYPES.SUCCESS]: (state, { data }) => ({
     ...state,
     ...spreadLastUpdated(),
     loading: false,
@@ -105,7 +105,7 @@ reducers = {
  * Get Single Job
  */
 export const GET_SINGLE_JOB = 'GET_SINGLE_JOB'
-export const getSingleJobTypes = createActionTypes(GET_SINGLE_JOB)
+export const getSingleJobTYPES = createActionTypes(GET_SINGLE_JOB)
 
 export const getSingleJob = id => (dispatch, getState) =>
   dispatch({
@@ -119,7 +119,7 @@ export const getSingleJob = id => (dispatch, getState) =>
 
 reducers = {
   ...reducers,
-  [getSingleJobTypes.LOADING]: state => ({
+  [getSingleJobTYPES.LOADING]: state => ({
     ...state,
     singleJob: {
       ...state.singleJob,
@@ -127,7 +127,7 @@ reducers = {
       error: false,
     },
   }),
-  [getSingleJobTypes.SUCCESS]: (state, { data }) => ({
+  [getSingleJobTYPES.SUCCESS]: (state, { data }) => ({
     ...state,
     singleJob: {
       ...state.singleJob,
@@ -136,7 +136,7 @@ reducers = {
       results: data,
     },
   }),
-  [getSingleJobTypes.ERROR]: (state, { error }) => ({
+  [getSingleJobTYPES.ERROR]: (state, { error }) => ({
     ...state,
     singleJob: {
       loading: false,
@@ -149,7 +149,7 @@ reducers = {
  * GET JOB APPLICANTS
  */
 export const GET_JOB_APPLICANTS = 'GET_JOB_APPLICANTS'
-export const getJobApplicantsTypes = createActionTypes(GET_JOB_APPLICANTS)
+export const getJobApplicantsTYPES = createActionTypes(GET_JOB_APPLICANTS)
 
 export const getJobApplicants = jobId => (dispatch, getState) =>
   dispatch({
@@ -171,7 +171,7 @@ export const getJobApplicants = jobId => (dispatch, getState) =>
 
 reducers = {
   ...reducers,
-  [getJobApplicantsTypes.LOADING]: (state, { jobId }) => ({
+  [getJobApplicantsTYPES.LOADING]: (state, { jobId }) => ({
     ...state,
     applications: {
       ...state.applications,
@@ -182,7 +182,7 @@ reducers = {
       },
     },
   }),
-  [getJobApplicantsTypes.SUCCESS]: (state, { __payload: { jobId }, data }) => ({
+  [getJobApplicantsTYPES.SUCCESS]: (state, { __payload: { jobId }, data }) => ({
     ...state,
     applications: {
       ...state.applications,
@@ -194,7 +194,7 @@ reducers = {
       },
     },
   }),
-  [getJobApplicantsTypes.ERROR]: (state, { error, jobId }) => ({
+  [getJobApplicantsTYPES.ERROR]: (state, { error, jobId }) => ({
     ...state,
     applications: {
       ...state.applications,
@@ -211,7 +211,7 @@ reducers = {
  * GET JOB SELECTED APPLICANTS
  */
 export const GET_JOB_SELECTED_APPLICANTS = 'GET_JOB_SELECTED_APPLICANTS'
-export const getJobSelectedApplicantsTypes = createActionTypes(
+export const getJobSelectedApplicantsTYPES = createActionTypes(
   GET_JOB_SELECTED_APPLICANTS,
 )
 
@@ -234,7 +234,7 @@ export const getJobSelectedApplicants = (
 
 reducers = {
   ...reducers,
-  [getJobSelectedApplicantsTypes.LOADING]: (state, { jobId }) => ({
+  [getJobSelectedApplicantsTYPES.LOADING]: (state, { jobId }) => ({
     ...state,
     selectedApplications: {
       ...state.selectedApplications,
@@ -245,7 +245,7 @@ reducers = {
       },
     },
   }),
-  [getJobSelectedApplicantsTypes.SUCCESS]: (state, { __payload: { jobId }, data }) => ({
+  [getJobSelectedApplicantsTYPES.SUCCESS]: (state, { __payload: { jobId }, data }) => ({
     ...state,
     selectedApplications: {
       ...state.selectedApplications,
@@ -257,7 +257,7 @@ reducers = {
       },
     },
   }),
-  [getJobSelectedApplicantsTypes.ERROR]: (state, { error, jobId }) => ({
+  [getJobSelectedApplicantsTYPES.ERROR]: (state, { error, jobId }) => ({
     ...state,
     selectedApplications: {
       ...state.selectedApplications,
@@ -274,7 +274,7 @@ reducers = {
  * ADD USER TO JOB
  */
 export const ADD_USER_TO_JOB = 'ADD_USER_TO_JOB'
-export const addUserToJobTypes = createActionTypes(ADD_USER_TO_JOB)
+export const addUserToJobTYPES = createActionTypes(ADD_USER_TO_JOB)
 
 export const addUserToJob = ({ jobId, userId }) => (dispatch, getState) =>
   dispatch({
@@ -295,7 +295,7 @@ export const addUserToJob = ({ jobId, userId }) => (dispatch, getState) =>
 
 reducers = {
   ...reducers,
-  [addUserToJobTypes.LOADING]: (state, { jobId, userId }) => ({
+  [addUserToJobTYPES.LOADING]: (state, { jobId, userId }) => ({
     ...state,
     selectingUserForJob: {
       ...state.selectingUserForJob,
@@ -308,7 +308,7 @@ reducers = {
       },
     },
   }),
-  [addUserToJobTypes.SUCCESS]: (state, { __payload: { jobId, userId }, data }) => ({
+  [addUserToJobTYPES.SUCCESS]: (state, { __payload: { jobId, userId }, data }) => ({
     ...state,
     selectingUserForJob: {
       ...state.selectingUserForJob,
@@ -335,7 +335,7 @@ reducers = {
       },
     },
   }),
-  [addUserToJobTypes.ERROR]: (state, { jobId, userId, error }) => ({
+  [addUserToJobTYPES.ERROR]: (state, { jobId, userId, error }) => ({
     ...state,
     selectingUserForJob: {
       ...state.selectingUserForJob,
@@ -417,7 +417,7 @@ reducers = {
  * Post New Job
  */
 export const POST_NEW_JOB = 'POST_NEW_JOB'
-export const postNewJobTypes = createActionTypes(POST_NEW_JOB)
+export const postNewJobTYPES = createActionTypes(POST_NEW_JOB)
 
 export const postNewJob = (data, cb = {}) => (dispatch, getState) =>
   dispatch({
@@ -440,14 +440,14 @@ export const postNewJob = (data, cb = {}) => (dispatch, getState) =>
 
 reducers = {
   ...reducers,
-  [postNewJobTypes.LOADING]: state => ({
+  [postNewJobTYPES.LOADING]: state => ({
     ...state,
     create: {
       ...state.create,
       ...spreadLoadingError(true, false),
     },
   }),
-  [postNewJobTypes.SUCCESS]: state => ({
+  [postNewJobTYPES.SUCCESS]: state => ({
     ...state,
     ...spreadLastUpdated(),
     create: {
@@ -455,7 +455,7 @@ reducers = {
       ...spreadLoadingError(false, false),
     },
   }),
-  [postNewJobTypes.ERROR]: (state, { error }) => ({
+  [postNewJobTYPES.ERROR]: (state, { error }) => ({
     ...state,
     create: {
       ...state.create,
@@ -468,7 +468,7 @@ reducers = {
  * Update Job Post
  */
 export const UPDATE_JOB_POST = 'UPDATE_JOB_POST'
-export const updateJobPostTypes = createActionTypes(UPDATE_JOB_POST)
+export const updateJobPostTYPES = createActionTypes(UPDATE_JOB_POST)
 
 export const updateJobPost = (data, cb = {}) => (dispatch, getState) =>
   dispatch({
@@ -491,7 +491,7 @@ export const updateJobPost = (data, cb = {}) => (dispatch, getState) =>
 
 reducers = {
   ...reducers,
-  [updateJobPostTypes.LOADING]: (state, { jobId }) => ({
+  [updateJobPostTYPES.LOADING]: (state, { jobId }) => ({
     ...state,
     update: {
       ...state.update,
@@ -499,7 +499,7 @@ reducers = {
       jobId,
     },
   }),
-  [updateJobPostTypes.SUCCESS]: state => ({
+  [updateJobPostTYPES.SUCCESS]: state => ({
     ...state,
     ...spreadLastUpdated(),
     update: {
@@ -508,7 +508,7 @@ reducers = {
       jobId: false,
     },
   }),
-  [updateJobPostTypes.ERROR]: (state, { error }) => ({
+  [updateJobPostTYPES.ERROR]: (state, { error }) => ({
     ...state,
     update: {
       ...state.update,

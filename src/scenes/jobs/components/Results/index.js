@@ -37,6 +37,7 @@ import appTheme from '../../../app/theme.css'
 import theme from './theme.css'
 
 const JobSearch = ({
+  match,
   location,
   history,
   jobs,
@@ -132,7 +133,7 @@ const JobSearch = ({
       </header>
 
       <div className={theme.searchResults}>
-        {loading ? (
+        {!getJobs().length && loading ? (
           <Spinner />
         ) : (
           <>
@@ -164,7 +165,7 @@ const JobSearch = ({
                   {getJobs().map(job => (
                     <Card key={job.id} type="large">
                       <Link
-                        to={`/search/job/${job.slug}`}
+                        to={`${match.url}/view/${job.id}`}
                         className={clsx(theme.title, job.new && theme.new)}
                       >
                         {get(job, 'criteria.title', 'Job')}
@@ -210,7 +211,10 @@ const JobSearch = ({
                       <div className={theme.actions}>
                         <div>{get(job, 'criteria.hourly_rate')}/hr</div>
 
-                        <Link to={`/search/job/${job.id}`} className={theme.readMore}>
+                        <Link
+                          to={`${match.url}/view/${job.id}`}
+                          className={theme.readMore}
+                        >
                           Read More
                         </Link>
 
@@ -255,6 +259,7 @@ JobSearch.propTypes = {
     pathname: string,
     search: string.isRequired,
   }).isRequired,
+  match: shape({ url: string.isRequired }).isRequired,
   history: shape({
     push: func.isRequired,
   }).isRequired,
