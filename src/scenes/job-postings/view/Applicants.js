@@ -107,9 +107,7 @@ const JobApplicantsView = ({
   const listOfApplicantsLoading = get(applicants, 'loading', false)
   const listOfApplicantsError = get(applicants, 'error', false)
 
-  const onClickAddUserToJob = userId => {
-    addUserToJob({ userId, jobId: job.id })
-  }
+  const onClickAddUserToJob = userId => addUserToJob({ userId, jobId: job.id })
 
   const getAddUserActionText = userId => {
     if (get(selectingUserForJob, `[${job.id}][${userId}].loading`, false)) {
@@ -180,7 +178,7 @@ const JobApplicantsView = ({
               listOfSelectedApplicants.map((applicant, index) => (
                 <ProfessionalCard
                   key={`applicant-selected-card-${applicant.id}`}
-                  applicant={applicant}
+                  applicant={applicant.applicant_details}
                   shortCard
                   className={index === 0 && theme.first}
                 />
@@ -205,7 +203,7 @@ const JobApplicantsView = ({
               listOfApplicants.map((applicant, index) => (
                 <ProfessionalCard
                   key={`applicant-applied-card-${applicant.id}`}
-                  applicant={applicant}
+                  applicant={applicant.applicant_details}
                   shortCard
                   className={index === 0 && theme.first}
                 />

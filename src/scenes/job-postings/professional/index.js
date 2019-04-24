@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import clsx from 'clsx'
 import get from '@sdog/utils/get'
 import { defineJob } from '@sdog/definitions/jobs'
-import ProfilePhotoSVG from '@sdog/components/svg/ProfilePhoto'
+import Avatar from '@sdog/components/Avatar'
 import Button from '@sdog/components/button'
 
 import theme from './theme.css'
@@ -21,18 +21,15 @@ const ProfessionalCard = ({
     className={clsx(theme.proCard, shortCard && theme.shortCard, className && className)}
   >
     <div className={theme.img}>
-      {!get(applicant, 'preferences.profile_image_url', false) ? (
-        <ProfilePhotoSVG inline size={100} color="purple" />
-      ) : (
-        <img
-          src={get(applicant, 'preferences.profile_image_url', '')}
-          alt={`${get(applicant, 'user.first_name', 'FirstName')} ${get(
-            applicant,
-            'user.last_name',
-            'LastName',
-          )}`}
-        />
-      )}
+      <Avatar
+        url={get(applicant, 'preferences.profile_image_url', false)}
+        alt={`${get(applicant, 'user.first_name', 'FirstName')} ${get(
+          applicant,
+          'user.last_name',
+          'LastName',
+        )}`}
+        size="100"
+      />
     </div>
 
     <div className={theme.content}>
