@@ -116,6 +116,7 @@ export const sendUserMessage = ({
   userId = false,
   friendId = false,
   threadId = false,
+  cbSuccess = false,
 }) => (dispatch, getState) => {
   const isNewThread = !threadId
 
@@ -131,6 +132,9 @@ export const sendUserMessage = ({
         ...(friendId ? { participant_id: friendId } : {}),
         ...(threadId ? { thread_id: threadId } : {}),
         data: { message },
+      },
+      callbacks: {
+        success: () => cbSuccess && cbSuccess(),
       },
     },
     payload: {

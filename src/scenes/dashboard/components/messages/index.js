@@ -87,10 +87,24 @@ class Messages extends React.Component {
 
     const threadId = this.state.active
 
-    this.props.sendUserMessage({
-      message,
-      ...(threadId === 'new' ? { friendId } : { threadId }),
-    })
+    const success = () => {
+      if (this.state.active === 'new') {
+        this.viewThread('')
+        // this.viewThread(this.props.threads)
+        setTimeout(() => {
+          this.props.getUserThreads()
+        }, 500)
+      }
+      this.setState({ message: '' })
+    }
+
+    this.props.sendUserMessage(
+      {
+        message,
+        ...(threadId === 'new' ? { friendId } : { threadId }),
+      },
+      success(),
+    )
   }
 
   handleChange = message => this.setState({ message })
