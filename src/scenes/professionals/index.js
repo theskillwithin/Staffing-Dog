@@ -93,7 +93,9 @@ const ProfessionalsView = ({ history, location, professionals, getProfessionals 
             <p>
               <strong>{professionals.results.length}</strong>
               &nbsp;{' '}
-              {`job post${professionals.results.length === 1 ? '' : 's'} in your area.`}
+              {`Professional${
+                professionals.results.length === 1 ? ' was' : 's were'
+              } found.`}
             </p>
           </div>
           <div className={theme.professionals}>
@@ -104,7 +106,7 @@ const ProfessionalsView = ({ history, location, professionals, getProfessionals 
             )}
 
             {!professionals.results.length ? (
-              <p>No results were found. Try adjusting your filters above.</p>
+              <p>No Professionals were found. Try adjusting your filters above.</p>
             ) : (
               professionals.results.map(applicant => (
                 <ProfessionalCard
