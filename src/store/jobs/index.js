@@ -292,6 +292,22 @@ export const addUserToJob = ({ jobId, userId }) => (dispatch, getState) =>
           applicant_id: userId,
         },
       },
+      dispatches: {
+        success: [
+          () =>
+            showGlobalAlert({
+              message: 'You have sucessfully added the user to your job',
+              type: 'success',
+            }),
+        ],
+        error: [
+          error =>
+            showGlobalAlert({
+              message: useErrorFromResponse(error),
+              type: 'error',
+            }),
+        ],
+      },
     },
     payload: { jobId, userId },
   })
@@ -371,6 +387,22 @@ export const applyForJob = jobId => (dispatch, getState) =>
           job_id: jobId,
         },
       },
+      dispatches: {
+        success: [
+          () =>
+            showGlobalAlert({
+              message: 'You have sucessfully applied to this job',
+              type: 'success',
+            }),
+        ],
+        error: [
+          error =>
+            showGlobalAlert({
+              message: useErrorFromResponse(error),
+              type: 'error',
+            }),
+        ],
+      },
     },
     payload: { jobId },
   })
@@ -422,7 +454,9 @@ reducers = {
 export const POST_NEW_JOB = 'POST_NEW_JOB'
 export const postNewJobTYPES = createActionTypes(POST_NEW_JOB)
 
-export const postNewJob = (data, cb = {}) => (dispatch, getState) =>
+export const postNewJob = (data, cb = {}) => (dispatch, getState) => {
+  const status = data.status || 'draft'
+
   dispatch({
     type: POST_NEW_JOB,
     api: {
@@ -438,8 +472,28 @@ export const postNewJob = (data, cb = {}) => (dispatch, getState) =>
       callbacks: {
         ...cb,
       },
+      dispatches: {
+        success: [
+          () =>
+            showGlobalAlert({
+              message:
+                'draft' === status
+                  ? 'You have successfully saved your job as a draft.'
+                  : 'You have successfully posted your job live!',
+              type: 'success',
+            }),
+        ],
+        error: [
+          error =>
+            showGlobalAlert({
+              message: useErrorFromResponse(error),
+              type: 'error',
+            }),
+        ],
+      },
     },
   })
+}
 
 reducers = {
   ...reducers,
@@ -473,7 +527,7 @@ reducers = {
 export const UPDATE_JOB_POST = 'UPDATE_JOB_POST'
 export const updateJobPostTYPES = createActionTypes(UPDATE_JOB_POST)
 
-export const updateJobPost = (data, cb = {}) => (dispatch, getState) =>
+export const updateJobPost = (data, cb = {}) => (dispatch, getState) => {
   dispatch({
     type: UPDATE_JOB_POST,
     api: {
@@ -490,7 +544,10 @@ export const updateJobPost = (data, cb = {}) => (dispatch, getState) =>
         success: [
           () =>
             showGlobalAlert({
-              message: 'You have sucessfully saved your job',
+              message:
+                'draft' === data.status
+                  ? 'You have sucessfully saved your job.'
+                  : 'You have succesfully updated and posted live your job!',
               type: 'success',
             }),
         ],
@@ -507,6 +564,7 @@ export const updateJobPost = (data, cb = {}) => (dispatch, getState) =>
       jobId: data.id,
     },
   })
+}
 
 reducers = {
   ...reducers,
