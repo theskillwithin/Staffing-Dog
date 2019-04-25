@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react'
-import { string, array, number, bool, oneOfType, oneOf } from 'prop-types'
+import React, { useState, useEffect, useRef } from 'react'
+import { func, string, array, number, bool, oneOfType, oneOf } from 'prop-types'
 import clsx from 'clsx'
 
 import theme from './theme.css'
@@ -11,22 +11,38 @@ export const SingleToaster = ({
   autoClose,
   hasContainer,
   type,
+  onClose,
 }) => {
   if (!children) return null
+  const autoCloseTimeout = useRef(null)
+  const delayedTimeout = useRef(null)
   const [delayed, setDelayed] = useState(multiple)
   const [isClose, setClose] = useState(false)
 
   useEffect(() => {
     if (autoClose) {
-      setTimeout(() => {
-        setClose(true)
+      autoCloseTimeout.current = setTimeout(() => {
+        if (onClose) {
+          onClose({ setClose })
+        } else {
+          setClose(true)
+        }
       }, 10000)
     }
-    if (!multiple) return
+    if (!multiple) {
+      return () => {
+        clearTimeout(autoCloseTimeout.current)
+      }
+    }
 
-    setTimeout(() => {
+    delayedTimeout.current = setTimeout(() => {
       setDelayed(false)
     }, multiple * 300)
+
+    return () => {
+      clearTimeout(autoCloseTimeout.current)
+      clearTimeout(delayedTimeout.current)
+    }
   }, [])
 
   if (isClose) return null
@@ -44,7 +60,13 @@ export const SingleToaster = ({
       {closeButton ? (
         <button
           className={theme.closeButton}
-          onClick={() => setClose(true)}
+          onClick={() => {
+            if (onClose) {
+              onClose({ setClose })
+            } else {
+              setClose(true)
+            }
+          }}
           type="button"
         >
           &times;
@@ -61,6 +83,7 @@ SingleToaster.defaultProps = {
   closeButton: false,
   hasContainer: false,
   type: null,
+  onClose: false,
 }
 
 SingleToaster.propTypes = {
@@ -70,6 +93,7 @@ SingleToaster.propTypes = {
   closeButton: bool,
   hasContainer: bool,
   type: oneOf(['error', 'success']),
+  onClose: oneOfType([bool, func]),
 }
 
 const Toaster = ({ children, autoClose, closeButton, maxDisplayErrors, type }) => {

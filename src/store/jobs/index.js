@@ -2,6 +2,7 @@ import isArray from 'lodash/isArray'
 import { API_ROOT } from '@sdog/utils/api'
 import get from '@sdog/utils/get'
 import { useErrorFromResponse } from '@sdog/definitions/errors'
+import { showGlobalAlert } from '@sdog/store/alerts'
 
 import { findUserId } from '../user'
 import { getUserId } from '../storage'
@@ -482,6 +483,22 @@ export const updateJobPost = (data, cb = {}) => (dispatch, getState) =>
       },
       callbacks: {
         ...cb,
+      },
+      dispatches: {
+        success: [
+          () =>
+            showGlobalAlert({
+              message: 'You have sucessfully saved your job',
+              type: 'success',
+            }),
+        ],
+        error: [
+          error =>
+            showGlobalAlert({
+              message: useErrorFromResponse(error),
+              type: 'error',
+            }),
+        ],
       },
     },
     payload: {

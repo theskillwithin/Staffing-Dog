@@ -19,12 +19,12 @@ export const showGlobalAlert = ({ message, type, id }) => ({
 })
 
 export const clearGlobalAlert = id => ({
-  type: SHOW_GLOBAL_ALERT,
+  type: CLEAR_GLOBAL_ALERT,
   payload: { id },
 })
 
 export const clearGlobalAlerts = () => ({
-  type: SHOW_GLOBAL_ALERT,
+  type: CLEAR_GLOBAL_ALERTS,
 })
 
 reducers = {
