@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { string } from 'prop-types'
+import { string, func, object } from 'prop-types'
 import moment from 'moment'
 import chrono from 'chrono-node'
 
@@ -47,17 +47,16 @@ class DatePickerWrapper extends Component {
   }
 
   handleChange = value => {
-    this.setState({ value })
+    this.props.onChange(value)
   }
 
   render() {
-    const { value } = this.state
     // const displayValue = value && value.value ? value.value.toString() : 'null'
     return (
       <div>
         {/* <div>Value: {displayValue}</div> */}
         <DatePicker
-          value={value}
+          value={this.props.value}
           onChange={this.handleChange}
           defaultOptions={defaultOptions}
           createOptionForDate={createOptionForDate}
@@ -73,6 +72,8 @@ class DatePickerWrapper extends Component {
 
 DatePickerWrapper.propTypes = {
   label: string.isRequired,
+  onChange: func.isRequired,
+  value: object.isRequired,
 }
 
 export default DatePickerWrapper
