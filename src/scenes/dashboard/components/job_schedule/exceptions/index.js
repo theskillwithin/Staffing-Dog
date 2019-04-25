@@ -34,14 +34,16 @@ const exceptionsReducer = (state, action) => {
 }
 
 const Exceptions = ({ exceptions, onUpdate }) => {
-  const [startDate, setStartDate] = useState('')
-  const [endDate, setEndDate] = useState('')
+  const [startDate, setStartDate] = useState(moment().utc())
+  const [endDate, setEndDate] = useState(moment().utc())
   const [availability, setAvailability] = useState(true)
   const [deleteId, setDeleteExceptionId] = useState(false)
   const [{ listOfExceptions, lastUpdated }, dispatch] = useReducer(exceptionsReducer, {
     lastUpdated: false,
     listOfExceptions: exceptions,
   })
+
+  console.log(startDate)
 
   useEffect(
     () => {
@@ -66,8 +68,8 @@ const Exceptions = ({ exceptions, onUpdate }) => {
       },
     })
 
-    setStartDate('')
-    setEndDate('')
+    setStartDate(moment())
+    setEndDate(moment())
     setAvailability(true)
   }
 
