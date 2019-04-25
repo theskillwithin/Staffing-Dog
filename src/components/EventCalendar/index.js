@@ -14,10 +14,25 @@ const EventCalendar = ({ userType, jobs, exceptions }) => {
     ),
   }))
 
-  const blackoutDates = exceptions.map(exception => ({
-    start_date: get(exception, 'start_date'),
-    end_date: get(exception, 'end_date', get(exception, 'start_date')),
-  }))
+  const blackoutDates = exceptions.reduce((listOfBlackoutDates, exception) => {
+    if (get(exception, 'dispotision', 'not_available') === 'availble') {
+      return listOfBlackoutDates
+    }
+
+    const startDate = get(exception, 'start_date')
+    const endDate = get(exception, 'end_date', get(exception, 'start_date'))
+
+    return [
+      ...listOfBlackoutDates,
+      {
+        startDate,
+        endDate,
+        start_date: startDate,
+        end_date: endDate,
+        blackout: true,
+      },
+    ]
+  }, [])
 
   return <Calendar activeDates={activeDates} blackoutDates={blackoutDates} />
 }

@@ -81,6 +81,9 @@ const JobSchedule = ({
   const userType = get(user, 'type', 'professional')
   const isNotPractice = userType !== 'practice'
 
+  const onUpdateExceptions = exceptions =>
+    autoSaveUserProfile('meta.capacity.exceptions', exceptions)
+
   return (
     <Card
       icon={CalendarIcon}
@@ -176,20 +179,21 @@ const JobSchedule = ({
           )}
 
           {activeTabIndex === 1 && (
-            <Exceptions exceptions={get(meta, 'capacity.exceptions', [])} />
+            <Exceptions
+              exceptions={get(meta, 'capacity.exceptions', [])}
+              onUpdate={onUpdateExceptions}
+            />
           )}
 
           <hr className={theme.divider} />
         </>
       )}
 
-      {isNotPractice && (
-        <EventCalendar
-          userType={userType}
-          jobs={jobs}
-          exceptions={get(meta, 'capacity.exceptions', [])}
-        />
-      )}
+      <EventCalendar
+        userType={userType}
+        jobs={jobs}
+        exceptions={get(meta, 'capacity.exceptions', [])}
+      />
 
       {isNotPractice && (
         <div className={theme.events}>
