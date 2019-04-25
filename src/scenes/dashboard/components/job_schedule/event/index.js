@@ -5,6 +5,7 @@ import get from 'lodash/get'
 import clsx from 'clsx'
 import NearMeIcon from '@sdog/components/svg/NearMe'
 import Map from '@sdog/components/map'
+import { getPositionLabel, getEmploymentType } from '@sdog/definitions/jobs'
 
 import theme from './theme.css'
 
@@ -14,14 +15,18 @@ const JobScheduleEvent = ({ open, event, userType }) => {
   if (!event) return null
 
   const isPractice = userType === 'practice'
+  if (isPractice && event.status !== 'scheduled') return null
+
   const practice = get(event, 'criteria.practice_details', {})
   const startDate = moment(get(event, 'criteria.duration.start_date')).utc()
   const geoLocation = get(practice, 'geocode', {})
 
   const title = isPractice
-    ? 'Job Position'
+    ? getPositionLabel(get(event, 'criteria.position', false))
     : `${practice.name} @ ${startDate.format('M/D/YY')}`
-  const subTitle = isPractice ? 'UserName + JobType' : buildAddress(practice.address)
+  const subTitle = isPractice
+    ? getEmploymentType(get(event, 'criteria.employment_type', false))
+    : buildAddress(practice.address)
 
   return (
     <div>

@@ -185,13 +185,11 @@ const JobSchedule = ({
         </>
       )}
 
-      {isNotPractice && (
-        <EventCalendar
-          userType={userType}
-          jobs={jobs}
-          exceptions={get(meta, 'capacity.exceptions', [])}
-        />
-      )}
+      <EventCalendar
+        userType={userType}
+        jobs={jobs}
+        exceptions={get(meta, 'capacity.exceptions', [])}
+      />
 
       {isNotPractice && (
         <div className={theme.events}>

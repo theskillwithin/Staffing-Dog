@@ -1,5 +1,6 @@
 import get from 'lodash/get'
 import startCase from 'lodash/startCase'
+import find from 'lodash/find'
 
 export const definitions = {
   type: {
@@ -66,3 +67,24 @@ export const getPositionTypesByPosition = position =>
 
 export const defineJob = (definekey, key) =>
   get(definitions, `${definekey}.${key}`, startCase(key))
+
+export const getPositionLabel = position =>
+  find(
+    positions,
+    (value, option) => (option.value === position ? option.label : value),
+    startCase(position),
+  )
+
+export const getSpecialtyLabel = specialty =>
+  find(
+    [...positionTypes, ...positionTypesDentist],
+    (value, option) => (option.value === specialty ? option.label : value),
+    startCase(specialty),
+  )
+
+export const getEmploymentType = type =>
+  find(
+    jobTypes,
+    (value, option) => (option.value === type ? option.label : value),
+    startCase(type),
+  )
