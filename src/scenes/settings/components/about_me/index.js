@@ -1,7 +1,7 @@
 import React from 'react'
 import { func, shape, object, string } from 'prop-types'
 import { connect } from 'react-redux'
-import { positions, positionTypes } from '@sdog/definitions/jobs'
+import { positions, getPositionTypesByPosition } from '@sdog/definitions/jobs'
 import get from 'lodash/get'
 import clsx from 'clsx'
 import find from 'lodash/find'
@@ -130,7 +130,7 @@ const SettingsAboutMe = ({
   const getSpecialty = get(profile, 'meta.summary.profession.specialty', [])
 
   const findInitSpecialtyDropdown = s =>
-    find(positionTypes, {
+    find(getPositionTypesByPosition(get(profile, 'meta.summary.profession.type', '')), {
       value: s,
     })
 
@@ -500,7 +500,9 @@ const SettingsAboutMe = ({
               label="Speciailty"
               placeholder="Speciailty"
               value={form.profile.meta.summary.profession.specialty}
-              options={positionTypes}
+              options={getPositionTypesByPosition(
+                get(profile, 'meta.summary.profession.type', ''),
+              )}
               isMulti
               height={120}
               onChange={value =>
