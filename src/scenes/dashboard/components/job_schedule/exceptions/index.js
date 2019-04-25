@@ -34,8 +34,18 @@ const exceptionsReducer = (state, action) => {
 }
 
 const Exceptions = ({ exceptions, onUpdate }) => {
-  const [startDate, setStartDate] = useState(moment().utc())
-  const [endDate, setEndDate] = useState(moment().utc())
+  const [startDate, setStartDate] = useState({
+    date: moment().utc(),
+    display: 'calendar',
+    label: moment().format('Do MMMM YYYY'),
+    value: moment().utc(),
+  })
+  const [endDate, setEndDate] = useState({
+    date: moment().utc(),
+    display: 'calendar',
+    label: moment().format('Do MMMM YYYY'),
+    value: moment().utc(),
+  })
   const [availability, setAvailability] = useState(true)
   const [deleteId, setDeleteExceptionId] = useState(false)
   const [{ listOfExceptions, lastUpdated }, dispatch] = useReducer(exceptionsReducer, {
