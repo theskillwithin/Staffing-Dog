@@ -40,11 +40,11 @@ const Button = ({
           ],
       red && theme.red,
       green && theme.green,
-      className && className,
       size && theme[size],
       width && theme.width,
       disabled && theme.disabled,
       loading && theme.loading,
+      className && className,
     )}
     onClick={onClick}
     type={type}

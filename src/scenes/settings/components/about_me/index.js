@@ -318,7 +318,7 @@ const SettingsAboutMe = ({
               })
             }
           />
-          <EmailVerified verified={profile.verified || false} />
+          <EmailVerified verified={get(profile, 'user.verified_email', false)} />
         </div>
         <div className={theme.inputRow}>
           <Input
