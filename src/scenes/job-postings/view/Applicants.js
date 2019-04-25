@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { array, bool, shape, string, oneOfType, func, arrayOf, object } from 'prop-types'
 import { connect } from 'react-redux'
+import clsx from 'clsx'
 import find from 'lodash/find'
 import get from '@sdog/utils/get'
 import qs from 'qs'
@@ -45,6 +46,8 @@ import ProfessionalCard from '../professional'
 
 import theme from './theme.css'
 
+const tabCache = {}
+
 const JobApplicantsView = ({
   job,
   jobApplicants,
@@ -72,14 +75,18 @@ const JobApplicantsView = ({
   useEffect(
     () => {
       if (job.id && preferredApplicants.length) {
-        getJobSelectedApplicants(preferredApplicants)
+        getJobSelectedApplicants(job.id, preferredApplicants)
       }
     },
     [job.id, preferredApplicants],
   )
 
-  const [activeTabIndex, setActiveTabIndex] = useState(0)
+  const [activeTabIndex, setActiveTabIndex] = useState(tabCache[job.id] || 0)
   const [filters, setFilters] = useFilterQueryParams(location.search)
+
+  useEffect(() => {
+    tabCache[job.id] = activeTabIndex
+  })
 
   useEffect(() => {
     const filteredFilters = useNonEmptyParams(filters)
@@ -106,10 +113,25 @@ const JobApplicantsView = ({
   const listOfApplicants = get(applicants, 'results', [])
   const listOfApplicantsLoading = get(applicants, 'loading', false)
   const listOfApplicantsError = get(applicants, 'error', false)
+  const userIsSelected = userId =>
+    find(listOfSelectedApplicants, ({ id }) => id === userId)
+  const userHasApplied = userId => find(listOfApplicants, ({ id }) => id === userId)
 
-  const onClickAddUserToJob = userId => addUserToJob({ userId, jobId: job.id })
+  const onClickAddUserToJob = userId => {
+    if (!userIsSelected(userId) && userHasApplied(userId)) {
+      addUserToJob({ userId, jobId: job.id })
+    }
+  }
 
   const getAddUserActionText = userId => {
+    if (userIsSelected(userId)) {
+      return 'Pending'
+    }
+
+    if (userHasApplied(userId)) {
+      return 'Applied'
+    }
+
     if (get(selectingUserForJob, `[${job.id}][${userId}].loading`, false)) {
       return 'Offering'
     }
@@ -118,6 +140,14 @@ const JobApplicantsView = ({
   }
 
   const getAddUserActionColor = userId => {
+    if (userIsSelected(userId)) {
+      return 'secondary'
+    }
+
+    if (userHasApplied(userId)) {
+      return 'secondary'
+    }
+
     if (get(selectingUserForJob, `[${job.id}][${userId}].loading`, false)) {
       return 'primary'
     }
@@ -178,9 +208,11 @@ const JobApplicantsView = ({
               listOfSelectedApplicants.map((applicant, index) => (
                 <ProfessionalCard
                   key={`applicant-selected-card-${applicant.id}`}
-                  applicant={applicant.applicant_details}
+                  applicant={applicant}
                   shortCard
-                  className={index === 0 && theme.first}
+                  className={clsx(index === 0 && theme.first)}
+                  actionText="Offered"
+                  actionColor="secondary"
                 />
               ))
             ) : (
@@ -206,6 +238,8 @@ const JobApplicantsView = ({
                   applicant={applicant.applicant_details}
                   shortCard
                   className={index === 0 && theme.first}
+                  actionText="Applied"
+                  actionColor="secondary"
                 />
               ))
             ) : (

@@ -217,6 +217,7 @@ export const getJobSelectedApplicantsTYPES = createActionTypes(
 )
 
 export const getJobSelectedApplicants = (
+  jobId,
   ids = [],
   { onSuccess = false, onError = false } = {},
 ) => (dispatch, getState) =>
@@ -231,6 +232,7 @@ export const getJobSelectedApplicants = (
         error: onError,
       },
     },
+    payload: { jobId },
   })
 
 reducers = {
@@ -254,7 +256,7 @@ reducers = {
         id: jobId,
         ...get(state, `selectedApplications[${jobId}]`, {}),
         ...spreadLoadingError(false, false),
-        results: get(data, 'applications', []),
+        results: data,
       },
     },
   }),
