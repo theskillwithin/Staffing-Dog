@@ -1041,6 +1041,7 @@ export const findForgot = state => findState(state).forgot
 export const findReset = state => findState(state).reset
 export const findValidateEmail = state => findState(state).validateEmail
 export const findResetValidate = state => findReset(state).validate
+export const findValidateEmailRequest = state => findState(state).requestValidateEmail
 export const findUserProfile = state => findState(state).profile
 export const findUserMeta = state => findUserProfile(state).meta
 export const findUserInfo = state => findUserProfile(state).user
@@ -1057,6 +1058,13 @@ export const findForgotSuccess = state => findForgot(state).success
 export const findValidateEmailLoading = state => findValidateEmail(state).loading
 export const findValidateEmailError = state => findValidateEmail(state).error
 export const findValidateEmailSuccess = state => findValidateEmail(state).success
+
+export const findValidateEmailRequestLoading = state =>
+  findValidateEmailRequest(state).loading
+export const findValidateEmailRequestError = state =>
+  findValidateEmailRequest(state).error
+export const findValidateEmailRequestSuccess = state =>
+  findValidateEmailRequest(state).success
 
 export const findResetValidateLoading = state => findResetValidate(state).loading
 export const findResetValidateError = state => findResetValidate(state).error

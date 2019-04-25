@@ -14,10 +14,18 @@
   color: var(--sd-red);
   border: solid 1px var(--sd-red);
   transition: color, border 300ms;
+  background: transparent;
+
+  &:hover {
+    background: var(--sd-red);
+    color: white;
+  }
 
   &.verified {
     color: var(--sd-green);
     border: solid 1px var(--sd-green);
+    background: transparent;
+    pointer-events: none;
   }
 
   @media (--sd-mobile) {
