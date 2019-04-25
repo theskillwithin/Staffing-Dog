@@ -39,9 +39,9 @@ const PhoneVerified = ({
 
   if (validateSuccess) {
     return (
-      <div className={theme.phoneIsVerified}>
-        <Button green>Success</Button>
-      </div>
+      <Button className={theme.phoneIsVerified} green>
+        Success
+      </Button>
     )
   }
 
