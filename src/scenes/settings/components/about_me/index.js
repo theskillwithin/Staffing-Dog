@@ -92,11 +92,6 @@ const availability = [
   { label: 'Temp', value: 'temp' },
 ]
 
-// const specialties = [
-//   { label: 'I can fly!', value: '1' },
-//   { label: 'I run fast', value: '0' },
-// ]
-
 const FormSpacer = () => <div className={theme.spacer} />
 
 const SettingsAboutMe = ({
@@ -130,9 +125,14 @@ const SettingsAboutMe = ({
   const getSpecialty = get(profile, 'meta.summary.profession.specialty', [])
 
   const findInitSpecialtyDropdown = s =>
-    find(getPositionTypesByPosition(get(profile, 'meta.summary.profession.type', '')), {
-      value: s,
-    })
+    find(
+      getPositionTypesByPosition(
+        get(form, 'profile.meta.summary.profession.type.value', ''),
+      ),
+      {
+        value: s,
+      },
+    )
 
   const specialtyDropdownInit =
     getSpecialty && getSpecialty.length
@@ -501,7 +501,7 @@ const SettingsAboutMe = ({
               placeholder="Speciailty"
               value={form.profile.meta.summary.profession.specialty}
               options={getPositionTypesByPosition(
-                get(profile, 'meta.summary.profession.type', ''),
+                get(form, 'profile.meta.summary.profession.type.value', ''),
               )}
               isMulti
               height={120}
