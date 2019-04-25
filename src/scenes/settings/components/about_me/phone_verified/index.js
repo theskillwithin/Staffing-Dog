@@ -12,7 +12,7 @@ import {
   findValidatePhoneSuccess,
   validatePhone,
 } from '@sdog/store/user'
-import { bool, func, string } from 'prop-types'
+import { bool, func, string, oneOfType } from 'prop-types'
 import Button from '@sdog/components/button'
 import Input from '@sdog/components/input'
 import Toaster from '@sdog/components/toaster'
@@ -84,8 +84,8 @@ PhoneVerified.defaultProps = {
   loading: false,
   error: false,
   success: false,
-  token: null,
-  anchor: null,
+  token: false,
+  anchor: false,
   validateLoading: false,
   validateError: false,
   validateSuccess: false,
@@ -98,8 +98,8 @@ PhoneVerified.propTypes = {
   loading: bool,
   error: bool,
   success: bool,
-  token: string,
-  anchor: string,
+  token: oneOfType([string, bool]),
+  anchor: oneOfType([string, bool]),
   validateLoading: bool,
   validateError: bool,
   validateSuccess: bool,
