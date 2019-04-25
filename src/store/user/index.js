@@ -110,6 +110,18 @@ export const INITIAL_STATE = {
     error: false,
     success: false,
   },
+  requestValidatePhone: {
+    loading: false,
+    error: false,
+    success: false,
+    token: false,
+    anchor: false,
+  },
+  validatePhone: {
+    loading: false,
+    error: false,
+    success: false,
+  },
 }
 
 const getLastUpdated = () => new Date().getTime()
@@ -1019,6 +1031,95 @@ reducers = {
 }
 
 /**
+ * USER VALIDATE PHONE #
+ */
+export const USER_VALIDATE_PHONE = 'USER_VALIDATE_PHONE'
+export const USER_VALIDATE_PHONE_REQUEST = 'USER_VALIDATE_PHONE_REQUEST'
+export const userValidatePhone = createActionTypes(USER_VALIDATE_PHONE)
+export const userValidateRequestPhone = createActionTypes(USER_VALIDATE_PHONE_REQUEST)
+
+export const requestValidatePhone = () => (dispatch, getState) => {
+  const userId = findUserId(getState()) || getUserId()
+  dispatch({
+    type: USER_VALIDATE_PHONE_REQUEST,
+    api: {
+      url: `${API_ROOT}/profiles/phone_confirmation_request`,
+      method: 'POST',
+      data: { user_id: userId },
+    },
+  })
+}
+
+export const validatePhone = ({ anchor, token, code }) => ({
+  type: USER_VALIDATE_PHONE,
+  api: {
+    url: `${API_ROOT}/profiles/phone_confirmation`,
+    method: 'POST',
+    data: { anchor, token, code },
+  },
+})
+
+reducers = {
+  ...reducers,
+  [userValidateRequestPhone.LOADING]: state => ({
+    ...state,
+    ...spreadLastUpdated(),
+    requestValidatePhone: {
+      ...state.requestValidatePhone,
+      ...spreadLoadingError(true, false),
+      success: false,
+    },
+  }),
+  [userValidateRequestPhone.ERROR]: (state, { error }) => ({
+    ...state,
+    ...spreadLastUpdated(),
+    requestValidatePhone: {
+      ...state.requestValidatePhone,
+      ...spreadLoadingError(false, useErrorFromResponse(error)),
+      success: false,
+    },
+  }),
+  [userValidateRequestPhone.SUCCESS]: (state, { data: { token, anchor } }) => ({
+    ...state,
+    ...spreadLastUpdated(),
+    requestValidatePhone: {
+      ...state.requestValidatePhone,
+      ...spreadLoadingError(false, false),
+      success: true,
+      token,
+      anchor,
+    },
+  }),
+  [userValidatePhone.LOADING]: state => ({
+    ...state,
+    ...spreadLastUpdated(),
+    validatePhone: {
+      ...state.validatePhone,
+      ...spreadLoadingError(true, false),
+      success: false,
+    },
+  }),
+  [userValidatePhone.ERROR]: (state, { error }) => ({
+    ...state,
+    ...spreadLastUpdated(),
+    validatePhone: {
+      ...state.validatePhone,
+      ...spreadLoadingError(false, useErrorFromResponse(error)),
+      success: false,
+    },
+  }),
+  [userValidatePhone.SUCCESS]: (state, { data }) => ({
+    ...state,
+    ...spreadLastUpdated(),
+    validatePhone: {
+      ...state.validatePhone,
+      ...spreadLoadingError(false, false),
+      success: get(data, 'message', true),
+    },
+  }),
+}
+
+/**
  * Create Store
  */
 export const reducer = buildStore(reducers, INITIAL_STATE)
@@ -1040,8 +1141,10 @@ export const findRegister = state => findState(state).register
 export const findForgot = state => findState(state).forgot
 export const findReset = state => findState(state).reset
 export const findValidateEmail = state => findState(state).validateEmail
+export const findValidatePhone = state => findState(state).validatePhone
 export const findResetValidate = state => findReset(state).validate
 export const findValidateEmailRequest = state => findState(state).requestValidateEmail
+export const findValidatePhoneRequest = state => findState(state).requestValidatePhone
 export const findUserProfile = state => findState(state).profile
 export const findUserMeta = state => findUserProfile(state).meta
 export const findUserInfo = state => findUserProfile(state).user
@@ -1065,6 +1168,21 @@ export const findValidateEmailRequestError = state =>
   findValidateEmailRequest(state).error
 export const findValidateEmailRequestSuccess = state =>
   findValidateEmailRequest(state).success
+
+export const findValidatePhoneLoading = state => findValidatePhone(state).loading
+export const findValidatePhoneError = state => findValidatePhone(state).error
+export const findValidatePhoneSuccess = state => findValidatePhone(state).success
+
+export const findValidatePhoneRequestLoading = state =>
+  findValidatePhoneRequest(state).loading
+export const findValidatePhoneRequestError = state =>
+  findValidatePhoneRequest(state).error
+export const findValidatePhoneRequestSuccess = state =>
+  findValidatePhoneRequest(state).success
+export const findValidatePhoneRequestToken = state =>
+  findValidatePhoneRequest(state).token
+export const findValidatePhoneRequestAnchor = state =>
+  findValidatePhoneRequest(state).anchor
 
 export const findResetValidateLoading = state => findResetValidate(state).loading
 export const findResetValidateError = state => findResetValidate(state).error

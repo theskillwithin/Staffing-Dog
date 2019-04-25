@@ -2,7 +2,7 @@ import React from 'react'
 import { func, shape, object, string } from 'prop-types'
 import { connect } from 'react-redux'
 import { positions, getPositionTypesByPosition } from '@sdog/definitions/jobs'
-import get from 'lodash/get'
+import get from '@sdog/utils/get'
 import clsx from 'clsx'
 import find from 'lodash/find'
 import includes from 'lodash/includes'
@@ -22,6 +22,7 @@ import {
 } from '@sdog/store/user'
 
 import EmailVerified from './email_verified'
+import PhoneVerified from './phone_verified'
 import theme from './theme.css'
 
 const states = [
@@ -136,9 +137,6 @@ const SettingsAboutMe = ({
 
   const [form, setForm] = React.useState({
     profile: {
-      description: profile.description,
-      dentalLicenseNumber: profile.dentalLicenseNumber,
-      insuranceExpiration: profile.insuranceExpiration,
       user: {
         first_name: profile.user.first_name,
         last_name: profile.user.last_name,
@@ -337,9 +335,7 @@ const SettingsAboutMe = ({
               })
             }
           />
-          <Button primary round className={theme.verifyPhone}>
-            Verify Phone #
-          </Button>
+          <PhoneVerified verified={get(profile, 'user.verified_phone', false)} />
         </div>
         {isNotPractice && (
           <div className={theme.inputRow}>
