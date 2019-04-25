@@ -1,16 +1,12 @@
 import React from 'react'
-import { array, bool, oneOfType } from 'prop-types'
+import { array, bool, oneOfType, shape } from 'prop-types'
+import { connect } from 'react-redux'
+import get from '@sdog/utils/get'
 import Card from '@sdog/components/card'
+import { findUserProfile } from '@sdog/store/user'
 import Checklist from '@sdog/components/checklist'
 import ListIcon from '@sdog/components/svg/List'
 import filter from 'lodash/filter'
-
-const list = [
-  { name: 'Verify Phone Number', checked: true },
-  { name: 'Verify Email Address', checked: true },
-  // { name: 'Complete Profile', checked: false },
-  // { name: 'Add Background Check', checked: false },
-]
 
 const progressPercent = (collection, search) => {
   const divisor = collection.length
@@ -18,15 +14,28 @@ const progressPercent = (collection, search) => {
   return filter(collection, search).length / divisor
 }
 
-const ToDoList = () => (
-  <Card
-    title="To Do List"
-    icon={ListIcon}
-    progress={progressPercent(list, { checked: true })}
-  >
-    <Checklist list={list} />
-  </Card>
-)
+const ToDoList = ({ userProfile, list }) => {
+  const listOfTodos = list || [
+    {
+      name: 'Verify Phone Number',
+      checked: get(userProfile, 'user.verified_phone', false),
+    },
+    {
+      name: 'Verify Email Address',
+      checked: get(userProfile, 'user.verified_email', false),
+    },
+  ]
+
+  return (
+    <Card
+      title="To Do List"
+      icon={ListIcon}
+      progress={progressPercent(list, { checked: true })}
+    >
+      <Checklist list={listOfTodos} />
+    </Card>
+  )
+}
 
 ToDoList.defaultProps = {
   list: false,
@@ -34,6 +43,9 @@ ToDoList.defaultProps = {
 
 ToDoList.propTypes = {
   list: oneOfType([array, bool]),
+  userProfile: shape({}).isRequired,
 }
 
-export default ToDoList
+export const mapStateToProps = state => ({ userProfile: findUserProfile(state) })
+
+export default connect(mapStateToProps)(ToDoList)

@@ -43,7 +43,7 @@ const Card = ({
                 {action}
               </Button>
             )}
-            {progress && (
+            {progress !== false && (
               <h2 className={theme.progress}>
                 {progress * 100}% &nbsp;
                 <span>Complete</span>
@@ -53,7 +53,9 @@ const Card = ({
         )}
 
         <section className={theme.cardContent}>
-          {progress && <LoadingBar className={theme.loadingBar} progress={progress} />}
+          {progress !== false && (
+            <LoadingBar className={theme.loadingBar} progress={progress} />
+          )}
           {children}
         </section>
       </div>
