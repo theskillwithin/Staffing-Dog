@@ -125,14 +125,9 @@ const SettingsAboutMe = ({
   const getSpecialty = get(profile, 'meta.summary.profession.specialty', [])
 
   const findInitSpecialtyDropdown = s =>
-    find(
-      getPositionTypesByPosition(
-        get(form, 'profile.meta.summary.profession.type.value', ''),
-      ),
-      {
-        value: s,
-      },
-    )
+    find(getPositionTypesByPosition(get(profile, 'meta.summary.profession.type', '')), {
+      value: s,
+    })
 
   const specialtyDropdownInit =
     getSpecialty && getSpecialty.length
