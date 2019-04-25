@@ -2,7 +2,8 @@ import React, { useState, useRef } from 'react'
 import { string } from 'prop-types'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { findUserInfo } from '@sdog/store/user'
+import { findUserInfo, findUserMeta } from '@sdog/store/user'
+import get from 'lodash/get'
 import useOutsideClick from '@sdog/utils/useOutsideClick'
 import clsx from 'clsx'
 import Arrow from '@sdog/components/svg/Arrow'
@@ -39,7 +40,7 @@ const UserMenu = ({ type, first, last, office }) => {
             <div>{displayUserName}</div>
             {type === 'practice' && office && (
               <div>
-                <span>{office}</span>
+                <span className={theme.office}>{office}</span>
               </div>
             )}
           </div>
@@ -95,7 +96,7 @@ const mapState = state => ({
   type: findUserInfo(state).type,
   first: findUserInfo(state).first_name,
   last: findUserInfo(state).last_name,
-  office: 'Office',
+  office: get(findUserMeta(state), 'summary.practice_name', false),
 })
 
 export default connect(mapState)(UserMenu)

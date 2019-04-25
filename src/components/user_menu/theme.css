@@ -77,6 +77,11 @@
     background-color: var(--sd-primary);
     border-radius: 8px 8px 0 0;
     padding: 15px 20px;
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 
     @media (--sd-preBreakTablet) {
       display: block;
@@ -236,4 +241,12 @@
       display: block;
     }
   }
+}
+
+.office {
+  display: block;
+  max-width: 100px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }

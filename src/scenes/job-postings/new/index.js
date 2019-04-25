@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import { func, bool, string, arrayOf, oneOfType, shape } from 'prop-types'
 import { connect } from 'react-redux'
+import { Link } from 'react-router-dom'
 import clsx from 'clsx'
 import get from '@sdog/utils/get'
 import { useDocumentTitle } from '@sdog/utils/document'
@@ -11,6 +12,7 @@ import Alert from '@sdog/components/alert'
 import {
   getPracticeOffices as getPracticeOfficesAction,
   findPracticeOffices,
+  findUserPlanTier,
 } from '@sdog/store/user'
 import { postNewJob as postNewJobAction, findCreateJob } from '@sdog/store/jobs'
 
@@ -20,7 +22,14 @@ import JobPostForm from '../edit/Form'
 
 import theme from './theme.css'
 
-const JobPostings = ({ history, getPracticeOffices, offices, create, postNewJob }) => {
+const JobPostings = ({
+  history,
+  getPracticeOffices,
+  offices,
+  create,
+  postNewJob,
+  plan,
+}) => {
   useDocumentTitle('Job Postings')
   useEffect(() => void getPracticeOffices(), [])
 
@@ -70,6 +79,13 @@ const JobPostings = ({ history, getPracticeOffices, offices, create, postNewJob 
         </Card>
 
         <Card>
+          {plan === 'day_hire' ? (
+            <div className={theme.overlay}>
+              <Link to="/support">
+                <Button size="medium">Contact Support</Button>
+              </Link>
+            </div>
+          ) : null}
           <SVG name="desktop_search" className={theme.desktopSearchSVG} />
           <h1>Job Board</h1>
           <h4>Choose for long range planning</h4>
@@ -118,11 +134,13 @@ JobPostings.propTypes = {
   }).isRequired,
   postNewJob: func.isRequired,
   history: shape({ push: func.isRequired }).isRequired,
+  plan: string,
 }
 
 export const mapStateToProps = state => ({
   offices: findPracticeOffices(state),
   create: findCreateJob(state),
+  plan: findUserPlanTier(state),
 })
 export const mapActionsToProps = {
   getPracticeOffices: getPracticeOfficesAction,
