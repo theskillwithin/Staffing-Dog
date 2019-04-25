@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { shape, object, string, array, func, oneOfType, bool } from 'prop-types'
 import qs from 'qs'
 import find from 'lodash/find'
 import get from '@sdog/utils/get'
-import { useQueryParamsOnlyWith, useNonEmptyParams } from '@sdog/utils/queryParams'
+import { useFilterQueryParams, useNonEmptyParams } from '@sdog/utils/queryParams'
 import { connect } from 'react-redux'
 import { withRouter, Link } from 'react-router-dom'
 import clsx from 'clsx'
@@ -27,9 +27,9 @@ import LocationOnIcon from '@sdog/components/svg/Location'
 import {
   defineJob,
   jobTypes,
-  positions,
+  // positions,
   distance,
-  getPositionTypesByPosition,
+  // getPositionTypesByPosition,
 } from '@sdog/definitions/jobs'
 
 import appTheme from '../../../app/theme.css'
@@ -48,21 +48,10 @@ const JobSearch = ({
   applyForJob,
 }) => {
   useDocumentTitle('Job Search')
-
-  const searchParams = useQueryParamsOnlyWith(location.search, [
+  const [filters, setFilters] = useFilterQueryParams(location.search, [
     'employment_type',
-    'specialty',
-    'job_type',
     'radius',
   ])
-
-  const [filters, setFilters] = useState({
-    employment_type: null,
-    specialty: null,
-    job_type: null,
-    radius: null,
-    ...searchParams,
-  })
 
   const handleFilterChange = (field, value) => setFilters({ ...filters, [field]: value })
 
@@ -106,7 +95,7 @@ const JobSearch = ({
           placeholder="All Job Types"
           className={theme.jobType}
         />
-        <Filter
+        {/* <Filter
           onChange={value => handleFilterChange('job_type', value.value)}
           value={find(positions, ({ value }) => value === filters.job_type)}
           options={positions}
@@ -122,7 +111,7 @@ const JobSearch = ({
           options={getPositionTypesByPosition(filters.position)}
           placeholder="All Speciality Types"
           className={theme.specialtyTypes}
-        />
+        /> */}
         <Filter
           onChange={value => handleFilterChange('radius', value.value)}
           value={find(distance, ({ value }) => value === filters.radius)}

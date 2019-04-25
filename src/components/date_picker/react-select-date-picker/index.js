@@ -80,11 +80,14 @@ class DatePicker extends Component {
   }
 
   gotoNextMonth = () => {
-    const currentMonth = this.state.options[Object.keys(this.state.options).length - 1]
-      .label
+    const monthYear = this.state.options[Object.keys(this.state.options).length - 1].label
+
+    const currentMonth = `01 ${monthYear}`
+
     const monthPlusOne = moment(currentMonth)
       .add(1, 'months')
-      .format('MMMM YYYY')
+      .format('DD MMMM YYYY')
+
     this.setState({
       options: [
         this.props.createOptionForDate(monthPlusOne),
@@ -94,11 +97,12 @@ class DatePicker extends Component {
   }
 
   gotoPrevMonth = () => {
-    const currentMonth = this.state.options[Object.keys(this.state.options).length - 1]
-      .label
+    const currentMonth = `01 ${
+      this.state.options[Object.keys(this.state.options).length - 1].label
+    }`
     const monthMinusOne = moment(currentMonth)
-      .add(-1, 'months')
-      .format('MMMM YYYY')
+      .subtract(1, 'months')
+      .format('DD MMMM YYYY')
     this.setState({
       options: [
         this.props.createOptionForDate(monthMinusOne),
