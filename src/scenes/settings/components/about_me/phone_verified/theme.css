@@ -1,0 +1,58 @@
+@import '../../../../../styles/config.css';
+
+.verify.verify {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 14px;
+  font-weight: var(--sd-fontWeightBold);
+  margin-top: 1px;
+  height: 48px;
+  max-width: 154px;
+  margin-left: 26px;
+  border-radius: 50px;
+  transition: color, border 300ms;
+
+  @media (--sd-mobile) {
+    max-width: none;
+    width: 100%;
+    margin-left: 0;
+  }
+}
+
+.sent {
+  display: flex;
+  justify-content: space-between;
+  input {
+    max-width: 100%;
+  }
+
+  > * {
+    max-width: 44%;
+  }
+
+  button {
+    min-width: 154px;
+    max-width: 100%;
+    border-radius: 50px;
+    margin-left: -2.2em;
+  }
+}
+
+.phoneIsVerified,
+.verified {
+  pointer-events: none;
+}
+
+.phoneIsVerified.phoneIsVerified {
+  width: 154px;
+  border-radius: 50px;
+  max-width: 154px;
+  margin-left: 26px;
+
+  @media (--sd-mobile) {
+    max-width: none;
+    width: 100%;
+    margin-left: 0;
+  }
+}
