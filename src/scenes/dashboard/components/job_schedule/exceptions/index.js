@@ -1,5 +1,6 @@
-import React, { useReducer, useState } from 'react'
-import { array } from 'prop-types'
+import React, { useReducer, useState, useEffect } from 'react'
+import { func, array } from 'prop-types'
+import moment from 'moment'
 import clsx from 'clsx'
 import DatePicker from '@sdog/components/date_picker'
 // import Dropdown from '@sdog/components/dropdown'
@@ -13,40 +14,69 @@ import theme from './theme.css'
 const exceptionsReducer = (state, action) => {
   switch (action.type) {
     case 'delete':
-      return state.filter(({ id }) => id !== action.id)
+      return {
+        ...state,
+        lastUpdated: new Date().getTime(),
+        listOfExceptions: state.listOfExceptions.filter(({ id }) => id !== action.id),
+      }
     case 'add':
-      return [...state, { ...action.exception, id: new Date().getTime() }]
+      return {
+        ...state,
+        lastUpdated: new Date().getTime(),
+        listOfExceptions: [
+          ...state.listOfExceptions,
+          { ...action.exception, id: new Date().getTime() },
+        ],
+      }
     default:
       return state
   }
 }
 
-const Exceptions = ({ exceptions }) => {
-  const [startTime, setStartTime] = useState('')
-  const [startMin, setStartMin] = useState('')
-  const [endTime, setEndTime] = useState('')
-  const [endMin, setEndMin] = useState('')
+const Exceptions = ({ exceptions, onUpdate }) => {
+  const [startDate, setStartDate] = useState('')
+  const [endDate, setEndDate] = useState('')
   const [availability, setAvailability] = useState(true)
-  const [deleteId, deleteException] = useState(false)
-  const [listOfExceptions, dispatch] = useReducer(exceptionsReducer, exceptions)
+  const [deleteId, setDeleteExceptionId] = useState(false)
+  const [{ listOfExceptions, lastUpdated }, dispatch] = useReducer(exceptionsReducer, {
+    lastUpdated: false,
+    listOfExceptions: exceptions,
+  })
+
+  useEffect(
+    () => {
+      if (lastUpdated) {
+        onUpdate(listOfExceptions)
+      }
+    },
+    [lastUpdated],
+  )
 
   const submitNewException = () => {
     dispatch({
       type: 'add',
       exception: {
-        startTime,
-        startMin,
-        endTime,
-        endMin,
-        type: availability ? 'blue' : 'red',
+        start_date: moment(startDate)
+          .utc()
+          .format(),
+        end_date: moment(endDate)
+          .utc()
+          .format(),
+        dispostiion: availability ? 'blue' : 'red',
       },
     })
 
-    setStartTime('')
-    setStartMin('')
-    setEndTime('')
-    setEndMin('')
+    setStartDate('')
+    setEndDate('')
     setAvailability(true)
+  }
+
+  const deleteException = (id = false) => {
+    if (id) {
+      dispatch({ type: 'delete', id })
+    }
+
+    setDeleteExceptionId(false)
   }
 
   return (
@@ -54,7 +84,7 @@ const Exceptions = ({ exceptions }) => {
       <h4>Add a new availability exception</h4>
 
       <div className={theme.exceptionRow}>
-        <DatePicker label="Exception Start" />
+        <DatePicker label="Exception Start" onChange={setStartDate} value={startDate} />
         {/* <Dropdown
           value={startTime}
           onChange={setStartTime}
@@ -72,10 +102,8 @@ const Exceptions = ({ exceptions }) => {
           width={61}
           small
         /> */}
-      </div>
 
-      <div className={theme.exceptionRow}>
-        <DatePicker label="Exception End" />
+        <DatePicker label="Exception End" onChange={setEndDate} value={endDate} />
         {/* <Dropdown
           value={endTime}
           onChange={setEndTime}
@@ -119,26 +147,34 @@ const Exceptions = ({ exceptions }) => {
                   <Button secondary onClick={() => deleteException(false)}>
                     Cancel Delete
                   </Button>
+
                   <Button
                     red
                     onClick={() => {
-                      dispatch({ type: 'delete', id: deleteId })
-                      deleteException(false)
+                      deleteException(exception.id)
                     }}
                   >
                     Confirm Delete
                   </Button>
                 </div>
               )}
-              <span className={theme.startDate}>{exception.startDate}</span>
-              <span className={theme.startTime}>{exception.startTime}</span>
+              <span className={theme.startDate}>
+                {moment(exception.start_date)
+                  .utc()
+                  .format('D/M/Y')}
+              </span>
+              {/* <span className={theme.startTime}>{exception.startTime}</span> */}
               <Arrow />
-              <span className={theme.endDate}>{exception.endDate}</span>
-              <span className={theme.endTime}>{exception.endTime}</span>
+              <span className={theme.endDate}>
+                {moment(exception.end_date)
+                  .utc()
+                  .format('D/M/Y')}
+              </span>
+              {/* <span className={theme.endTime}>{exception.endTime}</span> */}
               <button
                 className={theme.close}
                 type="button"
-                onClick={() => deleteException(exception.id)}
+                onClick={() => setDeleteExceptionId(exception.id)}
               >
                 &times;
               </button>
@@ -151,6 +187,7 @@ const Exceptions = ({ exceptions }) => {
 
 Exceptions.propTypes = {
   exceptions: array.isRequired,
+  onUpdate: func.isRequired,
 }
 
 export default Exceptions
