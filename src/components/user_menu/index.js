@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react'
-import { string } from 'prop-types'
+import { string, bool, oneOfType } from 'prop-types'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { findUserInfo, findUserMeta } from '@sdog/store/user'
@@ -82,7 +82,7 @@ UserMenu.propTypes = {
   type: string,
   first: string,
   last: string,
-  office: string,
+  office: oneOfType([string, bool]),
 }
 
 UserMenu.defaultProps = {

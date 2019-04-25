@@ -170,6 +170,8 @@ const SettingsAboutMe = ({
           hourly_wage: get(profile, 'meta.capacity.hourly_wage', ''),
         },
         summary: {
+          dental_license_number: get(profile, 'meta.summary.dental_license_number', ''),
+          excerpt: get(profile, 'meta.summary.excerpt', ''),
           profession: {
             type: typeDropdownInit,
             specialty: specialtyDropdownInit,
@@ -181,6 +183,7 @@ const SettingsAboutMe = ({
 
   const submit = e => {
     e.preventDefault()
+
     const modifyDropdownsData = {
       profile: {
         ...form.profile,
@@ -200,9 +203,11 @@ const SettingsAboutMe = ({
               ...form.profile.meta.summary.profession,
               type: form.profile.meta.summary.profession.type.value,
               specialty:
-                form.profile.meta.summary.profession.specialty &&
-                form.profile.meta.summary.profession.specialty.length
-                  ? form.profile.meta.summary.profession.specialty.map(s => s.value)
+                get(form, 'profile.meta.summary.profession.specialty', []) &&
+                get(form, 'profile.meta.summary.profession.specialty', []).length
+                  ? get(form, 'profile.meta.summary.profession.specialty', []).map(
+                      s => s && s.value,
+                    )
                   : [],
             },
           },
@@ -524,13 +529,19 @@ const SettingsAboutMe = ({
           <div className={theme.inputRow}>
             <Input
               label="Profile Description"
-              value={form.profile.description}
+              value={form.profile.meta.summary.excerpt}
               onChange={value =>
                 setForm({
                   ...form,
                   profile: {
                     ...form.profile,
-                    description: value,
+                    meta: {
+                      ...form.profile.meta,
+                      summary: {
+                        ...form.profile.meta.summary,
+                        excerpt: value,
+                      },
+                    },
                   },
                 })
               }
@@ -543,13 +554,19 @@ const SettingsAboutMe = ({
           {isNotPractice && (
             <Input
               label="Dental License Number"
-              value={form.profile.dentalLicenseNumber}
+              value={form.profile.meta.summary.dental_license_number}
               onChange={value =>
                 setForm({
                   ...form,
                   profile: {
                     ...form.profile,
-                    dentalLicenseNumber: value,
+                    meta: {
+                      ...form.profile.meta,
+                      summary: {
+                        ...form.profile.meta.summary,
+                        dental_license_number: value,
+                      },
+                    },
                   },
                 })
               }
