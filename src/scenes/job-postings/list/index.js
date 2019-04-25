@@ -25,7 +25,7 @@ import appTheme from '../../app/theme.css'
 
 import theme from './theme.css'
 
-const JobPostings = ({ getUserJobs, jobs, loading, location, history }) => {
+const JobPostings = ({ getUserJobs, jobs, loading, location, history, match }) => {
   useDocumentTitle('Job Postings')
   const searchParams = qs.parse((location.search || '').substr(1))
   const [filterValue, setFilter] = useState(searchParams.filter || 'active')
@@ -80,7 +80,7 @@ const JobPostings = ({ getUserJobs, jobs, loading, location, history }) => {
             filteredJobs.map(job => (
               <Card key={`job-posting-${job.id}`} type="large">
                 <Link
-                  to={`/search/job/${job.slug}`}
+                  to={`${match.url}/${job.id}`}
                   className={clsx(theme.title, job.new && theme.new)}
                 >
                   {get(job, 'criteria.title', 'Job')}
@@ -106,7 +106,7 @@ const JobPostings = ({ getUserJobs, jobs, loading, location, history }) => {
 
                 {get(job, 'status', false) === 'draft' && (
                   <div className={theme.edit}>
-                    <Link to={`/job-postings/${job.id}/edit`}>
+                    <Link to={`${match.url}/${job.id}/edit`}>
                       <Button secondary>Edit Post</Button>
                     </Link>
                   </div>
@@ -124,7 +124,7 @@ const JobPostings = ({ getUserJobs, jobs, loading, location, history }) => {
                     </div>
                   </div>
                   <div className={theme.applicants}>
-                    <Link to={`/job-postings/${job.id}`}>
+                    <Link to={`${match.url}/${job.id}`}>
                       <span className={theme.blue}>
                         {parseInt(get(job, 'misc.preferred_applicants.length', 0), 10)}
                       </span>{' '}
@@ -145,7 +145,7 @@ const JobPostings = ({ getUserJobs, jobs, loading, location, history }) => {
           ) : (
             <h4>
               No job postings{`${filterValue && ' matching your filters'}`}.{' '}
-              <Link to="/job-postings/create">Create one now!</Link>
+              <Link to={`${match.url}/create`}>Create one now!</Link>
             </h4>
           )}
         </div>
@@ -161,6 +161,7 @@ JobPostings.propTypes = {
   getUserJobs: func.isRequired,
   location: shape({ search: string.isRequired }).isRequired,
   history: shape({ push: func.isRequired }).isRequired,
+  match: shape({ url: string.isRequired }).isRequired,
 }
 
 export const mapStateToProps = state => ({
