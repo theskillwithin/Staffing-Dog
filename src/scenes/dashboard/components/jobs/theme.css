@@ -29,3 +29,8 @@
   width: calc(100% + 3em);
   margin-left: -1.5em;
 }
+
+.empty {
+  padding-top: 3em;
+  text-align: center;
+}

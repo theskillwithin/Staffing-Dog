@@ -46,7 +46,7 @@ const UserJobsList = ({ loading, error, jobs }) => {
                 </div>
               </div>
             ) : (
-              <div>no applied jobs</div>
+              <div className={theme.empty}>no jobs</div>
             )}
           </div>
         )}
