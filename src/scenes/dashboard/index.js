@@ -1,5 +1,5 @@
 import React from 'react'
-import { string } from 'prop-types'
+import { string, oneOfType, bool } from 'prop-types'
 import clsx from 'clsx'
 import { connect } from 'react-redux'
 import { findUserType } from '@sdog/store/user'
@@ -32,7 +32,10 @@ const Dashboard = ({ userType }) => {
 }
 
 Dashboard.propTypes = {
-  userType: string.isRequired,
+  userType: oneOfType([bool, string]),
+}
+Dashboard.defaultProps = {
+  userType: false,
 }
 
 export const mapStateToProps = state => ({ userType: findUserType(state) })

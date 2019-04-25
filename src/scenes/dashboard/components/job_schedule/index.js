@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { func, string, array, object, shape, oneOfType, bool } from 'prop-types'
 import { connect } from 'react-redux'
-import get from 'lodash/get'
+import get from '@sdog/utils/get'
 import clsx from 'clsx'
 import includes from 'lodash/includes'
 import find from 'lodash/find'
