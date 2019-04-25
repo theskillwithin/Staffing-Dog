@@ -34,26 +34,24 @@ const exceptionsReducer = (state, action) => {
 }
 
 const Exceptions = ({ exceptions, onUpdate }) => {
-  const [startDate, setStartDate] = useState({
-    date: moment().utc(),
+  const defaultExceptionDate = moment()
+    .add(1, 'days')
+    .utc()
+  const defaultDateOption = {
+    date: defaultExceptionDate,
     display: 'calendar',
-    label: moment().format('Do MMMM YYYY'),
-    value: moment().utc(),
-  })
-  const [endDate, setEndDate] = useState({
-    date: moment().utc(),
-    display: 'calendar',
-    label: moment().format('Do MMMM YYYY'),
-    value: moment().utc(),
-  })
+    label: defaultExceptionDate.format('Do MMMM YYYY'),
+    value: defaultExceptionDate,
+  }
+
+  const [startDate, setStartDate] = useState(defaultDateOption)
+  const [endDate, setEndDate] = useState(defaultDateOption)
   const [availability, setAvailability] = useState(true)
   const [deleteId, setDeleteExceptionId] = useState(false)
   const [{ listOfExceptions, lastUpdated }, dispatch] = useReducer(exceptionsReducer, {
     lastUpdated: false,
     listOfExceptions: exceptions,
   })
-
-  console.log(startDate)
 
   useEffect(
     () => {
@@ -68,18 +66,18 @@ const Exceptions = ({ exceptions, onUpdate }) => {
     dispatch({
       type: 'add',
       exception: {
-        start_date: moment(startDate)
+        start_date: moment(startDate.date)
           .utc()
           .format(),
-        end_date: moment(endDate)
+        end_date: moment(endDate.date)
           .utc()
           .format(),
-        dispostiion: availability ? 'blue' : 'red',
+        dispotision: availability ? 'availble' : 'not_available',
       },
     })
 
-    setStartDate(moment())
-    setEndDate(moment())
+    setStartDate(defaultDateOption)
+    setEndDate(defaultDateOption)
     setAvailability(true)
   }
 
@@ -89,6 +87,17 @@ const Exceptions = ({ exceptions, onUpdate }) => {
     }
 
     setDeleteExceptionId(false)
+  }
+
+  const getExceptionColorClassName = ({ dispotision }) => {
+    if (dispotision === 'available') {
+      return 'blue'
+    }
+    if (dispotision === 'not_available') {
+      return 'red'
+    }
+
+    return 'grey'
   }
 
   return (
@@ -152,7 +161,10 @@ const Exceptions = ({ exceptions, onUpdate }) => {
         ? listOfExceptions.map(exception => (
             <div
               key={exception.id}
-              className={clsx(theme.exception, exception.type && theme[exception.type])}
+              className={clsx(
+                theme.exception,
+                theme[getExceptionColorClassName(exception)],
+              )}
             >
               {deleteId === exception.id && (
                 <div className={theme.delete}>
@@ -173,14 +185,14 @@ const Exceptions = ({ exceptions, onUpdate }) => {
               <span className={theme.startDate}>
                 {moment(exception.start_date)
                   .utc()
-                  .format('D/M/Y')}
+                  .format('M/D/Y')}
               </span>
               {/* <span className={theme.startTime}>{exception.startTime}</span> */}
               <Arrow />
               <span className={theme.endDate}>
                 {moment(exception.end_date)
                   .utc()
-                  .format('D/M/Y')}
+                  .format('M/D/Y')}
               </span>
               {/* <span className={theme.endTime}>{exception.endTime}</span> */}
               <button
