@@ -12,7 +12,7 @@ import Alert from '@sdog/components/alert'
 import {
   getPracticeOffices as getPracticeOfficesAction,
   findPracticeOffices,
-  findUserMeta,
+  findUserPlanTier,
 } from '@sdog/store/user'
 import { postNewJob as postNewJobAction, findCreateJob } from '@sdog/store/jobs'
 
@@ -140,10 +140,7 @@ JobPostings.propTypes = {
 export const mapStateToProps = state => ({
   offices: findPracticeOffices(state),
   create: findCreateJob(state),
-  plan:
-    findUserMeta(state) &&
-    findUserMeta(state).summary &&
-    findUserMeta(state).summary.plan_tier,
+  plan: findUserPlanTier(state),
 })
 export const mapActionsToProps = {
   getPracticeOffices: getPracticeOfficesAction,

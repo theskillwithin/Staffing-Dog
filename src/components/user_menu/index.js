@@ -3,6 +3,7 @@ import { string } from 'prop-types'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { findUserInfo, findUserMeta } from '@sdog/store/user'
+import get from 'lodash/get'
 import useOutsideClick from '@sdog/utils/useOutsideClick'
 import clsx from 'clsx'
 import Arrow from '@sdog/components/svg/Arrow'
@@ -95,10 +96,7 @@ const mapState = state => ({
   type: findUserInfo(state).type,
   first: findUserInfo(state).first_name,
   last: findUserInfo(state).last_name,
-  office:
-    findUserMeta(state) &&
-    findUserMeta(state).summary &&
-    findUserMeta(state).summary.practice_name,
+  office: get(findUserMeta(state), 'summary.practice_name', false),
 })
 
 export default connect(mapState)(UserMenu)
