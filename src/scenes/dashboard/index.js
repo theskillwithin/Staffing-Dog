@@ -1,5 +1,8 @@
 import React from 'react'
+import { string } from 'prop-types'
 import clsx from 'clsx'
+import { connect } from 'react-redux'
+import { findUserType } from '@sdog/store/user'
 import { useHtmlClass, useDocumentTitle } from '@sdog/utils/document'
 
 import theme from '../app/theme.css'
@@ -9,7 +12,7 @@ import Messages from './components/messages'
 import JobSchedule from './components/job_schedule'
 import Jobs from './components/jobs'
 
-const Dashboard = () => {
+const Dashboard = ({ userType }) => {
   useDocumentTitle('Dashboard')
   useHtmlClass('html-app')
 
@@ -17,7 +20,7 @@ const Dashboard = () => {
     <div className={clsx(theme.pageContent, theme.columns)}>
       <div className={theme.columnA}>
         <ToDoList />
-        <Jobs />
+        {userType !== 'practice' && <Jobs />}
         <Messages />
       </div>
 
@@ -28,4 +31,10 @@ const Dashboard = () => {
   )
 }
 
-export default Dashboard
+Dashboard.propTypes = {
+  userType: string.isRequired,
+}
+
+export const mapStateToProps = state => ({ userType: findUserType(state) })
+
+export default connect(mapStateToProps)(Dashboard)
