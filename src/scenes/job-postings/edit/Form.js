@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { bool, shape, string, func, object, array } from 'prop-types'
+import moment from 'moment'
 import find from 'lodash/find'
 import get from '@sdog/utils/get'
 import Button from '@sdog/components/button'
@@ -60,6 +61,13 @@ const JobPostForm = ({ loading, onSubmit, date, setFormValue, options, form, typ
 
   const isInvalid = field => inValidFields.includes(field)
 
+  const createDatePickerObject = initDate => ({
+    date: moment(initDate),
+    display: 'calendar',
+    label: moment(initDate).format('Do MMMM YYYY'),
+    value: moment(initDate),
+  })
+
   return (
     <form className={theme.form}>
       {'new' === type ? (
@@ -95,15 +103,29 @@ const JobPostForm = ({ loading, onSubmit, date, setFormValue, options, form, typ
         />
 
         <DatePicker
-          value={get(form, 'criteria.duration.start_date', date)}
-          onChange={value => handleSetFormValue('criteria.duration.start_date', value)}
+          value={createDatePickerObject(get(form, 'criteria.duration.start_date', date))}
+          onChange={value =>
+            handleSetFormValue(
+              'criteria.duration.start_date',
+              moment(value.value)
+                .utc()
+                .format(),
+            )
+          }
           label="Start Date"
           className={theme.startDate}
         />
 
         <DatePicker
-          value={get(form, 'criteria.duration.end_date', date)}
-          onChange={value => handleSetFormValue('criteria.duration.end_date', value)}
+          value={createDatePickerObject(get(form, 'criteria.duration.end_date', date))}
+          onChange={value =>
+            handleSetFormValue(
+              'criteria.duration.end_date',
+              moment(value.value)
+                .utc()
+                .format(),
+            )
+          }
           label="End Date"
           className={theme.endDate}
         />
