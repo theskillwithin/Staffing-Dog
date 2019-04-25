@@ -1,44 +1,59 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { connect } from 'react-redux'
-import moment from 'moment'
 import { object, bool } from 'prop-types'
 import Card from '@sdog/components/card'
 import Spinner from '@sdog/components/spinner'
 import Alert from '@sdog/components/alert'
 import { findJobsLoading, findJobsError, findJobs } from 'store/jobs'
+import Tabs from '@sdog/components/tab_bar'
 
+import JobCard from './card'
 import theme from './theme.css'
 
-const UserJobsList = ({ loading, error, jobs }) => (
-  <Card title="Job List">
-    <div className={theme.jobList}>
-      {loading && <Spinner />}
-      {error && <Alert error>an error has occured</Alert>}
-      {!error && !loading && (
-        <>
-          {jobs && jobs.applied && jobs.applied.length ? (
-            <div className={theme.jobs}>
-              <h3>Applied Jobs</h3>
-              {jobs &&
-                jobs.applied.map(app => (
-                  <div key={app.id}>
-                    <div>{app.criteria.practice_details.name}</div>
-                    <div>{app.criteria.position}</div>
-                    <div>${app.criteria.hourly_rate || app.criteria.salary}/hr</div>
-                    <div>{app.criteria.specialty}</div>
-                    <div>{moment(app.criteria.available_date).format('MM/DD/YYYY')}</div>
-                    <div>View Job Post</div>
-                  </div>
-                ))}
+const UserJobsList = ({ loading, error, jobs }) => {
+  const [activeTabIndex, setActiveTab] = useState(0)
+  const chosenJobs = jobs && activeTabIndex === 1 ? jobs.scheduled : jobs.applied
+  const which = jobs && activeTabIndex === 1 ? 'Scheduled' : 'Applied'
+  return (
+    <Card title="Jobs">
+      <div className={theme.jobList}>
+        {loading && <Spinner />}
+        {error && <Alert error>an error has occured</Alert>}
+        {!error && !loading && (
+          <div>
+            <div className={theme.tabs}>
+              <Tabs
+                activeTabIndex={activeTabIndex}
+                onSelect={setActiveTab}
+                underline
+                exactWidthTab
+                fw500
+              >
+                <div>Applied</div>
+                <div>Scheduled</div>
+              </Tabs>
             </div>
-          ) : (
-            <div>no applied jobs</div>
-          )}
-        </>
-      )}
-    </div>
-  </Card>
-)
+            {jobs && chosenJobs && chosenJobs.length ? (
+              <div className={theme.jobs}>
+                {jobs &&
+                  chosenJobs.map(app => (
+                    <div key={app.id}>
+                      <JobCard data={app} />
+                    </div>
+                  ))}
+                <div className={theme.bottom}>
+                  <span>{chosenJobs.length}</span> {which}
+                </div>
+              </div>
+            ) : (
+              <div className={theme.empty}>no jobs</div>
+            )}
+          </div>
+        )}
+      </div>
+    </Card>
+  )
+}
 
 UserJobsList.defaultProps = {
   loading: true,
