@@ -2,18 +2,18 @@ import React, { useState, useRef } from 'react'
 import { string, bool, oneOfType } from 'prop-types'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { findUserInfo, findUserMeta } from '@sdog/store/user'
+import { findUserInfo, findUserMeta, findUserPreferences } from '@sdog/store/user'
 import get from 'lodash/get'
 import useOutsideClick from '@sdog/utils/useOutsideClick'
 import clsx from 'clsx'
 import Arrow from '@sdog/components/svg/Arrow'
 import Chevron from '@sdog/components/svg/Chevron'
-import ProfilePhotoSVG from '@sdog/components/svg/ProfilePhoto'
+import Avatar from '@sdog/components/Avatar'
 import Hamburger from '@sdog/components/hamburger'
 
 import theme from './theme.css'
 
-const UserMenu = ({ type, first, last, office }) => {
+const UserMenu = ({ type, first, last, office, photo }) => {
   const [mobileActive, setMobileActive] = useState(false)
   const pRef = useRef()
   const handleMobileToggle = () => setMobileActive(!mobileActive)
@@ -34,7 +34,7 @@ const UserMenu = ({ type, first, last, office }) => {
       <div className={theme.userMenuInner} ref={pRef}>
         <div className={theme.userMenuDesktop}>
           <div className={theme.photo}>
-            <ProfilePhotoSVG color="purple" />
+            <Avatar color="purple" size="48px" url={photo} alt="avatar" />
           </div>
           <div className={theme.user}>
             <div>{displayUserName}</div>
@@ -83,6 +83,7 @@ UserMenu.propTypes = {
   first: string,
   last: string,
   office: oneOfType([string, bool]),
+  photo: oneOfType([bool, string]),
 }
 
 UserMenu.defaultProps = {
@@ -90,6 +91,7 @@ UserMenu.defaultProps = {
   first: '',
   last: '',
   office: '',
+  photo: '',
 }
 
 const mapState = state => ({
@@ -97,6 +99,7 @@ const mapState = state => ({
   first: findUserInfo(state).first_name,
   last: findUserInfo(state).last_name,
   office: get(findUserMeta(state), 'summary.practice_name', false),
+  photo: get(findUserPreferences(state), 'profile_image_url', false),
 })
 
 export default connect(mapState)(UserMenu)

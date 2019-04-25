@@ -31,7 +31,7 @@ export const getInitialState = date => ({
     hourly_rate: 0.0,
     experience_min: 1,
     experience_preferred: 3,
-    applicant_selection: ['closed'],
+    applicant_selection: [],
     duration: {
       start_date: date,
       end_date: date,
