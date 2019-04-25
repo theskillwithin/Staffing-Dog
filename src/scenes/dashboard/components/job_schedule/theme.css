@@ -15,10 +15,15 @@
   margin-top: 2em;
 }
 
+.schedulerTitle {
+  margin-top: 2em;
+  margin-bottom: 0.5em;
+}
+
 .scheduler {
   display: flex;
   flex-wrap: wrap;
-  margin: 2em 0;
+  margin: 0;
 
   > * {
     margin-right: 2em;
