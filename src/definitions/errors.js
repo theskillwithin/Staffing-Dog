@@ -17,7 +17,7 @@ export const codes = {
   '400_172': 'Bad email confirmation link.  Try requesting email confirmation again.',
   '400_2': withTryAgain('There was an unkown error.'),
   '400_21': 'user has to at least complete initial registration to do this',
-  '400_3': 'general stripe error',
+  '400_3': 'Invalid Credit Card Information',
   '400_4': 'general file upload error',
   '401_1': 'invalid jwt',
   '401_11': withTryAgain('There was an error authenticating.'),

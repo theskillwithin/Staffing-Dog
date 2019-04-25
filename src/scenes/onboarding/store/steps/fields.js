@@ -511,7 +511,7 @@ export const practice = [
             required: true,
             options: [
               { label: 'Day Hire', value: 'day_hire' },
-              { label: 'Three Month', value: '3_month' },
+              { label: 'Three Month', value: '3_months' },
               { label: 'Full', value: 'annual' },
             ],
           },
