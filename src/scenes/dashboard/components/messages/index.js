@@ -139,18 +139,22 @@ class Messages extends React.Component {
             <div className={theme.threads}>
               {threads && threads.length ? (
                 map(threads, thread => {
-                  const findOtherUserIsInitiator =
-                    activeThread &&
-                    activeThread.initiator &&
-                    activeThread.initiator.id === this.props.userId
+                  const findOtherUserIsParticipant =
+                    thread &&
+                    thread.initiator &&
+                    thread.initiator.id === this.props.userId
 
-                  const findOtherUser = findOtherUserIsInitiator
+                  const findOtherUser = !findOtherUserIsParticipant
                     ? `${thread.initiator &&
                         thread.initiator.first_name} ${thread.initiator &&
                         thread.initiator.last_name}`
                     : `${thread.participant &&
                         thread.participant.first_name} ${thread.participant &&
                         thread.participant.last_name}`
+
+                  const practiceName = !findOtherUserIsParticipant
+                    ? get(thread, 'initiator.practice_name', false)
+                    : get(thread, 'participant.practice_name', false)
 
                   return (
                     <div
@@ -177,7 +181,7 @@ class Messages extends React.Component {
                         <div className={theme.middle}>
                           <div className={theme.title}>
                             <h6>{findOtherUser}</h6>
-                            {thread.location && <span>{thread.location}</span>}
+                            {practiceName && <span>{practiceName}</span>}
                           </div>
                           <div className={theme.short}>
                             <p>{get(thread.recent, '[0].message', '')}</p>
