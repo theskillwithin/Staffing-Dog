@@ -15,7 +15,7 @@ import theme from './theme.css'
 const EmailVerified = ({ verified, submit, loading, success }) => (
   <Button
     className={clsx(theme.verify, verified && theme.verified)}
-    onClick={submit}
+    onClick={() => submit()}
     loading={loading}
   >
     {loading ? '' : success ? 'Email Sent' : verified ? 'Email Verified' : 'Verify Email'}
