@@ -1,10 +1,11 @@
 import * as Sentry from '@sentry/browser'
 import get from 'lodash/get'
 import axios, { unauthorizedUser } from '@sdog/utils/api'
+import createFingerprint from '@sdog/utils/fingerprint'
 
 import { createActionTypes } from './createAction'
 import { setToken, getToken } from './storage'
-import { USER_SET_TOKEN, findToken, findFingerprint } from './user'
+import { USER_SET_TOKEN, findToken, findFingerprint, setFingerprint } from './user'
 
 const AUTH_TOKEN_NAME = 'x-auth-token'
 
@@ -20,8 +21,13 @@ export default ({ dispatch, getState }) => next => async action => {
 
   const state = getState()
   const actionTypes = createActionTypes(type)
-  const fingerprint = findFingerprint(state)
+  let fingerprint = findFingerprint(state)
   const token = findToken(state)
+
+  if (!fingerprint) {
+    fingerprint = createFingerprint()
+    setFingerprint(fingerprint)(dispatch)
+  }
 
   dispatch({ type: actionTypes.LOADING, payload })
 
@@ -31,9 +37,7 @@ export default ({ dispatch, getState }) => next => async action => {
     apiConfig.headers = { ...apiConfig.headers, Authorization: `Bearer ${token}` }
   }
 
-  if (fingerprint) {
-    apiConfig.headers = { ...apiConfig.headers, fingerprint }
-  }
+  apiConfig.headers = { ...apiConfig.headers, fingerprint }
 
   try {
     const response = await axios(apiConfig)
