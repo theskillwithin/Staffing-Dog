@@ -11,9 +11,9 @@ import {
   updateRegisterUser,
   findToken,
   findUserProfile,
-  userRegisterTypes,
-  userRegisterUpdateTypes,
-  userGetProfileTypes,
+  userRegisterTYPES,
+  userRegisterUpdateTYPES,
+  userGetProfileTYPES,
   findUserId,
 } from '@sdog/store/user'
 import reduxRegister from '@sdog/store/register'
@@ -251,9 +251,9 @@ export const reducers = {
     error: payload.error,
   }),
   // When Updating the user, we want to make sure to update the steps data as well
-  [userRegisterTypes.SUCCESS]: updateStepValuesFromRegister,
-  [userRegisterUpdateTypes.SUCCESS]: updateStepValuesFromRegister,
-  [userGetProfileTypes.SUCCESS]: (state, { data }) => {
+  [userRegisterTYPES.SUCCESS]: updateStepValuesFromRegister,
+  [userRegisterUpdateTYPES.SUCCESS]: updateStepValuesFromRegister,
+  [userGetProfileTYPES.SUCCESS]: (state, { data }) => {
     const values = {
       ...state.values,
       ...formatDataFromApi(data, state.values, state.type),
