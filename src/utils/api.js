@@ -23,7 +23,7 @@ export const getLastUsedRequest = () => lastUsedRequest
 
 const axiosInstance = axios.create({
   withCredentials: true,
-  paramsSerializer: params => qs.stringify(params),
+  paramsSerializer: params => qs.stringify(params, { arrayFormat: 'brackets' }),
 })
 
 export const unauthorizedUser = () => {
