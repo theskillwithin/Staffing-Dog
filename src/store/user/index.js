@@ -948,8 +948,8 @@ reducers = {
 export const USER_VALIDATE_EMAIL = 'USER_VALIDATE_EMAIL'
 export const USER_VALIDATE_REQUEST = 'USER_VALIDATE_REQUEST'
 export const USER_VALIDATE_EMAIL_CLEAR_SUCCESS = 'USER_VALIDATE_EMAIL_CLEAR_SUCCESS'
-export const userValidateEmail = createActionTypes(USER_VALIDATE_EMAIL)
-export const userValidateRequestEmail = createActionTypes(USER_VALIDATE_REQUEST)
+export const userValidateEmailTypes = createActionTypes(USER_VALIDATE_EMAIL)
+export const userValidateRequestEmailTypes = createActionTypes(USER_VALIDATE_REQUEST)
 
 export const requestValidateEmail = () => (dispatch, getState) => {
   const userId = findUserId(getState()) || getUserId()
@@ -974,7 +974,7 @@ export const validateEmail = ({ anchor, token }) => ({
 
 reducers = {
   ...reducers,
-  [userValidateRequestEmail.LOADING]: state => ({
+  [userValidateRequestEmailTypes.LOADING]: state => ({
     ...state,
     ...spreadLastUpdated(),
     requestValidateEmail: {
@@ -983,7 +983,7 @@ reducers = {
       success: false,
     },
   }),
-  [userValidateRequestEmail.ERROR]: (state, { error }) => ({
+  [userValidateRequestEmailTypes.ERROR]: (state, { error }) => ({
     ...state,
     ...spreadLastUpdated(),
     requestValidateEmail: {
@@ -992,7 +992,7 @@ reducers = {
       success: false,
     },
   }),
-  [userValidateRequestEmail.SUCCESS]: (state, { data }) => ({
+  [userValidateRequestEmailTypes.SUCCESS]: (state, { data }) => ({
     ...state,
     ...spreadLastUpdated(),
     requestValidateEmail: {
@@ -1001,7 +1001,7 @@ reducers = {
       success: get(data, 'message', true),
     },
   }),
-  [userValidateEmail.LOADING]: state => ({
+  [userValidateEmailTypes.LOADING]: state => ({
     ...state,
     ...spreadLastUpdated(),
     validateEmail: {
@@ -1010,7 +1010,7 @@ reducers = {
       success: false,
     },
   }),
-  [userValidateEmail.ERROR]: (state, { error }) => ({
+  [userValidateEmailTypes.ERROR]: (state, { error }) => ({
     ...state,
     ...spreadLastUpdated(),
     validateEmail: {
@@ -1019,7 +1019,7 @@ reducers = {
       success: false,
     },
   }),
-  [userValidateEmail.SUCCESS]: (state, { data }) => ({
+  [userValidateEmailTypes.SUCCESS]: (state, { data }) => ({
     ...state,
     ...spreadLastUpdated(),
     validateEmail: {
@@ -1035,8 +1035,10 @@ reducers = {
  */
 export const USER_VALIDATE_PHONE = 'USER_VALIDATE_PHONE'
 export const USER_VALIDATE_PHONE_REQUEST = 'USER_VALIDATE_PHONE_REQUEST'
-export const userValidatePhone = createActionTypes(USER_VALIDATE_PHONE)
-export const userValidateRequestPhone = createActionTypes(USER_VALIDATE_PHONE_REQUEST)
+export const userValidatePhoneTypes = createActionTypes(USER_VALIDATE_PHONE)
+export const userValidateRequestPhoneTypes = createActionTypes(
+  USER_VALIDATE_PHONE_REQUEST,
+)
 
 export const requestValidatePhone = () => (dispatch, getState) => {
   const userId = findUserId(getState()) || getUserId()
@@ -1061,7 +1063,7 @@ export const validatePhone = ({ anchor, token, code }) => ({
 
 reducers = {
   ...reducers,
-  [userValidateRequestPhone.LOADING]: state => ({
+  [userValidateRequestPhoneTypes.LOADING]: state => ({
     ...state,
     ...spreadLastUpdated(),
     requestValidatePhone: {
@@ -1070,7 +1072,7 @@ reducers = {
       success: false,
     },
   }),
-  [userValidateRequestPhone.ERROR]: (state, { error }) => ({
+  [userValidateRequestPhoneTypes.ERROR]: (state, { error }) => ({
     ...state,
     ...spreadLastUpdated(),
     requestValidatePhone: {
@@ -1079,7 +1081,7 @@ reducers = {
       success: false,
     },
   }),
-  [userValidateRequestPhone.SUCCESS]: (state, { data: { token, anchor } }) => ({
+  [userValidateRequestPhoneTypes.SUCCESS]: (state, { data: { token, anchor } }) => ({
     ...state,
     ...spreadLastUpdated(),
     requestValidatePhone: {
@@ -1090,7 +1092,7 @@ reducers = {
       anchor,
     },
   }),
-  [userValidatePhone.LOADING]: state => ({
+  [userValidatePhoneTypes.LOADING]: state => ({
     ...state,
     ...spreadLastUpdated(),
     validatePhone: {
@@ -1099,7 +1101,7 @@ reducers = {
       success: false,
     },
   }),
-  [userValidatePhone.ERROR]: (state, { error }) => ({
+  [userValidatePhoneTypes.ERROR]: (state, { error }) => ({
     ...state,
     ...spreadLastUpdated(),
     validatePhone: {
@@ -1108,7 +1110,7 @@ reducers = {
       success: false,
     },
   }),
-  [userValidatePhone.SUCCESS]: (state, { data }) => ({
+  [userValidatePhoneTypes.SUCCESS]: (state, { data }) => ({
     ...state,
     ...spreadLastUpdated(),
     validatePhone: {
