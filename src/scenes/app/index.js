@@ -10,6 +10,7 @@ import MainMenu from '@sdog/scenes/app/menu'
 import UserMenu from '@sdog/components/user_menu'
 import Spinner from '@sdog/components/spinner'
 import { getUserProfile as getUserProfileAction, findUserProfile } from '@sdog/store/user'
+import GlobalAlerts from '@sdog/components/GlobalAlerts'
 
 import theme from './theme.css'
 import './styles.css'
@@ -44,6 +45,8 @@ const App = ({ getUserProfile, location, history, userProfile }) => {
 
   return (
     <div className={theme.app}>
+      <GlobalAlerts />
+
       <header className={theme.appHeader}>
         <div className={theme.appHeaderInner}>
           <div className={theme.logo}>
