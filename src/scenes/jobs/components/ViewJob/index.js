@@ -50,12 +50,14 @@ const ViewJob = ({
       ) : (
         <>
           <section className={theme.title}>
+            <div className={theme.avatar} />
             <Avatar
               url={get(job, 'criteria.practice_details.profile_image_url')}
               size="128"
+              alt="Avatar"
             />
 
-            <div>
+            <div className={theme.titles}>
               <h2>{get(job, 'criteria.title')}</h2>
               <h4>{get(job, 'criteria.practice_details.name')}</h4>
             </div>
@@ -114,7 +116,7 @@ const ViewJob = ({
           <section className={theme.details}>
             <div
               className={theme.rawDescription}
-              dangerouslySetInnerHTML={{ __html: get(job, 'meta.raw') }}
+              dangerouslySetInnerHTML={{ __html: get(job, 'meta.long_description') }}
             />
           </section>
         </>
@@ -142,10 +144,12 @@ export const mapStateToProps = state => ({
   loading: findSingleJobLoading(state),
   error: findSingleJobError(state),
   applyingForJobs: findApplyingForJob(state),
-  applyForJob: applyForJobAction,
 })
 
-export const mapActionsToProps = { getSingleJob: getSingleJobAction }
+export const mapActionsToProps = {
+  getSingleJob: getSingleJobAction,
+  applyForJob: applyForJobAction,
+}
 
 export default withRouter(
   connect(

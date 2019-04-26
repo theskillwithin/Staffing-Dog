@@ -30,8 +30,8 @@
   display: flex;
   align-items: center;
 
-  img {
-    margin-right: 2em;
+  .titles {
+    margin-left: 2em;
   }
 
   h2 {
