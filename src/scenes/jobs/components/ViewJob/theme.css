@@ -1,10 +1,14 @@
 @import '../../../../styles/config.css';
 
 :root .pageContent {
-  --sd-containerWidth: 840px;
-  --sd-pagePaddingTop: 1em;
-  --sd-pagePaddingBottom: 1em;
+  --sd-viewJobContainerWidth: 840px;
   --sd-pagePadding: 1.5em 2.5em;
+}
+
+.container {
+  max-width: var(--sd-viewJobContainerWidth);
+  margin: 0 auto;
+  padding-bottom: 4em;
 }
 
 .pageContent {
@@ -13,6 +17,7 @@
   border-radius: 4px;
   margin-top: 106px;
   margin-bottom: 4em;
+  max-width: var(--sd-viewJobContainerWidth);
 
   p {
     color: var(--sd-blackTxt);
