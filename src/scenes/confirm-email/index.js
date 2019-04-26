@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { bool, func, string, array, oneOfType, shape } from 'prop-types'
-import { withRouter } from 'react-router-dom'
+import { withRouter, Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { useHtmlClass, useDocumentTitle } from '@sdog/utils/document'
 import Toaster from '@sdog/components/toaster'
@@ -55,12 +55,14 @@ const EmailConfirmation = ({
               {success && (
                 <div className={theme.success}>
                   <Alert success>Email has been verified!</Alert>
-                  <Button to="/login" size="medium">
-                    Login{' '}
-                    <span>
-                      <Arrow small color="white" />
-                    </span>
-                  </Button>
+                  <Link to="/login">
+                    <Button size="medium">
+                      Login{' '}
+                      <span>
+                        <Arrow small color="white" />
+                      </span>
+                    </Button>
+                  </Link>
                 </div>
               )}
             </div>
