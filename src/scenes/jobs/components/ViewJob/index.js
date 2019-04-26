@@ -44,82 +44,86 @@ const ViewJob = ({
   }
 
   return (
-    <div className={clsx(appTheme.pageContent, theme.pageContent)}>
-      {error ? (
-        <p>{error || 'Could not find job'}</p>
-      ) : (
-        <>
-          <section className={theme.title}>
-            <Avatar
-              url={get(job, 'criteria.practice_details.profile_image_url')}
-              size="128"
-            />
+    <article className={theme.container}>
+      <div className={clsx(appTheme.pageContent, theme.pageContent)}>
+        {error ? (
+          <p>{error || 'Could not find job'}</p>
+        ) : (
+          <>
+            <section className={theme.title}>
+              <div className={theme.avatar} />
+              <Avatar
+                url={get(job, 'criteria.practice_details.profile_image_url')}
+                size="128"
+                alt="Avatar"
+              />
 
-            <div>
-              <h2>{get(job, 'criteria.title')}</h2>
-              <h4>{get(job, 'criteria.practice_details.name')}</h4>
-            </div>
-          </section>
+              <div className={theme.titles}>
+                <h2>{get(job, 'criteria.title')}</h2>
+                <h4>{get(job, 'criteria.practice_details.name')}</h4>
+              </div>
+            </section>
 
-          <section>
-            <p>{get(job, 'criteria.description')}</p>
+            <section>
+              <p>{get(job, 'criteria.description')}</p>
 
-            <div className={theme.location}>
-              <LocationOnIcon />
+              <div className={theme.location}>
+                <LocationOnIcon />
 
-              <strong>
-                {get(job, 'criteria.practice_details.address.city')},{' '}
-                {get(job, 'criteria.practice_details.address.state')}
-              </strong>
-            </div>
+                <strong>
+                  {get(job, 'criteria.practice_details.address.city')},{' '}
+                  {get(job, 'criteria.practice_details.address.state')}
+                </strong>
+              </div>
 
-            <div className={theme.details}>
-              <dl>
-                <dt>Job Type</dt>
-                <dd>{defineJob('type', get(job, 'criteria.employment_type'))}</dd>
-                <dt>Position</dt>
-                <dd>{defineJob('position', get(job, 'criteria.position'))}</dd>
-                <dt>Rate</dt>
-                <dd>${get(job, 'criteria.hourly_rate')} hr</dd>
-                <dt>Experience</dt>
-                <dd>
-                  {get(job, 'criteria.experience_min', 0)}-
-                  {get(job, 'criteria.experience_preferred', 1)} Years
-                </dd>
-              </dl>
-            </div>
+              <div className={theme.details}>
+                <dl>
+                  <dt>Job Type</dt>
+                  <dd>{defineJob('type', get(job, 'criteria.employment_type'))}</dd>
+                  <dt>Position</dt>
+                  <dd>{defineJob('position', get(job, 'criteria.position'))}</dd>
+                  <dt>Rate</dt>
+                  <dd>${get(job, 'criteria.hourly_rate')} hr</dd>
+                  <dt>Experience</dt>
+                  <dd>
+                    {get(job, 'criteria.experience_min', 0)}-
+                    {get(job, 'criteria.experience_preferred', 1)} Years
+                  </dd>
+                </dl>
+              </div>
 
-            <div className={theme.apply}>
-              <Button
-                round
-                secondary={job.applied}
-                disabled={
-                  job.applied || get(applyingForJobs, `[${job.id}].loading`, false)
-                }
-                onClick={e => onClickApplyForJob(e, job.id)}
-              >
-                {get(applyingForJobs, `[${job.id}].loading`, false) ? (
-                  <span>
-                    Applying <Spinner inverted size={20} center={false} />
-                  </span>
-                ) : get(job, 'applied', false) ? (
-                  'Applied'
-                ) : (
-                  'Apply Now'
-                )}
-              </Button>
-            </div>
-          </section>
+              <div className={theme.apply}>
+                <Button
+                  round
+                  secondary={job.applied}
+                  disabled={
+                    job.applied || get(applyingForJobs, `[${job.id}].loading`, false)
+                  }
+                  onClick={e => onClickApplyForJob(e, job.id)}
+                >
+                  {get(applyingForJobs, `[${job.id}].loading`, false) ? (
+                    <span>
+                      Applying <Spinner inverted size={20} center={false} />
+                    </span>
+                  ) : get(job, 'applied', false) ? (
+                    'Applied'
+                  ) : (
+                    'Apply Now'
+                  )}
+                </Button>
+              </div>
+            </section>
 
-          <section className={theme.details}>
-            <div
-              className={theme.rawDescription}
-              dangerouslySetInnerHTML={{ __html: get(job, 'meta.raw') }}
-            />
-          </section>
-        </>
-      )}
-    </div>
+            <section className={theme.details}>
+              <div
+                className={theme.rawDescription}
+                dangerouslySetInnerHTML={{ __html: get(job, 'meta.long_description') }}
+              />
+            </section>
+          </>
+        )}
+      </div>
+    </article>
   )
 }
 
@@ -142,10 +146,12 @@ export const mapStateToProps = state => ({
   loading: findSingleJobLoading(state),
   error: findSingleJobError(state),
   applyingForJobs: findApplyingForJob(state),
-  applyForJob: applyForJobAction,
 })
 
-export const mapActionsToProps = { getSingleJob: getSingleJobAction }
+export const mapActionsToProps = {
+  getSingleJob: getSingleJobAction,
+  applyForJob: applyForJobAction,
+}
 
 export default withRouter(
   connect(
