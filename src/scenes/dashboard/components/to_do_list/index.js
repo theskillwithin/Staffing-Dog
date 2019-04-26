@@ -30,7 +30,7 @@ const ToDoList = ({ userProfile, list }) => {
     <Card
       title="To Do List"
       icon={ListIcon}
-      progress={progressPercent(list, { checked: true })}
+      progress={progressPercent(listOfTodos, { checked: true })}
     >
       <Checklist list={listOfTodos} />
     </Card>
