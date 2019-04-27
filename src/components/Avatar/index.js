@@ -1,5 +1,6 @@
 import React from 'react'
 import { oneOfType, object, bool, string, number, shape } from 'prop-types'
+
 import get from '@sdog/utils/get'
 import ProfilePhotoSVG from '@sdog/components/svg/ProfilePhoto'
 

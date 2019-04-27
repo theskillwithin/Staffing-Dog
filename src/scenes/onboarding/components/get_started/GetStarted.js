@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import { func, string, object, bool } from 'prop-types'
 import clsx from 'clsx'
+
 import Arrow from '@sdog/components/svg/Arrow'
 import Button from '@sdog/components/button'
 import SVGCertification from '@sdog/components/svg/files/certification.svg'

@@ -3,6 +3,7 @@ import { oneOfType, string, bool } from 'prop-types'
 import { connect } from 'react-redux'
 import { findUserId, findUserInfo } from 'store/user'
 import { Link } from 'react-router-dom'
+
 import Button from '@sdog/components/button'
 import Arrow from '@sdog/components/svg/Arrow'
 

@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import { shape, string, func, oneOfType, bool } from 'prop-types'
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
+
 import { setTitle } from '@sdog/utils/document'
 import { findToken } from '@sdog/store/user'
 

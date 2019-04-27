@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import { shape, func, oneOfType, bool, string } from 'prop-types'
 import { Switch, Route, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
+
 import { findUserType } from '@sdog/store/user'
 import Spinner from '@sdog/components/spinner'
 

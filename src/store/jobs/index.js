@@ -1,7 +1,8 @@
 import isArray from 'lodash/isArray'
+import map from 'lodash/map'
+
 import { API_ROOT } from '@sdog/utils/api'
 import get from '@sdog/utils/get'
-import map from 'lodash/map'
 import { useErrorFromResponse } from '@sdog/definitions/errors'
 import { showGlobalAlert } from '@sdog/store/alerts'
 

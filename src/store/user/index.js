@@ -1,6 +1,7 @@
 import set from 'lodash/set'
 import omit from 'lodash/omit'
 import Cookies from 'js-cookie'
+
 import { API_ROOT } from '@sdog/utils/api'
 import get from '@sdog/utils/get'
 import createFingerprint from '@sdog/utils/fingerprint'

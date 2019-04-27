@@ -1,14 +1,15 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { bool, func } from 'prop-types'
+import clsx from 'clsx'
+
 import {
   requestValidateEmail,
   findValidateEmailRequestLoading,
   findValidateEmailRequestError,
   findValidateEmailRequestSuccess,
 } from '@sdog/store/user'
-import { bool, func } from 'prop-types'
 import Button from '@sdog/components/button'
-import clsx from 'clsx'
 
 import theme from './theme.css'
 

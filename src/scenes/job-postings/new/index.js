@@ -3,6 +3,7 @@ import { func, bool, string, arrayOf, oneOfType, shape } from 'prop-types'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import clsx from 'clsx'
+
 import get from '@sdog/utils/get'
 import { useDocumentTitle } from '@sdog/utils/document'
 import SVG from '@sdog/components/svg'

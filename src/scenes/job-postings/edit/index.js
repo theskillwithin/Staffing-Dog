@@ -2,8 +2,9 @@ import React, { useEffect } from 'react'
 import { shape, arrayOf, oneOfType, bool, string, func } from 'prop-types'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
-import get from '@sdog/utils/get'
 import clsx from 'clsx'
+
+import get from '@sdog/utils/get'
 import { useDocumentTitle } from '@sdog/utils/document'
 import {
   getPracticeOffices as getPracticeOfficesAction,

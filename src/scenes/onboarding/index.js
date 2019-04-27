@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import { Route, Switch, Redirect } from 'react-router-dom'
 import get from 'lodash/get'
 import indexOf from 'lodash/indexOf'
+
 import {
   getUserProfile as getUserProfileAction,
   findUserProfile,

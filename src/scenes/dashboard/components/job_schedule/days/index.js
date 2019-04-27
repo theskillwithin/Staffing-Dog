@@ -1,6 +1,7 @@
 import React from 'react'
 import { string, shape, func } from 'prop-types'
 import clsx from 'clsx'
+
 import Button from '@sdog/components/button'
 
 import theme from './theme.css'

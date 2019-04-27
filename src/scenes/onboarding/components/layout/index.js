@@ -1,6 +1,7 @@
 import React from 'react'
 import clsx from 'clsx'
 import { node, bool, string, array, oneOfType } from 'prop-types'
+
 import Logo from '@sdog/components/logo'
 import LoadingBar from '@sdog/components/loading_bar'
 import Toaster from '@sdog/components/toaster'

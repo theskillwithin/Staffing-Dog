@@ -2,6 +2,7 @@ import React from 'react'
 import { string, oneOfType, bool } from 'prop-types'
 import clsx from 'clsx'
 import { connect } from 'react-redux'
+
 import { findUserType } from '@sdog/store/user'
 import { useHtmlClass, useDocumentTitle } from '@sdog/utils/document'
 
