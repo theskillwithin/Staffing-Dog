@@ -118,7 +118,7 @@ const JobApplicantsView = ({
   const userHasApplied = userId => find(listOfApplicants, ({ id }) => id === userId)
 
   const onClickAddUserToJob = userId => {
-    if (!userIsSelected(userId) && userHasApplied(userId)) {
+    if (!userIsSelected(userId) && !userHasApplied(userId)) {
       addUserToJob({ userId, jobId: job.id })
     }
   }
