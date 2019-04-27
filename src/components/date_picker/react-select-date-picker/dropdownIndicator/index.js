@@ -1,5 +1,6 @@
 import React from 'react'
 import { bool } from 'prop-types'
+
 import CalSVG from '@sdog/components/svg/Cal'
 
 import styles from './theme.css'

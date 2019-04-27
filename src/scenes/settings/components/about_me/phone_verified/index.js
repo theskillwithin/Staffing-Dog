@@ -1,5 +1,8 @@
 import React, { useState } from 'react'
 import { connect } from 'react-redux'
+import { bool, func, string, oneOfType } from 'prop-types'
+import clsx from 'clsx'
+
 import {
   requestValidatePhone,
   findValidatePhoneRequestLoading,
@@ -12,11 +15,9 @@ import {
   findValidatePhoneSuccess,
   validatePhone,
 } from '@sdog/store/user'
-import { bool, func, string, oneOfType } from 'prop-types'
 import Button from '@sdog/components/button'
 import Input from '@sdog/components/input'
 import Toaster from '@sdog/components/toaster'
-import clsx from 'clsx'
 
 import theme from './theme.css'
 

@@ -1,4 +1,5 @@
 import React from 'react'
+
 import { useHtmlClass, useDocumentTitle } from '@sdog/utils/document'
 import Logo from '@sdog/components/logo'
 

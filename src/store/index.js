@@ -2,6 +2,7 @@ import { combineReducers, createStore, compose, applyMiddleware } from 'redux'
 import thunkMiddleware from 'redux-thunk'
 import * as Sentry from '@sentry/browser'
 import createSentryMiddleware from 'redux-sentry-middleware'
+
 import { IS_DEV, IS_STAGE } from '@sdog/utils/env'
 
 import { reduxRegister } from './tools'

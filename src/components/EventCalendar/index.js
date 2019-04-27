@@ -1,5 +1,6 @@
 import React from 'react'
 import { oneOfType, object, string, array } from 'prop-types'
+
 import { getJobsByUserType } from '@sdog/utils/jobs'
 import get from '@sdog/utils/get'
 import Calendar from '@sdog/components/calendar'

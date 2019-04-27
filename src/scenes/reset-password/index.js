@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { bool, func, string, array, oneOfType, shape } from 'prop-types'
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
+
 import { useHtmlClass, useDocumentTitle } from '@sdog/utils/document'
 import Toaster from '@sdog/components/toaster'
 import Spinner from '@sdog/components/spinner'

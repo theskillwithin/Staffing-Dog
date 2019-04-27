@@ -1,9 +1,10 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { findUserType, findUserPlanTier } from '@sdog/store/user'
 import { Link } from 'react-router-dom'
 import { oneOfType, bool, object, string } from 'prop-types'
 import clsx from 'clsx'
+
+import { findUserType, findUserPlanTier } from '@sdog/store/user'
 
 import theme from './theme.css'
 

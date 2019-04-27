@@ -1,6 +1,7 @@
 import React from 'react'
 import { func, string, bool, number, oneOfType } from 'prop-types'
 import clsx from 'clsx'
+
 import Check from '@sdog/components/svg/Check'
 import Invalid from '@sdog/components/svg/Invalid'
 
