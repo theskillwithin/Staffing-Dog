@@ -1,7 +1,6 @@
 import React from 'react'
 import { func, shape, object, string } from 'prop-types'
 import { connect } from 'react-redux'
-import { positions, getPositionTypesByPosition } from '@sdog/definitions/jobs'
 import get from '@sdog/utils/get'
 import clsx from 'clsx'
 import find from 'lodash/find'
@@ -20,78 +19,16 @@ import {
   loadingUserProfileError,
   uploadUserPhoto as uploadUserPhotoAction,
 } from '@sdog/store/user'
+import { stateOptions } from '@sdog/definitions/locations'
+import {
+  positions,
+  getPositionTypesByPosition,
+  employmentTypes,
+} from '@sdog/definitions/jobs'
 
 import EmailVerified from './email_verified'
 import PhoneVerified from './phone_verified'
 import theme from './theme.css'
-
-const states = [
-  'AL',
-  'AK',
-  'AS',
-  'AZ',
-  'AR',
-  'CA',
-  'CO',
-  'CT',
-  'DE',
-  'DC',
-  'FM',
-  'FL',
-  'GA',
-  'GU',
-  'HI',
-  'ID',
-  'IL',
-  'IN',
-  'IA',
-  'KS',
-  'KY',
-  'LA',
-  'ME',
-  'MH',
-  'MD',
-  'MA',
-  'MI',
-  'MN',
-  'MS',
-  'MO',
-  'MT',
-  'NE',
-  'NV',
-  'NH',
-  'NJ',
-  'NM',
-  'NY',
-  'NC',
-  'ND',
-  'MP',
-  'OH',
-  'OK',
-  'OR',
-  'PW',
-  'PA',
-  'PR',
-  'RI',
-  'SC',
-  'SD',
-  'TN',
-  'TX',
-  'UT',
-  'VT',
-  'VI',
-  'VA',
-  'WA',
-  'WV',
-  'WI',
-  'WY',
-].map(state => ({ label: state, value: state }))
-
-const availability = [
-  { label: 'Full Time (Permanent)', value: 'full_time' },
-  { label: 'Part Time (permanent)', value: 'part_time' },
-  { label: 'Temp', value: 'temp' },
-]
 
 const FormSpacer = () => <div className={theme.spacer} />
 
@@ -146,12 +83,12 @@ const SettingsAboutMe = ({
       addresses: {
         line_1: profile.addresses.line_1,
         city: profile.addresses.city,
-        state: find(states, state => state.value === profile.addresses.state) || '',
+        state: find(stateOptions, state => state.value === profile.addresses.state) || '',
         zip: profile.addresses.zip,
       },
       meta: {
         capacity: {
-          availability: availability.reduce(
+          availability: employmentTypes.reduce(
             (values, avail) => [
               ...values,
               ...(includes(get(profile, 'meta.capacity.availability', []), avail.value)
@@ -390,7 +327,7 @@ const SettingsAboutMe = ({
                   },
                 })
               }
-              options={states}
+              options={stateOptions}
             />
             <Input
               label="Postal Code"
@@ -434,7 +371,7 @@ const SettingsAboutMe = ({
                   },
                 })
               }
-              options={availability}
+              options={employmentTypes}
             />
           </div>
         )}
