@@ -1,6 +1,7 @@
 import isArray from 'lodash/isArray'
 import { API_ROOT } from '@sdog/utils/api'
 import get from '@sdog/utils/get'
+import map from 'lodash/map'
 import { useErrorFromResponse } from '@sdog/definitions/errors'
 import { showGlobalAlert } from '@sdog/store/alerts'
 
@@ -408,9 +409,9 @@ export const applyForJob = jobId => (dispatch, getState) =>
   })
 
 const updateJobsAppliedFor = (jobs, jobId) =>
-  jobs.map(job => ({
+  map(jobs, job => ({
     ...job,
-    applied: job.id === jobId,
+    applied: job.id === jobId || job.applied,
   }))
 
 reducers = {
