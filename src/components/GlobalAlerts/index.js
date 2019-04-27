@@ -18,6 +18,7 @@ const GlobalAlerts = ({ errors, clearGlobalAlert }) => {
     <SingleToaster
       key={id}
       type={type}
+      autoClose
       closeButton
       hasContainer
       multiple={index}
