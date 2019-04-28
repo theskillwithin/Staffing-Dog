@@ -5,6 +5,7 @@ import { API_ROOT } from '@sdog/utils/api'
 import get from '@sdog/utils/get'
 import createFingerprint from '@sdog/utils/fingerprint'
 import { useErrorFromResponse } from '@sdog/definitions/errors'
+import { showGlobalAlert } from '@sdog/store/alerts'
 
 import { createActionTypes, reduxRegister, buildStore } from '../tools'
 import {
@@ -33,6 +34,10 @@ export const INITIAL_STATE = {
     loading: false,
     error: false,
     results: [],
+  },
+  updateProfile: {
+    loading: false,
+    error: false,
   },
   profile: {
     loading: false,
@@ -80,6 +85,10 @@ export const INITIAL_STATE = {
     },
     id: '',
     user: {},
+    update: {
+      loading: false,
+      error: false,
+    },
   },
   register: {
     loading: false,
@@ -653,16 +662,52 @@ reducers = {
 export const SAVE_USER_PROFILE = 'SAVE_USER_PROFILE'
 export const saveUserProfileTYPES = createActionTypes(SAVE_USER_PROFILE)
 
-export const saveUserProfile = form => (dispatch, getState) => {
-  dispatch({
+export const saveUserProfile = (form, options = {}) => (dispatch, getState) => {
+  const dispatchOptions = {
     type: SAVE_USER_PROFILE,
     api: {
       url: `${API_ROOT}/profiles`,
       method: 'PUT',
       data: { data: form.profile, id: findUserId(getState()) || getUserId() },
+      dispatches: {
+        success: [
+          () =>
+            showGlobalAlert({
+              message: 'You have sucessfully saved your profile.',
+              type: 'success',
+            }),
+        ],
+        error: [
+          error =>
+            showGlobalAlert({
+              message: useErrorFromResponse(error),
+              type: 'error',
+            }),
+        ],
+      },
     },
     payload: form.profile,
-  })
+  }
+
+  if (options.dispatches) {
+    if (options.overrideDispatches) {
+      dispatchOptions.api.dispatches = { ...options.dispatches }
+    } else {
+      dispatchOptions.api.dispatches = {
+        ...get(dispatchOptions, 'api.dispatches', []),
+        success: [
+          ...get(dispatchOptions, 'api.dispatches.success', []),
+          ...get(options, 'dispatches.success', []),
+        ],
+        error: [
+          ...get(dispatchOptions, 'api.dispatches.error', []),
+          ...get(options, 'dispatches.error', []),
+        ],
+      }
+    }
+  }
+
+  dispatch(dispatchOptions)
 }
 
 reducers = {
@@ -670,7 +715,7 @@ reducers = {
   [saveUserProfileTYPES.LOADING]: state => ({
     ...state,
     ...spreadLastUpdated(),
-    profile: { ...state.profile, ...spreadLoadingError(true, false) },
+    updateProfile: { ...state.updateProfile, ...spreadLoadingError(true, false) },
   }),
   [saveUserProfileTYPES.SUCCESS]: (state, { data }) => ({
     ...state,
@@ -678,14 +723,17 @@ reducers = {
     profile: {
       ...state.profile,
       ...data,
+    },
+    updateProfile: {
+      ...state.updateProfile,
       ...spreadLoadingError(false, false),
     },
   }),
   [saveUserProfileTYPES.ERROR]: (state, { error }) => ({
     ...state,
     ...spreadLastUpdated(),
-    profile: {
-      ...state.profile,
+    updateProfile: {
+      ...state.updateProfile,
       ...spreadLoadingError(false, useErrorFromResponse(error)),
     },
   }),
@@ -1040,16 +1088,39 @@ export const userValidateRequestPhoneTYPES = createActionTypes(
   USER_VALIDATE_PHONE_REQUEST,
 )
 
-export const requestValidatePhone = () => (dispatch, getState) => {
+export const requestValidatePhone = ({ updateProfileData = false }) => (
+  dispatch,
+  getState,
+) => {
   const userId = findUserId(getState()) || getUserId()
-  dispatch({
-    type: USER_VALIDATE_PHONE_REQUEST,
-    api: {
-      url: `${API_ROOT}/profiles/phone_confirmation_request`,
-      method: 'POST',
-      data: { user_id: userId },
-    },
-  })
+
+  if (updateProfileData) {
+    dispatch({ type: userValidateRequestPhoneTYPES.LOADING })
+    saveUserProfile(updateProfileData, {
+      overrideDIspatches: true,
+      dispatches: {
+        success: [
+          () => ({
+            type: USER_VALIDATE_PHONE_REQUEST,
+            api: {
+              url: `${API_ROOT}/profiles/phone_confirmation_request`,
+              method: 'POST',
+              data: { user_id: userId },
+            },
+          }),
+        ],
+      },
+    })(dispatch, getState)
+  } else {
+    dispatch({
+      type: USER_VALIDATE_PHONE_REQUEST,
+      api: {
+        url: `${API_ROOT}/profiles/phone_confirmation_request`,
+        method: 'POST',
+        data: { user_id: userId },
+      },
+    })
+  }
 }
 
 export const validatePhone = ({ anchor, token, code }) => ({
@@ -1151,6 +1222,8 @@ export const findUserProfile = state => findState(state).profile
 export const findUserMeta = state => findUserProfile(state).meta
 export const findUserInfo = state => findUserProfile(state).user
 export const findUserPreferences = state => findUserProfile(state).preferences
+
+export const findUpdateProfile = state => findState(state).updateProfile
 
 export const findScheduleEvents = state => findSchedule(state).events
 export const findScheduleLoading = state => findSchedule(state).loading
