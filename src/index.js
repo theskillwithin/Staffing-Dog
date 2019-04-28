@@ -6,6 +6,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import qs from 'qs'
 import Cookies from 'js-cookie'
 import changeFavicon from 'utils/local-favicon'
+
 import createStore from '@sdog/store'
 import reducers from '@sdog/store/reducers'
 import { INITIAL_STATE as USER_INITIAL_STATE } from '@sdog/store/user'

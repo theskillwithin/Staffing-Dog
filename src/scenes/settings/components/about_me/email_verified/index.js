@@ -2,6 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { bool, func } from 'prop-types'
 import clsx from 'clsx'
+
 import {
   requestValidateEmail,
   findValidateEmailRequestLoading,

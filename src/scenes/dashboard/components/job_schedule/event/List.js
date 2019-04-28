@@ -1,5 +1,6 @@
 import React from 'react'
 import { string, oneOfType, object, array } from 'prop-types'
+
 import { getJobsByUserType } from '@sdog/utils/jobs'
 
 import Event from './index'

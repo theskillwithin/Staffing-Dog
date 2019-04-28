@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import get from 'lodash/get'
 import clsx from 'clsx'
+
 import { findUserInfo, findUserMeta, findUserPreferences } from '@sdog/store/user'
 import useOutsideClick from '@sdog/utils/useOutsideClick'
 import Arrow from '@sdog/components/svg/Arrow'

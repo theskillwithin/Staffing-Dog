@@ -1,5 +1,6 @@
 import React from 'react'
 import { node, func, object, array, string } from 'prop-types'
+
 import Arrow from '@sdog/components/svg/Arrow'
 
 import styles from './theme.css'

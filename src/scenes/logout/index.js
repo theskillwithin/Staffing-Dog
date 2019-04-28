@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
+
 import { logout as logoutAction } from '@sdog/store/user'
 
 const LogoutScene = ({ logout }) => {

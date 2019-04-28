@@ -2,6 +2,7 @@ import React from 'react'
 import { array, bool, oneOfType, shape } from 'prop-types'
 import { connect } from 'react-redux'
 import filter from 'lodash/filter'
+
 import get from '@sdog/utils/get'
 import Card from '@sdog/components/card'
 import { findUserProfile } from '@sdog/store/user'

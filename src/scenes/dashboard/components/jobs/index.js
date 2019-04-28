@@ -3,6 +3,7 @@ import { object, bool } from 'prop-types'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { findJobsLoading, findJobsError, findJobs } from 'store/jobs'
+
 import Card from '@sdog/components/card'
 import Spinner from '@sdog/components/spinner'
 import Alert from '@sdog/components/alert'

@@ -3,6 +3,7 @@ import { Route, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { object, func, shape } from 'prop-types'
 import get from 'lodash/get'
+
 import { IS_PROD } from '@sdog/utils/env'
 import { useHtmlClass } from '@sdog/utils/document'
 import Logo from '@sdog/components/logo'

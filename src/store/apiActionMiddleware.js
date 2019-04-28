@@ -1,5 +1,6 @@
 import * as Sentry from '@sentry/browser'
 import get from 'lodash/get'
+
 import axios, { unauthorizedUser } from '@sdog/utils/api'
 import createFingerprint from '@sdog/utils/fingerprint'
 

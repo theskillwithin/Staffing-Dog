@@ -2,6 +2,7 @@ import React from 'react'
 import { string, shape, func, bool } from 'prop-types'
 import { Link } from 'react-router-dom'
 import clsx from 'clsx'
+
 import get from '@sdog/utils/get'
 import { defineJob } from '@sdog/definitions/jobs'
 import Avatar from '@sdog/components/Avatar'

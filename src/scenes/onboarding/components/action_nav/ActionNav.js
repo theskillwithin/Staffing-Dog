@@ -2,6 +2,7 @@ import React from 'react'
 import { object, bool, func, array, string, shape, oneOfType } from 'prop-types'
 import find from 'lodash/find'
 import clsx from 'clsx'
+
 import Arrow from '@sdog/components/svg/Arrow'
 import Spinner from '@sdog/components/spinner'
 

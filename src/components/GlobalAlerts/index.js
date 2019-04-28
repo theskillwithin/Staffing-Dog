@@ -1,6 +1,7 @@
 import React from 'react'
 import { arrayOf, shape, oneOf, oneOfType, string, number, func } from 'prop-types'
 import { connect } from 'react-redux'
+
 import { SingleToaster } from '@sdog/components/toaster'
 import {
   findGlobalAlerts,

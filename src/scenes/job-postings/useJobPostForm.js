@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import moment from 'moment'
 import set from 'lodash/set'
+
 import get from '@sdog/utils/get'
 import { positions, getPositionTypesByPosition } from '@sdog/definitions/jobs'
 

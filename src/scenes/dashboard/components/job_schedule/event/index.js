@@ -3,6 +3,7 @@ import { object, bool, string } from 'prop-types'
 import moment from 'moment'
 import get from 'lodash/get'
 import clsx from 'clsx'
+
 import NearMeIcon from '@sdog/components/svg/NearMe'
 import Map from '@sdog/components/map'
 import { getPositionLabel, getEmploymentType } from '@sdog/definitions/jobs'

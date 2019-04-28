@@ -1,6 +1,7 @@
 import React from 'react'
 import { node, string, func, object, number, bool, oneOfType } from 'prop-types'
 import clsx from 'clsx'
+
 import ErrorBoundry from '@sdog/components/error_boundry'
 import Button from '@sdog/components/button'
 import LoadingBar from '@sdog/components/loading_bar'

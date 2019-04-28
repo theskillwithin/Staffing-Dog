@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import { bool, func, string, oneOfType, object } from 'prop-types'
 import { connect } from 'react-redux'
-import { bool, func, string, oneOfType } from 'prop-types'
 import clsx from 'clsx'
+
 import {
   requestValidatePhone,
   findValidatePhoneRequestLoading,
@@ -109,7 +109,7 @@ PhoneVerified.propTypes = {
   anchor: oneOfType([string, bool]),
   validateLoading: bool,
   validateError: bool,
-  validateSuccess: bool,
+  validateSuccess: oneOfType([bool, string]),
   updateProfileData: oneOfType([bool, object]),
 }
 

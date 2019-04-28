@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { bool, func, string, array, oneOfType } from 'prop-types'
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
+
 import { useHtmlClass, useDocumentTitle } from '@sdog/utils/document'
 import Toaster from '@sdog/components/toaster'
 import Logo from '@sdog/components/logo'

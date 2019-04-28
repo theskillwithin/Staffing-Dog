@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { oneOfType, bool, object, string } from 'prop-types'
 import clsx from 'clsx'
+
 import { findUserType, findUserPlanTier } from '@sdog/store/user'
 
 import theme from './theme.css'
