@@ -1,12 +1,12 @@
 import React from 'react'
 import { array, bool, oneOfType, shape } from 'prop-types'
 import { connect } from 'react-redux'
+import filter from 'lodash/filter'
 import get from '@sdog/utils/get'
 import Card from '@sdog/components/card'
 import { findUserProfile } from '@sdog/store/user'
 import Checklist from '@sdog/components/checklist'
 import ListIcon from '@sdog/components/svg/List'
-import filter from 'lodash/filter'
 
 const progressPercent = (collection, search) => {
   const divisor = collection.length
