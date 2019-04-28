@@ -1,5 +1,5 @@
-import { API_ROOT } from '@sdog/utils/api'
 import get from 'lodash/get'
+import { API_ROOT } from '@sdog/utils/api'
 
 import { createActionTypes, reduxRegister, buildStore } from '../tools'
 

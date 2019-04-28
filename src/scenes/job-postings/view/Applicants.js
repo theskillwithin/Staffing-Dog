@@ -3,8 +3,8 @@ import { array, bool, shape, string, oneOfType, func, arrayOf, object } from 'pr
 import { connect } from 'react-redux'
 import clsx from 'clsx'
 import find from 'lodash/find'
-import get from '@sdog/utils/get'
 import qs from 'qs'
+import get from '@sdog/utils/get'
 import { useFilterQueryParams, useNonEmptyParams } from '@sdog/utils/queryParams'
 import {
   positions,
@@ -118,7 +118,7 @@ const JobApplicantsView = ({
   const userHasApplied = userId => find(listOfApplicants, ({ id }) => id === userId)
 
   const onClickAddUserToJob = userId => {
-    if (!userIsSelected(userId) && userHasApplied(userId)) {
+    if (!userIsSelected(userId) && !userHasApplied(userId)) {
       addUserToJob({ userId, jobId: job.id })
     }
   }

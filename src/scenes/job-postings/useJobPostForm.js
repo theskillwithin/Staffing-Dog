@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import moment from 'moment'
-import get from '@sdog/utils/get'
 import set from 'lodash/set'
+import get from '@sdog/utils/get'
 import { positions, getPositionTypesByPosition } from '@sdog/definitions/jobs'
 
 export const formatOffices = offices =>

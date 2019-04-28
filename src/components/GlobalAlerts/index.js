@@ -14,13 +14,14 @@ const GlobalAlerts = ({ errors, clearGlobalAlert }) => {
     return null
   }
 
-  const alerts = errors.map(({ message, type, id }) => (
+  const alerts = errors.map(({ message, type, id }, index) => (
     <SingleToaster
       key={id}
       type={type}
       autoClose
       closeButton
-      hasContainer={false}
+      hasContainer
+      multiple={index}
       onClose={() => clearGlobalAlert(id)}
     >
       {message}

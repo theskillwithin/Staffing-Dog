@@ -2,11 +2,11 @@ import React, { useEffect } from 'react'
 import { shape, object, string, array, func, oneOfType, bool } from 'prop-types'
 import qs from 'qs'
 import find from 'lodash/find'
-import get from '@sdog/utils/get'
-import { useFilterQueryParams, useNonEmptyParams } from '@sdog/utils/queryParams'
 import { connect } from 'react-redux'
 import { withRouter, Link } from 'react-router-dom'
 import clsx from 'clsx'
+import { useFilterQueryParams, useNonEmptyParams } from '@sdog/utils/queryParams'
+import get from '@sdog/utils/get'
 import {
   getUserJobs as getUserJobsAction,
   findJobs,
