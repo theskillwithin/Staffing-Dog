@@ -59,3 +59,5 @@ reduxRegister.register('alerts', reducer)
  */
 export const findState = state => state.alerts
 export const findGlobalAlerts = state => findState(state).global
+
+export default reducer

@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
+import { bool, func, string, oneOfType, object } from 'prop-types'
 import { connect } from 'react-redux'
-import { bool, func, string, oneOfType } from 'prop-types'
 import clsx from 'clsx'
 
 import {
@@ -33,6 +33,7 @@ const PhoneVerified = ({
   submitValidatePhone,
   error,
   validateError,
+  updateProfileData,
 }) => {
   const [verify, setVerify] = useState('S-')
 
@@ -53,6 +54,7 @@ const PhoneVerified = ({
         <Button
           onClick={() => submitValidatePhone({ token, anchor, code })}
           loading={validateLoading}
+          type="button"
         >
           {validateLoading ? '' : 'Send Code'}
         </Button>
@@ -60,13 +62,15 @@ const PhoneVerified = ({
       </div>
     )
   }
+
   return (
     <>
       <Button
         className={clsx(theme.verify, verified && theme.verified)}
-        onClick={() => submit()}
+        onClick={() => submit({ updateProfileData })}
         loading={loading}
         red={!verified && !success}
+        type="button"
       >
         {loading
           ? ''
@@ -76,6 +80,7 @@ const PhoneVerified = ({
           ? 'Phone Verified'
           : 'Verify Phone #'}
       </Button>
+
       {!success && <Toaster type="error">{error}</Toaster>}
     </>
   )
@@ -90,6 +95,7 @@ PhoneVerified.defaultProps = {
   validateLoading: false,
   validateError: false,
   validateSuccess: false,
+  updateProfileData: false,
 }
 
 PhoneVerified.propTypes = {
@@ -103,7 +109,8 @@ PhoneVerified.propTypes = {
   anchor: oneOfType([string, bool]),
   validateLoading: bool,
   validateError: bool,
-  validateSuccess: bool,
+  validateSuccess: oneOfType([bool, string]),
+  updateProfileData: oneOfType([bool, object]),
 }
 
 const mapState = state => ({

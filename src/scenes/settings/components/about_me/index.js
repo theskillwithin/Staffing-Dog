@@ -1,5 +1,5 @@
 import React from 'react'
-import { func, shape, object, string } from 'prop-types'
+import { oneOfType, func, shape, object, string, bool } from 'prop-types'
 import { connect } from 'react-redux'
 import clsx from 'clsx'
 import find from 'lodash/find'
@@ -7,7 +7,6 @@ import includes from 'lodash/includes'
 import Dropzone from 'react-dropzone'
 
 import get from '@sdog/utils/get'
-import { positions, getPositionTypesByPosition } from '@sdog/definitions/jobs'
 import Spinner from '@sdog/components/spinner'
 import Alert from '@sdog/components/alert'
 import ProfilePhotoSVG from '@sdog/components/svg/ProfilePhoto'
@@ -20,79 +19,18 @@ import {
   loadingUserProfile,
   loadingUserProfileError,
   uploadUserPhoto as uploadUserPhotoAction,
+  findUpdateProfile,
 } from '@sdog/store/user'
+import { stateOptions } from '@sdog/definitions/locations'
+import {
+  positions,
+  getPositionTypesByPosition,
+  employmentTypes,
+} from '@sdog/definitions/jobs'
 
 import EmailVerified from './email_verified'
 import PhoneVerified from './phone_verified'
 import theme from './theme.css'
-
-const states = [
-  'AL',
-  'AK',
-  'AS',
-  'AZ',
-  'AR',
-  'CA',
-  'CO',
-  'CT',
-  'DE',
-  'DC',
-  'FM',
-  'FL',
-  'GA',
-  'GU',
-  'HI',
-  'ID',
-  'IL',
-  'IN',
-  'IA',
-  'KS',
-  'KY',
-  'LA',
-  'ME',
-  'MH',
-  'MD',
-  'MA',
-  'MI',
-  'MN',
-  'MS',
-  'MO',
-  'MT',
-  'NE',
-  'NV',
-  'NH',
-  'NJ',
-  'NM',
-  'NY',
-  'NC',
-  'ND',
-  'MP',
-  'OH',
-  'OK',
-  'OR',
-  'PW',
-  'PA',
-  'PR',
-  'RI',
-  'SC',
-  'SD',
-  'TN',
-  'TX',
-  'UT',
-  'VT',
-  'VI',
-  'VA',
-  'WA',
-  'WV',
-  'WI',
-  'WY',
-].map(state => ({ label: state, value: state }))
-
-const availability = [
-  { label: 'Full Time (Permanent)', value: 'full_time' },
-  { label: 'Part Time (permanent)', value: 'part_time' },
-  { label: 'Temp', value: 'temp' },
-]
 
 const FormSpacer = () => <div className={theme.spacer} />
 
@@ -102,6 +40,7 @@ const SettingsAboutMe = ({
   profile,
   photoError,
   photoLoading,
+  updateProfile,
 }) => {
   if (profile.loading) {
     return (
@@ -147,12 +86,12 @@ const SettingsAboutMe = ({
       addresses: {
         line_1: profile.addresses.line_1,
         city: profile.addresses.city,
-        state: find(states, state => state.value === profile.addresses.state) || '',
+        state: find(stateOptions, state => state.value === profile.addresses.state) || '',
         zip: profile.addresses.zip,
       },
       meta: {
         capacity: {
-          availability: availability.reduce(
+          availability: employmentTypes.reduce(
             (values, avail) => [
               ...values,
               ...(includes(get(profile, 'meta.capacity.availability', []), avail.value)
@@ -175,39 +114,41 @@ const SettingsAboutMe = ({
     },
   })
 
-  const submit = e => {
-    e.preventDefault()
-
-    const modifyDropdownsData = {
-      profile: {
-        ...form.profile,
-        addresses: {
-          ...form.profile.addresses,
-          state: form.profile.addresses.state.value,
+  const getProfileDataToSave = () => ({
+    profile: {
+      ...form.profile,
+      addresses: {
+        ...form.profile.addresses,
+        state: form.profile.addresses.state.value,
+      },
+      meta: {
+        ...form.profile.meta,
+        capacity: {
+          ...form.profile.meta.capacity,
+          availability: form.profile.meta.capacity.availability.map(avil => avil.value),
         },
-        meta: {
-          ...form.profile.meta,
-          capacity: {
-            ...form.profile.meta.capacity,
-            availability: form.profile.meta.capacity.availability.map(avil => avil.value),
-          },
-          summary: {
-            ...form.profile.meta.summary,
-            profession: {
-              ...form.profile.meta.summary.profession,
-              type: form.profile.meta.summary.profession.type.value,
-              specialty:
-                get(form, 'profile.meta.summary.profession.specialty', []) &&
-                get(form, 'profile.meta.summary.profession.specialty', []).length
-                  ? get(form, 'profile.meta.summary.profession.specialty', []).map(
-                      s => s && s.value,
-                    )
-                  : [],
-            },
+        summary: {
+          ...form.profile.meta.summary,
+          profession: {
+            ...form.profile.meta.summary.profession,
+            type: form.profile.meta.summary.profession.type.value,
+            specialty:
+              get(form, 'profile.meta.summary.profession.specialty', []) &&
+              get(form, 'profile.meta.summary.profession.specialty', []).length
+                ? get(form, 'profile.meta.summary.profession.specialty', []).map(
+                    s => s && s.value,
+                  )
+                : [],
           },
         },
       },
-    }
+    },
+  })
+
+  const submit = e => {
+    e.preventDefault()
+
+    const modifyDropdownsData = getProfileDataToSave()
     saveProfile(modifyDropdownsData)
   }
 
@@ -219,12 +160,15 @@ const SettingsAboutMe = ({
 
   return (
     <div>
+      {profile.error && <Alert error>{profile.error}</Alert>}
+
       <div className={theme.photo}>
         {photoLoading && (
           <div className={theme.photoLoading}>
             <Spinner center={false} />
           </div>
         )}
+
         <Dropzone accept="image/jpeg, image/png" onDrop={files => uplodateFile(files)}>
           {({ getRootProps, getInputProps, isDragActive }) => (
             <div
@@ -262,9 +206,10 @@ const SettingsAboutMe = ({
               with anyone without your explicit consent.
             </li>
           </ul>
-          <Alert error>{photoError}</Alert>
+          {photoError && <Alert error>{photoError}</Alert>}
         </div>
       </div>
+
       <form className={theme.formContainer} onSubmit={e => submit(e)}>
         <div className={theme.inputRow}>
           <Input
@@ -336,7 +281,10 @@ const SettingsAboutMe = ({
               })
             }
           />
-          <PhoneVerified verified={get(profile, 'user.verified_phone', false)} />
+          <PhoneVerified
+            verified={get(profile, 'user.verified_phone', false)}
+            updateProfileData={getProfileDataToSave()}
+          />
         </div>
         {isNotPractice && (
           <div className={theme.inputRow}>
@@ -391,7 +339,7 @@ const SettingsAboutMe = ({
                   },
                 })
               }
-              options={states}
+              options={stateOptions}
             />
             <Input
               label="Postal Code"
@@ -435,7 +383,7 @@ const SettingsAboutMe = ({
                   },
                 })
               }
-              options={availability}
+              options={employmentTypes}
             />
           </div>
         )}
@@ -609,10 +557,10 @@ const SettingsAboutMe = ({
           </Button>
         </div> */}
         <hr />
-        <Button type="submit" className={theme.submit}>
-          Save
+        <Button type="submit" className={theme.submit} loading={updateProfile.loading}>
+          {updateProfile.loading ? 'Saving' : 'Save'}
         </Button>
-        <Alert error>{profile.error}</Alert>
+        {updateProfile.error && <Alert error>{updateProfile.error}</Alert>}
       </form>
     </div>
   )
@@ -626,12 +574,14 @@ SettingsAboutMe.propTypes = {
   }).isRequired,
   photoLoading: string,
   photoError: string,
+  updateProfile: shape({ loading: bool, error: oneOfType([bool, string]) }),
 }
 
 export const mapStateToProps = state => ({
   profile: findUserProfile(state),
   photoLoading: loadingUserProfile(state),
   photoError: loadingUserProfileError(state),
+  updateProfile: findUpdateProfile(state),
 })
 
 export const mapActionsToProps = {

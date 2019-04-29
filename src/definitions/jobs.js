@@ -8,11 +8,14 @@ export const definitions = {
   },
 }
 
+// TODO: deprecate this name
 export const jobTypes = [
   { label: 'Full Time', value: 'full_time' },
   { label: 'Part Time', value: 'part_time' },
   { label: 'Temp', value: 'temporary' },
 ]
+
+export const employmentTypes = jobTypes
 
 export const positions = [
   { label: 'Dental Hygienist', value: 'dental_hygienist' },
