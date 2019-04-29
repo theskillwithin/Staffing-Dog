@@ -10,10 +10,6 @@ export const GoogleAnalytics = ({ location }) => {
     () => {
       const page = `${location.pathname}${location.search}`
 
-      reactGa.set({
-        page,
-        location: `${location.origin}${page}`,
-      })
       reactGa.pageview(page)
     },
     [location.pathname, location.search],
