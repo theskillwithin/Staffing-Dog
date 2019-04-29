@@ -160,6 +160,9 @@ config.plugins = [
     'process.env.ENV': JSON.stringify(process.env.ENV || 'prod'),
     'process.env.BUILD_STAGE': JSON.stringify(process.env.BUILD_STAGE || false),
     'process.env.BYPASS_LUA': JSON.stringify(process.env.BYPASS_LUA || false),
+    'process.env.GA_CODE': JSON.stringify(
+      process.env.GA_CODE || IS_DEV ? 'UA-98231042-3' : 'UA-98231042-2',
+    ),
   }),
   new webpack.SourceMapDevToolPlugin({
     filename: '[file].map',

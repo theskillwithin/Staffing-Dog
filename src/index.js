@@ -6,12 +6,13 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import qs from 'qs'
 import Cookies from 'js-cookie'
 import changeFavicon from 'utils/local-favicon'
+
 import createStore from '@sdog/store'
 import reducers from '@sdog/store/reducers'
 import { INITIAL_STATE as USER_INITIAL_STATE } from '@sdog/store/user'
 import { getToken, getFingerprint, setFingerprint, getUserId } from '@sdog/store/storage'
 import Footer from '@sdog/components/footer'
-import { IS_DEV, IS_PROD } from '@sdog/utils/env'
+import { IS_DEV, GA_CODE } from '@sdog/utils/env'
 import { RouteTracker } from '@sdog/components/GoogleAnalytics'
 
 import createFingerprint from './utils/fingerprint'
@@ -71,7 +72,7 @@ const store = createStore(storeData, reducers)
 render(
   <Provider store={store}>
     <Router>
-      <RouteTracker enable={IS_PROD} code="UA-98231042-2" />
+      <RouteTracker code={GA_CODE} />
 
       <ErrorBoundry hideFallback>
         <React.Suspense fallback={<Spinner />}>
