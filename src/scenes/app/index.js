@@ -4,7 +4,6 @@ import { connect } from 'react-redux'
 import { object, func, shape } from 'prop-types'
 import get from 'lodash/get'
 
-import { IS_PROD } from '@sdog/utils/env'
 import { useHtmlClass } from '@sdog/utils/document'
 import Logo from '@sdog/components/logo'
 import MainMenu from '@sdog/scenes/app/menu'
@@ -23,11 +22,6 @@ const JobPostingsScene = React.lazy(() => import('@sdog/scenes/job-postings'))
 const ProfesionalsScene = React.lazy(() => import('@sdog/scenes/professionals'))
 
 const App = ({ getUserProfile, location, history, userProfile }) => {
-  if (IS_PROD) {
-    window.location = '/landing'
-    return null
-  }
-
   const userOnboardingStatus = get(userProfile, 'user.onboarding_status', false)
 
   useHtmlClass('html-app')
@@ -36,7 +30,7 @@ const App = ({ getUserProfile, location, history, userProfile }) => {
   useEffect(
     () => {
       if ('incomplete' === userOnboardingStatus) {
-        history.push(`/onboarding/${get(userProfile, 'user.type')}/step/1`)
+        history.push(`/onboarding/${get(userProfile, 'user.type')}/step/2`)
       }
     },
     [userOnboardingStatus],

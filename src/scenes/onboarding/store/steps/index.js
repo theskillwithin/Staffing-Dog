@@ -514,7 +514,11 @@ export const goToStep = ({ currentStep, nextStep, history }) => (dispatch, getSt
       step: step.step,
       onSuccess: () => {
         dispatch(actions.goToStepSuccess(nextStep, type))
-        history.push(`/onboarding/${type}/step/${nextStep}`)
+        if ('complete' === nextStep) {
+          history.push('/')
+        } else {
+          history.push(`/onboarding/${type}/step/${nextStep}`)
+        }
       },
       onError: errorRes => {
         dispatch(
@@ -532,7 +536,11 @@ export const goToStep = ({ currentStep, nextStep, history }) => (dispatch, getSt
 
   return new Promise(resolve => {
     dispatch(actions.goToStepSuccess(nextStep, type))
-    resolve(history.push(`/onboarding/${type}/step/${nextStep}`))
+    if ('complete' === nextStep) {
+      resolve(history.push('/'))
+    } else {
+      resolve(history.push(`/onboarding/${type}/step/${nextStep}`))
+    }
   })
 }
 
