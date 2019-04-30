@@ -40,7 +40,6 @@ const LogoutScene = React.lazy(() => import('@sdog/scenes/logout'))
 const ForgotPWScene = React.lazy(() => import('@sdog/scenes/forgot-password'))
 const ResetPWScene = React.lazy(() => import('@sdog/scenes/reset-password'))
 const EmailConfirmationScene = React.lazy(() => import('@sdog/scenes/confirm-email'))
-const LandingScene = React.lazy(() => import('@sdog/scenes/landing'))
 const SupportScene = React.lazy(() => import('@sdog/scenes/support'))
 const PrivacyScene = React.lazy(() => import('@sdog/scenes/privacy'))
 const TermsScene = React.lazy(() => import('@sdog/scenes/terms'))
@@ -78,15 +77,8 @@ render(
         <React.Suspense fallback={<Spinner />}>
           <Switch>
             <Route path="/logout" component={LogoutScene} />
-            {/* --- TMP OVERRIDE --- */}
-            <Route
-              path="/onboarding/:type(professional|practice)/step/complete"
-              component={LandingScene}
-            />
-            {/* --- end TMP OVERRIDE --- */}
             <Route path="/onboarding" component={OnboardingScene} />
             <Route path="/login" component={LoginScene} />
-            <Route path="/landing" component={LandingScene} />
             <Route path="/privacy" component={PrivacyScene} />
             <Route path="/terms" component={TermsScene} />
             <Route path="/forgot-password" component={ForgotPWScene} />
