@@ -13,6 +13,7 @@ import CopyWebpackPlugin from 'copy-webpack-plugin'
 const ENV = process.env.NODE_ENV
 const IS_DEV = ENV === 'development'
 const IS_PROD = !IS_DEV
+const LOCAL_ENV = process.env.ENV || 'prod'
 
 const root = path.resolve(__dirname, '../')
 const paths = {
@@ -161,7 +162,7 @@ config.plugins = [
     'process.env.BUILD_STAGE': JSON.stringify(process.env.BUILD_STAGE || false),
     'process.env.BYPASS_LUA': JSON.stringify(process.env.BYPASS_LUA || false),
     'process.env.GA_CODE': JSON.stringify(
-      process.env.GA_CODE || IS_DEV ? 'UA-98231042-3' : 'UA-98231042-2',
+      process.env.GA_CODE || LOCAL_ENV === 'prod' ? 'UA-98231042-2' : 'UA-98231042-3',
     ),
   }),
   new webpack.SourceMapDevToolPlugin({
