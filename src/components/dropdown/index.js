@@ -18,10 +18,10 @@ const Dropdown = ({ onChange, value, invalid, ...props }) => {
     control: styles => ({
       ...styles,
       cursor: 'pointer',
-      height: props.height,
+      height: props.isMulti ? 'auto' : props.height,
       zIndex: isOpen ? 90 : 'inherit',
       minWidth: 'auto',
-      minHeight: props.height ? props.height : 38,
+      minHeight: props.isMulti ? 48 : props.height ? props.height : 38,
       width: props.width ? props.width : 'auto',
       border: invalid ? '1px solid #ed4f32' : '1px solid rgba(152, 160, 178, 0.54)',
       borderRadius: 3,

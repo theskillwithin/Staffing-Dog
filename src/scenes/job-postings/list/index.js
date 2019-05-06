@@ -127,13 +127,10 @@ const JobPostings = ({ getUserJobs, jobs, loading, location, history, match }) =
                   <div className={theme.applicants}>
                     <Link to={`${match.url}/${job.id}`}>
                       <span className={theme.blue}>
-                        {parseInt(get(job, 'misc.preferred_applicants.length', 0), 10)}
+                        {parseInt(get(job, 'meta.applicant_count', 0), 10)}
                       </span>{' '}
                       {`Applicant${
-                        parseInt(get(job, 'misc.preferred_applicants.length', 0), 10) ===
-                        1
-                          ? ''
-                          : 's'
+                        parseInt(get(job, 'meta.applicant_count', 0), 10) === 1 ? '' : 's'
                       }`}
                       <span className={theme.chevron}>
                         <Chevron />

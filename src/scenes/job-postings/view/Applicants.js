@@ -11,7 +11,7 @@ import {
   positions,
   jobTypes,
   getPositionTypesByPosition,
-  distance,
+  // distance,
 } from '@sdog/definitions/jobs'
 import {
   findSingleJob,
@@ -162,12 +162,12 @@ const JobApplicantsView = ({
         <Card type="large">
           {get(listOfApplicants, '[0].id', false) ? (
             <div className={theme.searchInner}>
-              <StarTitle title="Congradulations Day Hire Found" />
+              <StarTitle title="Congradulations DayHire&trade; Found" />
               <ProfessionalCard applicant={listOfApplicants[0]} className={theme.first} />
             </div>
           ) : (
             <div className={theme.searchInner}>
-              <h2>Searching for Day Hire...</h2>
+              <h2>Searching for DayHire&trade;...</h2>
               <SVG name="desktop_search" className={theme.desktopSearchSVG} />
             </div>
           )}
@@ -279,13 +279,13 @@ const JobApplicantsView = ({
                 className={theme.jobSpecialty}
               />
 
-              <Filter
+              {/* <Filter
                 onChange={value => handleFilterChange('radius', value.value)}
                 value={find(distance, ({ value }) => value === filters.radius)}
                 options={distance}
                 placeholder="Any Distance"
                 className={theme.jobDistance}
-              />
+              /> */}
             </div>
 
             {listOfApplicantsLoading ? (

@@ -189,7 +189,7 @@ export const professional = [
       {
         name: 'specialty',
         label: 'Specialty',
-        type: 'dropdown',
+        type: 'multi-select',
         optionsByValue: {
           name: 'profession',
           options: positions.reduce(
@@ -510,7 +510,7 @@ export const practice = [
             type: 'dropdown',
             required: true,
             options: [
-              { label: 'Day Hire', value: 'day_hire' },
+              { label: 'DayHire™', value: 'day_hire' },
               { label: 'Three Month', value: '3_months' },
               { label: 'Full', value: 'annual' },
             ],

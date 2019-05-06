@@ -19,7 +19,7 @@ import {
 import { findUserProfile } from '@sdog/store/user'
 import { useDocumentTitle } from '@sdog/utils/document'
 import Card from '@sdog/components/card'
-import Filter from '@sdog/components/filter'
+import FilterDropdown from '@sdog/components/filter'
 import Button from '@sdog/components/button'
 import Alert from '@sdog/components/alert'
 import Spinner from '@sdog/components/spinner'
@@ -60,11 +60,13 @@ const JobSearch = ({
     const filteredFilters = useNonEmptyParams(filters)
     if (Object.keys(filteredFilters).length) {
       history.push(`${location.pathname}?${qs.stringify(filteredFilters)}`)
+    } else {
+      history.push(`${location.pathname}`)
     }
 
     // call api
     getUserJobs({ search: filteredFilters })
-  }, Object.keys(filters).map(filter => filters[filter]))
+  }, Object.keys(filters).map(f => filters[f]))
 
   const onClickApplyForJob = (e, jobId) => {
     e.preventDefault()
@@ -89,7 +91,7 @@ const JobSearch = ({
   return (
     <div className={clsx(appTheme.pageContent, theme.pageContent)}>
       <header className={theme.searchFilters}>
-        <Filter
+        <FilterDropdown
           onChange={value => handleFilterChange('employment_type', value.value)}
           value={find(jobTypes, ({ value }) => value === filters.employment_type)}
           options={jobTypes}
@@ -113,7 +115,7 @@ const JobSearch = ({
           placeholder="All Speciality Types"
           className={theme.specialtyTypes}
         /> */}
-        <Filter
+        <FilterDropdown
           onChange={value => handleFilterChange('radius', value.value)}
           value={find(distance, ({ value }) => value === filters.radius)}
           options={distance}
