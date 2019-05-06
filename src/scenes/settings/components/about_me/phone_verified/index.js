@@ -15,9 +15,10 @@ import {
   findValidatePhoneSuccess,
   validatePhone,
 } from '@sdog/store/user'
+
+import { showGlobalAlert } from '@sdog/store/alerts'
 import Button from '@sdog/components/button'
 import Input from '@sdog/components/input'
-import Toaster from '@sdog/components/toaster'
 
 import theme from './theme.css'
 
@@ -34,6 +35,7 @@ const PhoneVerified = ({
   error,
   validateError,
   updateProfileData,
+  globalAlert,
 }) => {
   const [verify, setVerify] = useState('S-')
 
@@ -48,6 +50,9 @@ const PhoneVerified = ({
   }
 
   if (success) {
+    if (!validateSuccess && validateError) {
+      globalAlert({ message: validateError, type: 'error', id: 'phone-verified-error' })
+    }
     return (
       <div className={theme.sent}>
         <Input value={verify} onChange={value => setVerify(value)} label="Text Code" />
@@ -58,9 +63,12 @@ const PhoneVerified = ({
         >
           {validateLoading ? '' : 'Send Code'}
         </Button>
-        {!validateSuccess && <Toaster type="error">{validateError}</Toaster>}
       </div>
     )
+  }
+
+  if (!success && error) {
+    globalAlert({ message: error, type: 'error', id: 'phone-verified-error' })
   }
 
   return (
@@ -80,8 +88,6 @@ const PhoneVerified = ({
           ? 'Phone Verified'
           : 'Verify Phone #'}
       </Button>
-
-      {!success && <Toaster type="error">{error}</Toaster>}
     </>
   )
 }
@@ -101,14 +107,15 @@ PhoneVerified.defaultProps = {
 PhoneVerified.propTypes = {
   verified: bool.isRequired,
   submit: func.isRequired,
+  globalAlert: func.isRequired,
   submitValidatePhone: func.isRequired,
   loading: bool,
-  error: bool,
+  error: oneOfType([string, bool]),
   success: bool,
   token: oneOfType([string, bool]),
   anchor: oneOfType([string, bool]),
   validateLoading: bool,
-  validateError: bool,
+  validateError: oneOfType([string, bool]),
   validateSuccess: oneOfType([bool, string]),
   updateProfileData: oneOfType([bool, object]),
 }
@@ -126,5 +133,9 @@ const mapState = state => ({
 
 export default connect(
   mapState,
-  { submit: requestValidatePhone, submitValidatePhone: validatePhone },
+  {
+    submit: requestValidatePhone,
+    submitValidatePhone: validatePhone,
+    globalAlert: showGlobalAlert,
+  },
 )(PhoneVerified)
