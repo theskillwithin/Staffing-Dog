@@ -119,7 +119,9 @@ export const formatDataFromOnboarding = (values, profile, type = INITIAL_STATE.t
     ...(profile.meta || {}),
     capacity: {
       ...get(profile, 'meta.summary.capacity', {}),
-      ...(values.availability ? { availability: values.availability } : {}),
+      ...(values.availability
+        ? { availability: values.availability.map(a => a.value) }
+        : []),
       ...(values.hourly_wage ? { hourly_wage: values.hourly_wage } : {}),
     },
     summary: {
@@ -129,7 +131,9 @@ export const formatDataFromOnboarding = (values, profile, type = INITIAL_STATE.t
             profession: {
               ...get(profile, 'meta.summary.profession', {}),
               ...(values.profession ? { type: values.profession } : {}),
-              ...(values.specialty ? { specialty: [values.specialty] } : []),
+              ...(values.specialty
+                ? { specialty: values.specialty.map(s => s.value) }
+                : []),
             },
           }
         : {

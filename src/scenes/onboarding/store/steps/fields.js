@@ -189,7 +189,7 @@ export const professional = [
       {
         name: 'specialty',
         label: 'Specialty',
-        type: 'dropdown',
+        type: 'multi-select',
         optionsByValue: {
           name: 'profession',
           options: positions.reduce(
