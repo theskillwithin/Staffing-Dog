@@ -394,7 +394,7 @@ const SettingsAboutMe = ({
               placeholder="Profession"
               value={form.profile.meta.summary.profession.type}
               options={positions}
-              onChange={value =>
+              onChange={value => {
                 setForm({
                   ...form,
                   profile: {
@@ -406,12 +406,13 @@ const SettingsAboutMe = ({
                         profession: {
                           ...form.profile.meta.summary.profession,
                           type: value,
+                          specialty: [],
                         },
                       },
                     },
                   },
                 })
-              }
+              }}
             />
             <Input
               label="Hourly Wage"
