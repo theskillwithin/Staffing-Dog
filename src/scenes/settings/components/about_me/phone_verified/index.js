@@ -68,7 +68,7 @@ const PhoneVerified = ({
   }
 
   if (!success && error) {
-    globalAlert({ message: error, type: 'error', id: 'phone-verified-error' })
+    globalAlert({ message: error, type: 'error', id: 'phone-verified-error-request' })
   }
 
   return (
