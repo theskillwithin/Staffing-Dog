@@ -11,7 +11,7 @@ import {
   positions,
   jobTypes,
   getPositionTypesByPosition,
-  distance,
+  // distance,
 } from '@sdog/definitions/jobs'
 import {
   findSingleJob,
@@ -279,13 +279,13 @@ const JobApplicantsView = ({
                 className={theme.jobSpecialty}
               />
 
-              <Filter
+              {/* <Filter
                 onChange={value => handleFilterChange('radius', value.value)}
                 value={find(distance, ({ value }) => value === filters.radius)}
                 options={distance}
                 placeholder="Any Distance"
                 className={theme.jobDistance}
-              />
+              /> */}
             </div>
 
             {listOfApplicantsLoading ? (
