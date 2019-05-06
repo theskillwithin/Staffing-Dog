@@ -21,7 +21,6 @@ import { useDocumentTitle } from '@sdog/utils/document'
 import Card from '@sdog/components/card'
 import FilterDropdown from '@sdog/components/filter'
 import Button from '@sdog/components/button'
-import Alert from '@sdog/components/alert'
 import Spinner from '@sdog/components/spinner'
 // import Star from '@sdog/components/svg/FavStar'
 import LocationOnIcon from '@sdog/components/svg/Location'
@@ -77,6 +76,10 @@ const JobSearch = ({
   const showRecommended = Boolean(jobs.recommended.length)
 
   const getJobs = () => {
+    if (jobs.posts.length) {
+      return jobs.posts || []
+    }
+
     if (showRecommended) {
       return jobs.recommended || []
     }
@@ -147,12 +150,12 @@ const JobSearch = ({
             <div>
               {getJobs().length ? (
                 <div className={theme.searchResultsList}>
-                  {showRecommended && (
+                  {/* {showRecommended && (
                     <Alert>
                       We could not find any jobs that matched perfectly with your search
                       requirements. Below are some recommended jobs you might consider.
                     </Alert>
-                  )}
+                  )} */}
 
                   {getJobs().map(job => (
                     <Card key={job.id} type="large">
