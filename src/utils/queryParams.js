@@ -14,7 +14,7 @@ export const useQueryParamsOnlyWith = (queryString, onlyWith = []) =>
   pickBy(useQueryParams(queryString), (_value, key) => includes(onlyWith, key))
 
 export const useNonEmptyParams = params =>
-  pickBy(params, value => value !== null && value !== '' && value !== '0')
+  pickBy(params, value => value !== null && value !== '' && value !== 'any')
 
 /**
  * Hook: userFilterQueryParams
@@ -34,7 +34,7 @@ export function useFilterQueryParams(
     ...filterNames.reduce(
       (listOfFilters, currentFilterName) => ({
         ...listOfFilters,
-        [currentFilterName]: null,
+        [currentFilterName]: 'any',
       }),
       {},
     ),

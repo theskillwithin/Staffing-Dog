@@ -64,7 +64,7 @@ const JobSearch = ({
     }
 
     // call api
-    getUserJobs({ search: filteredFilters })
+    getUserJobs({ search: filters })
   }, Object.keys(filters).map(f => filters[f]))
 
   const onClickApplyForJob = (e, jobId) => {
@@ -73,16 +73,16 @@ const JobSearch = ({
     applyForJob(jobId)
   }
 
-  const showRecommended = Boolean(jobs.recommended.length)
+  // const showRecommended = Boolean(jobs.recommended.length)
 
   const getJobs = () => {
     if (jobs.posts.length) {
       return jobs.posts || []
     }
 
-    if (showRecommended) {
-      return jobs.recommended || []
-    }
+    // if (showRecommended) {
+    //   return jobs.recommended || []
+    // }
 
     if (jobs.preferred.length) {
       return jobs.preferred || []

@@ -17,7 +17,6 @@ export const INITIAL_STATE = {
   results: {
     scheduled: [],
     applied: [],
-    recommended: [],
     posts: [],
     preferred: [],
   },
@@ -90,7 +89,7 @@ reducers = {
       ...state.results,
       ...(isArray(data)
         ? { posts: [...data] }
-        : ['applied', 'scheduled', 'recommended', 'preferred', 'posts'].reduce(
+        : ['applied', 'scheduled', 'preferred', 'posts'].reduce(
             (listOfPosts, postType) => ({
               ...listOfPosts,
               [postType]:
@@ -432,7 +431,7 @@ reducers = {
     },
     results: {
       ...state.results,
-      ...['scheduled', 'recommended', 'posts', 'preferred'].reduce(
+      ...['scheduled', 'posts', 'preferred'].reduce(
         (listOfJobLists, jobListKey) => ({
           ...listOfJobLists,
           [jobListKey]: updateJobsAppliedFor(state.results[jobListKey], jobId),
