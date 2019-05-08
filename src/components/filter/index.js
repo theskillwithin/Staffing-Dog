@@ -98,6 +98,7 @@ const Filter = ({ onChange, options, placeholder, ...props }) => {
         onMenuOpen={openMenu}
         onMenuClose={closeMenu}
         isSearchable={false}
+        maxMenuHeight={320}
         {...props}
       />
     </div>

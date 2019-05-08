@@ -24,6 +24,7 @@ export const positions = [
   { label: 'Dentist', value: 'dentist' },
   { label: 'Front Office', value: 'front_office' },
   { label: 'Other', value: 'other' },
+  { label: 'All Job Positions', value: 'any' },
 ]
 
 export const positionTypes = [
@@ -37,6 +38,7 @@ export const positionTypes = [
   { label: 'Prosthodontics', value: 'prosthodontics' },
   { label: 'Radiology', value: 'radiology' },
   { label: 'Other', value: 'other' },
+  { label: 'All Specialty Types', value: 'any' },
 ]
 
 export const positionTypesDentist = [
@@ -50,6 +52,7 @@ export const positionTypesDentist = [
   { label: 'Prosthodontist', value: 'prosthodontist' },
   { label: 'Radiologist', value: 'radiologist' },
   { label: 'Other', value: 'other' },
+  { label: 'All Specialty Types', value: 'any' },
 ]
 
 export const positionTypesByPostion = {
