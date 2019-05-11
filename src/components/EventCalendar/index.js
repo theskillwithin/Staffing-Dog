@@ -3,14 +3,15 @@ import { oneOfType, object, string, array } from 'prop-types'
 
 import { getJobsByUserType } from '@sdog/utils/jobs'
 import get from '@sdog/utils/get'
+
 import Calendar from '@sdog/components/calendar'
 
 const EventCalendar = ({ userType, jobs, exceptions }) => {
   const activeDates = getJobsByUserType({ userType, jobs }).map(job => ({
-    start_date: get(job, 'criteria.duration.start_date'),
-    end_date: get(
+    startDate: get(job, 'criteria.duration.start_date'),
+    endDate: get(
       job,
-      'criteria.duaration.end_date',
+      'criteria.duration.end_date',
       get(job, 'criteria.duration.start_date'),
     ),
   }))
