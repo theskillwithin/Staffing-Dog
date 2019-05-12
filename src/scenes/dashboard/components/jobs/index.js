@@ -55,7 +55,7 @@ const UserJobsList = ({ loading, error, jobs }) => {
                 {'Applied' === which && (
                   <span>
                     <Link to="/jobs">
-                      <Button>Find and apply to a job here!</Button>
+                      <Button>Click here to find and apply to a job!</Button>
                     </Link>
                   </span>
                 )}
@@ -63,7 +63,7 @@ const UserJobsList = ({ loading, error, jobs }) => {
                   <span>
                     You do not have any scheduled jobs.{' '}
                     <Link to="/jobs">
-                      <Button>Find a job here!</Button>
+                      <Button>Click here to find and apply to a job!</Button>
                     </Link>
                   </span>
                 )}
