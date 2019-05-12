@@ -32,7 +32,7 @@ const JobScheduleEvent = ({ open, event, userType }) => {
   return (
     <div>
       <button type="button" className={theme.event} onClick={() => setIsOpen(!isOpen)}>
-        <h2 className={theme.red}>{startDate.format('D')}</h2>
+        <h2 className={theme.blue}>{startDate.format('D')}</h2>
 
         <div className={theme.eventDetails}>
           <h5>{title}</h5>
