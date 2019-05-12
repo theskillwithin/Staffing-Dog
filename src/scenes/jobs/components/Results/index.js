@@ -140,7 +140,7 @@ const JobSearch = ({
             </div>
 
             <div>
-              {getJobs().length ? (
+              {getJobs().length || jobs.posts.length ? (
                 <div className={theme.searchResultsList}>
                   {/* {showRecommended && (
                     <Alert>
