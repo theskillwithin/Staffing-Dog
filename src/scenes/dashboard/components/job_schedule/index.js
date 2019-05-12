@@ -167,7 +167,9 @@ const JobSchedule = ({
                   </div>
               </div> */}
 
-              <h5 className={theme.schedulerTitle}>Days of the week availability:</h5>
+              <h5 className={theme.schedulerTitle}>
+                Days of the week you are available:
+              </h5>
 
               <div className={theme.scheduler}>
                 {schedule.map(daySchedule => (
