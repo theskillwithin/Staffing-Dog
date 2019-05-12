@@ -98,7 +98,6 @@ PhoneVerified.defaultProps = {
 PhoneVerified.propTypes = {
   verified: bool.isRequired,
   submit: func.isRequired,
-  globalAlert: func.isRequired,
   submitValidatePhone: func.isRequired,
   loading: bool,
   error: oneOfType([string, bool]),
