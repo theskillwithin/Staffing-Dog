@@ -12,13 +12,15 @@
 
 .inputRow {
   display: flex;
-  justify-content: space-between;
+  /* justify-content: space-between; */
+  justify-content: center;
   align-items: center;
   margin: 2em 0;
 }
 
 .available {
-  display: flex;
+  /* display: flex; */
+  display: none;
 
   span {
     margin-right: 4em;
