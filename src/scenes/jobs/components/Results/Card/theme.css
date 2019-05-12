@@ -29,8 +29,8 @@
   > * + *:before {
     content: '';
     position: absolute;
-    top: 50%;
-    left: -0.5em;
+    top: 53%;
+    left: -0.7em;
     transform: translateY(-50%);
     display: block;
     background-color: var(--sd-primary);
