@@ -69,17 +69,16 @@ const JobSearch = ({
   // const showRecommended = Boolean(jobs.recommended.length)
 
   const getJobs = () => {
-    if (jobs.posts.length) {
-      return jobs.posts || []
+    if (jobs.preferred.length) {
+      return jobs.preferred || []
     }
+    // if (jobs.posts.length) {
+    //   return jobs.posts || []
+    // }
 
     // if (showRecommended) {
     //   return jobs.recommended || []
     // }
-
-    if (jobs.preferred.length) {
-      return jobs.preferred || []
-    }
 
     return []
   }
@@ -135,8 +134,8 @@ const JobSearch = ({
                 )}`}
               </p>
               <p>
-                <strong>{getJobs().length}</strong>
-                {` job post${getJobs().length === 1 ? '' : 's'} in your area.`}
+                <strong>{jobs.preferred.length}</strong>
+                {` job post${jobs.preferred.length === 1 ? '' : 's'} in your area.`}
               </p>
             </div>
 
@@ -160,6 +159,22 @@ const JobSearch = ({
                       defineJob={defineJob}
                     />
                   ))}
+
+                  {jobs.posts && jobs.posts.length && (
+                    <>
+                      <h3>non preffered jobs</h3>
+                      {jobs.posts.map(job => (
+                        <JobCard
+                          key={job.id}
+                          job={job}
+                          applyingForJobs={applyingForJobs}
+                          applyForJob={applyForJob}
+                          match={match}
+                          defineJob={defineJob}
+                        />
+                      ))}
+                    </>
+                  )}
                 </div>
               ) : (
                 <div className={theme.empty}>
