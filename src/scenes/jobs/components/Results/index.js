@@ -149,18 +149,20 @@ const JobSearch = ({
                     </Alert>
                   )} */}
 
-                  {getJobs().map(job => (
-                    <JobCard
-                      key={job.id}
-                      job={job}
-                      applyingForJobs={applyingForJobs}
-                      applyForJob={applyForJob}
-                      match={match}
-                      defineJob={defineJob}
-                    />
-                  ))}
+                  {getJobs().length
+                    ? getJobs().map(job => (
+                        <JobCard
+                          key={job.id}
+                          job={job}
+                          applyingForJobs={applyingForJobs}
+                          applyForJob={applyForJob}
+                          match={match}
+                          defineJob={defineJob}
+                        />
+                      ))
+                    : null}
 
-                  {jobs.posts && jobs.posts.length && (
+                  {jobs.posts && jobs.posts.length ? (
                     <>
                       <h3>non preffered jobs</h3>
                       {jobs.posts.map(job => (
@@ -174,7 +176,7 @@ const JobSearch = ({
                         />
                       ))}
                     </>
-                  )}
+                  ) : null}
                 </div>
               ) : (
                 <div className={theme.empty}>
