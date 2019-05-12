@@ -13,7 +13,7 @@ export const jobTypes = [
   { label: 'Full Time', value: 'full_time' },
   { label: 'Part Time', value: 'part_time' },
   { label: 'Temp', value: 'temporary' },
-  { label: 'All Job Types', value: '' },
+  { label: 'All Job Types', value: 'any' },
 ]
 
 export const employmentTypes = jobTypes
