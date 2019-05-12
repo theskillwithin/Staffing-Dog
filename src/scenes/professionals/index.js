@@ -16,7 +16,7 @@ import LocationOnIcon from '@sdog/components/svg/Location'
 import {
   jobTypes,
   positions,
-  distance,
+  // distance,
   getPositionTypesByPosition,
 } from '@sdog/definitions/jobs'
 import {
@@ -31,7 +31,11 @@ import theme from './theme.css'
 const ProfessionalsView = ({ history, location, professionals, getProfessionals }) => {
   useEffect(() => void setTitle('Job Postings'), [])
 
-  const [filters, setFilters] = useFilterQueryParams(location.search)
+  const [filters, setFilters] = useFilterQueryParams(location.search, [
+    'employment_type',
+    'specialty',
+    'job_type',
+  ])
   const handleFilterChange = (field, value) => setFilters({ ...filters, [field]: value })
 
   useEffect(() => {
@@ -39,10 +43,12 @@ const ProfessionalsView = ({ history, location, professionals, getProfessionals 
 
     if (Object.keys(filteredFilters).length) {
       history.push(`${location.pathname}?${qs.stringify(filteredFilters)}`)
+    } else {
+      history.push(`${location.pathname}`)
     }
 
     getProfessionals({
-      criteria: { ...filteredFilters },
+      criteria: { ...filters },
     })
   }, Object.keys(filters).map(filter => filters[filter]))
 
@@ -73,13 +79,13 @@ const ProfessionalsView = ({ history, location, professionals, getProfessionals 
           placeholder="All Speciality Types"
           className={theme.jobSpecialty}
         />
-        <Filter
+        {/* <Filter
           onChange={value => handleFilterChange('radius', value.value)}
           value={find(distance, ({ value }) => value === filters.radius)}
           options={distance}
           placeholder="Any Distance"
           className={theme.jobDistance}
-        />
+          /> */}
       </div>
 
       {professionals.loading ? (

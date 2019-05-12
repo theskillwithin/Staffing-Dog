@@ -12,13 +12,15 @@
 
 .inputRow {
   display: flex;
-  justify-content: space-between;
+  /* justify-content: space-between; */
+  justify-content: center;
   align-items: center;
   margin: 2em 0;
 }
 
 .available {
-  display: flex;
+  /* display: flex; */
+  display: none;
 
   span {
     margin-right: 4em;
@@ -60,7 +62,8 @@
   align-items: center;
   justify-content: space-between;
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+  /* grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr; */
+  grid-template-columns: 1fr 1fr 1fr 1fr;
   text-align: center;
   height: 60px;
   border-top: 1px solid var(--sd-borderColor);

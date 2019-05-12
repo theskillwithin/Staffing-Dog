@@ -8,6 +8,7 @@ import Card from '@sdog/components/card'
 import Spinner from '@sdog/components/spinner'
 import Alert from '@sdog/components/alert'
 import Tabs from '@sdog/components/tab_bar'
+import Button from '@sdog/components/button'
 
 import JobCard from './card'
 import theme from './theme.css'
@@ -53,13 +54,17 @@ const UserJobsList = ({ loading, error, jobs }) => {
               <div className={theme.empty}>
                 {'Applied' === which && (
                   <span>
-                    No jobs to show. <Link to="/jobs">Find and apply to a job here!</Link>
+                    <Link to="/jobs">
+                      <Button>Click here to find and apply to a job!</Button>
+                    </Link>
                   </span>
                 )}
                 {'Scheduled' === which && (
                   <span>
                     You do not have any scheduled jobs.{' '}
-                    <Link to="/jobs">Find a job here!</Link>
+                    <Link to="/jobs">
+                      <Button>Click here to find and apply to a job!</Button>
+                    </Link>
                   </span>
                 )}
               </div>

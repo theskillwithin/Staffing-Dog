@@ -1119,6 +1119,15 @@ export const requestValidatePhone = ({ updateProfileData = false }) => (
         url: `${API_ROOT}/profiles/phone_confirmation_request`,
         method: 'POST',
         data: { user_id: userId },
+        dispatches: {
+          error: [
+            error =>
+              showGlobalAlert({
+                message: useErrorFromResponse(error),
+                type: 'error',
+              }),
+          ],
+        },
       },
     })
   }
@@ -1130,6 +1139,15 @@ export const validatePhone = ({ anchor, token, code }) => ({
     url: `${API_ROOT}/profiles/phone_confirmation`,
     method: 'POST',
     data: { anchor, token, code },
+    dispatches: {
+      error: [
+        error =>
+          showGlobalAlert({
+            message: useErrorFromResponse(error),
+            type: 'error',
+          }),
+      ],
+    },
   },
 })
 

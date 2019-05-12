@@ -101,15 +101,15 @@ export const formatDataFromOnboardingForRegister = (
 
 // format data from redux to use for api
 export const formatDataFromOnboarding = (values, profile, type = INITIAL_STATE.type) => ({
-  billing_data: {
-    plan_tier: values.plan_tier,
-    cc_number: values.cc_number,
-    cc_exp_month: values.expiration && values.expiration.split('/')[0],
-    cc_exp_year: values.expiration && values.expiration.split('/')[1],
-    cc_cvv: values.cc_cvv,
-  },
+  // billing_data: {
+  //   plan_tier: values.plan_tier,
+  //   cc_number: values.cc_number,
+  //   cc_exp_month: values.expiration && values.expiration.split('/')[0],
+  //   cc_exp_year: values.expiration && values.expiration.split('/')[1],
+  //   cc_cvv: values.cc_cvv,
+  // },
   addresses: {
-    ...(profile.addresses || {}),
+    // ...(profile.addresses || {}),
     ...(values.street ? { line_1: values.street } : {}),
     ...(values.state ? { state: values.state } : {}),
     ...(values.city ? { city: values.city } : {}),

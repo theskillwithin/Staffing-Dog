@@ -13,7 +13,7 @@ export const jobTypes = [
   { label: 'Full Time', value: 'full_time' },
   { label: 'Part Time', value: 'part_time' },
   { label: 'Temp', value: 'temporary' },
-  { label: 'All Job Types', value: '0' },
+  { label: 'All Job Types', value: 'any' },
 ]
 
 export const employmentTypes = jobTypes
@@ -24,6 +24,7 @@ export const positions = [
   { label: 'Dentist', value: 'dentist' },
   { label: 'Front Office', value: 'front_office' },
   { label: 'Other', value: 'other' },
+  { label: 'All Job Positions', value: 'any' },
 ]
 
 export const positionTypes = [
@@ -37,6 +38,7 @@ export const positionTypes = [
   { label: 'Prosthodontics', value: 'prosthodontics' },
   { label: 'Radiology', value: 'radiology' },
   { label: 'Other', value: 'other' },
+  { label: 'All Specialty Types', value: 'any' },
 ]
 
 export const positionTypesDentist = [
@@ -50,6 +52,7 @@ export const positionTypesDentist = [
   { label: 'Prosthodontist', value: 'prosthodontist' },
   { label: 'Radiologist', value: 'radiologist' },
   { label: 'Other', value: 'other' },
+  { label: 'All Specialty Types', value: 'any' },
 ]
 
 export const positionTypesByPostion = {
@@ -63,7 +66,7 @@ export const distance = [
   { label: 'Within 25 miles', value: '25' },
   { label: 'Within 50 miles', value: '50' },
   { label: 'Within 100 miles', value: '100' },
-  { label: 'Any Distance', value: '0' },
+  { label: 'Any Distance', value: 'any' },
 ]
 
 export const getPositionTypesByPosition = position =>

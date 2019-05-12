@@ -16,7 +16,6 @@ import {
   validatePhone,
 } from '@sdog/store/user'
 
-import { showGlobalAlert } from '@sdog/store/alerts'
 import Button from '@sdog/components/button'
 import Input from '@sdog/components/input'
 
@@ -32,10 +31,9 @@ const PhoneVerified = ({
   token,
   anchor,
   submitValidatePhone,
-  error,
-  validateError,
+  // error,
+  // validateError,
   updateProfileData,
-  globalAlert,
 }) => {
   const [verify, setVerify] = useState('S-')
 
@@ -50,9 +48,6 @@ const PhoneVerified = ({
   }
 
   if (success) {
-    if (!validateSuccess && validateError) {
-      globalAlert({ message: validateError, type: 'error', id: 'phone-verified-error' })
-    }
     return (
       <div className={theme.sent}>
         <Input value={verify} onChange={value => setVerify(value)} label="Text Code" />
@@ -65,10 +60,6 @@ const PhoneVerified = ({
         </Button>
       </div>
     )
-  }
-
-  if (!success && error) {
-    globalAlert({ message: error, type: 'error', id: 'phone-verified-error-request' })
   }
 
   return (
@@ -136,6 +127,5 @@ export default connect(
   {
     submit: requestValidatePhone,
     submitValidatePhone: validatePhone,
-    globalAlert: showGlobalAlert,
   },
 )(PhoneVerified)

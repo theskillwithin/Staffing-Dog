@@ -47,7 +47,7 @@ const Exceptions = ({ exceptions, onUpdate }) => {
 
   const [startDate, setStartDate] = useState(defaultDateOption)
   const [endDate, setEndDate] = useState(defaultDateOption)
-  const [availability, setAvailability] = useState(true)
+  const [availability, setAvailability] = useState(false)
   const [deleteId, setDeleteExceptionId] = useState(false)
   const [{ listOfExceptions, lastUpdated }, dispatch] = useReducer(exceptionsReducer, {
     lastUpdated: false,
@@ -79,7 +79,6 @@ const Exceptions = ({ exceptions, onUpdate }) => {
 
     setStartDate(defaultDateOption)
     setEndDate(defaultDateOption)
-    setAvailability(true)
   }
 
   const deleteException = (id = false) => {

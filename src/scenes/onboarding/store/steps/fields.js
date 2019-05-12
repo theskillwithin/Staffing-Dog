@@ -393,7 +393,7 @@ export const practice = [
   },
   {
     step: '3',
-    nextStep: '4',
+    nextStep: 'complete',
     previousStep: '2',
     complete: false,
     needsComplete: true,
@@ -452,73 +452,73 @@ export const practice = [
       },
     ],
   },
-  {
-    step: '4',
-    nextStep: 'complete',
-    previousStep: '3',
-    complete: false,
-    needsComplete: true,
-    needsCompleteIfToken: true,
-    title: 'Billing Information',
-    sidebar: {
-      packages: true,
-      order: ['packages'],
-    },
-    fields: [
-      {
-        name: 'name_on_card',
-        label: 'Name on Card',
-        type: 'input',
-        required: true,
-        autoFocus: true,
-      },
-      {
-        name: 'cc_number',
-        label: 'Card Number',
-        type: 'input',
-        required: true,
-      },
-      {
-        fields: [
-          {
-            name: 'expiration',
-            label: 'MM/YYYY',
-            placeholder: 'MM/YYYY',
-            type: 'input',
-            required: true,
-          },
-          {
-            name: 'cc_cvv',
-            label: 'CVC',
-            type: 'input',
-            required: true,
-            cvc: true,
-          },
-        ],
-      },
-      {
-        fields: [
-          {
-            name: 'billing_postal',
-            label: 'Billing Postal Code',
-            type: 'input',
-            required: true,
-          },
-          {
-            name: 'plan_tier',
-            label: 'Select Package',
-            type: 'dropdown',
-            required: true,
-            options: [
-              { label: 'DayHire™', value: 'day_hire' },
-              { label: 'Three Month', value: '3_months' },
-              { label: 'Full', value: 'annual' },
-            ],
-          },
-        ],
-      },
-    ],
-  },
+  // {
+  //   step: '4',
+  //   nextStep: 'complete',
+  //   previousStep: '3',
+  //   complete: false,
+  //   needsComplete: true,
+  //   needsCompleteIfToken: true,
+  //   title: 'Billing Information',
+  //   sidebar: {
+  //     packages: true,
+  //     order: ['packages'],
+  //   },
+  //   fields: [
+  //     {
+  //       name: 'name_on_card',
+  //       label: 'Name on Card',
+  //       type: 'input',
+  //       required: true,
+  //       autoFocus: true,
+  //     },
+  //     {
+  //       name: 'cc_number',
+  //       label: 'Card Number',
+  //       type: 'input',
+  //       required: true,
+  //     },
+  //     {
+  //       fields: [
+  //         {
+  //           name: 'expiration',
+  //           label: 'MM/YYYY',
+  //           placeholder: 'MM/YYYY',
+  //           type: 'input',
+  //           required: true,
+  //         },
+  //         {
+  //           name: 'cc_cvv',
+  //           label: 'CVC',
+  //           type: 'input',
+  //           required: true,
+  //           cvc: true,
+  //         },
+  //       ],
+  //     },
+  //     {
+  //       fields: [
+  //         {
+  //           name: 'billing_postal',
+  //           label: 'Billing Postal Code',
+  //           type: 'input',
+  //           required: true,
+  //         },
+  //         {
+  //           name: 'plan_tier',
+  //           label: 'Select Package',
+  //           type: 'dropdown',
+  //           required: true,
+  //           options: [
+  //             { label: 'DayHire™', value: 'day_hire' },
+  //             { label: 'Three Month', value: '3_months' },
+  //             { label: 'Full', value: 'annual' },
+  //           ],
+  //         },
+  //       ],
+  //     },
+  //   ],
+  // },
   {
     step: 'complete',
     previousStep: '3',

@@ -10,7 +10,9 @@ const DaysOfWeekRow = ({ schedule, onChange }) => (
   <div className={clsx(theme.day, schedule.active && theme.active)}>
     <div className={theme.dayButton}>
       <Button
-        onClick={() => onChange('active', !schedule.active, schedule.day)}
+        onClick={() =>
+          onChange({ type: 'active', value: !schedule.active, day: schedule.day })
+        }
         secondaryDark={!schedule.active}
         width="67px"
         round
