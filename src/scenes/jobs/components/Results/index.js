@@ -3,7 +3,7 @@ import { shape, object, string, array, func, oneOfType, bool } from 'prop-types'
 import qs from 'qs'
 import find from 'lodash/find'
 import { connect } from 'react-redux'
-import { withRouter, Link } from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
 import clsx from 'clsx'
 
 import { useFilterQueryParams, useNonEmptyParams } from '@sdog/utils/queryParams'
@@ -18,11 +18,8 @@ import {
 } from '@sdog/store/jobs'
 import { findUserProfile } from '@sdog/store/user'
 import { useDocumentTitle } from '@sdog/utils/document'
-import Card from '@sdog/components/card'
 import FilterDropdown from '@sdog/components/filter'
-import Button from '@sdog/components/button'
 import Spinner from '@sdog/components/spinner'
-// import Star from '@sdog/components/svg/FavStar'
 import LocationOnIcon from '@sdog/components/svg/Location'
 import {
   defineJob,
@@ -33,6 +30,8 @@ import {
 } from '@sdog/definitions/jobs'
 
 import appTheme from '../../../app/theme.css'
+
+import JobCard from './Card'
 
 import theme from './theme.css'
 
@@ -66,12 +65,6 @@ const JobSearch = ({
     // call api
     getUserJobs({ search: filters })
   }, Object.keys(filters).map(f => filters[f]))
-
-  const onClickApplyForJob = (e, jobId) => {
-    e.preventDefault()
-
-    applyForJob(jobId)
-  }
 
   // const showRecommended = Boolean(jobs.recommended.length)
 
@@ -158,82 +151,14 @@ const JobSearch = ({
                   )} */}
 
                   {getJobs().map(job => (
-                    <Card key={job.id} type="large">
-                      <Link
-                        to={`${match.url}/view/${job.id}`}
-                        className={clsx(theme.title, job.new && theme.new)}
-                      >
-                        {get(job, 'criteria.title', 'Job')}
-                      </Link>
-                      {/* <div className={clsx(theme.star, job.star && theme.active)}>
-                        <button onClick={() => this.toggleFav(job.id)} type="button">
-                          <Star active={job.star} />
-                        </button>
-                      </div> */}
-                      <div className={theme.location}>
-                        <span>
-                          {get(job, 'criteria.practice_details.address.city', 'city')},{' '}
-                        </span>
-                        <span>
-                          {get(job, 'criteria.practice_details.address.state', 'state')}
-                        </span>
-                        <span>
-                          {get(
-                            job,
-                            'criteria.practice_details.origin_distance',
-                            'unkown',
-                          )}{' '}
-                          miles away
-                        </span>
-                      </div>
-                      <div className={theme.details}>
-                        <dl>
-                          <dt>Position</dt>
-                          <dd>{defineJob('position', get(job, 'criteria.position'))}</dd>
-                          <dt>Experience</dt>
-                          <dd>{get(job, 'criteria.experience_preferred')}</dd>
-                          <dt>Job Type</dt>
-                          <dd>
-                            {defineJob('type', get(job, 'criteria.employment_type'))}
-                          </dd>
-                        </dl>
-                      </div>
-
-                      <div className={theme.short}>
-                        {get(job, 'criteria.description')}
-                      </div>
-
-                      <div className={theme.actions}>
-                        <div>{get(job, 'criteria.hourly_rate')}/hr</div>
-
-                        <Link
-                          to={`${match.url}/view/${job.id}`}
-                          className={theme.readMore}
-                        >
-                          Read More
-                        </Link>
-
-                        <Button
-                          round
-                          secondary={job.applied}
-                          disabled={
-                            job.applied ||
-                            get(applyingForJobs, `[${job.id}].loading`, false)
-                          }
-                          onClick={e => onClickApplyForJob(e, job.id)}
-                        >
-                          {get(applyingForJobs, `[${job.id}].loading`, false) ? (
-                            <span>
-                              Applying <Spinner inverted size={20} center={false} />
-                            </span>
-                          ) : get(job, 'applied', false) ? (
-                            'Applied'
-                          ) : (
-                            'Quick Apply'
-                          )}
-                        </Button>
-                      </div>
-                    </Card>
+                    <JobCard
+                      key={job.id}
+                      job={job}
+                      applyingForJobs={applyingForJobs}
+                      applyForJob={applyForJob}
+                      match={match}
+                      defineJob={defineJob}
+                    />
                   ))}
                 </div>
               ) : (
