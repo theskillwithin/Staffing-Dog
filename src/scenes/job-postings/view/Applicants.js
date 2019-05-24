@@ -130,6 +130,8 @@ const JobApplicantsView = ({
     }
 
     if (userHasApplied(userId)) {
+      console.log('test')
+      console.log(userHasApplied(userId))
       return 'Applied'
     }
 
@@ -238,9 +240,10 @@ const JobApplicantsView = ({
                   key={`applicant-applied-card-${applicant.id}`}
                   applicant={applicant.applicant_details}
                   shortCard
-                  className={index === 0 && theme.first}
-                  actionText="Applied"
-                  actionColor="secondary"
+                  className={clsx(index === 0 && theme.first)}
+                  actionText={applicant.status === 'accepted' ? 'Accepted' : 'Quick Hire'}
+                  actionColor={applicant.status === 'accepted' ? 'green' : 'primary'}
+                  disableClick={applicant.status === 'accepted'}
                 />
               ))
             ) : (
