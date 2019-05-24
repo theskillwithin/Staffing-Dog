@@ -17,7 +17,7 @@ const isBrowser = typeof window !== 'undefined'
 
 const composeEnhancers =
   isBrowser && (IS_DEV || IS_STAGE) && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ // eslint-disable-line no-underscore-dangle
-    ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ // eslint-disable-line no-underscore-dangle
+    ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({ trace: true, traceLimit: 25 }) // eslint-disable-line no-underscore-dangle
     : compose
 
 // generated combine reducers based off reducers passed in
