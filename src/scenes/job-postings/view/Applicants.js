@@ -130,8 +130,6 @@ const JobApplicantsView = ({
     }
 
     if (userHasApplied(userId)) {
-      console.log('test')
-      console.log(userHasApplied(userId))
       return 'Applied'
     }
 
