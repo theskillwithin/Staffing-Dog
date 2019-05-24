@@ -239,9 +239,23 @@ const JobApplicantsView = ({
                   applicant={applicant.applicant_details}
                   shortCard
                   className={clsx(index === 0 && theme.first)}
-                  actionText={applicant.status === 'accepted' ? 'Accepted' : 'Quick Hire'}
-                  actionColor={applicant.status === 'accepted' ? 'green' : 'primary'}
-                  disableClick={applicant.status === 'accepted'}
+                  actionText={
+                    applicant.status === 'accepted'
+                      ? 'Accepted'
+                      : applicant.status === 'pending'
+                      ? 'Pending'
+                      : 'Offer Job'
+                  }
+                  actionColor={
+                    applicant.status === 'accepted'
+                      ? 'green'
+                      : applicant.status === 'pending'
+                      ? 'secondary'
+                      : 'primary'
+                  }
+                  disableClick={
+                    applicant.status === 'accepted' || applicant.status === 'pending'
+                  }
                 />
               ))
             ) : (
