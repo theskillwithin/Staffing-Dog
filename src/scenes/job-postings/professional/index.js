@@ -17,6 +17,7 @@ const ProfessionalCard = ({
   actionColor,
   shortCard,
   className,
+  disableClick,
 }) => (
   <div
     className={clsx(theme.proCard, shortCard && theme.shortCard, className && className)}
@@ -73,7 +74,7 @@ const ProfessionalCard = ({
           </div>
         </>
       )}
-      <div className={theme.action}>
+      <div className={clsx(theme.action, disableClick && theme.disableClick)}>
         <Button
           onClick={() => action(applicant.id)}
           green={actionColor === 'green'}
@@ -93,6 +94,7 @@ ProfessionalCard.defaultProps = {
   actionColor: 'primary',
   shortCard: false,
   className: null,
+  disableClick: false,
 }
 
 ProfessionalCard.propTypes = {
@@ -102,6 +104,7 @@ ProfessionalCard.propTypes = {
   actionColor: string,
   shortCard: bool,
   className: string,
+  disableClick: bool,
 }
 
 export default ProfessionalCard
