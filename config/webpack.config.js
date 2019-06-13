@@ -79,8 +79,11 @@ config.module.rules = [
       {
         loader: 'css-loader',
         options: {
-          modules: true,
-          localIdentName: '[local]__[name]--[hash:base64:5]',
+          modules: {
+            mode: 'local',
+            localIdentName: '[local]__[name]--[hash:base64:5]',
+            context: path.resolve(__dirname, 'src'),
+          },
           importLoaders: 1,
         },
       },
