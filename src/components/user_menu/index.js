@@ -70,7 +70,7 @@ const UserMenu = ({ type, first, last, office, photo }) => {
             </>
           )} 
           <Link to="/settings">Account</Link> */}
-          <Link to="/logout" className={theme.logout}>
+          <Link to="/logout" className={theme.logout} data-testid="test-logout">
             Logout <Arrow />
           </Link>
         </div>
