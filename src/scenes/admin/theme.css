@@ -1,11 +1,16 @@
 .header {
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 
 .grid {
   > div:nth-child(odd) {
     background: #eee;
+  }
+
+  > div:nth-child(even) {
+    background: #cceefc;
   }
   > div:first-child {
     font-weight: bold;
