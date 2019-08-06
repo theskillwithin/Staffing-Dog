@@ -59,7 +59,11 @@ const UsersList = ({ getUsersQuery, client }) => {
   if (getUsersQuery.loading) return <div>Loading...</div>
   return (
     <div>
-      <h1>Users - length: {getUsersQuery.signups_by_date.length}</h1>
+      <header className={theme.header}>
+        <h1>Users</h1>
+        <h3>length: {getUsersQuery.signups_by_date.length}</h3>
+        <h4>(log button prints out user history to browser console)</h4>
+      </header>
       <div className={theme.grid}>
         <div className={theme.user}>
           <div>email</div>
@@ -76,7 +80,7 @@ const UsersList = ({ getUsersQuery, client }) => {
             <div>{user.f_name}</div>
             <div>{user.l_name}</div>
             <div>{user.practice_name}</div>
-            <div>{moment(user.signup_at).format('MMMM/DD/YYYY')}</div>
+            <div>{moment(user.signup_at).format('DD-MMM-YYYY')}</div>
             <div>{user.type}</div>
             <div>{user.plan_tier}</div>
             <button onClick={() => getUserLogs(user.user_id)} type="button">
