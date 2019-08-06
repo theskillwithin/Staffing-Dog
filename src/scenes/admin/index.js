@@ -20,11 +20,6 @@ import UsersList from './users'
 const Admin = ({ token, fingerprint }) => {
   useEffect(() => void setTitle('Admin'), [])
 
-  // const client = new ApolloClient({
-  //   uri: 'http://api.sdog.test/v1/gql',
-  //   credentials: 'include',
-  // })
-
   const authLink = setContext((_, { headers }) => {
     return {
       headers: {
