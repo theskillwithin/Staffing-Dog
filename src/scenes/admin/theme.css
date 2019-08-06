@@ -1,16 +1,28 @@
 .grid {
+  > div:nth-child(odd) {
+    background: #eee;
+  }
   > div:first-child {
     font-weight: bold;
+    background: white;
   }
 }
 
 .user {
   display: grid;
-  grid-template-columns: 2fr 1fr 1fr 1fr 1fr 1fr;
+  grid-template-columns: 3fr 2fr 2fr 2fr 2fr 2fr 1fr;
 
   > * {
     margin-right: 10px;
   }
 
   margin: 1em 0;
+
+  pre {
+    margin: 0;
+  }
+}
+
+.id {
+  grid-column: span 3;
 }

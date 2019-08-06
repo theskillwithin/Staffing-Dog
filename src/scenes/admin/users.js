@@ -6,7 +6,7 @@ import moment from 'moment'
 
 import theme from './theme.css'
 
-export const getUsersQuery = gql`
+export const getUsersQuerygql = gql`
   {
     signups_by_date(
       date_start: "2016-05-24T00:00:00Z"
@@ -19,11 +19,43 @@ export const getUsersQuery = gql`
       type
       practice_name
       signup_at
+      plan_tier
     }
   }
 `
-// eslint-disable-next-line
-const UsersList = ({ getUsersQuery }) => {
+
+export const getUserLogsQuerygql = gql`
+  query($id: ID!) {
+    userLogs(user_id: $id) {
+      details
+      id
+      insertedAt
+      ipAddress
+      userAgent
+      userId
+    }
+  }
+`
+const UsersList = ({ getUsersQuery, client }) => {
+  const getUserLogs = async id => {
+    // const yay = getUserLogsQuery({
+    //   variables: {
+    //     id,
+    //   },
+    // })
+
+    const {
+      data: { userLogs },
+    } = await client.query({
+      query: getUserLogsQuerygql,
+      variables: { id },
+    })
+
+    console.log({ id })
+    console.log(userLogs)
+    // .then(res => console.log(res))
+    // .catch(err => console.log(err.message))
+  }
   if (getUsersQuery.loading) return <div>Loading...</div>
   return (
     <div>
@@ -36,6 +68,7 @@ const UsersList = ({ getUsersQuery }) => {
           <div>practice</div>
           <div>signup date</div>
           <div>type</div>
+          <div>tier</div>
         </div>
         {getUsersQuery.signups_by_date.map(user => (
           <div key={user.user_id} className={theme.user}>
@@ -45,6 +78,11 @@ const UsersList = ({ getUsersQuery }) => {
             <div>{user.practice_name}</div>
             <div>{moment(user.signup_at).format('MMMM/DD/YYYY')}</div>
             <div>{user.type}</div>
+            <div>{user.plan_tier}</div>
+            <button onClick={() => getUserLogs(user.user_id)} type="button">
+              logs
+            </button>
+            <pre className={theme.id}>{user.user_id}</pre>
           </div>
         ))}
       </div>
@@ -54,6 +92,11 @@ const UsersList = ({ getUsersQuery }) => {
 
 UsersList.propTypes = {
   getUsersQuery: object.isRequired,
+  getUserLogsQuery: object.isRequired,
+  client: object.isRequired,
 }
 
-export default compose(graphql(getUsersQuery, { name: 'getUsersQuery' }))(UsersList)
+export default compose(
+  graphql(getUsersQuerygql, { name: 'getUsersQuery' }),
+  graphql(getUserLogsQuerygql, { name: 'getUserLogsQuery' }),
+)(UsersList)

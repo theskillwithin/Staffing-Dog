@@ -43,7 +43,7 @@ const Admin = ({ token, fingerprint }) => {
     <div className={clsx(appTheme.pageContent)}>
       <ApolloProvider client={client}>
         <Card type="large">
-          <UsersList />
+          <UsersList client={client} />
         </Card>
       </ApolloProvider>
     </div>
