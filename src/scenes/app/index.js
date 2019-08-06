@@ -20,6 +20,7 @@ const JobsScene = React.lazy(() => import('@sdog/scenes/jobs'))
 const SettingsScene = React.lazy(() => import('@sdog/scenes/settings'))
 const JobPostingsScene = React.lazy(() => import('@sdog/scenes/job-postings'))
 const ProfesionalsScene = React.lazy(() => import('@sdog/scenes/professionals'))
+const AdminScene = React.lazy(() => import('@sdog/scenes/admin'))
 
 const App = ({ getUserProfile, location, history, userProfile }) => {
   const userOnboardingStatus = get(userProfile, 'user.onboarding_status', false)
@@ -65,6 +66,7 @@ const App = ({ getUserProfile, location, history, userProfile }) => {
           {planTier && planTier !== 'day_hire' ? (
             <Route path="/professionals" component={ProfesionalsScene} />
           ) : null}
+          <Route path="/admin" component={AdminScene} />
         </React.Suspense>
       </div>
     </div>
