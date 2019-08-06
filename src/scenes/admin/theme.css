@@ -1,10 +1,12 @@
 .grid {
-  /* display: grid; */
+  > div:first-child {
+    font-weight: bold;
+  }
 }
 
 .user {
   display: grid;
-  grid-template-columns: 2fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-template-columns: 2fr 1fr 1fr 1fr 1fr 1fr;
 
   > * {
     margin-right: 10px;

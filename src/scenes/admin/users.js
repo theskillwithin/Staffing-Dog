@@ -27,13 +27,20 @@ const UsersList = ({ getUsersQuery }) => {
   if (getUsersQuery.loading) return <div>Loading...</div>
   return (
     <div>
-      <h1>Users</h1>
+      <h1>Users - length: {getUsersQuery.signups_by_date.length}</h1>
       <div className={theme.grid}>
+        <div className={theme.user}>
+          <div>email</div>
+          <div>first</div>
+          <div>last</div>
+          <div>practice</div>
+          <div>signup date</div>
+          <div>type</div>
+        </div>
         {getUsersQuery.signups_by_date.map(user => (
           <div key={user.user_id} className={theme.user}>
             <div>{user.email}</div>
             <div>{user.f_name}</div>
-            <div>{user.l_name}</div>
             <div>{user.l_name}</div>
             <div>{user.practice_name}</div>
             <div>{moment(user.signup_at).format('MMMM/DD/YYYY')}</div>
