@@ -1,3 +1,5 @@
+@import '../../styles/config.css';
+
 .header {
   display: flex;
   justify-content: space-between;
@@ -35,4 +37,47 @@
 
 .id {
   grid-column: span 3;
+}
+
+.isReporting {
+  position: relative;
+  &:after {
+    content: '';
+    position: absolute;
+    left: -10px;
+    top: 30%;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--sd-red);
+  }
+}
+
+.isSDEmail {
+  position: relative;
+  &:before {
+    content: '';
+    position: absolute;
+    left: -10px;
+    top: 60%;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--sd-primary);
+  }
+}
+
+.legend {
+  > * {
+    margin-right: 4em;
+    display: inline-block;
+    &:before {
+      top: 50%;
+      transform: translateY(-50%);
+    }
+    &:after {
+      top: 50%;
+      transform: translateY(-50%);
+    }
+  }
 }

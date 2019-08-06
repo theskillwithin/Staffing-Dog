@@ -3,6 +3,7 @@ import { object } from 'prop-types'
 import { gql } from 'apollo-boost'
 import { graphql, compose } from 'react-apollo'
 import moment from 'moment'
+import clsx from 'classnames'
 
 import theme from './theme.css'
 
@@ -56,6 +57,8 @@ const UsersList = ({ getUsersQuery, client }) => {
     // .then(res => console.log(res))
     // .catch(err => console.log(err.message))
   }
+  const isReporting = type => type === 'sdog_reporting'
+  const isSDEmail = email => email.includes('@staffing.dog')
   if (getUsersQuery.loading) return <div>Loading...</div>
   return (
     <div>
@@ -64,6 +67,10 @@ const UsersList = ({ getUsersQuery, client }) => {
         <h3>length: {getUsersQuery.signups_by_date.length}</h3>
         <h4>(log button prints out user history to browser console)</h4>
       </header>
+      <div className={theme.legend}>
+        <span className={theme.isReporting}>reporting type acccount</span>
+        <span className={theme.isSDEmail}>email contains @staffing.dog</span>
+      </div>
       <div className={theme.grid}>
         <div className={theme.user}>
           <div>email</div>
@@ -75,7 +82,14 @@ const UsersList = ({ getUsersQuery, client }) => {
           <div>tier</div>
         </div>
         {getUsersQuery.signups_by_date.map(user => (
-          <div key={user.user_id} className={theme.user}>
+          <div
+            key={user.user_id}
+            className={clsx(
+              theme.user,
+              isReporting(user.type) && theme.isReporting,
+              isSDEmail(user.email) && theme.isSDEmail,
+            )}
+          >
             <div>{user.email}</div>
             <div>{user.f_name}</div>
             <div>{user.l_name}</div>
