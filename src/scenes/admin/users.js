@@ -1,7 +1,9 @@
 import React from 'react'
 import { object } from 'prop-types'
 import { gql } from 'apollo-boost'
-import { graphql, compose } from 'react-apollo'
+import { graphql } from 'react-apollo'
+// import { graphql, compose } from 'react-apollo'
+import compose from 'lodash/flowright'
 import moment from 'moment'
 import clsx from 'classnames'
 
