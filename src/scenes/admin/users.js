@@ -16,7 +16,7 @@ export const getUsersQuerygql = gql`
   {
     signups_by_date(
       date_start: "2016-05-24T00:00:00Z"
-      date_end: "2019-10-01T23:59:59Z"
+      date_end: "2020-10-01T23:59:59Z"
     ) {
       user_id
       email
