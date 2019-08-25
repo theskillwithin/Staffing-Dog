@@ -33,6 +33,10 @@ const App = ({ getUserProfile, location, history, userProfile }) => {
       if ('incomplete' === userOnboardingStatus) {
         history.push(`/onboarding/${get(userProfile, 'user.type')}/step/2`)
       }
+      const userType = get(userProfile, 'user.type', false)
+      if (userType && userType === 'sdog_reporting') {
+        history.push('/admin')
+      }
     },
     [userOnboardingStatus],
   )

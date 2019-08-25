@@ -64,15 +64,15 @@ const UsersList = ({ getUsersQuery, client }) => {
   }
   const isReporting = type => type === 'sdog_reporting'
   const isSDEmail = email => email.includes('@staffing.dog')
+
   if (getUsersQuery.loading) return <div>Loading...</div>
-  console.log(getUsersQuery.signups_by_date)
+
   const signupsByDate = !getUsersQuery.loading && getUsersQuery.signups_by_date
   const signupsByDateSansTime = signupsByDate.map(item => ({
     ...item,
     signup_at: item.signup_at.split('T')[0],
   }))
   const count = countBy(signupsByDateSansTime, 'signup_at')
-  console.log({ count })
 
   return (
     <div>
