@@ -3,7 +3,10 @@ import { object } from 'prop-types'
 import { gql } from 'apollo-boost'
 import { graphql } from 'react-apollo'
 // import { graphql, compose } from 'react-apollo'
+import { LineChart } from 'react-chartkick'
+import 'chart.js'
 import compose from 'lodash/flowright'
+import countBy from 'lodash/countBy'
 import moment from 'moment'
 import clsx from 'classnames'
 
@@ -62,14 +65,28 @@ const UsersList = ({ getUsersQuery, client }) => {
   const isReporting = type => type === 'sdog_reporting'
   const isSDEmail = email => email.includes('@staffing.dog')
   if (getUsersQuery.loading) return <div>Loading...</div>
+  console.log(getUsersQuery.signups_by_date)
+  const signupsByDate = !getUsersQuery.loading && getUsersQuery.signups_by_date
+  const signupsByDateSansTime = signupsByDate.map(item => ({
+    ...item,
+    signup_at: item.signup_at.split('T')[0],
+  }))
+  const count = countBy(signupsByDateSansTime, 'signup_at')
+  console.log({ count })
+
   return (
     <div>
       <header className={theme.header}>
         <h1>Users</h1>
-        <h3>length: {getUsersQuery.signups_by_date.length}</h3>
-        <h4>(log button prints out user history to browser console)</h4>
+        <h3>length: {signupsByDate.length}</h3>
+        {/* <h4>(log button prints out user history to browser console)</h4> */}
       </header>
+      <div>
+        <h4 className={theme.signupsByDate}>signups by date</h4>
+        <LineChart data={count} />
+      </div>
       <div className={theme.legend}>
+        <span>legend for table below:</span>
         <span className={theme.isReporting}>reporting type acccount</span>
         <span className={theme.isSDEmail}>email contains @staffing.dog</span>
       </div>
@@ -83,7 +100,7 @@ const UsersList = ({ getUsersQuery, client }) => {
           <div>type</div>
           <div>tier</div>
         </div>
-        {getUsersQuery.signups_by_date.map(user => (
+        {signupsByDate.map(user => (
           <div
             key={user.user_id}
             className={clsx(

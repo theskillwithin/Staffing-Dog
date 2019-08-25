@@ -68,6 +68,7 @@
 }
 
 .legend {
+  margin-top: 1em;
   > * {
     margin-right: 4em;
     display: inline-block;
@@ -80,4 +81,9 @@
       transform: translateY(-50%);
     }
   }
+}
+
+.signupsByDate {
+  text-align: center;
+  margin-top: 0;
 }
