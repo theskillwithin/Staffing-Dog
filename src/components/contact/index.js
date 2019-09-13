@@ -1,12 +1,13 @@
 import React, { useState, useRef } from 'react'
 import clsx from 'clsx'
+import { Link } from 'react-router-dom'
+
 import useOutsideClick from '@sdog/utils/useOutsideClick'
 import ContactSVG from '@sdog/components/svg/Contact'
 // import HeadsetSVG from '@sdog/components/svg/Headset'
 import EmailUsSVG from '@sdog/components/svg/EmailUs'
 import LiveChatSVG from '@sdog/components/svg/LiveChat'
 import Hamburger from '@sdog/components/hamburger'
-import { Link } from 'react-router-dom'
 
 import theme from './theme.css'
 

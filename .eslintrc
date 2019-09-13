@@ -22,6 +22,10 @@
         "semi": false
       }
     ],
+    "react/jsx-props-no-spreading": "off",
+    "react/state-in-constructor": "off",
+    "jsx-a11y/control-has-associated-label": "off",
+    "react/static-property-placement": "off",
     "jsx-a11y/label-has-for": [
       2,
       {

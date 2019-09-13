@@ -1,0 +1,89 @@
+@import '../../styles/config.css';
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.grid {
+  > div:nth-child(odd) {
+    background: #eee;
+  }
+
+  > div:nth-child(even) {
+    background: #cceefc;
+  }
+  > div:first-child {
+    font-weight: bold;
+    background: white;
+  }
+}
+
+.user {
+  display: grid;
+  grid-template-columns: 3fr 2fr 2fr 2fr 2fr 2fr 1fr;
+
+  > * {
+    margin-right: 10px;
+  }
+
+  margin: 1em 0;
+
+  pre {
+    margin: 0;
+  }
+}
+
+.id {
+  grid-column: span 3;
+}
+
+.isReporting {
+  position: relative;
+  &:after {
+    content: '';
+    position: absolute;
+    left: -10px;
+    top: 30%;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--sd-red);
+  }
+}
+
+.isSDEmail {
+  position: relative;
+  &:before {
+    content: '';
+    position: absolute;
+    left: -10px;
+    top: 60%;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--sd-primary);
+  }
+}
+
+.legend {
+  margin-top: 1em;
+  > * {
+    margin-right: 4em;
+    display: inline-block;
+    &:before {
+      top: 50%;
+      transform: translateY(-50%);
+    }
+    &:after {
+      top: 50%;
+      transform: translateY(-50%);
+    }
+  }
+}
+
+.signupsByDate {
+  text-align: center;
+  margin-top: 0;
+}

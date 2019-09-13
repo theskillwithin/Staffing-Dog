@@ -34,7 +34,9 @@ const Login = ({
   clearResetSuccess,
   token,
 }) => {
-  const [email, setEmail] = useState(IS_DEV || IS_STAGE ? 'romelu@lukaku.com' : '')
+  const [email, setEmail] = useState(
+    IS_DEV || IS_STAGE ? 'romelu.lukaku@staffing.dog' : '',
+  )
   const [password, setPassword] = useState(IS_DEV || IS_STAGE ? 'Password1234$' : '')
 
   useDocumentTitle('Login')
